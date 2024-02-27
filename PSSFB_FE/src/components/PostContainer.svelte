@@ -14,9 +14,9 @@
 		<div class="pb-5 flex justify-between items-center">
             <div>
                 <div class="font-light text-lg">{@html $t('Commentinfo', {n: post.comment})}</div>
-                <div>Created time: {post.createdDate}</div>
+                <div>{$t('Created time')}: {post.createdDate}</div>
             </div>
-            <a href="/home">see the post</a>
+            <a href="/home">{$t('see the post')}</a>
         </div>
 	</div>
 </div>

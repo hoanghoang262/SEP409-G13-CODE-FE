@@ -1,24 +1,27 @@
 <script>
-	import avatar from '../../assets/Thanh.jpg';
+	import avatar from '../assets/Thanh.jpg';
 	import { Progressbar } from 'flowbite-svelte';
 	import Icon from '@iconify/svelte';
-	import { courses, posts } from '../../data/data';
-	import CourseContainer from '../../components/CourseContainer.svelte';
-	import PostContainer from '../../components/PostContainer.svelte';
-	import SkillsSet from '../../components/SkillsSet.svelte';
-	import { t } from '../../translations/i18n';
+	import { courses, posts } from '../data/data';
+	import CourseContainer from '../components/CourseContainer.svelte';
+	import PostContainer from '../components/PostContainer.svelte';
+	import SkillsSet from '../components/SkillsSet.svelte';
+	import { t } from '../translations/i18n';
+	import { currentUser } from '../stores/store';
+	import Avatar from '../atoms/Avatar.svelte';
+	import { goto } from '$app/navigation';
 </script>
 
 <div class="p-5 px-20 flex flex-wrap items-center pt-52 bg-black">
 	<div class="w-full font-light text-white text-2xl mb-5">
-		Hello nguyenthanh23122002@gmail.com. Welcome you to PSSFB. Let's <span
+		Hello {$currentUser?.email}. Welcome you to PSSFB. Let's <span
 			class="px-3 py-1 font-medium rounded-xl bg-white text-black">Start</span
 		> to explore more!
 	</div>
 	<div class="w-1/3">
 		<div class="rounded-md flex flex-wrap items-center bg-white p-5 pb-10">
-			<img src={avatar} alt="avatar" class="rounded-full border-neutral-400 border-2 w-1/4 mr-5" />
-			<div class="overflow-hidden text-3xl font-medium">Nguyen Cong Thanh</div>
+			<Avatar src={$currentUser?.photoURL} classes="rounded-full border-neutral-400 border-2 w-1/4 mr-5"/>
+			<div class="overflow-hidden text-3xl font-medium">{$currentUser?.displayName}</div>
 		</div>
 	</div>
 	<div class="w-2/3 p-5 text-white">
@@ -51,7 +54,7 @@
 <div class="pt-10 px-32">
 	<div class="flex justify-between items-center">
 		<span class="text-3xl font-medium">{$t('Courses')}</span>
-		<a href="/home" class="text-xl">{$t('see all')}</a>
+		<a href="/courses" class="text-xl">{$t('see all')}</a>
 	</div>
 
 	<div class="text-xl font-medium flex my-5">
@@ -60,8 +63,8 @@
 		<div class="mr-10">{$t('Completed')} (0)</div>
 	</div>
 	<div class="flex flex-wrap my-10">
-		{#each courses as c}
-			<div class="w-1/4 pr-5">
+		{#each courses as c, index}
+			<div on:keydown={() => goto('/learning/'+index)} on:click={() => goto('/learning/'+index)} class="w-1/4 pr-5" role="button" tabindex="0">
 				<CourseContainer course={c} />
 			</div>
 		{/each}

@@ -1,9 +1,12 @@
 <script lang="ts">
     export let name:string = ''
     export let placehoder:string = ''
-    export let type:string = ''
+   // export let type:string = ''
     export let readonly:boolean = false
     export let value:string = ''
+    export let required:boolean = false
+    export let classes:string = ''
+    export let onChange:any=()=>{}
 </script>
 
-<input class="py-3 px-5 w-full font-light text-black rounded-md" name="{name}" placeholder="{placehoder}" type="{type}" readonly={readonly} value="{value}"/>
+<input on:change={onChange} class="{classes} py-3 px-5 font-light text-black rounded-md" required={required} name="{name}" placeholder="{placehoder}" readonly={readonly} bind:value={value}/>

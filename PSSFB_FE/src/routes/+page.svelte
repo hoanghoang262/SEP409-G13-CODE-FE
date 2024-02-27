@@ -1,18 +1,35 @@
-<script>
+<script lang="ts">
 	import bigLogBlack from '../assets/Trắng 1.png';
-	import techimg from '../assets/techimg.jpg';
-	import techimg2 from '../assets/techimg2.webp';
-    import techimg3 from '../assets/techimg3.png';
 	import LoginContainer from '../components/LoginContainer.svelte';
+
+	import { beforeUpdate, onMount } from 'svelte';
+	import { checkExist } from '../helpers/helpers';
+	import { currentUser } from '../stores/store';
+	import { goto } from '$app/navigation';
+	import LearningPage from '../pages/LearningPage.svelte';
+	import RegisterContainer from '../components/RegisterContainer.svelte';
+
+	//export let data;
+
+	// onMount(async () => {
+	// 	if (checkExist(data?.user)) {
+	// 		currentUser.set(data.user);
+	// 		goto('/learning');
+	// 	} else {
+	// 		goto('/');
+	// 	}
+	// });
+
+	beforeUpdate(async () => {
+		if (checkExist($currentUser)) {
+			goto('/learning');
+		}
+	});
 </script>
 
-<div class="bg-black text-white">
-	<div class="flex items-center px-20 py-40">
-        <img alt="blb" class="m-auto w-3/6" src={bigLogBlack} />
-        <div class="w-2/6"><LoginContainer /></div>
-    </div>
-
-	
-	
-</div>
-
+	<div class="bg-black text-white">
+		<div class="flex items-center px-20 py-40">
+			<img alt="blb" class="m-auto w-3/6" src={bigLogBlack} />
+			<div class="w-2/6"><LoginContainer /></div>
+		</div>
+	</div>

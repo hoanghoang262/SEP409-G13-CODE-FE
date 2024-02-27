@@ -38,5 +38,19 @@
 		"vite": "^5.0.3",
 		"vitest": "^1.0.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@codemirror/lang-javascript": "github:codemirror/lang-javascript",
+		"@codemirror/theme-one-dark": "^6.1.2",
+		"@monaco-editor/react": "^4.6.0",
+		"ace-builds": "^1.32.6",
+		"axios": "^1.6.7",
+		"codemirror": "^6.0.1",
+		"firebase": "^10.8.0",
+		"js-cookie": "^3.0.5",
+		"svelte-ace": "^1.0.21",
+		"svelte-codemirror-editor": "^1.2.0",
+		"svelte-routing": "^2.11.0",
+		"svelte-toasts": "^1.1.2"
+	}
 }
