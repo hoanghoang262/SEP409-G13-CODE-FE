@@ -3,7 +3,7 @@ interface TestCase {
     Result:string
 }
 
-function initTestCase():TestCase{
+export function initTestCase():TestCase{
     return {
         Inputs:["input"],
         Result:"result"
@@ -15,7 +15,7 @@ interface Answer {
     Correct:boolean
 }
 
-function initAnswer(Correct:boolean):Answer{
+export function initAnswer(Correct:boolean):Answer{
     return {
         Content:"Answer",
         Correct
@@ -27,7 +27,7 @@ interface Question {
     Answers: Answer[]
 }
 
-function initQuestion():Question{
+export function initQuestion():Question{
     return {
         Question:"Question",
         Answers:[initAnswer(false),initAnswer(false),initAnswer(false),initAnswer(true)]
@@ -43,7 +43,7 @@ interface Lession{
     Questions:Question[]
 }
 
-function initLessions(Type:string):Lession {
+export function initLessions(Type:string):Lession {
     return {
         Name: "LessionsName",
         Content: "Content",

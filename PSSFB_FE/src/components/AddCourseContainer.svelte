@@ -3,10 +3,11 @@
 	import Editor from '@tinymce/tinymce-svelte';
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
 	import Input from '../atoms/Input.svelte';
-	import { initChapter, type Chapter } from '$lib/type';
+	import { initChapter, type Chapter, initLessions } from '$lib/type';
 	import CodeEditor2 from './CodeEditor2.svelte';
 	import { onMount } from 'svelte';
 	import tinymce from '@tinymce/tinymce-svelte';
+	import Icon from '@iconify/svelte';
 
 	let Chapters: Chapter[] = [initChapter()];
 
@@ -40,8 +41,8 @@
 		}
 	};
 
-	const hiddenLession = (index: number) => {
-		const element: any = document.getElementById(`lession${index + 1}div`);
+	const hiddenLession = (indexc:number, index: number) => {
+		const element: any = document.getElementById(`lession${index + 1}ofc${indexc+1}div`);
 		if (element.classList.contains('h-1')) {
 			element.classList.remove('h-1');
 			element.classList.add('h-full');
@@ -50,6 +51,20 @@
 			element.classList.add('h-1');
 		}
 	};
+
+	const AddChapter = () => {
+		Chapters = [
+			...Chapters,
+			initChapter()
+		]
+	}
+
+	const AddLession = (index:number) => {
+		 Chapters[index].Lessions = [
+			...Chapters[index].Lessions,
+			initLessions('code')
+		 ]
+	}
 </script>
 
 <div>
@@ -71,8 +86,8 @@
 			<div class="text-3xl font-medium mb-5">Chapters</div>
 
 			{#each Chapters as chapter, indexc}
-				<div role="button" tabindex="0" on:keydown={() => hiddenChapter(indexc)} on:click={() => hiddenChapter(indexc)} class="text-xl font-medium mb-5">
-					Chapters #{indexc + 1}
+				<div role="button" tabindex="0" on:keydown={() => hiddenChapter(indexc)} on:click={() => hiddenChapter(indexc)} class="flex items-center text-xl font-medium mb-5">
+					Chapters #{indexc + 1} <Icon icon="eva:arrow-down-fill" class="ml-3" />
 				</div>
 				<div id="chap{indexc + 1}div" class="overflow-hidden h-full transition-all">
 					<Label defaultClass=" mb-3 block">Chapter Name</Label>
@@ -92,8 +107,10 @@
 						<div class="text-2xl font-medium mb-5">Lessions of chapter {chapter.Name}</div>
 
 						{#each chapter.Lessions as lession, indexl}
-							<div role="button" tabindex="0" on:keydown={() => hiddenLession(indexl)} on:click={() => hiddenLession(indexl)} class="text-xl font-medium mb-5">Lessions #{indexl + 1}</div>
-							<div id="lession{indexl+1}div" class="h-full">
+							<div role="button" tabindex="0" on:keydown={() => hiddenLession(indexc, indexl)} on:click={() => hiddenLession(indexc, indexl)} class="flex items-center text-xl font-medium mb-5 ">
+								Lessions #{indexl + 1} <Icon icon="eva:arrow-down-fill" class="ml-3" />
+							</div>
+							<div id="lession{indexl+1}ofc{indexc+1}div" class="h-full overflow-hidden">
 								<Label defaultClass=" mb-3 block">Lession Name</Label>
 								<input
 									class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
@@ -130,7 +147,9 @@
 												<input type="checkbox" bind:value={answer.Correct} /> Correct
 											</div>
 										{/each}
+										<button class="py-2 px-5 border rounded-lg ml-5 mb-5 block">Add Answers</button>
 									{/each}
+									<button class="py-2 px-5 border rounded-lg mb-5">Add Question</button>
 								{/if}
 
 								{#if lession.Type == 'code'}
@@ -149,16 +168,22 @@
 												bind:value={input}
 											/>
 										{/each}
+										<button class="py-2 px-5 border rounded-lg">Add Input</button>
 										<div class="ml-5">
 											<Textarea placeholder="Result" bind:value={testcase.Result} />
 										</div>
 									{/each}
+									<button class="py-2 px-5 border rounded-lg my-5">Add Test Case</button>
 								{/if}
 							</div>
+							
 						{/each}
+						<button on:click={() => AddLession(indexc)} class="py-2 px-5 border rounded-lg mb-5">Add Lession</button>
 					</div>
 				</div>
+				
 			{/each}
+			<button on:click={AddChapter} class="py-2 px-5 border rounded-lg">Add Chapter</button>
 		</div>
 	</form>
 </div>
