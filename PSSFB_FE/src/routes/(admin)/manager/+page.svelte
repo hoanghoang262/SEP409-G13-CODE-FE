@@ -1,8 +1,10 @@
 <script lang="ts">
 import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
-import { courses } from "../../../data/data";
+import { Posts, courses, posts } from "../../../data/data";
 	import { secondsToHMS } from '../../../helpers/helpers';
 	import Button2 from '../../../atoms/Button2.svelte';
+	import Input from '../../../atoms/Input.svelte';
+	import AddCourseContainer from '../../../components/AddCourseContainer.svelte';
 
 let section = "Courses Lists"
 const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post']
@@ -14,13 +16,13 @@ const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post']
 		<div class="pl-5">
 			<div class="font-medium text-xl mb-2">Courses Manager</div>
 			<div class="mb-5">
-				<div class="pl-3 hover:bg-neutral-100">Courses Lists</div>
-				<div class="pl-3 hover:bg-neutral-100">Add Course</div>
+				<div on:click={() => section="Courses Lists"} class="pl-3 hover:bg-neutral-100">Courses Lists</div>
+				<div on:click={() => section="Add Course"} class="pl-3 hover:bg-neutral-100">Add Course</div>
 			</div>
 			<div class="font-medium text-xl mb-2">Posts Manager</div>
 			<div>
-				<div class="pl-3 hover:bg-neutral-100">Posts List</div>
-				<div class="pl-3 hover:bg-neutral-100">Add Post</div>
+				<div on:click={() => section="Posts List"} class="pl-3 hover:bg-neutral-100">Posts List</div>
+				<div on:click={() => section="Add Post"} class="pl-3 hover:bg-neutral-100">Add Post</div>
 			</div>
 		</div>
 	</div>
@@ -46,6 +48,35 @@ const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post']
               {/each}
             </TableBody>
           </Table>
+
+          {:else if section = 'Add Course'}
+          <div>
+            <AddCourseContainer />
+          </div>
+          {:else if section = 'Posts List'}
+          <Table>
+            <TableHead>
+              <TableHeadCell>#</TableHeadCell>
+              <TableHeadCell>Post</TableHeadCell>
+              <TableHeadCell>Description</TableHeadCell>
+              <TableHeadCell>Create By</TableHeadCell>
+              <TableHeadCell>Last Update</TableHeadCell>
+              <TableHeadCell>Action</TableHeadCell>
+            </TableHead>
+            <TableBody tableBodyClass="divide-y">
+              {#each Posts as p, index}
+                <TableBodyRow>
+                    <TableBodyCell>{index+1}</TableBodyCell>
+                    <TableBodyCell>{p.title}</TableBodyCell>
+                    <TableBodyCell>{p.description}</TableBodyCell>
+                    <TableBodyCell>Stevent Siren</TableBodyCell>
+                    <TableBodyCell>{p.lastUpdate}</TableBodyCell>
+                    <TableBodyCell><Button2 classes="border mr-3" content="delete"/></TableBodyCell>
+                </TableBodyRow>
+              {/each}
+            </TableBody>
+          </Table>
+          {:else if section = 'Add Post'}
         {/if}
     </div>
 </div>
