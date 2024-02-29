@@ -33,7 +33,7 @@
 	<form method="POST" action="?/login">
 	<div class="mb-3"><Input classes="w-full" value={Email} name="Email" placehoder="Email" /></div>
 	<div class="mb-3"><PasswordInput value={Password} name="Password" placehoder="Password" /></div>
-	<div on:click={() => showModal = true} class="text-right">forgot password?</div>
+	<div role="button" tabindex="0" on:keydown={()=>{() => showModal = true}} on:click={() => showModal = true} class="text-right">forgot password?</div>
 	<div class="my-10">
 		
 	</div>

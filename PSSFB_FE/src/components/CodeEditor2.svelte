@@ -12,7 +12,7 @@
 			"&": {
 				width: "100%",
 				maxWidth: "100%",
-				height: "500px",
+				height: "250px",
 			},
 		}} theme={oneDark}/>
 	

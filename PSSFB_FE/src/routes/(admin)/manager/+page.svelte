@@ -16,13 +16,13 @@ const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post']
 		<div class="pl-5">
 			<div class="font-medium text-xl mb-2">Courses Manager</div>
 			<div class="mb-5">
-				<div on:click={() => section="Courses Lists"} class="pl-3 hover:bg-neutral-100">Courses Lists</div>
-				<div on:click={() => section="Add Course"} class="pl-3 hover:bg-neutral-100">Add Course</div>
+				<div role="button" tabindex="0" on:keydown={() => section="Courses Lists"} on:click={() => section="Courses Lists"} class="pl-3 hover:bg-neutral-100">Courses Lists</div>
+				<div role="button" tabindex="0" on:keydown={() => section="Add Course"} on:click={() => section="Add Course"} class="pl-3 hover:bg-neutral-100">Add Course</div>
 			</div>
 			<div class="font-medium text-xl mb-2">Posts Manager</div>
 			<div>
-				<div on:click={() => section="Posts List"} class="pl-3 hover:bg-neutral-100">Posts List</div>
-				<div on:click={() => section="Add Post"} class="pl-3 hover:bg-neutral-100">Add Post</div>
+				<div role="button" tabindex="0" on:keydown={() => section="Posts List"} on:click={() => section="Posts List"} class="pl-3 hover:bg-neutral-100">Posts List</div>
+				<div role="button" tabindex="0" on:keydown={() => section="Add Post"} on:click={() => section="Add Post"} class="pl-3 hover:bg-neutral-100">Add Post</div>
 			</div>
 		</div>
 	</div>
@@ -77,6 +77,7 @@ const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post']
             </TableBody>
           </Table>
           {:else if section = 'Add Post'}
+          <div></div>
         {/if}
     </div>
 </div>
