@@ -49,6 +49,7 @@
 		"codemirror": "^6.0.1",
 		"firebase": "^10.8.0",
 		"js-cookie": "^3.0.5",
+		"jwt-decode": "^4.0.0",
 		"svelte-ace": "^1.0.21",
 		"svelte-codemirror-editor": "^1.2.0",
 		"svelte-routing": "^2.11.0",

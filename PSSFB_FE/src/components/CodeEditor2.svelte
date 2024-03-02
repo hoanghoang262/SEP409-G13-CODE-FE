@@ -3,7 +3,7 @@
 	import { oneDark } from "@codemirror/theme-one-dark";
 
     export let value = "";
-
+	
 </script>
 
 <div class="text-slate-300">

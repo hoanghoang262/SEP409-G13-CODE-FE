@@ -35,9 +35,9 @@ export const actions = {
         console.log(data)
         console.log("login server working")
         const user:any = await loginWithEmailAndPsr(data.get("Email"), data.get("Password"));
-        console.log("user",user)
+        
         if(checkExist(user)){
-            const JWTFS = await loginByGoogle(user?.email, user?.photoURL)
+            const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName)
             const decodeData:any = decodeJWT(JWTFS)
             user.UserID = decodeData.userID;
             user.Role = decodeData.Role
@@ -49,7 +49,7 @@ export const actions = {
                 maxAge: 60 * 2
             });
         }
-        
+        console.log("user",user)
         return {};
     },
     register:async({cookies, request}:any) => {
@@ -59,7 +59,7 @@ export const actions = {
         const user:any = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
         console.log("user",user)
         if(checkExist(user)){
-            const JWTFS = await loginByGoogle(user?.email, user?.photoURL)
+            const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName)
             const decodeData:any = decodeJWT(JWTFS)
             user.UserID = decodeData.userID;
             user.Role = decodeData.Role
