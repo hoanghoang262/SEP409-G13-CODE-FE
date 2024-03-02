@@ -1,62 +1,85 @@
 interface TestCase {
-    Inputs:string[];
-    Result:string
+    inputTypeInt:BigInteger,
+    inputTypeString:string,
+    expectedResultInt:BigInteger,
+    expectedResultString:string,
+    inputTypeBoolean:Boolean,
+    expectedResultBoolean:Boolean,
+    inputTypeArrayInt:string,
+    inputTypeArrayString:string,
+
 }
 
-export function initTestCase():TestCase{
+// export function initTestCase():TestCase{
+//     return {
+//         Inputs:["input"],
+//         Result:"result"
+//     }
+// }
+
+interface answerOption {
+    optionsText:string,
+    correctAnswer:boolean
+}
+
+export function initAnswer(correctAnswer:boolean):answerOption{
     return {
-        Inputs:["input"],
-        Result:"result"
-    }
-}
-
-interface Answer {
-    Content:string,
-    Correct:boolean
-}
-
-export function initAnswer(Correct:boolean):Answer{
-    return {
-        Content:"Answer",
-        Correct
+        optionsText:"Answer",
+        correctAnswer
     }
 }
 
 interface Question {
-    Question:string,
-    Answers: Answer[]
+    contentQuestion:string,
+    time:Number,
+    answerOptions: answerOption[]
 }
 
 export function initQuestion():Question{
     return {
-        Question:"Question",
-        Answers:[initAnswer(false),initAnswer(false),initAnswer(false),initAnswer(true)]
+        contentQuestion:"Question",
+        time:3000,
+        answerOptions:[initAnswer(false),initAnswer(false),initAnswer(false),initAnswer(true)]
     }
 }
 
 interface Lession{
-    Name:string,
-    Content:string,
-    Type:string,
-    Code:string,
-    TestCases:TestCase[],
-    Questions:Question[]
+    title:string,
+    videoUrl:string,
+    description:string,
+    duration:Number,
+    questions:Question[]
 }
 
-export function initLessions(Type:string):Lession {
+export function initLessions():Lession {
     return {
-        Name: "LessionsName",
-        Content: "Content",
-        Type,
-        Code:"code",
-        TestCases: [initTestCase(),initTestCase()],
-        Questions: [initQuestion(),initQuestion()]
+        title: "LessionsName",
+        videoUrl: "url",
+        description:"description",
+        duration:60*10,
+        questions: [initQuestion(),initQuestion()]
+    }
+}
+
+interface codeQuestion {
+    description:string,
+    codeForm:string,
+    testCases:TestCase[]
+}
+
+export function intitCodeQuestion():codeQuestion{
+    return{
+        description:"description",
+        codeForm:"",
+        testCases:[]
     }
 }
 
 export interface Chapter{
     Name:string,
     Description:string,
+    Part:Number,
+    codeQuestions:codeQuestion[]
     Lessions:Lession[]
 }
 
@@ -64,7 +87,9 @@ export function initChapter():Chapter {
     return {
         Name: "ChapterName",
         Description:"Description",
-        Lessions:[initLessions("code")]
+        Part:1,
+        Lessions:[initLessions()],
+        codeQuestions:[intitCodeQuestion()]
     }
 }
 

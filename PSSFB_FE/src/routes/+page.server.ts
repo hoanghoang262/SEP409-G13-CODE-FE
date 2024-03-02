@@ -1,5 +1,6 @@
+import { loginByGoogle } from "$lib/services/AuthenticationServices";
 import { changePasswordWithEmail, loginWithEmailAndPsr, registerWithEmailAndPsr } from "../firebase";
-import { checkExist } from "../helpers/helpers";
+import { checkExist, decodeJWT } from "../helpers/helpers";
 import { currentUser } from "../stores/store";
 
 
@@ -33,9 +34,14 @@ export const actions = {
         const data = await request.formData();
         console.log(data)
         console.log("login server working")
-        const user = await loginWithEmailAndPsr(data.get("Email"), data.get("Password"));
+        const user:any = await loginWithEmailAndPsr(data.get("Email"), data.get("Password"));
         console.log("user",user)
         if(checkExist(user)){
+            const JWTFS = await loginByGoogle(user?.email, user?.photoURL)
+            const decodeData:any = decodeJWT(JWTFS)
+            user.UserID = decodeData.userID;
+            user.Role = decodeData.Role
+            user.jwt = JWTFS;
             cookies.set('user', JSON.stringify(user), {
                 path: '/',
                 httpOnly: true,
@@ -50,9 +56,14 @@ export const actions = {
         const data = await request.formData();
         console.log(data)
         console.log("server working")
-        const user = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
+        const user:any = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
         console.log("user",user)
         if(checkExist(user)){
+            const JWTFS = await loginByGoogle(user?.email, user?.photoURL)
+            const decodeData:any = decodeJWT(JWTFS)
+            user.UserID = decodeData.userID;
+            user.Role = decodeData.Role
+            user.jwt = JWTFS;
             cookies.set('user', JSON.stringify(user), {
                 path: '/',
                 httpOnly: true,

@@ -42,3 +42,13 @@ export function isValidEmail(email:string) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
 }
+
+export function decodeJWT(token:string) {
+	try {
+	  const decoded = jwt.decode(token, { complete: true });
+	  return decoded;
+	} catch (error:any) {
+	  console.error('Error decoding JWT:', error.message);
+	  return null;
+	}
+  }
