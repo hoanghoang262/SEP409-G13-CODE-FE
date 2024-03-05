@@ -143,7 +143,7 @@ export interface Chapter {
 	Description: string;
 	Part: Number;
 	codeQuestions: codeQuestion[];
-	Lessions: Lession[];
+	lessons: Lession[];
 }
 
 export function initChapter(): Chapter {
@@ -151,7 +151,7 @@ export function initChapter(): Chapter {
 		Name: 'ChapterName',
 		Description: 'Description',
 		Part: 1,
-		Lessions: [initLessions()],
+		lessons: [initLessions()],
 		codeQuestions: [intitCodeQuestion()]
 	};
 }

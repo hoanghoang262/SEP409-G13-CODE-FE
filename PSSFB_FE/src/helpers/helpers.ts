@@ -1,7 +1,6 @@
 import { toasts, ToastContainer, FlatToast, BootstrapToast } from 'svelte-toasts';
 import type { ToastType } from 'svelte-toasts/types/common';
 
-
 export function secondsToHMS(seconds: number) {
 	// Calculate hours, minutes, and remaining seconds
 	var hours = Math.floor(seconds / 3600);
@@ -23,7 +22,7 @@ export function checkExist(v: any) {
 	return v != undefined && v != null && v != '';
 }
 
-export function showToast(title: string, description: string, type:ToastType = 'info') {
+export function showToast(title: string, description: string, type: ToastType = 'info') {
 	const toast = toasts.add({
 		title,
 		description,
@@ -38,18 +37,34 @@ export function showToast(title: string, description: string, type:ToastType = '
 	// toast.remove()
 }
 
-export function isValidEmail(email:string) {
-    // Regular expression pattern for validating email addresses
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
+export function isValidEmail(email: string) {
+	// Regular expression pattern for validating email addresses
+	const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return emailPattern.test(email);
 }
 
-export function decodeJWT(token:string) {
+export function decodeJWT(token: string) {
 	try {
-	  const decoded = atob(token);
-	  return decoded;
-	} catch (error:any) {
-	  console.error('Error decoding JWT:', error.message);
-	  return null;
+		console.log('token', token);
+		const [header, payload, signature] = token.split('.');
+		const decodedHeader = JSON.parse(atob(header));
+		const decodedPayload = JSON.parse(atob(payload));
+		console.log('decoded',decodedPayload)
+		return decodedPayload
+	} catch (error: any) {
+		console.error('Error decoding JWT:', error.message);
+		return null;
 	}
-  }
+}
+
+export function trimUserData(user:any){
+	const trimUser = {
+		...user.providerData[0],
+		UserID: user.UserID,
+		Role: user.Role,
+		jwt: user.jwt,
+		stsTokenManager: user.stsTokenManager
+
+	}
+	return trimUser
+}

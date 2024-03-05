@@ -8,7 +8,7 @@
 	import PasswordInput from '../atoms/PasswordInput.svelte';
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
-	import { decodeJWT } from '../helpers/helpers';
+	import { decodeJWT, trimUserData } from '../helpers/helpers';
 
 	let Email = '';
 	let Password = '';
@@ -17,24 +17,26 @@
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-		const decodeData: any = decodeJWT(JWTFS);
-		user.UserID = decodeData.userID;
+		const decodeData: any = await decodeJWT(JWTFS);
+		console.log('decodeData', decodeData)
+		user.UserID = decodeData.UserID;
 		user.Role = decodeData.Role;
 		user.jwt = JWTFS;
 		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(user));
+		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 		goto('/learning');
 	};
 
 	const LWG = async () => {
 		const user:any = await loginWithGoogle();
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-		const decodeData: any = decodeJWT(JWTFS);
-		user.UserID = decodeData.userID;
+		const decodeData: any = await decodeJWT(JWTFS);
+		
+		user.UserID = decodeData.UserID;
 		user.Role = decodeData.Role;
 		user.jwt = JWTFS;
 		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(user));
+		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 		goto('/learning');
 	};
 </script>

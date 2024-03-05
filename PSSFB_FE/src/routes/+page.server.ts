@@ -17,6 +17,7 @@ export async function load ({cookies, parent }:any){
 export const actions = {
     setuser:async({cookies, request}:any) => {
         const user = await request.json()
+        console.log("set user cookie", user)
         cookies.set('user', JSON.stringify(user), {
             path: '/',
             httpOnly: true,

@@ -19,7 +19,7 @@
                 <div class="font-medium text-xl mb-2">Posts Manager</div>
                 <div>
                     <a href="/manager/postslist" class="pl-3 hover:bg-neutral-100 block">Posts List</a>
-                    <div role="button" tabindex="0" on:keydown={() => section="Add Post"} on:click={() => section="Add Post"} class="pl-3 hover:bg-neutral-100">Add Post</div>
+                    <a href="/manager/addpost" class="pl-3 hover:bg-neutral-100">Add Post</a>
                 </div>
             </div>
         </div>
