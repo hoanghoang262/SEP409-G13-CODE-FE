@@ -4,14 +4,22 @@
 	import Input from '../../atoms/Input.svelte';
 	import { resetPasswordWithEmail } from '../../firebase';
 	import { checkExist, isValidEmail, showToast } from '../../helpers/helpers';
+	import { checkEmail } from '$lib/services/AuthenticationServices';
 
 	export let showModal = false;
 	export let onClose = () => {};
 	let email = '';
 	const resetPass = async () => {
 		if (checkExist(email) && isValidEmail(email)) {
-			await resetPasswordWithEmail(email);
-            showToast('Reset Password', 'Check your email to change the password', 'info')
+			const result = await checkEmail(email)
+			if(result=="Email has exist"){
+				await resetPasswordWithEmail(email);
+				showToast('Reset Password', 'Check your email to change the password', 'info')
+			}else{
+				showToast('Reset Password', 'Email do not exist', 'error');
+			}
+			
+           
 		} else {
 			showToast('Reset Password', 'Please input an email', 'error');
 		}

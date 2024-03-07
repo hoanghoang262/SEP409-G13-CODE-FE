@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Icon from '@iconify/svelte';
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import Button2 from '../../../../../atoms/Button2.svelte';
@@ -11,10 +11,10 @@
 	import CommentContainer from '../../../../../components/CommentContainer.svelte';
 
 	export let data;
-	const course = data.course;
-	const sysllabus = data.sysllabus;
-	const quiz = sysllabus.filter((s) => s.type == 'quiz');
-	const code = sysllabus.filter((s) => s.type == 'code');
+	const course:any = data.course;
+	//const sysllabus = data.sysllabus;
+	const quiz = course.lessons;
+	const code = course.codeQuestions;
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
 </script>
@@ -51,6 +51,9 @@
 		<div class="flex text-2xl mb-10">
 			{#each sections as s}
 				<div
+				tabindex=0
+				role="button"
+				on:keydown={() => (section = s)}
 					on:click={() => (section = s)}
 					class="mr-10 {s == section ? 'underline underline-offset-8' : ''}"
 				>
@@ -98,7 +101,7 @@
 							{#each quiz as q}
 								<li class="pl-5 my-3 flex items-center">
 									<Icon class="mr-1 text-3xl" icon="mdi:dot" style="color: black" />
-									{q.name}
+									{q.title}
 								</li>
 							{/each}
 						</ul>
@@ -114,7 +117,7 @@
 							{#each code as q}
 								<li class="pl-5 my-3 flex items-center">
 									<Icon class="mr-1 text-3xl" icon="mdi:dot" style="color: black" />
-									{q.name}
+									{q.description}
 								</li>
 							{/each}
 						</ul>

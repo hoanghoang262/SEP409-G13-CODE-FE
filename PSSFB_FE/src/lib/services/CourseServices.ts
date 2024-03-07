@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const getAllCourses = async() => {
     const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses`)
+    console.log(result.data)
     return result.data.items
 }
 

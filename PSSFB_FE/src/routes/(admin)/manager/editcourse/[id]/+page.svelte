@@ -2,7 +2,7 @@
 	import { Textarea, Select, Label, Toolbar, ToolbarGroup, ToolbarButton } from 'flowbite-svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
-	import Input from '../../../../atoms/Input.svelte';
+	import Input from '../../../../../atoms/Input.svelte';
 	import {
 		initChapter,
 		type Chapter,
@@ -12,10 +12,10 @@
 		initAnswer,
 		initTestCase
 	} from '$lib/type';
-	import CodeEditor2 from '../../../../components/CodeEditor2.svelte';
+	import CodeEditor2 from '../../../../../components/CodeEditor2.svelte';
 	import Icon from '@iconify/svelte';
-	import { checkExist } from '../../../../helpers/helpers';
-	import { currentUser } from '../../../../stores/store';
+	import { checkExist } from '../../../../../helpers/helpers';
+	import { currentUser } from '../../../../../stores/store';
 	import { goto } from '$app/navigation';
 	import { addCourse } from '$lib/services/ModerationServices';
 

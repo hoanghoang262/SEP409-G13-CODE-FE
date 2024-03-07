@@ -102,7 +102,7 @@ export function initQuestion(): Question {
 	return {
 		contentQuestion: 'Question',
 		time: 3000,
-		answerOptions: [initAnswer(false), initAnswer(false), initAnswer(false), initAnswer(true)]
+		answerOptions: [initAnswer(true), initAnswer(false)]
 	};
 }
 
@@ -120,7 +120,7 @@ export function initLessions(): Lession {
 		videoUrl: 'url',
 		description: 'description',
 		duration: 60 * 10,
-		questions: [initQuestion(), initQuestion()]
+		questions: [initQuestion()]
 	};
 }
 

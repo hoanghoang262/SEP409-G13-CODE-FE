@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import avatar from '../assets/Thanh.jpg';
 	import { Progressbar } from 'flowbite-svelte';
 	import Icon from '@iconify/svelte';
-	import { courses, posts } from '../data/data';
+	import { posts } from '../data/data';
 	import CourseContainer from '../components/CourseContainer.svelte';
 	import PostContainer from '../components/PostContainer.svelte';
 	import SkillsSet from '../components/SkillsSet.svelte';
@@ -10,6 +10,8 @@
 	import { currentUser } from '../stores/store';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { goto } from '$app/navigation';
+
+	export let courses:any
 </script>
 
 <div class="p-5 px-20 flex flex-wrap items-center pt-52 bg-black">
