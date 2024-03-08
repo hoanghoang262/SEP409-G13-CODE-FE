@@ -5,7 +5,7 @@ export function load ({cookies}:any) {
     const user = cookies.get('user')
     if(checkExist(user)){
         const jsonUser = JSON.parse(user)
-        console.log('jsonUser',user)
+        //console.log('jsonUser',user)
         // if(checkExist(user)){
         //     currentUser.set(user)
         // }

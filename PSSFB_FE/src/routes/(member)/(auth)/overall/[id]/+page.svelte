@@ -2,15 +2,15 @@
 	import Icon from '@iconify/svelte';
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
+	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
 
 	export let data: any;
 
 	const course = data?.course;
 	const courseId = data?.id
-	const sysllabus = data?.sysllabus;
-	const Schedule = data?.schedule;
-	const codeworks = data?.sysllabus.filter((data: any) => data?.type == 'code');
-	const quizs = data?.sysllabus.filter((data: any) => data?.type == 'quiz');
+	const chapters = course?.chapters
+	const codeworks = course.chapters.flatMap((chapter:any) => chapter.codeQuestions);
+	const quizs = course.chapters.flatMap((chapter:any) => chapter.lessons);
 	const arrowR =
 		"<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 1024 1024' > <path fill='#0091ff' d='M338.752 104.704a64 64 0 0 0 0 90.496l316.8 316.8l-316.8 316.8a64 64 0 0 0 90.496 90.496l362.048-362.048a64 64 0 0 0 0-90.496L429.248 104.704a64 64 0 0 0-90.496 0' /> </svg>";
 
@@ -36,72 +36,18 @@
 		}
 	};
 
-	const hidden2 = (index: number) => {
-		const div = document.getElementById(`si${index}`);
-		const schedule = document.getElementById(`schedule${index}`);
-		if (schedule) {
-			if (schedule.classList.contains('hidden')) {
-				schedule.classList.remove('hidden');
-				div!.innerHTML = minus;
-			} else {
-				schedule.classList.add('hidden');
-				div!.innerHTML = plus;
-			}
-		}
-	};
-
 	const lessionClick = (l: any, index: number, lindex:number) => {
 		if (l.type == 'code') goto(`/lession/${courseId}/${index}/${lindex}`);
 		else if (l.type == 'quiz') goto(`/quiz/${index}`);
 	};
 </script>
 
-<div class="bg-neutral-100 pt-40 px-20 flex">
-	<div class="w-1/4 shadow-xl rounded-2xl mr-10 border bg-white">
-		<div class="text-2xl font-medium px-3 py-5">Schedule</div>
+<div class="bg-neutral-100 pt-40 px-20 flex mb-20">
+	
+	<CourseSideBar course={course} />
 
-		<hr class="my-5" />
-
-		{#each Schedule as s, index}
-			<div class="text-lg font-medium px-3 py-5 flex items-center text-neutral-500">
-				<div
-					class="mr-5"
-					tabindex="0"
-					role="button"
-					on:keydown={() => {
-						() => hidden2(index);
-					}}
-					on:click={() => hidden2(index)}
-					id="si{index}"
-				>
-					{@html minus}
-				</div>
-				{s?.name}
-			</div>
-			<div id="schedule{index}">
-				{#each s.lessions as l, lindex}
-					<div
-						tabindex="0"
-						role="button"
-						on:keydown={() => {
-							lessionClick(l, index, lindex);
-						}}
-						on:click={() => lessionClick(l, index,lindex)}
-						class="pl-10 mb-5 flex items-center"
-					>
-						{#if l.type == 'code'}
-							<Icon class="mr-3" icon="material-symbols:code" style="color: gray" />
-						{:else}
-							<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
-						{/if}
-						{l.name}
-					</div>
-				{/each}
-			</div>
-		{/each}
-	</div>
 	<div class="w-3/4 shadow-xl rounded-2xl border bg-white">
-		<div class="pl-5 pt-3 text-xl text-blue-500">{course?.title}</div>
+		<div class="pl-5 pt-3 text-xl text-blue-500">{course?.name}</div>
 		<div class="flex pl-10 mt-20">
 			<div class="flex items-center mr-20">
 				<Icon class="text-3xl" icon="material-symbols:code" style="color: 0054c2" />
@@ -116,7 +62,7 @@
 		<hr class="my-5" />
 
 		<div class="px-10">
-			{#each Schedule as s, index}
+			{#each chapters as s, index}
 				<div class="mb-10">
 					<div class="text-blue-600 mb-5 text-xl flex items-center">
 						<div
@@ -132,7 +78,7 @@
 						{s?.name}
 					</div>
 					<div id="lession{index}" class="transition-all" transition:fade>
-						{#each s.lessions as l, lindex}
+						{#each s.lessons as l, lindex}
 							<div
 								tabindex="0"
 								role="button"
@@ -143,8 +89,23 @@
 								class="pl-10 mb-5"
 								transition:fade
 							>
-								<div>{l.name}</div>
-								<div>{l.type}</div>
+								<div>{l.title}</div>
+								<div class="text-sm text-neutral-500">{l.description}</div>
+							</div>
+						{/each}
+
+						{#each s.codeQuestions as l, lindex}
+							<div
+								tabindex="0"
+								role="button"
+								on:keydown={() => {
+									lessionClick(l, index, lindex);
+								}}
+								on:click={() => lessionClick(l, index, lindex)}
+								class="pl-10 mb-5"
+								transition:fade
+							>
+								<div>{l.description}</div>
 							</div>
 						{/each}
 					</div>

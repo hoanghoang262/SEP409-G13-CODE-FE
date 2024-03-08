@@ -66,7 +66,7 @@
 	</div>
 	<div class="flex flex-wrap my-10">
 		{#each courses as c, index}
-			<div on:keydown={() => goto('/learning/'+index)} on:click={() => goto('/learning/'+index)} class="w-1/4 pr-5" role="button" tabindex="0">
+			<div class="w-1/4 pr-5">
 				<CourseContainer course={c} />
 			</div>
 		{/each}

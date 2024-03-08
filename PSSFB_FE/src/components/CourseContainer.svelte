@@ -2,6 +2,7 @@
     import Icon from '@iconify/svelte';
 	import { secondsToHMS } from '../helpers/helpers';
 	import Button from '../atoms/Button.svelte';
+	import { goto } from '$app/navigation';
 export let course:any
 </script>
 
@@ -14,6 +15,6 @@ export let course:any
     <hr />
     <div class="px-2 py-5 flex justify-between items-center">
         <div class="flex items-center"><Icon icon="mdi:clock-outline"/>20:00:00</div>
-        <Button content="join now"/>
+        <Button onclick={() => goto(`/learning/${course.id}`)} content="join now"/>
     </div>
 </div>

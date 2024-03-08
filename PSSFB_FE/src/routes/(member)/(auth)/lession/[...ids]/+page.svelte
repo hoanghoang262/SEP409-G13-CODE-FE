@@ -1,7 +1,7 @@
 <script>
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 import CodeEditor from '../../../../../components/CodeEditor.svelte';
-	export let data;
+	export let data../[id]/$types.js;
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.lession;

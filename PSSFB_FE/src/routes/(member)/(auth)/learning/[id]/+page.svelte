@@ -13,8 +13,8 @@
 	export let data;
 	const course:any = data.course;
 	//const sysllabus = data.sysllabus;
-	const quiz = course.lessons;
-	const code = course.codeQuestions;
+	const quiz = course.chapters.flatMap((chapter:any) => chapter.lessons);
+	const code = course.chapters.flatMap((chapter:any) => chapter.codeQuestions);
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
 </script>
@@ -22,7 +22,7 @@
 <div>
 	<div class="flex pt-40 px-40 bg-black text-white">
 		<div class="w-2/3">
-			<div class="text-6xl my-5">{course.title}</div>
+			<div class="text-6xl my-5">{course.name}</div>
 			<div class="flex text-4xl my-5">
 				<Icon icon="material-symbols:star" style="color: #ffd500" />
 				<Icon icon="material-symbols:star" style="color: #ffd500" />
@@ -32,7 +32,7 @@
 			</div>
 			<div class="flex items-center">
 				<Avatar classes="w-10 rounded-full mr-3" />
-				<div class="text-xl">Steven Siren</div>
+				<div class="text-xl">{course.created_Name}</div>
 			</div>
 			<Button2
 				onclick={() => goto(`/overall/${data.id}`)}

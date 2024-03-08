@@ -41,6 +41,7 @@
 	"type": "module",
 	"dependencies": {
 		"@codemirror/lang-javascript": "github:codemirror/lang-javascript",
+		"@codemirror/lang-python": "^6.1.4",
 		"@codemirror/theme-one-dark": "^6.1.2",
 		"@monaco-editor/react": "^4.6.0",
 		"@tinymce/tinymce-svelte": "^2.0.1",

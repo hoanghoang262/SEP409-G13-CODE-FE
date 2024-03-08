@@ -5,11 +5,24 @@
 	import Button2 from '../atoms/Button2.svelte';
 	import CodeMirror from "svelte-codemirror-editor";
 	import {javascript} from "@codemirror/lang-javascript"
+	import {python} from "@codemirror/lang-python"
 	import { oneDark } from "@codemirror/theme-one-dark";
 
     let value = "";
 	let text = '';
+	export let lang = "javascript"
+	export let testCases:any[] = []
 
+	const getLang = () => {
+		switch (lang){
+			case "javascript":
+				return javascript();
+			case "python":
+				return python();
+			default:
+				return javascript();
+		}
+	}
 </script>
 
 <div class="text-slate-300">
@@ -17,9 +30,7 @@
 		<div class="flex items-center">
 			<Icon icon="" />
 			<select class="bg-slate-800">
-				{#each codeLanguage as c}
-					<option>{c}</option>
-				{/each}
+				<option>{lang}</option>
 			</select>
 		</div>
 		<div>
@@ -33,7 +44,7 @@
 
 	<!-- <textarea rows="14" class="bg-slate-950 text-base p-5 w-full"></textarea> -->
 	
-		<CodeMirror bind:value lang={javascript()} styles={{
+		<CodeMirror bind:value lang={getLang()} styles={{
 			"&": {
 				width: "100%",
 				maxWidth: "100%",
@@ -45,7 +56,9 @@
 		<div class="border-b border-white inline-block mb-3">TEST CASE</div>
 		<div class="flex">
 			<div class="w-1/6 border-r mr-10">
-				<div>test case 1</div>
+				{#each testCases as tc, index}
+					<div>Test case {index+1}</div>
+				{/each}
 			</div>
 			<div class="w-5/6 flex">
 				<div class="w-1/2">

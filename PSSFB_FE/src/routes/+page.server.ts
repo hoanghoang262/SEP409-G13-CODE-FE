@@ -22,7 +22,7 @@ export const actions = {
             path: '/',
             httpOnly: true,
             sameSite: 'strict',
-            maxAge: 60 * 2
+            maxAge: 60 * 5
         });
     },
     logout:async({cookies, request}:any) => {
@@ -47,7 +47,7 @@ export const actions = {
                 path: '/',
                 httpOnly: true,
                 sameSite: 'strict',
-                maxAge: 60 * 2
+                maxAge: 60 * 5
             });
         }
         console.log("user",user)
@@ -69,7 +69,7 @@ export const actions = {
                 path: '/',
                 httpOnly: true,
                 sameSite: 'strict',
-                maxAge: 60 * 2
+                maxAge: 60 * 5
             });
         }
         return {};
