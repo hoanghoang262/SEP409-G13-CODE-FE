@@ -11,7 +11,7 @@
 	<div class="px-5 py-2 font-medium truncate">{course.name} > {chapter.name} > {lession.description}</div>
 	<div class="flex bg-white text-black">
 		<div class="w-1/2 p-3 overflow-y-scroll max-h-screen">
-			<div class="flex items-center"><Avatar classes="w-10 mr-3"/> created_Name</div>
+			<div class="flex items-center"><Avatar classes="w-10 mr-3"/> {course.created_Name}</div>
 			<hr class="my-5"/>
 			<p>
 				{@html lession.description}

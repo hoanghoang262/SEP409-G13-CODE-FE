@@ -27,8 +27,11 @@
 	};
 
 	const lessionClick = (l: any, index: number, lindex:number) => {
-		if (l.type == 'code') goto(`/lession/${courseId}/${index}/${lindex}`);
-		else if (l.type == 'quiz') goto(`/quiz/${index}`);
+		goto(`/lession/${courseId}/${index}/${lindex}`);
+	};
+
+	const codelessionClick = (l: any, index: number, lindex:number) => {
+		goto(`/codelesson/${courseId}/${index}/${lindex}`);
 	};
 </script>
 
@@ -54,14 +57,14 @@
 			{s?.name}
 		</div>
 		<div id="schedule{index}">
-			{#each s.lessons as l, lindex}
+			{#each s.lessons as l}
 				<div
 					tabindex="0"
 					role="button"
 					on:keydown={() => {
-						lessionClick(l, index, lindex);
+						lessionClick(l, s.id, l.id);
 					}}
-					on:click={() => lessionClick(l, index, lindex)}
+					on:click={() => lessionClick(l, s.id, l.id)}
 					class="pl-10 mb-5 flex items-center flex-wrap"
 				>
 
@@ -72,14 +75,14 @@
 				</div>
 			{/each}
 
-			{#each s.codeQuestions as l, lindex}
+			{#each s.codeQuestions as l}
 				<div
 					tabindex="0"
 					role="button"
 					on:keydown={() => {
-						lessionClick(l, index, lindex);
+						codelessionClick(l, s.id, l.id);
 					}}
-					on:click={() => lessionClick(l, index, lindex)}
+					on:click={() => codelessionClick(l, s.id, l.id)}
 					class="pl-10 mb-5 flex items-center"
 				>
 					<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
