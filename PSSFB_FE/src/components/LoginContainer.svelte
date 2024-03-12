@@ -31,7 +31,6 @@
 		const user: any = await loginWithGoogle();
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
-
 		user.UserID = decodeData.UserID;
 		user.Role = decodeData.Role;
 		user.jwt = JWTFS;
@@ -42,13 +41,12 @@
 
 	const login = async () => {
 		const user: any = await loginWithEmailAndPsr(Email, Password);
-
 		if (checkExist(user)) {
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
 			const decodeData: any = decodeJWT(JWTFS);
 			user.UserID = decodeData.UserID;
 			user.Role = decodeData.Role;
-			user.jwt = JWTFS;
+			user.jwt = JWTFS; 
 			currentUser.set(user);
 			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 			goto('/learning');

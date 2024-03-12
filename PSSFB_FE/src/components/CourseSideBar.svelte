@@ -35,7 +35,7 @@
 	};
 </script>
 
-<div class="w-1/4 shadow-xl rounded-2xl mr-10 border bg-white">
+<div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white">
 	<div class="text-2xl font-medium px-3 py-5">Schedule</div>
 
 	<hr class="my-5" />

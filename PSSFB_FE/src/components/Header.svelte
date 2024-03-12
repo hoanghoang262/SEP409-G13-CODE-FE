@@ -36,7 +36,7 @@
 			<RegisterBtn onClick={() => goto("/register")} />
 		{:else}
 			<Avatar classes="w-1/12 rounded-full mr-3" src={$currentUser.photoURL} />
-			<a href="/profile" class="mr-3">{$currentUser.displayName}{$currentUser.UserID}</a>
+			<a href="/profile" class="mr-3">{$currentUser.displayName}</a>
 			<LogoutBtn />
 		{/if}
 	</div>

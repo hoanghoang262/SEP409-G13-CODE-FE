@@ -20,11 +20,11 @@
 		{/if}
 	</div>
 	<div class="bg-white">
-		{#each searchPosts as p, index}
+		{#each searchPosts as p}
 			<div class="border flex justify-between p-5">
 				<div class="w-14"><Avatar /></div>
 				<div class="w-10/12">
-					<div role="button" tabindex="0" on:keydown={() => goto(`forums/${index}`)} on:click={() => goto(`forums/${index}`)} class="text-lg">{p.title}</div>
+					<div role="button" tabindex="0" on:keydown={() => goto(`forums/${p.id}`)} on:click={() => goto(`forums/${p.id}`)} class="text-lg">{p.title}</div>
 					<hr class="my-2" />
 					<div class="overflow-hidden whitespace-normal mb-2">
 						<p class="line-clamp-2">{p.description}</p>

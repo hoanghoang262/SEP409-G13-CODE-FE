@@ -1,4 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app';
+import { getDatabase, ref, set } from 'firebase/database';
 import {
 	createUserWithEmailAndPassword,
 	FacebookAuthProvider,
@@ -8,7 +9,8 @@ import {
 	signInWithEmailAndPassword,
 	signInWithPopup,
 	updatePassword,
-	updateProfile
+	updateProfile,
+	type User
 } from 'firebase/auth';
 import { currentUser } from './stores/store';
 import { checkExist } from './helpers/helpers';
@@ -147,12 +149,12 @@ const resetPasswordWithEmail = async (email: string) => {
 };
 
 const changePasswordWithEmail = async (newPassword: string) => {
-	const user:any = firebaseAuth.currentUser
+	const user: any = firebaseAuth.currentUser;
 	if (checkExist(user)) {
 		updatePassword(user, newPassword)
 			.then((data) => {
 				console.log('change password', data);
-				logout()
+				logout();
 			})
 			.catch((error) => {
 				const errorMessage = error.message;
@@ -160,6 +162,14 @@ const changePasswordWithEmail = async (newPassword: string) => {
 			});
 	}
 };
+
+export const changeUserInfo = async (uid:string, info:any) => {
+	const db = getDatabase();
+	 set(ref(db, 'users/' + uid), {
+		...info
+	  });
+};
+
 
 export {
 	loginWithGoogle,

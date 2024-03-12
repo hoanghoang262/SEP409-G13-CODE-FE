@@ -31,7 +31,7 @@
 				<Icon icon="material-symbols:star" style="color: #ffd500" />
 			</div>
 			<div class="flex items-center">
-				<Avatar classes="w-10 rounded-full mr-3" />
+				<Avatar src={course?.avatar} classes="w-10 rounded-full mr-3" />
 				<div class="text-xl">{course.created_Name}</div>
 			</div>
 			<Button2

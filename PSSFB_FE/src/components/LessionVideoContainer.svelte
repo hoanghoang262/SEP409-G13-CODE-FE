@@ -3,7 +3,7 @@
 	import VideoQuestionModal from "./modals/VideoQuestionModal.svelte";
 
 	export let lession: any;
-	const questions = lession.questions;
+	const questions = lession.theoryQuestions;
     let question = questions[0]
     let showModal = false;
     let firstTimePlay = true;
@@ -27,7 +27,7 @@
 	
 </script>
 
-<div>{lession.description}</div>
+<div class="text-xl font-medium mb-10">{lession.description}</div>
 
 <video on:play={FirstPlay} id="video" width="640" height="360" controls>
 	<source src={lession.videoUrl} type="video/mp4" />

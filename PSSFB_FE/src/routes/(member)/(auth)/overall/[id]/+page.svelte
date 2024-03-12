@@ -41,13 +41,13 @@
 	};
 
 	const codelessionClick = (l: any, index: number, lindex:number) => {
-		goto(`/codelesson/${courseId}/${index}/${lindex}`);
+		goto(`/codelession/${courseId}/${index}/${lindex}`);
 	};
 </script>
 
 <div class="bg-neutral-100 pt-40 px-20 flex mb-20">
 	
-	<CourseSideBar course={course} />
+	<div class="w-1/4 mr-5"><CourseSideBar course={course} /></div>
 
 	<div class="w-3/4 shadow-xl rounded-2xl border bg-white">
 		<div class="pl-5 pt-3 text-xl text-blue-500">{course?.name}</div>

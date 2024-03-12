@@ -9,8 +9,8 @@
 
 	export let data;
 
-  if (checkExist(data?.user)) {
-			currentUser.set(data.user);
+	if (checkExist(data?.user)) {
+		currentUser.set(data.user);
 	}
 </script>
 

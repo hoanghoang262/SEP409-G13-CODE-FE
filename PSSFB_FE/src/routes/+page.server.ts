@@ -17,8 +17,17 @@ export async function load ({cookies, parent }:any){
 export const actions = {
     setuser:async({cookies, request}:any) => {
         const user = await request.json()
-        console.log("set user cookie", user)
+        console.log("set user", user)
         cookies.set('user', JSON.stringify(user), {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 60 * 5
+        });
+    },
+    setfbcu:async({cookies, request}:any) => {
+        const user = await request.json()
+        cookies.set('fbcu', JSON.stringify(user), {
             path: '/',
             httpOnly: true,
             sameSite: 'strict',
@@ -28,6 +37,9 @@ export const actions = {
     logout:async({cookies, request}:any) => {
         console.log("deleting..")
         cookies.delete('user',{
+            path: '/',
+        });
+        cookies.delete('fbcu',{
             path: '/',
         });
     },
@@ -80,5 +92,6 @@ export const actions = {
         cookies.delete('user',{
             path: '/',
         });
-    }
+    },
+    
 }
