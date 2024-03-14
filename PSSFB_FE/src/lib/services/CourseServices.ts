@@ -24,3 +24,4 @@ export const getChapterById = async(id:number) => {
     const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetChapterById?chapterId=${id}`)
     return result.data;
 }
+

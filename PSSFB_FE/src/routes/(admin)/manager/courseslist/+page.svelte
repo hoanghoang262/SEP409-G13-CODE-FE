@@ -8,12 +8,15 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import Button2 from '../../../../atoms/Button2.svelte';
+	import CourseContainer from '../../../../components/CourseContainer.svelte';
+	import Button from '../../../../atoms/Button.svelte';
+	import { goto } from '$app/navigation';
 
 	export let data;
 	const courses: any = data.courses;
 </script>
 
-<Table>
+<!-- <Table>
 	<TableHead>
 		<TableHeadCell>#</TableHeadCell>
 		<TableHeadCell>Course</TableHeadCell>
@@ -41,4 +44,13 @@
 			</TableBodyRow>
 		{/each}
 	</TableBody>
-</Table>
+</Table> -->
+<div class="pl-5"><Button onclick={() => goto("/manager/coursesmanager/addcourse")} content="Add Course"/></div>
+<div class="flex flex-wrap w-full items-center py-10">
+	
+	{#each courses as c}
+	<div class="w-1/3 p-5">
+		<CourseContainer type="admin" course={c} />
+	</div>
+	{/each}
+</div>

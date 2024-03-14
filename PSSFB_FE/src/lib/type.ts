@@ -1,12 +1,12 @@
 interface TestCase {
-	inputTypeInt: number | null;
-	inputTypeString: string | null;
-	expectedResultInt: number | null;
-	expectedResultString: string | null;
-	inputTypeBoolean: Boolean | null;
-	expectedResultBoolean: Boolean | null;
-	inputTypeArrayInt: number[] | null;
-	inputTypeArrayString: string[] | null;
+	inputTypeInt: number | undefined;
+	inputTypeString: string | undefined;
+	expectedResultInt: number | undefined;
+	expectedResultString: string | undefined;
+	inputTypeBoolean: boolean|null | undefined;
+	expectedResultBoolean: boolean|null | undefined;
+	inputTypeArrayInt:  string | undefined;
+	inputTypeArrayString:  string | undefined;
 }
 
 export function initTestCase(type: string): TestCase {
@@ -14,73 +14,73 @@ export function initTestCase(type: string): TestCase {
 		case 'int':
 			return {
 				inputTypeInt: 0,
-				inputTypeString: null,
+				inputTypeString: undefined,
 				expectedResultInt: 0,
-				expectedResultString: null,
-				inputTypeBoolean: null,
-				expectedResultBoolean: null,
-				inputTypeArrayInt: null,
-				inputTypeArrayString: null
+				expectedResultString: undefined,
+				inputTypeBoolean: undefined,
+				expectedResultBoolean: undefined,
+				inputTypeArrayInt: undefined,
+				inputTypeArrayString: undefined
 			};
 		case 'String':
 			return {
-				inputTypeInt: null,
+				inputTypeInt: undefined,
 				inputTypeString: "string",
-				expectedResultInt: null,
+				expectedResultInt: undefined,
 				expectedResultString: "string",
-				inputTypeBoolean: null,
-				expectedResultBoolean: null,
-				inputTypeArrayInt: null,
-				inputTypeArrayString: null
+				inputTypeBoolean: undefined,
+				expectedResultBoolean: undefined,
+				inputTypeArrayInt: undefined,
+				inputTypeArrayString: undefined
 			};
 		case 'boolean':
 			return {
-				inputTypeInt: null,
-				inputTypeString: null,
-				expectedResultInt: null,
-				expectedResultString: null,
+				inputTypeInt: undefined,
+				inputTypeString: undefined,
+				expectedResultInt: undefined,
+				expectedResultString: undefined,
 				inputTypeBoolean: true,
 				expectedResultBoolean: true,
-				inputTypeArrayInt: null,
-				inputTypeArrayString: null
+				inputTypeArrayInt: undefined,
+				inputTypeArrayString: undefined
 			};
 		case 'int[]':
 			return {
-				inputTypeInt: null,
-				inputTypeString: null,
-				expectedResultInt: null,
-				expectedResultString: null,
-				inputTypeBoolean: null,
-				expectedResultBoolean: null,
-				inputTypeArrayInt: [0],
-				inputTypeArrayString: null
+				inputTypeInt: undefined,
+				inputTypeString: undefined,
+				expectedResultInt: undefined,
+				expectedResultString: undefined,
+				inputTypeBoolean: undefined,
+				expectedResultBoolean: undefined,
+				inputTypeArrayInt: undefined,
+				inputTypeArrayString: undefined
 			};
 		case 'String[]':
 			return {
-				inputTypeInt: null,
-				inputTypeString: null,
-				expectedResultInt: null,
-				expectedResultString: null,
-				inputTypeBoolean: null,
-				expectedResultBoolean: null,
-				inputTypeArrayInt: null,
-				inputTypeArrayString: [""]
+				inputTypeInt: undefined,
+				inputTypeString: undefined,
+				expectedResultInt: undefined,
+				expectedResultString: undefined,
+				inputTypeBoolean: undefined,
+				expectedResultBoolean: undefined,
+				inputTypeArrayInt: undefined,
+				inputTypeArrayString: undefined
 			};
 	}
 
     return {
         inputTypeInt: 0,
-        inputTypeString: null,
+        inputTypeString: undefined,
         expectedResultInt: 0,
-        expectedResultString: null,
-        inputTypeBoolean: null,
-        expectedResultBoolean: null,
-        inputTypeArrayInt: null,
-        inputTypeArrayString: null
+        expectedResultString: undefined,
+        inputTypeBoolean: undefined,
+        expectedResultBoolean: undefined,
+        inputTypeArrayInt: undefined,
+        inputTypeArrayString: undefined
     };
 }
 
-interface answerOption {
+export interface answerOption {
 	optionsText: string;
 	correctAnswer: boolean;
 }
@@ -92,7 +92,7 @@ export function initAnswer(correctAnswer: boolean): answerOption {
 	};
 }
 
-interface Question {
+export interface Question {
 	contentQuestion: string;
 	time: Number;
 	answerOptions: answerOption[];
@@ -124,7 +124,7 @@ export function initLessions(): Lession {
 	};
 }
 
-interface codeQuestion {
+export interface codeQuestion {
 	description: string;
 	codeForm: string;
 	testCases: TestCase[];

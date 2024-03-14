@@ -49,22 +49,31 @@ export function decodeJWT(token: string) {
 		const [header, payload, signature] = token.split('.');
 		const decodedHeader = JSON.parse(atob(header));
 		const decodedPayload = JSON.parse(atob(payload));
-		console.log('decoded',decodedPayload)
-		return decodedPayload
+		console.log('decoded', decodedPayload);
+		return decodedPayload;
 	} catch (error: any) {
 		console.error('Error decoding JWT:', error.message);
 		return null;
 	}
 }
 
-export function trimUserData(user:any){
+export function trimUserData(user: any) {
 	const trimUser = {
 		...user.providerData[0],
 		UserID: user.UserID,
 		Role: user.Role,
 		jwt: user.jwt,
 		stsTokenManager: user.stsTokenManager,
-		uid:user.uid
+		uid: user.uid
+	};
+	return trimUser;
+}
+
+export function getFormData(formData: any) {
+	let data: any = {};
+	// Iterate over FormData entries and populate the object
+	for (let [key, value] of formData.entries()) {
+		data[key] = value;
 	}
-	return trimUser
+	return data;
 }

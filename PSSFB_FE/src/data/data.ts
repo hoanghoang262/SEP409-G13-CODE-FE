@@ -25,6 +25,10 @@ export const headerData: section[] = [
 	{ display: 'About Us', link: '/aboutus' }
 ];
 
+export const headerAdminData: section[] = [
+	
+];
+
 export const teammates: dev[] = [
 	{
 		image: Thanh,
@@ -548,5 +552,28 @@ export const Posts = [
 		description:"Thời gian qua mình thấy khá nhiều bạn trong khóa học này gặp phải:\"Đề, TestCase, UML(Hình mô tả lớp với thuộc tính và phương thức)\", sai, thiếu rõ ràng và gây hiểu nhầm.Vậy lên mình viết Comment này để các bạn có thể: Chỉ ra chỗ sai của \" và số của bài mà các bạn đang gặp phải.Rồi mình sẽ kiểm tra, tổng hợp lại và gửi lên \"đội ngũ hỗ trợ\" để họ khắc phục.Hoặc các bạn có thể comment vào đây: https://codelearn.io/learning/lap-trinh-huong-doi-tuong-trong-cpp"
 	}
 ]
+
+export const language = [
+	{ value: 'C', name: 'C' },
+	{ value: 'C++', name: 'C++' },
+	{ value: 'C#', name: 'C#' },
+	{ value: 'Java', name: 'Java' },
+	{ value: 'Javascript', name: 'Javascript' },
+	{ value: 'Python', name: 'Python' }
+];
+
+export let inputTypes = [
+	{ value: 'int', name: 'int' },
+	{ value: 'String', name: 'String' },
+	{ value: 'boolean', name: 'boolean' },
+	{ value: 'int[]', name: 'int[]' },
+	{ value: 'String[]', name: 'String[]' }
+];
+
+export let resultTypes = [
+	{ value: 'int', name: 'int' },
+	{ value: 'String', name: 'String' },
+	{ value: 'boolean', name: 'boolean' },
+];
 
 export const codeLanguage = ['C','C#','C++','Java','JavaScript','Python']

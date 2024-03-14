@@ -19,12 +19,16 @@
 	// 		goto('/');
 	// 	}
 	// });
-
 	beforeUpdate(async () => {
 		if (checkExist($currentUser)) {
-			goto('/learning');
+			if($currentUser.Role.includes('Admin')){
+				goto('/manager');
+			}else{
+				goto('/learning');
+			}
 		}
 	});
+	
 </script>
 
 	<div class="bg-black text-white">

@@ -24,7 +24,11 @@
 		user.jwt = JWTFS;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		goto('/learning');
+		if (user.Role.includes('Admin')) {
+			goto('/manager');
+		} else {
+			goto('/learning');
+		}
 	};
 
 	const LWG = async () => {
@@ -36,7 +40,11 @@
 		user.jwt = JWTFS;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		goto('/learning');
+		if (user.Role.includes('Admin')) {
+			goto('/manager');
+		} else {
+			goto('/learning');
+		}
 	};
 
 	const login = async () => {
@@ -46,11 +54,15 @@
 			const decodeData: any = decodeJWT(JWTFS);
 			user.UserID = decodeData.UserID;
 			user.Role = decodeData.Role;
-			user.jwt = JWTFS; 
+			user.jwt = JWTFS;
 			currentUser.set(user);
 			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-			goto('/learning');
-		}else{
+			if (user.Role.includes('Admin')) {
+				goto('/manager');
+			} else {
+				goto('/learning');
+			}
+		} else {
 			showToast('Login', 'Wrong email or password', 'error');
 		}
 	};

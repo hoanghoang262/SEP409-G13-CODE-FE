@@ -3,7 +3,7 @@
     export let placehoder:string = ''
    // export let type:string = ''
     export let readonly:boolean = false
-    export let value:string = ''
+    export let value:any = ''
     export let required:boolean = false
     export let classes:string = ''
     export let onChange:any=()=>{}
