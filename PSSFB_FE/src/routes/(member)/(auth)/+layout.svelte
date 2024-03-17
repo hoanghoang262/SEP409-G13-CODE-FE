@@ -7,6 +7,8 @@
 	beforeUpdate(async () => {
 		if (!$currentUser) {
 			goto('/');
+		}else if($currentUser?.Role.includes('Admin')){
+			goto('/manager');
 		}
 	});
 </script>

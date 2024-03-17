@@ -3,6 +3,7 @@
 	import { secondsToHMS } from '../helpers/helpers';
 	import Button from '../atoms/Button.svelte';
 	import { goto } from '$app/navigation';
+	import { currentUser } from '../stores/store';
 	export let course: any;
 	export let type = 'public';
 </script>
@@ -12,15 +13,36 @@
 		<img alt="courseimg" src={course.picture} class="w-full" />
 		<div class="p-4">
 			<h3 class="font-medium text-xl mb-2">{course.name}</h3>
-			<p class="text-sm">{course.userName}</p>
+			{#if $currentUser?.Role == 'Student'}
+				<p class="text-sm">{course.userName}</p>
+			{/if}
+			<p class="text-sm">Language: {course.tag}</p>
 			<p class="truncate text-sm">{course.description}</p>
 		</div>
 		<hr />
 		<div class="px-2 py-5 flex justify-between items-center">
 			<div class="flex items-center text-sm">{course.tag}</div>
-			
+
+			{#if $currentUser?.Role == 'Admin System'}
+			<div>
+				<Button onclick={() => goto(`/learning/${course.id}`)} content="Approve" />
+				<Button content="Detail" />
+			</div>
+			{:else if $currentUser?.Role == 'Admin Bussiness'}
+				<div>
+					<Button
+					onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
+					content="Edit"
+				/>
+				<Button
+				type='danger'
+					onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
+					content="Delete"
+				/>
+				</div>
+			{:else}
 				<Button onclick={() => goto(`/learning/${course.id}`)} content="join now" />
-		
+			{/if}
 		</div>
 	{:else if type == 'admin'}
 		<img alt="courseimg" src={course.coursePicture} class="w-full" />
@@ -31,10 +53,28 @@
 		</div>
 		<hr />
 		<div class="px-2 py-5 flex justify-between items-center">
-			<div class="flex items-center text-sm"> {course.createdAt}</div>
-			
-				<Button onclick={() => goto(`/learning/${course.id}`)} content="Edit" />
-			
+			<div class="flex items-center text-sm">{course.createdAt}</div>
+
+			{#if $currentUser?.Role == 'Admin System'}
+				<div>
+					<Button onclick={() => goto(`/learning/${course.id}`)} content="Approve" />
+					<Button content="Detail" />
+				</div>
+			{:else if $currentUser?.Role == 'Admin Bussiness'}
+				<div>
+					<Button
+					onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
+					content="Edit"
+				/>
+				<Button
+				type='danger'
+					onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
+					content="Delete"
+				/>
+				</div>
+			{:else}
+				<Button onclick={() => goto(`/learning/${course.id}`)} content="join now" />
+			{/if}
 		</div>
 	{/if}
 </div>

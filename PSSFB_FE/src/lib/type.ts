@@ -106,11 +106,12 @@ export function initQuestion(): Question {
 	};
 }
 
-interface Lession {
+export interface Lession {
 	title: string;
 	videoUrl: string;
 	description: string;
 	duration: Number;
+	contentLesson:string;
 	questions: Question[];
 }
 
@@ -120,6 +121,7 @@ export function initLessions(): Lession {
 		videoUrl: 'url',
 		description: 'description',
 		duration: 60 * 10,
+		contentLesson:"content",
 		questions: [initQuestion()]
 	};
 }
@@ -134,7 +136,7 @@ export function intitCodeQuestion(): codeQuestion {
 	return {
 		description: 'description',
 		codeForm: '',
-		testCases: []
+		testCases: [initTestCase('int')]
 	};
 }
 

@@ -2,7 +2,7 @@
 	import bigLogBlack from '../assets/Trắng 1.png';
 	import LoginContainer from '../components/LoginContainer.svelte';
 
-	import { beforeUpdate, onMount } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { checkExist } from '../helpers/helpers';
 	import { currentUser } from '../stores/store';
 	import { goto } from '$app/navigation';
@@ -21,9 +21,9 @@
 	// });
 	beforeUpdate(async () => {
 		if (checkExist($currentUser)) {
-			if($currentUser.Role.includes('Admin')){
+			if($currentUser?.Role.includes('Admin')){
 				goto('/manager');
-			}else{
+			}else if($currentUser?.Role.includes('Student')){
 				goto('/learning');
 			}
 		}

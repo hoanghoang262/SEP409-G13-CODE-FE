@@ -1,25 +1,28 @@
-import { addChapter, getModCourseById } from "$lib/services/ModerationServices"
+import { addChapter, getModChapterById, getModCourseById, updateChapter } from "$lib/services/ModerationServices"
 import { getFormData } from "../../../../../../../helpers/helpers";
 
 export async function load({params}:any){
-    const courseId = params.id
+	const ids = params.ids.split('/');
+    const courseId = ids[0]
+	const chapterId = ids[1]
+	const chapter = await getModChapterById(chapterId)
     const course = await getModCourseById(courseId)
     return {
-        course
+        course,
+		chapter
     }
 }
 
 export const actions = {
-	addchapter: async ({ params, request }: any) => {
+	editchapter: async ({ params, request }: any) => {
 		const data = getFormData(await request.formData());
 		
-		const courseId = params.id
 		try {
-			const response = await addChapter({ ...data, courseId });
+			const response = await updateChapter({ ...data });
 			console.log("response: ", response)
 			return {
 				type: 'success',
-				message: 'add chapter successfully',
+				message: 'edit chapter successfully',
 				response: response
 			};
 		} catch (err) {

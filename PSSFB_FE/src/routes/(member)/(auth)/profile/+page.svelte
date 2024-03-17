@@ -20,8 +20,8 @@
 
 <div class="px-40 py-40 flex bg-gray-100">
 	<div class="w-1/4 p-5 mr-5 rounded-xl bg-white">
-		<div on:click={() => (section = 'Infomation & Contact')}>Infomation & Contact</div>
-		<div on:click={() => (section = 'Change Password')}>Change Password</div>
+		<button on:click={() => (section = 'Infomation & Contact')}>Infomation & Contact</button>
+		<button on:click={() => (section = 'Change Password')}>Change Password</button>
 	</div>
 	<div class="w-3/4 p-5 rounded-xl bg-white">
 		{#if section == 'Infomation & Contact'}

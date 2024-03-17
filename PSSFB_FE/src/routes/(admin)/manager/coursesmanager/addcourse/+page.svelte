@@ -21,17 +21,9 @@
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { language } from '../../../../../data/data';
-	import { afterUpdate } from 'svelte';
-
-	let CourseName = '';
-
-	let Description = '';
-
-	let Picture = '';
-
-	let Tag = 'C';
-
-	let Chapters: Chapter[] = [initChapter()];
+	import { afterUpdate, beforeUpdate } from 'svelte';
+	import AdminCourseSb from '../../../../../components/AdminCourseSB.svelte';
+	
 
 
 	
@@ -128,6 +120,13 @@
 	}
 
 	let course:any = form?.response
+
+	beforeUpdate(() => {
+		if(form?.response&&form?.type=='success'){
+		goto(`addcourse/addchapter/${form?.response.id}`)
+	}
+	})
+	
 
 </script>
 
@@ -371,33 +370,36 @@
 	</form>
 </div> -->
 
+	<div class="w-4/5">
+		<form method="POST" action="?/addcourse">
+			<Label defaultClass=" mb-3 block">Add Course</Label>
+			<hr class="my-3"/>
+			<Label defaultClass=" mb-3 block">Course Name</Label>
+			<Input
+				required={true}
+				value={course?.name}
+				name="name"
+				classes="block w-1/3 ml-4 border mb-5"
+				placehoder="Course Name"
+			/>
+	
+			<Label defaultClass=" mb-3 block">Description</Label>
+			<div class="mb-5 ml-4"><Textarea name="description" value={course?.description} placeholder="Description" /></div>
+			<Label defaultClass=" mb-3 block">Picture</Label>
+			<Input
+				required={true}
+				name="picture"
+				value={course?.picture}
+				classes="block w-1/3 ml-4 border mb-5"
+				placehoder="url link"
+			/>
+			<Label>
+				Language
+				<Select name="tag" class="mt-2 ml-4" items={language} value={course?.tag??'C#'} />
+			</Label>
+			<div class="flex justify-end mt-5"><Button content="Save" /></div>
+		</form>
+	</div>
+	
 
-<div class="w-4/5">
-	<form method="POST" action="?/addcourse">
-		
-		<Label defaultClass=" mb-3 block">Course Name</Label>
-		<Input
-			required={true}
-			value={course?.name}
-			name="name"
-			classes="block w-1/3 ml-4 border mb-5"
-			placehoder="Course Name"
-		/>
 
-		<Label defaultClass=" mb-3 block">Description</Label>
-		<div class="mb-5 ml-4"><Textarea name="description" value={course?.description} placeholder="Description" /></div>
-		<Label defaultClass=" mb-3 block">Picture</Label>
-		<Input
-			required={true}
-			name="picture"
-			value={course?.picture}
-			classes="block w-1/3 ml-4 border mb-5"
-			placehoder="url link"
-		/>
-		<Label>
-			Language
-			<Select name="tag" class="mt-2 ml-4" items={language} value={course?.tag} />
-		</Label>
-		<div class="flex justify-end mt-5"><Button content="Save" /></div>
-	</form>
-</div>

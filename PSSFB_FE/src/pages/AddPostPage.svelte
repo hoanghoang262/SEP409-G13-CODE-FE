@@ -4,6 +4,31 @@
 	import Editor from '@tinymce/tinymce-svelte';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { currentUser } from '../stores/store';
+	import Button from '../atoms/Button.svelte'
+	import { checkExist, showToast } from '../helpers/helpers';
+	import { createAdminPost } from '$lib/services/ForumsServices';
+
+	let post = {
+		title:'',
+		desciption:'',
+		postContent:'',
+		createdBy: $currentUser.UserID,
+		lastUpdate: new Date().toDateString(),
+	}
+
+	const savePost = async () => {
+		if(!checkExist(post.title)||!checkExist(post.desciption)||!checkExist(post.postContent)){
+			showToast("Save Post","Enter all required fields","warning")
+		}else{
+			try {
+				post.lastUpdate = new Date().toDateString()
+				await createAdminPost(post)
+				showToast("Save Post","create post success","success")
+			} catch (error) {
+				console.log(error)
+			}
+		}
+	}
 </script>
 
 <div class="px-20 py-10">
@@ -13,16 +38,17 @@
     </div>
 	<div class="mb-10">
 		<Label>Title</Label>
-		<Input classes="border w-full" placehoder="Title" />
+		<Input required={true} bind:value={post.title} classes="border w-full" placehoder="Title" />
 	</div>
 
 	<div class="mb-10">
 		<Label>Description</Label>
-		<Textarea placehoder="Description" />
+		<Textarea required bind:value={post.desciption} placehoder="Description" />
 	</div>
 
 	<div class="mb-10">
 		<Label>Content</Label>
-		<Editor apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83" />
+		<Editor bind:value={post.postContent} apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83" />
 	</div>
+	<div class="flex justify-end"><Button onclick={savePost} content="Save" /></div>
 </div>
