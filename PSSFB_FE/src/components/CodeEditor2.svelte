@@ -3,12 +3,13 @@
 	import { oneDark } from "@codemirror/theme-one-dark";
 
     export let value = "";
+	export let readonly = false;
 	
 </script>
 
 <div class="text-slate-300">
 	
-		<CodeMirror bind:value styles={{
+		<CodeMirror readonly={readonly} bind:value styles={{
 			"&": {
 				width: "100%",
 				maxWidth: "100%",

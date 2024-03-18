@@ -178,6 +178,16 @@ export const getAllModPosts = async () => {
 	return result.data.items
 }
 
+export const getModPostById = async (id: number) => {
+	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostById?postId=${id}`)
+	return result.data.value
+}
+
+export const approvedPost = async (id: number) => {
+	const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationPost?postId=${id}`)
+	return result.data.value
+}
+
 export const getModChapterById = async (id: number) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/ChapterModeration/GetChapterById?id=${id}`

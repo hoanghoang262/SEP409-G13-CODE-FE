@@ -92,7 +92,7 @@
 				<Textarea bind:value={codeQuestion.description} name="description" placeholder="Description" />
 			</div>
             <Label>CodeForm</Label>
-            <CodeEditor2 />
+            <CodeEditor2 bind:value={codeQuestion.codeForm}/>
             <Label>TestCases</Label>
             <hr class="my-5"/>
             {#each testcases as t, index}
@@ -111,7 +111,7 @@
                     <Label>input</Label>
                     {#if selectedInputType == 'String'}
                     <Input bind:value={selectedTestcase.inputTypeString} classes="border w-2/3" />
-                    {:else if selectedInputType == 'String'}
+                    {:else if selectedInputType == 'int'}
                     <input type="number" bind:value={selectedTestcase.inputTypeInt} class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md" required />
                     {:else if selectedInputType == 'boolean'}
                     <input type="checkbox" bind:checked={selectedTestcase.inputTypeBoolean}/>

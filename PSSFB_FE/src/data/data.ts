@@ -26,7 +26,10 @@ export const headerData: section[] = [
 ];
 
 export const headerAdminData: section[] = [
-	
+	{ display: 'Manager', link: '/manager' },
+	{ display: 'Leaderboard', link: '/leaderboard' },
+	{ display: 'Forums', link: '/forums' },
+	{ display: 'About Us', link: '/aboutus' }
 ];
 
 export const teammates: dev[] = [

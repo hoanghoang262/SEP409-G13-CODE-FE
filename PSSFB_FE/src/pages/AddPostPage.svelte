@@ -7,23 +7,34 @@
 	import Button from '../atoms/Button.svelte'
 	import { checkExist, showToast } from '../helpers/helpers';
 	import { createAdminPost } from '$lib/services/ForumsServices';
+	import { createPost } from '$lib/services/ModerationServices';
 
 	let post = {
 		title:'',
-		desciption:'',
+		description:'',
 		postContent:'',
-		createdBy: $currentUser.UserID,
-		lastUpdate: new Date().toDateString(),
+		createdBy: $currentUser?.UserID,
+		lastUpdate: new Date().toISOString(),
 	}
 
 	const savePost = async () => {
-		if(!checkExist(post.title)||!checkExist(post.desciption)||!checkExist(post.postContent)){
+		if(!checkExist(post.title)||!checkExist(post.description)||!checkExist(post.postContent)){
 			showToast("Save Post","Enter all required fields","warning")
 		}else{
 			try {
-				post.lastUpdate = new Date().toDateString()
-				await createAdminPost(post)
-				showToast("Save Post","create post success","success")
+				post.lastUpdate = new Date().toISOString()
+				if($currentUser?.Role.includes('Admin')){
+					const response = await createAdminPost(post)
+					showToast("Save Post","create post success","success")
+					console.log(response)
+				}else if($currentUser?.Role.includes('Student')){
+					const response = await createPost(post)
+					console.log(response)
+					showToast("Save Post","create post success, wait for admin approve ","info")
+				}
+				console.log(JSON.stringify(post))
+				
+				
 			} catch (error) {
 				console.log(error)
 			}
@@ -43,7 +54,7 @@
 
 	<div class="mb-10">
 		<Label>Description</Label>
-		<Textarea required bind:value={post.desciption} placehoder="Description" />
+		<Textarea required bind:value={post.description} placehoder="Description" />
 	</div>
 
 	<div class="mb-10">

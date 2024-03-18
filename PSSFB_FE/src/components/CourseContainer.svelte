@@ -26,7 +26,7 @@
 			{#if $currentUser?.Role == 'Admin System'}
 			<div>
 				<Button onclick={() => goto(`/learning/${course.id}`)} content="Approve" />
-				<Button content="Detail" />
+				<Button onclick={() => goto(`/manager/moderationcourses/detail/${course.id}`)} content="Detail" />
 			</div>
 			{:else if $currentUser?.Role == 'Admin Bussiness'}
 				<div>
@@ -58,7 +58,7 @@
 			{#if $currentUser?.Role == 'Admin System'}
 				<div>
 					<Button onclick={() => goto(`/learning/${course.id}`)} content="Approve" />
-					<Button content="Detail" />
+					<Button onclick={() => goto(`/manager/moderationcourses/detail/${course.id}`)} content="Detail" />
 				</div>
 			{:else if $currentUser?.Role == 'Admin Bussiness'}
 				<div>
