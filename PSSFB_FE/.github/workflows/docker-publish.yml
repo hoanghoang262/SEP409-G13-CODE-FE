@@ -2,7 +2,7 @@ name: publish
 
 on:
   push:
-    branches: ["test_deploy"]
+    branches: ["test_deploy"] 
 
 env:
     REGISTRY: ghcr.io
