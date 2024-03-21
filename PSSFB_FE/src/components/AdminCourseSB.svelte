@@ -10,6 +10,7 @@
 		getModCourseById
 	} from '$lib/services/ModerationServices';
 	import { showToast } from '../helpers/helpers';
+	import { pageStatus } from '../stores/store';
 
 	export let course: any;
 
@@ -52,6 +53,7 @@
 	};
 
 	const deleteFunc = async () => {
+		pageStatus.set('load')
 		if (deleteObject) {
 			switch (deleteObject.type) {
 				case 'chapter':
@@ -83,6 +85,7 @@
 					break;
 			}
 			course = await getModCourseById(course.id);
+			pageStatus.set('done')
 		}
 	};
 </script>

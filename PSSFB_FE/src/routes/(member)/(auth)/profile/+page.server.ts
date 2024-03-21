@@ -20,7 +20,6 @@ export async function load({ cookies }: any) {
 export const actions = {
 	editinfo: async ({ cookies, request }: any) => {
 		const userStr = cookies.get('user');
-        const fbcuStr = cookies.get('fbcu');
 		if (!checkExist(userStr)) {
 			redirect(301, '/');
 		}
@@ -31,17 +30,22 @@ export const actions = {
 		const phoneNumber = data.get('phoneNumber');
 		const photoURL = data.get('photoURL');
 		const fullname = data.get('fullname');
+		const address = data.get('address')
+		const facebook = data.get('facebook')
         console.log(user.uid)
 		try {
-			await changeUserInfo(user.uid, { displayName, phoneNumber, photoURL });
+			// await changeUserInfo(user.uid, { displayName, phoneNumber, photoURL });
 
-			// await updateUserInfo(user.UserID, {
-            //     userId: user.UserID,
-			// 	fullname,
-			// 	email: user.email,
-			// 	profilePict: photoURL,
-			// 	username: displayName
-			// });
+			await updateUserInfo(user.UserID, {
+                userId: user.UserID,
+				fullname,
+				email: user.email,
+				profilePict: photoURL,
+				username: displayName,
+				phone: phoneNumber,
+				address,
+				facebookLink: facebook
+			});
 			cookies.set('user', JSON.stringify({ ...user, phoneNumber, photoURL, displayName }), {
 				path: '/',
 				httpOnly: true,
@@ -49,17 +53,17 @@ export const actions = {
 				maxAge: 60 * 5
 			});
 
-			// return JSON.stringify({
-			// 	message: 'Edit successfully',
-			// 	type: 'success'
-			// })
+			return {
+				message: 'Edit successfully',
+				type: 'success'
+			}
 		} catch (err) {
             console.log(err)
-			// return JSON.stringify({
-			// 	error: err,
-			// 	message: 'Something went wrong',
-			// 	type: 'error'
-			// })
+			return {
+				error: err,
+				message: 'Something went wrong',
+				type: 'error'
+			}
 		}
 	}
 };

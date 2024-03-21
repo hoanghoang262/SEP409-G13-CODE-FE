@@ -54,12 +54,12 @@
 </script>
 
 <div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white pr-3">
-	<div class="text-2xl font-medium px-3 py-5">{course.name}</div>
+	<button on:click={() => goto(`/manager/moderationcourses/detail/${courseId}`)} class="text-2xl font-medium px-3 py-5">{course.name}</button>
 
 	<hr class="my-5" />
 
 	{#each chapters as s, index}
-		<div class="text-lg font-medium px-3 py-5 flex items-center text-neutral-500 justify-between">
+		<div class="text-lg font-medium px-3 py-5 flex items-center text-neutral-500">
 			<div
 				class="mr-5"
 				tabindex="0"
@@ -77,7 +77,7 @@
 		</div>
 		<div id="schedule{index}">
 			{#each s.lessons as l}
-				<div class="pl-10 mb-5 flex items-center flex-wrap justify-between">
+				<div class="pl-10 mb-5 flex items-center flex-wrap">
 					<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
 
 					<button on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
@@ -89,7 +89,7 @@
 			
 
 			{#each s.codeQuestions as l}
-				<div class="pl-10 mb-5 flex items-center justify-between">
+				<div class="pl-10 mb-5 flex items-center">
 					<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
 
 					<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"

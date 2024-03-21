@@ -27,13 +27,27 @@ export const getUserInfo = async (id: number) => {
 	const result = await axios.get(
 		`https://authenticateservice.azurewebsites.net/api/Authenticate/GetUser?id=${id}`
 	);
-	result.data;
+
+	return result.data;
 };
 
 export const updateUserInfo = async (id: number, info:any) => {
+	console.log(info)
 	try {
 		const result = await axios.put(
 			`https://authenticateservice.azurewebsites.net/api/Profile/UpdateProfile?id=${id}`,info
+		);
+		result.data;
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+};
+
+export const deleteUser = async (email: string) => {
+	try {
+		const result = await axios.delete(
+			`https://authenticateservice.azurewebsites.net/api/Profile/DeleteUser?email=${email}`
 		);
 		result.data;
 	} catch (err) {

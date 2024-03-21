@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { checkExist } from '../../helpers/helpers';
 
-export const getAllCourses = async(courseName:string="",pageSize:number=5,page:number=1) => {
-    const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses`)
-    return result.data.items
+export const getAllCourses = async(courseName:string="",page:number=1,pageSize:number=6) => {
+    const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName)?`&CourseName=${courseName}`:``}`)
+    return result.data
 }
 
 export const getCourseById = async(id:number) => {

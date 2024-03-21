@@ -17,6 +17,7 @@
 	import { addLession, getModCourseById, updateLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import { getCourseById } from '$lib/services/CourseServices';
+	import { pageStatus } from '../../../../../../../stores/store';
 
 	export let data;
 	let course = data.course;
@@ -42,6 +43,7 @@
 	}
 
 	const EditLession = async () => {
+		pageStatus.set('load')
 		try{
 			const response = await updateLession({lessonId: lessionId, lesson:lession})
 			console.log(response)
@@ -53,6 +55,7 @@
 			console.error(e)
 			showToast("Edit Lession","Something went wrong","error")
 		}
+		pageStatus.set('done')
 	}
 </script>
 

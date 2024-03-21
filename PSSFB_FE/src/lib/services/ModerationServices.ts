@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { checkExist } from '../../helpers/helpers';
 
 export const addCourse = async (course: any) => {
 	try {
@@ -159,11 +160,11 @@ export const getCreatingCourseByUser = async (id:number) => {
 	return result.data;
 };
 
-export const getAllModCourse = async () => {
+export const getAllModCourse = async (courseName:string="",page:number=1,pageSize:number=6) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse`
+		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName)?`courseName=${courseName}`:``}&page=${page}&pageSize=${pageSize}`
 	);
-	return result.data.items;
+	return result.data;
 };
 
 export const getModCourseById = async (id: number) => {
@@ -173,9 +174,9 @@ export const getModCourseById = async (id: number) => {
 	return result.data;
 };
 
-export const getAllModPosts = async () => {
-	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost`)
-	return result.data.items
+export const getAllModPosts = async (postTitle:string="",page:number=1,pageSize:number=10) => {
+	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost?${checkExist(postTitle)?`postTitle=${postTitle}`:``}&page=${page}&pageSize=${pageSize}`)
+	return result.data
 }
 
 export const getModPostById = async (id: number) => {
@@ -201,14 +202,14 @@ export const getModLessionById = async (id: number) => {
 		`https://moderationservice.azurewebsites.net/api/LessonModeration/GetLessonById?id=${id}`,
 	);
 
-	return result.data
+	return result.data.value
 }
 
 export const getModPraticeQuestionById = async (id: number) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/PracticeQuestion/GetPracticeQuestionById?id=${id}`
 	);
-	return result.data
+	return result.data.value
 }
 
 export const approveCourse = async (courseId: number) => {
@@ -240,3 +241,13 @@ export const createPost = async (post:any) => {
 		return error
 	}
 }
+
+// export const deleteModPost = async (postId:number) => {
+// 	try {
+// 		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Moderation/CreatePost',post)
+// 		return result.data
+// 	} catch (error) {
+// 		console.log(error);
+// 		return error
+// 	}
+// }

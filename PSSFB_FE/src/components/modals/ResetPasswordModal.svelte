@@ -12,6 +12,7 @@
 	const resetPass = async () => {
 		if (checkExist(email) && isValidEmail(email)) {
 			const result = await checkEmail(email)
+			console.log('result',result)
 			if(result=="Email has exist"){
 				await resetPasswordWithEmail(email);
 				showToast('Reset Password', 'Check your email to change the password', 'info')
@@ -38,7 +39,7 @@
 		value={email}
 	/>
 	<svelte:fragment slot="footer">
-		<Button on:click={async () => await resetPass()}>Reset Password</Button>
+		<Button on:click={resetPass}>Reset Password</Button>
 		<Button color="alternative">Close</Button>
 	</svelte:fragment>
 </Modal>

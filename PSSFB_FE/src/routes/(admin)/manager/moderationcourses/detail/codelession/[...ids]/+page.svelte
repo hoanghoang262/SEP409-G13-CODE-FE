@@ -16,15 +16,15 @@
     let defaultModal = false;
 
     const getselectedInputType = () => {
-		if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeInt != undefined) {
+		if (codeQuestion?.testCases[selectedTestCaseIndex]?.inputTypeInt != undefined) {
 			return 'int';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeString != undefined) {
+		} else if (codeQuestion?.testCases[selectedTestCaseIndex]?.inputTypeString != undefined) {
 			return 'String';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeBoolean != undefined) {
+		} else if (codeQuestion?.testCases[selectedTestCaseIndex]?.inputTypeBoolean != undefined) {
 			return 'boolean';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeArrayInt != undefined) {
+		} else if (codeQuestion?.testCases[selectedTestCaseIndex]?.inputTypeArrayInt != undefined) {
 			return 'int[]';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeArrayString != undefined) {
+		} else if (codeQuestion?.testCases[selectedTestCaseIndex]?.inputTypeArrayString != undefined) {
 			return 'String[]';
 		}
 
@@ -77,10 +77,9 @@
             <Modal title="Terms of Service" bind:open={defaultModal}>
                 <Label>Input type: {selectedInputType}</Label>
                 <div>
-                    <Label>input</Label>
                     {#if selectedInputType == 'String'}
                     <Label>input: {selectedTestcase.inputTypeString}</Label>
-                    {:else if selectedInputType == 'String'}
+                    {:else if selectedInputType == 'int'}
                     <Label>input: {selectedTestcase.inputTypeInt}</Label>
                     
                     {:else if selectedInputType == 'boolean'}
@@ -96,13 +95,13 @@
                 <div>
                     <Label>Expected Result</Label>
                     {#if selectedResultType=='int'}
-                    <Label>input: {selectedTestcase.expectedResultInt}</Label>
+                    <Label>Result: {selectedTestcase.expectedResultInt}</Label>
                     
                     {:else if selectedResultType == 'String'}
-                    <Label>input: {selectedTestcase.expectedResultString}</Label>
+                    <Label>Result: {selectedTestcase.expectedResultString}</Label>
                    
                     {:else if selectedResultType == 'boolean'}
-                    <Label>input: {selectedTestcase.expectedResultBoolean}</Label>
+                    <Label>Result: {selectedTestcase.expectedResultBoolean}</Label>
                     
                     {/if}
                     

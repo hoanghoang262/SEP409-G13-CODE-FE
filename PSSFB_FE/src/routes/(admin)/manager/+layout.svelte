@@ -35,7 +35,7 @@
                 </div>
                 <div class="font-medium text-xl mb-2">Posts Manager</div>
                 <div>
-                    <a href="/manager/postslist" class="pl-3 hover:bg-neutral-100 block">Posts List</a>
+                    <a href="/manager/moderationposts" class="pl-3 hover:bg-neutral-100 block">Moderation Posts</a>
                     <a href="/manager/postmanager/addpost" class="pl-3 hover:bg-neutral-100">Add Post</a>
                 </div>
             </div>

@@ -16,6 +16,7 @@
 	import { showToast } from '../../../../../../../helpers/helpers';
 	import { addLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
+	import { pageStatus } from '../../../../../../../stores/store';
 
 	export let data;
 	let course = data.course;
@@ -41,6 +42,7 @@
 	}
 
 	const AddLession = async () => {
+		pageStatus.set('load')
 		try{
 			const response = await addLession({chapterId, lesson:lession})
 			console.log(response)
@@ -51,6 +53,7 @@
 			console.error(e)
 			showToast("Add Lession","Something went wrong","error")
 		}
+		pageStatus.set('done')
 	}
 </script>
 

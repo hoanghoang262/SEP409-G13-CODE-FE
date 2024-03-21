@@ -7,7 +7,7 @@
 	import { checkExist, showToast } from '../helpers/helpers';
 	import { changePasswordWithEmail, loginWithEmailAndPsr, logout } from '../firebase';
 	import { get } from 'svelte/store';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
 	import { redirect } from '@sveltejs/kit';
@@ -19,6 +19,7 @@
 	const newChange = (event: any) => (newP = event.target.value);
 
 	const changePass = async () => {
+		pageStatus.set('load')
         if(checkExist(old)&&checkExist(newP)){
             const user:any = await get(currentUser)
 
@@ -32,6 +33,7 @@
                 showToast('Change Password','Change password successfully', 'success')
 				currentUser.set(undefined)
                 logout()
+				pageStatus.set('done')
                 goto("/")
 				}
                 
@@ -42,6 +44,7 @@
         }else{
             showToast('Change Password','Please enter old password and new password', 'warning')
         }
+		pageStatus.set('done')
     };
 </script>
 

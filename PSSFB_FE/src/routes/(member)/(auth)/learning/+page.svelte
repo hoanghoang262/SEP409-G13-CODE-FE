@@ -5,7 +5,7 @@
 	import { currentUser } from "../../../../stores/store";
 
 export let data:any
-const courses = data.courses
+const courses = data.result.items
 
 </script>
 

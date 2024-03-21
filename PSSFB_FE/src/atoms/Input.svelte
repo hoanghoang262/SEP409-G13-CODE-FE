@@ -7,6 +7,7 @@
     export let required:boolean = false
     export let classes:string = ''
     export let onChange:any=()=>{}
+    export let onKeyDown:any=()=>{}
 </script>
 
-<input on:change={onChange} class="{classes} py-3 px-5 font-light text-black rounded-md" required={required} name="{name}" placeholder="{placehoder}" readonly={readonly} bind:value={value}/>
+<input on:keydown={onKeyDown} on:change={onChange} class="{classes} py-3 px-5 font-light text-black rounded-md" required={required} name="{name}" placeholder="{placehoder}" readonly={readonly} bind:value={value}/>

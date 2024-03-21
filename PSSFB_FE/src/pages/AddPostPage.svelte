@@ -3,7 +3,7 @@
 	import Input from '../atoms/Input.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Avatar from '../atoms/Avatar.svelte';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import Button from '../atoms/Button.svelte'
 	import { checkExist, showToast } from '../helpers/helpers';
 	import { createAdminPost } from '$lib/services/ForumsServices';
@@ -18,9 +18,11 @@
 	}
 
 	const savePost = async () => {
+		
 		if(!checkExist(post.title)||!checkExist(post.description)||!checkExist(post.postContent)){
 			showToast("Save Post","Enter all required fields","warning")
 		}else{
+			pageStatus.set('load')
 			try {
 				post.lastUpdate = new Date().toISOString()
 				if($currentUser?.Role.includes('Admin')){
@@ -38,6 +40,7 @@
 			} catch (error) {
 				console.log(error)
 			}
+			pageStatus.set('done')
 		}
 	}
 </script>

@@ -1,8 +1,8 @@
 import { getAllCourses } from "$lib/services/CourseServices";
 
 export async function load(){
-    const courses = await getAllCourses()
+    const result = await getAllCourses()
     return {
-        courses
+        result
     }
 }

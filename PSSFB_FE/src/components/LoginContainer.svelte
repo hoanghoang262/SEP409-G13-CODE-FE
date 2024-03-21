@@ -2,7 +2,7 @@
 	import Icon from '@iconify/svelte';
 	import Input from '../atoms/Input.svelte';
 	import { loginWithEmailAndPsr, loginWithFacebook, loginWithGoogle } from '../firebase';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
@@ -16,14 +16,17 @@
 
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
+		pageStatus.set('load')
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		console.log('decodeData', decodeData);
 		user.UserID = decodeData.UserID;
 		user.Role = decodeData.Role;
 		user.jwt = JWTFS;
+		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		pageStatus.set('done')
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
@@ -33,13 +36,16 @@
 
 	const LWG = async () => {
 		const user: any = await loginWithGoogle();
+		pageStatus.set('load')
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		user.UserID = decodeData.UserID;
 		user.Role = decodeData.Role;
 		user.jwt = JWTFS;
+		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		pageStatus.set('done')
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
@@ -48,6 +54,7 @@
 	};
 
 	const login = async () => {
+		pageStatus.set('load')
 		const user: any = await loginWithEmailAndPsr(Email, Password);
 		if (checkExist(user)) {
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
@@ -55,8 +62,11 @@
 			user.UserID = decodeData.UserID;
 			user.Role = decodeData.Role;
 			user.jwt = JWTFS;
+			user.displayName = decodeData.UserName;
+			console.log("decoded data", decodeData)
 			currentUser.set(user);
 			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+			pageStatus.set('done')
 			if (user.Role.includes('Admin')) {
 				goto('/manager');
 			} else {

@@ -1,11 +1,10 @@
 <script lang="ts">
-	
 	import CourseContainer from '../../../../components/CourseContainer.svelte';
 	import Button from '../../../../atoms/Button.svelte';
 	import { goto } from '$app/navigation';
 
-	export let data
-	const courses: any = data.courses??[];
+	export let data;
+	const courses: any = data.courses ?? [];
 </script>
 
 <!-- <Table>
@@ -37,12 +36,17 @@
 		{/each}
 	</TableBody>
 </Table> -->
-<div class="pl-5"><Button onclick={() => goto("/manager/coursesmanager/addcourse")} content="Add Course"/></div>
+<div class="pl-5">
+	<Button onclick={() => goto('/manager/coursesmanager/addcourse')} content="Add Course" />
+</div>
 <div class="flex flex-wrap w-full items-center py-10">
-	
-	{#each courses as c}
-	<div class="w-1/3 p-5">
-		<CourseContainer course={c} />
-	</div>
-	{/each}
+	{#if courses?.length > 0}
+		{#each courses as c}
+			<div class="w-1/3 p-5">
+				<CourseContainer course={c} />
+			</div>
+		{/each}
+	{:else}
+		<div>There is no course</div>
+	{/if}
 </div>

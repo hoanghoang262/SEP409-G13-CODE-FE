@@ -11,46 +11,42 @@
 	import CourseContainer from '../../../../components/CourseContainer.svelte';
 	import Button from '../../../../atoms/Button.svelte';
 	import { goto } from '$app/navigation';
+	import Pagination from '../../../../components/Pagination.svelte';
+	import { getAllModCourse } from '$lib/services/ModerationServices';
+	import Input from '../../../../atoms/Input.svelte';
+	import { pageStatus } from '../../../../stores/store';
 
 	export let data;
-	const courses: any = data.courses;
+	let result = data.result;
+	$: courses = result.items;
+	let searchStr = '';
+
+	const pagiClick = async (page: number) => {
+		result = await getAllModCourse(searchStr, page);
+	};
+
+	const searchFunc = async (event: any) => {
+		pageStatus.set('load')
+		if (event.keyCode === 13) {
+			// Your code to handle Enter key press
+			try {
+				result = await getAllModCourse(searchStr);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		pageStatus.set('done')
+	};
 </script>
 
-<!-- <Table>
-	<TableHead>
-		<TableHeadCell>#</TableHeadCell>
-		<TableHeadCell>Course</TableHeadCell>
-		<TableHeadCell>Create At</TableHeadCell>
-		<TableHeadCell>Create By</TableHeadCell>
-		<TableHeadCell>Status</TableHeadCell>
-		<TableHeadCell>Action</TableHeadCell>
-	</TableHead>
-	<TableBody tableBodyClass="divide-y">
-		{#each courses as c, index}
-			<TableBodyRow>
-				<TableBodyCell>{c.courseId}</TableBodyCell>
-				<TableBodyCell>{c.courseName}</TableBodyCell>
-				<TableBodyCell>{c.createdAt}</TableBodyCell>
-				<TableBodyCell>{c.userName}</TableBodyCell>
-				<TableBodyCell>{c.status}</TableBodyCell>
-				<TableBodyCell
-					><Button2 classes="border mr-3" content="edit" />
-          {#if c.status == 'Pending'}
-						<Button2 classes="border mr-3" content="approve" />
-					{:else}
-						<Button2 classes="border mr-3" content="close" />
-					{/if}</TableBodyCell
-				>
-			</TableBodyRow>
-		{/each}
-	</TableBody>
-</Table> -->
-<!-- <div class="pl-5"><Button onclick={() => goto("/manager/coursesmanager/addcourse")} content="Add Course"/></div> -->
+<Input onKeyDown={searchFunc} bind:value={searchStr} classes="w-1/4 mr-3 border" placehoder="search" />
+
 <div class="flex flex-wrap w-full items-center py-10">
-	
 	{#each courses as c}
-	<div class="w-1/3 p-5">
-		<CourseContainer type="admin" course={c} />
-	</div>
+		<div class="w-1/3 p-5">
+			<CourseContainer type="admin" course={c} />
+		</div>
 	{/each}
 </div>
+
+<Pagination pagi={result} {pagiClick} />

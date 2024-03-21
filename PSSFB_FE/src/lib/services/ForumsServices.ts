@@ -19,3 +19,13 @@ export const createAdminPost = async (post:any) => {
 		return error
 	}
 }
+
+export const deletePost = async (postid:any) => {
+	try {
+		const result = await axios.delete(`https://forumservices.azurewebsites.net/api/Forum/DeletePost?postId=${postid}`)
+		return result.data
+	} catch (error) {
+		console.log(error);
+		return error
+	}
+}

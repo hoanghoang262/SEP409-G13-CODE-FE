@@ -10,6 +10,7 @@
 	import { page } from '$app/stores';
 	import { showToast } from '../../../../../../../helpers/helpers';
 	import { onMount } from 'svelte';
+	import { pageStatus } from '../../../../../../../stores/store';
 
 	export let data;
 	const ids = $page.params.ids.split('/');
@@ -69,6 +70,7 @@
 	};
 
 	const saveCQ = async () => {
+		pageStatus.set('load')
 		console.log(JSON.stringify(codeQuestion));
 		try {
 			const response = await addCodeQuestion({ chapterId, practiceQuestion: codeQuestion });
@@ -80,6 +82,7 @@
 			console.log(e);
 			showToast('Add Practice Question', 'Something went wrong', 'error');
 		}
+		pageStatus.set('done')
 	};
 </script>
 

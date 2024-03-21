@@ -124,7 +124,7 @@
 					</div>
 				</div>
 			{:else if section == 'Comments'}
-				<CommentContainer />
+				<CommentContainer comments={[]} />
 			{/if}
 		</div>
 

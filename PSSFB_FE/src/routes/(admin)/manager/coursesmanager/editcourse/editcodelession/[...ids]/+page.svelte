@@ -10,6 +10,7 @@
 	import { addCodeQuestion, getModCourseById, updateCodeQuestion } from "$lib/services/ModerationServices";
 	import { page } from "$app/stores";
 	import { showToast } from "../../../../../../../helpers/helpers";
+	import { pageStatus } from "../../../../../../../stores/store";
 
     export let data;
 
@@ -68,6 +69,7 @@
     }
 
     const saveCQ = async () => {
+        pageStatus.set('load')
         console.log(JSON.stringify(codeQuestion))
         try{
             await updateCodeQuestion({practiceQuestionId:codeQuestion.id,practiceQuestion: codeQuestion})
@@ -77,6 +79,7 @@
             console.log(e)
             showToast("Edit Practice Question","Something went wrong","error")
         }
+        pageStatus.set('done')
     }
 </script>
 

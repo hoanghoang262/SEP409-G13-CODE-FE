@@ -21,17 +21,16 @@
 	<div class="w-4/5">
 			<Label defaultClass=" mb-3 block">Detail Course</Label>
 			<hr class="my-3" />
-			<Label defaultClass=" mb-3 block">Course Name</Label>
-			<div>{course?.name}</div>
+			<Label defaultClass=" mb-3 block">Course Name: {course?.name}</Label>
 
 			<Label defaultClass=" mb-3 block">Description</Label>
 			<div class="mb-5 ml-4">
 				{@html course?.description}
 			</div>
 			<Label defaultClass=" mb-3 block">Picture</Label>
-			<div class="w-1/3"><img alt="course img" src={course?.description}/></div>
+			<div class="w-1/3 mb-5"><img alt="course img" src={course?.picture}/></div>
 			<Label>
-				Language: course?.tag
+				Language: {course?.tag}
 			</Label>
 			<div class="flex justify-end mt-5"><Button content="Approve" /></div>
 	</div>
