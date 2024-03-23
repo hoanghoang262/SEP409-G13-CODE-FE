@@ -1,5 +1,4 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database';
 import {
 	createUserWithEmailAndPassword,
 	FacebookAuthProvider,
@@ -12,13 +11,8 @@ import {
 	updateProfile,
 	type User
 } from 'firebase/auth';
-import { currentUser } from './stores/store';
 import { checkExist } from './helpers/helpers';
-import { get } from 'svelte/store';
-
-const GoogleProvider = new GoogleAuthProvider();
-
-const FacebookProvider = new FacebookAuthProvider();
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadString } from 'firebase/storage';
 
 const firebaseConfig = {
 	// apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY,
@@ -42,8 +36,44 @@ if (!getApps().length) {
 	firebaseApp = initializeApp(firebaseConfig);
 }
 
+const GoogleProvider = new GoogleAuthProvider();
+
+const FacebookProvider = new FacebookAuthProvider();
+
 // Auth
 const firebaseAuth = getAuth(firebaseApp);
+
+const storage = getStorage();
+
+export function uploadImage(image: any) {
+	const imageStorageRef = ref(storage, `images/${image.path}`);
+	uploadBytes(imageStorageRef, image).then((snapshot) => {
+		console.log('Uploaded a blob or file!');
+		console.log(snapshot);
+	});
+}
+
+export async function uploadVid(vid: any) {
+	 const videoStorageRef = ref(storage, `videos/${vid.path}`);
+	 await uploadBytes(videoStorageRef, vid).then((snapshot) => {
+		console.log('Uploaded a vid!');
+		console.log(snapshot);
+	});
+}
+
+export async function getURL(imagePath: string) {
+	let URL = ''
+	await getDownloadURL(ref(storage, `images/${imagePath}`))
+		.then((url) => {
+			console.log(url);
+			URL = url
+		})
+		.catch((error) => {
+			// Handle any errors
+			console.log(error);
+		});
+	return URL;
+}
 
 const loginWithFacebook = async () => {
 	let user;
@@ -163,13 +193,12 @@ const changePasswordWithEmail = async (newPassword: string) => {
 	}
 };
 
-export const changeUserInfo = async (uid:string, info:any) => {
-	const db = getDatabase();
-	 set(ref(db, 'users/' + uid), {
-		...info
-	  });
-};
-
+// export const changeUserInfo = async (uid:string, info:any) => {
+// 	const db = getDatabase();
+// 	 set(ref(db, 'users/' + uid), {
+// 		...info
+// 	  });
+// };
 
 export {
 	loginWithGoogle,

@@ -7,7 +7,7 @@ export const addCourse = async (course: any) => {
 			`https://moderationservice.azurewebsites.net/api/CourseModeration/AddCourse`,
 			course
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -20,7 +20,7 @@ export const addChapter = async (chapter: any) => {
 			`https://moderationservice.azurewebsites.net/api/ChapterModeration/AddChapter`,
 			chapter
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -33,7 +33,7 @@ export const addLession = async (lession: any) => {
 			`https://moderationservice.azurewebsites.net/api/LessonModeration/CreateLesson`,
 			lession
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -46,7 +46,7 @@ export const addCodeQuestion = async (codeques: any) => {
 			`https://moderationservice.azurewebsites.net/api/PracticeQuestion/CreatePracticeQuestion`,
 			codeques
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -59,7 +59,7 @@ export const updateCourse = async (course: any) => {
 			`https://moderationservice.azurewebsites.net/api/CourseModeration/UpdateCourse`,
 			course
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -72,7 +72,7 @@ export const updateChapter = async (chapter: any) => {
 			`https://moderationservice.azurewebsites.net/api/ChapterModeration/UpdateChapter?id=${chapter.id}`,
 			chapter
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -85,7 +85,7 @@ export const updateLession = async (lession: any) => {
 			`https://moderationservice.azurewebsites.net/api/LessonModeration/UpdateLesson?id=${lession.lessonId}`,
 			lession
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -98,7 +98,7 @@ export const updateCodeQuestion = async (codeques: any) => {
 			`https://moderationservice.azurewebsites.net/api/PracticeQuestion/UpdatePracticeQuestion?id=${codeques.practiceQuestionId}`,
 			codeques
 		);
-		return result.data;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -157,14 +157,14 @@ export const getCreatingCourseByUser = async (id:number) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/CourseModeration/GetCourseByUserId?userId=${id}`
 	);
-	return result.data;
+	return result.data.value;
 };
 
 export const getAllModCourse = async (courseName:string="",page:number=1,pageSize:number=6) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName)?`courseName=${courseName}`:``}&page=${page}&pageSize=${pageSize}`
 	);
-	return result.data;
+	return result.data.value;
 };
 
 export const getModCourseById = async (id: number) => {
@@ -176,7 +176,7 @@ export const getModCourseById = async (id: number) => {
 
 export const getAllModPosts = async (postTitle:string="",page:number=1,pageSize:number=10) => {
 	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost?${checkExist(postTitle)?`postTitle=${postTitle}`:``}&page=${page}&pageSize=${pageSize}`)
-	return result.data
+	return result.data.value
 }
 
 export const getModPostById = async (id: number) => {
@@ -194,7 +194,7 @@ export const getModChapterById = async (id: number) => {
 		`https://moderationservice.azurewebsites.net/api/ChapterModeration/GetChapterById?id=${id}`
 	);
 
-	return result.data
+	return result.data.value
 }
 
 export const getModLessionById = async (id: number) => {
@@ -235,7 +235,7 @@ export const sendCourseToApprove = async (courseId: number) => {
 export const createPost = async (post:any) => {
 	try {
 		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Moderation/CreatePost',post)
-		return result.data
+		return result.data.value
 	} catch (error) {
 		console.log(error);
 		return error

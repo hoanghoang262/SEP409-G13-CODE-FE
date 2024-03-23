@@ -13,10 +13,12 @@
 	} from '$lib/type';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../../../../../../../components/AdminCourseSB.svelte';
-	import { showToast } from '../../../../../../../helpers/helpers';
+	import { checkExist, showToast } from '../../../../../../../helpers/helpers';
 	import { addLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import { pageStatus } from '../../../../../../../stores/store';
+	import Dropzone from 'svelte-file-dropzone';
+	import { getURL, uploadVid } from '../../../../../../../firebase';
 
 	export let data;
 	let course = data.course;
@@ -42,7 +44,12 @@
 	}
 
 	const AddLession = async () => {
+		// if(!checkExist(video)){
+		// 	showToast("Add lession","Please upload video","warning")
+		// 	return;
+		// }
 		pageStatus.set('load')
+		//frmSubmit();
 		try{
 			const response = await addLession({chapterId, lesson:lession})
 			console.log(response)
@@ -55,13 +62,56 @@
 		}
 		pageStatus.set('done')
 	}
+
+	let video: any;
+
+	function handleFilesSelect(e: any) {
+		const { acceptedFiles, fileRejections } = e.detail;
+		if (isVideo(acceptedFiles[0]?.path)) {
+			video = acceptedFiles[0];
+			const reader = new FileReader();
+			reader.addEventListener('load', () => {
+				// Create an image element or use a dedicated image component
+				const source: any = document.getElementById('src');
+				source.classList.remove('hidden')
+				source.src = reader.result;
+				// Append the image to a container element in your UI
+			});
+			reader.readAsDataURL(video);
+		}
+
+		console.log(video)
+	}
+
+	function isVideo(path: string) {
+		if (
+			path.includes('mkv') ||
+			path.includes('mp4') 
+		){
+			return true;
+		}
+		return false;
+	}
+
+	function frmSubmit(){
+		
+		
+			uploadVid(video)
+			const url:any = getURL(video?.path)
+			if(!checkExist(url)){
+				showToast("Add lession","something went wrong","error")
+			}else{
+				lession.videoUrl = url
+			}
+		
+	}
 </script>
 
 <div class="flex">
 	<div class="w-4/5">
 		<div>
 			<Label defaultClass=" mb-3 block">Add Lession</Label>
-			<hr class="my-3"/>
+			<hr class="my-3" />
 			<Label defaultClass=" mb-3 block">Lession Title</Label>
 			<Input
 				bind:value={lession.title}
@@ -84,14 +134,19 @@
 				placeholder="duration"
 				bind:value={lession.duration}
 			/>
-			<Label defaultClass=" mb-3 block">Video URL</Label>
-			<Input
+			<Label defaultClass=" mb-3 block">Video</Label>
+			<!-- <Input
 				required={true}
 				name="videoUrl"
 				classes="block w-1/3 ml-4 border mb-5"
 				placehoder="Video URL"
 				bind:value={lession.videoUrl}
-			/>
+			/> -->
+			<!-- <video class="hidden" width="400" height="300" controls>
+				<source id="src" type="video/mp4" />
+				<track kind="captions" />
+			</video>
+			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} /> -->
 			<Label defaultClass=" mb-3 block">Lession Content</Label>
 			<Editor
 				bind:value={lession.contentLesson}
@@ -105,7 +160,8 @@
 			{#each questions as q, index}
 				<div class="flex justify-between">
 					<div class="w-4/5">
-						<button class="mb-5"
+						<button
+							class="mb-5"
 							on:click={() => {
 								SelectedQIndex = index;
 								defaultModal = true;
@@ -123,7 +179,14 @@
 							bind:value={q.time}
 						/>
 					</div>
-					<div class="w-1/5 flex items-end"><Button onclick={() => {DeleteQ(index)}} content="Delete" /></div>
+					<div class="w-1/5 flex items-end">
+						<Button
+							onclick={() => {
+								DeleteQ(index);
+							}}
+							content="Delete"
+						/>
+					</div>
 				</div>
 			{/each}
 
@@ -138,7 +201,6 @@
 	</div>
 </div>
 
-
 <Modal title="Answers" bind:open={defaultModal}>
 	{#each questions[SelectedQIndex].answerOptions as answer, index}
 		<div class="flex justify-between">
@@ -150,12 +212,19 @@
 			<div><Button onclick={() => DeleteA(index)} content="Delete Answer" /></div>
 		</div>
 	{/each}
-	<Button onclick={() => lession.questions[SelectedQIndex].answerOptions = [...lession.questions[SelectedQIndex].answerOptions, initAnswer(false)]} content="Add Answer" />
+	<Button
+		onclick={() =>
+			(lession.questions[SelectedQIndex].answerOptions = [
+				...lession.questions[SelectedQIndex].answerOptions,
+				initAnswer(false)
+			])}
+		content="Add Answer"
+	/>
 	<svelte:fragment slot="footer">
 		<Button
 			onclick={() => {
 				console.log(lession);
-				defaultModal = false
+				defaultModal = false;
 			}}
 			content="Save"
 		/>

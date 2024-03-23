@@ -71,7 +71,7 @@
 
 	const saveCQ = async () => {
 		pageStatus.set('load')
-		console.log(JSON.stringify(codeQuestion));
+		console.log(JSON.stringify({ chapterId, practiceQuestion: codeQuestion }));
 		try {
 			const response = await addCodeQuestion({ chapterId, practiceQuestion: codeQuestion });
             console.log(response)

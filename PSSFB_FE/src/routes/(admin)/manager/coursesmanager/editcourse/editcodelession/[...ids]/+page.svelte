@@ -70,7 +70,7 @@
 
     const saveCQ = async () => {
         pageStatus.set('load')
-        console.log(JSON.stringify(codeQuestion))
+        console.log(JSON.stringify({practiceQuestionId:codeQuestion.id,practiceQuestion: codeQuestion}))
         try{
             await updateCodeQuestion({practiceQuestionId:codeQuestion.id,practiceQuestion: codeQuestion})
             showToast("Edit Practice Question","Edit practice Question Success","success")

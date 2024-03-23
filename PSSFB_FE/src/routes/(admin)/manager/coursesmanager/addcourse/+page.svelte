@@ -1,32 +1,17 @@
 <script lang="ts">
 	import { Textarea, Select, Label, Toolbar, ToolbarGroup, ToolbarButton } from 'flowbite-svelte';
-	import Editor from '@tinymce/tinymce-svelte';
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
 	import Input from '../../../../../atoms/Input.svelte';
-	import {
-		initChapter,
-		type Chapter,
-		initLessions,
-		intitCodeQuestion,
-		initQuestion,
-		initAnswer,
-		initTestCase
-	} from '$lib/type';
-	import CodeEditor2 from '../../../../../components/CodeEditor2.svelte';
-	import Icon from '@iconify/svelte';
+
 	import { checkExist, showToast } from '../../../../../helpers/helpers';
-	import { currentUser } from '../../../../../stores/store';
 	import { goto } from '$app/navigation';
-	import { addCourse } from '$lib/services/ModerationServices';
-	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { language } from '../../../../../data/data';
-	import { afterUpdate, beforeUpdate } from 'svelte';
-	import AdminCourseSb from '../../../../../components/AdminCourseSB.svelte';
-	
+	import { beforeUpdate } from 'svelte';
 
-
-	
+	import Dropzone from 'svelte-file-dropzone';
+	import { pageStatus } from '../../../../../stores/store';
+	import { getURL, uploadImage } from '../../../../../firebase';
 
 	// let inputType = 'int';
 
@@ -113,21 +98,72 @@
 
 	export let form: any;
 
-	if(form?.type=='success'){
-		showToast("Add Course",form.message, form.type)
-	}else if(form?.type=='error'){
-		showToast("Add Course",form.message, form.type)
+	if (form?.type == 'success') {
+		showToast('Add Course', form.message, form.type);
+	} else if (form?.type == 'error') {
+		showToast('Add Course', form.message, form.type);
 	}
 
-	let course:any = form?.response
+	let course: any = form?.response;
 
 	beforeUpdate(() => {
-		if(form?.response&&form?.type=='success'){
-		goto(`addcourse/addchapter/${form?.response.id}`)
-	}
-	})
-	
+		if (form?.response && form?.type == 'success') {
+			goto(`addcourse/addchapter/${form?.response.id}`);
+		}
+	});
 
+	let image: any;
+
+	function handleFilesSelect(e: any) {
+		const { acceptedFiles, fileRejections } = e.detail;
+		if (isImage(acceptedFiles[0]?.path)) {
+			image = acceptedFiles[0];
+			const reader = new FileReader();
+			reader.addEventListener('load', () => {
+				// Create an image element or use a dedicated image component
+				const imageE: any = document.getElementById('img');
+				imageE.classList.remove('hidden')
+				imageE.src = reader.result;
+				imageE.alt = image.name;
+				// Append the image to a container element in your UI
+			});
+			reader.readAsDataURL(image);
+		}
+
+		console.log(image)
+	}
+
+	function isImage(path: string) {
+		if (
+			path.includes('jpg') ||
+			path.includes('jng') ||
+			path.includes('gìf') ||
+			path.includes('png') ||
+			path.includes('svg')
+		)
+			return true;
+		return false;
+	}
+
+	async function frmSubmit(event:any){
+		if(!checkExist(image)){
+			showToast("Add course","Please upload image","warning")
+			event.preventDefault()
+		}
+		else{
+			pageStatus.set('load')
+			await uploadImage(image)
+			const url = await getURL(image?.path)
+			if(!checkExist(url)){
+				showToast("Add course","something went wrong","error")
+				event.preventDefault()
+			}else{
+				const imgInput:any = document.getElementById("imginput")
+				imgInput.value = url
+			}
+			pageStatus.set('done')
+		}
+	}
 </script>
 
 <!-- <div>
@@ -370,36 +406,37 @@
 	</form>
 </div> -->
 
-	<div class="w-4/5">
-		<form method="POST" action="?/addcourse">
-			<Label defaultClass=" mb-3 block">Add Course</Label>
-			<hr class="my-3"/>
-			<Label defaultClass=" mb-3 block">Course Name</Label>
-			<Input
-				required={true}
-				value={course?.name}
-				name="name"
-				classes="block w-1/3 ml-4 border mb-5"
-				placehoder="Course Name"
-			/>
-	
-			<Label defaultClass=" mb-3 block">Description</Label>
-			<div class="mb-5 ml-4"><Textarea name="description" value={course?.description} placeholder="Description" /></div>
-			<Label defaultClass=" mb-3 block">Picture</Label>
-			<Input
-				required={true}
-				name="picture"
-				value={course?.picture}
-				classes="block w-1/3 ml-4 border mb-5"
-				placehoder="url link"
-			/>
-			<Label>
-				Language
-				<Select name="tag" class="mt-2 ml-4" items={language} value={course?.tag??'C#'} />
-			</Label>
-			<div class="flex justify-end mt-5"><Button content="Save" /></div>
-		</form>
-	</div>
-	
+<div class="w-4/5">
+	<form method="POST" action="?/addcourse">
+		<Label defaultClass=" mb-3 block">Add Course</Label>
+		<hr class="my-3" />
+		<Label defaultClass=" mb-3 block">Course Name</Label>
+		<Input
+			required={true}
+			value={course?.name}
+			name="name"
+			classes="block w-1/3 ml-4 border mb-5"
+			placehoder="Course Name"
+		/>
 
-
+		<Label defaultClass=" mb-3 block">Description</Label>
+		<div class="mb-5 ml-4">
+			<Textarea name="description" value={course?.description} placeholder="Description" />
+		</div>
+		<Label defaultClass=" mb-3 block">Picture</Label>
+		<Input
+			id="imginput"
+			name="picture"
+			value={course?.picture}
+			classes="block w-1/3 ml-4 border mb-5"
+			placehoder="url link"
+		/>
+		<!-- <Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+		<img class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" /> -->
+		<Label>
+			Language
+			<Select name="tag" class="mt-2 ml-4" items={language} value={course?.tag ?? 'C#'} />
+		</Label>
+		<div class="flex justify-end mt-5"><Button content="Save" /></div>
+	</form>
+</div>

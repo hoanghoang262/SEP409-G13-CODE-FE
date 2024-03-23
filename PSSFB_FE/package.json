@@ -54,6 +54,7 @@
 		"jwt-decode": "^4.0.0",
 		"svelte-ace": "^1.0.21",
 		"svelte-codemirror-editor": "^1.2.0",
+		"svelte-file-dropzone": "^2.0.4",
 		"svelte-routing": "^2.11.0",
 		"svelte-toasts": "^1.1.2"
 	}

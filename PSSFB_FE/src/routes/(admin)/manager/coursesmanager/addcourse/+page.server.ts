@@ -16,6 +16,8 @@ export const actions = {
 		
 		try {
 			const response = await addCourse({ ...data, createdBy: user.UserID });
+			console.log('response', response)
+			console.log('data', {...data, createdBy: user.UserID})
 			return {
 				type: 'success',
 				message: 'add course successfully',
