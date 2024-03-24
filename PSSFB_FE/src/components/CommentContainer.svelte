@@ -7,7 +7,7 @@
 	import { currentUser } from '../stores/store';
 	import { checkExist } from '../helpers/helpers';
 	export let comments: any[];
-	//export let type = 'post';
+    //export let type = 'post';
 
 	const replyClick = (id: number) => {
 		const replyFrm = document.getElementById(`replyFrm#${id}`);
@@ -79,7 +79,7 @@
 						<div>
 							<div class="flex">
 								<div class="text-blue-500 mr-3">{reply.userName}</div>
-								<div class="text-neutral-400">{reply?.date}</div>
+								<div class="text-neutral-400">{reply?.createDate}</div>
 							</div>
 							<div>{reply.replyContent}</div>
 						</div>

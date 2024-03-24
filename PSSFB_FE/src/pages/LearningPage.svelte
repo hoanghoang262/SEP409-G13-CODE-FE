@@ -14,7 +14,7 @@
 	export let courses:any
 </script>
 
-<div class="p-5 px-20 flex flex-wrap items-center pt-52 bg-black">
+<div class="p-5 px-20 flex flex-wrap items-center pt-52 bg-blue-950">
 	<div class="w-full font-light text-white text-2xl mb-5">
 		Hello {$currentUser?.email}. Welcome you to PSSFB. Let's <span
 			class="px-3 py-1 font-medium rounded-xl bg-white text-black">Start</span
@@ -28,17 +28,17 @@
 	</div>
 	<div class="w-2/3 p-5 text-white">
 		<div class="flex w-full">
-			<div class="w-1/3 text-white p-5 bg-neutral-800 mr-3 rounded-lg">
+			<div class="w-1/3 text-white p-5 bg-blue-900 mr-3 rounded-lg">
 				<div class="text-xl">{$t('Courses')}</div>
 				<div class="text-3xl mb-5 font-medium">0</div>
 				<Progressbar color="indigo" progress="0" />
 			</div>
-			<div class="w-1/3 text-white p-5 bg-neutral-800 mr-3 rounded-lg">
+			<div class="w-1/3 text-white p-5 bg-blue-900 mr-3 rounded-lg">
 				<div class="text-xl">{$t('Posts')}</div>
 				<div class="text-3xl mb-5 font-medium">0</div>
 				<Progressbar color="indigo" progress="0" />
 			</div>
-			<div class="w-1/3 text-white p-5 bg-neutral-800 mr-3 rounded-lg">
+			<div class="w-1/3 text-white p-5 bg-blue-900 mr-3 rounded-lg">
 				<div class="text-xl">{$t('Score')}</div>
 				<div class="text-3xl mb-5 font-medium">0</div>
 				<Progressbar color="indigo" progress="0" />

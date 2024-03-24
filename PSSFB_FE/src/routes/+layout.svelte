@@ -24,9 +24,9 @@
 	<FlatToast {data} />
 	<!-- Provider template for your toasts -->
 </ToastContainer>
-
 {#if $pageStatus=="load"}
-<div class="z-10 absolute top-0 opacity-30 bg-black h-full w-full m-auto text-center pt-60">
+<div class="z-10 absolute top-0 opacity-30 bg-black h-[10000px] w-full m-auto text-center pt-60">
 	<p class="text-white text-4xl font-medium italic">Loading...</p>
 </div>
 {/if}
+

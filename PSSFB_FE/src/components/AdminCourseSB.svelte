@@ -91,7 +91,7 @@
 </script>
 
 <div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white pr-3">
-	<div class="text-2xl font-medium px-3 py-5">{course.name}</div>
+	<div class="text-2xl font-medium px-3 py-5"><button on:click={() => goto(`/manager/coursesmanager/editcourse/${courseId}`)}>{course.name}</button></div>
 
 	<hr class="my-5" />
 

@@ -10,8 +10,9 @@
 	import { beforeUpdate } from 'svelte';
 
 	import Dropzone from 'svelte-file-dropzone';
-	import { pageStatus } from '../../../../../stores/store';
+	import { currentUser, pageStatus } from '../../../../../stores/store';
 	import { getURL, uploadImage } from '../../../../../firebase';
+	import { addCourse } from '$lib/services/ModerationServices';
 
 	// let inputType = 'int';
 
@@ -96,21 +97,27 @@
 	// 	goto('/manager/courseslist');
 	// };
 
-	export let form: any;
+	// export let form: any;
 
-	if (form?.type == 'success') {
-		showToast('Add Course', form.message, form.type);
-	} else if (form?.type == 'error') {
-		showToast('Add Course', form.message, form.type);
-	}
+	// if (form?.type == 'success') {
+	// 	showToast('Add Course', form.message, form.type);
+	// } else if (form?.type == 'error') {
+	// 	showToast('Add Course', form.message, form.type);
+	// }
 
-	let course: any = form?.response;
+	let course: any = {
+		name: undefined,
+		description: undefined,
+		picture: undefined,
+		tag: 'C#',
+		createdBy: $currentUser.UserID
+	};
 
-	beforeUpdate(() => {
-		if (form?.response && form?.type == 'success') {
-			goto(`addcourse/addchapter/${form?.response.id}`);
-		}
-	});
+	// beforeUpdate(() => {
+	// 	if (form?.response && form?.type == 'success') {
+	// 		goto(`addcourse/addchapter/${form?.response.id}`);
+	// 	}
+	// });
 
 	let image: any;
 
@@ -122,7 +129,7 @@
 			reader.addEventListener('load', () => {
 				// Create an image element or use a dedicated image component
 				const imageE: any = document.getElementById('img');
-				imageE.classList.remove('hidden')
+				imageE.classList.remove('hidden');
 				imageE.src = reader.result;
 				imageE.alt = image.name;
 				// Append the image to a container element in your UI
@@ -130,7 +137,7 @@
 			reader.readAsDataURL(image);
 		}
 
-		console.log(image)
+		console.log(image);
 	}
 
 	function isImage(path: string) {
@@ -145,23 +152,22 @@
 		return false;
 	}
 
-	async function frmSubmit(event:any){
-		if(!checkExist(image)){
-			showToast("Add course","Please upload image","warning")
-			event.preventDefault()
-		}
-		else{
-			pageStatus.set('load')
-			await uploadImage(image)
-			const url = await getURL(image?.path)
-			if(!checkExist(url)){
-				showToast("Add course","something went wrong","error")
-				event.preventDefault()
-			}else{
-				const imgInput:any = document.getElementById("imginput")
-				imgInput.value = url
+	async function frmSubmit(event: any) {
+		event.preventDefault();
+		if (!checkExist(image)) {
+			showToast('Add course', 'Please upload image', 'warning');
+		} else {
+			pageStatus.set('load');
+			await uploadImage(image);
+			const url = await getURL(image?.path);
+			if (!checkExist(url)) {
+				showToast('Add course', 'something went wrong', 'error');
+			} else {
+				course.picture = url;
+				const response = await addCourse(course);
+				goto(`addcourse/addchapter/${response.id}`);
 			}
-			pageStatus.set('done')
+			pageStatus.set('done');
 		}
 	}
 </script>
@@ -407,13 +413,13 @@
 </div> -->
 
 <div class="w-4/5">
-	<form method="POST" action="?/addcourse">
+	<form on:submit={frmSubmit} method="POST" action="?/addcourse">
 		<Label defaultClass=" mb-3 block">Add Course</Label>
 		<hr class="my-3" />
 		<Label defaultClass=" mb-3 block">Course Name</Label>
 		<Input
 			required={true}
-			value={course?.name}
+			bind:value={course.name}
 			name="name"
 			classes="block w-1/3 ml-4 border mb-5"
 			placehoder="Course Name"
@@ -421,21 +427,21 @@
 
 		<Label defaultClass=" mb-3 block">Description</Label>
 		<div class="mb-5 ml-4">
-			<Textarea name="description" value={course?.description} placeholder="Description" />
+			<Textarea name="description" bind:value={course.description} placeholder="Description" />
 		</div>
 		<Label defaultClass=" mb-3 block">Picture</Label>
-		<Input
+		<!-- <Input
 			id="imginput"
 			name="picture"
 			value={course?.picture}
 			classes="block w-1/3 ml-4 border mb-5"
 			placehoder="url link"
-		/>
-		<!-- <Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
-		<img class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" /> -->
+		/> -->
+		<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+		<img class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" />
 		<Label>
 			Language
-			<Select name="tag" class="mt-2 ml-4" items={language} value={course?.tag ?? 'C#'} />
+			<Select name="tag" class="mt-2 ml-4" items={language} bind:value={course.tag} />
 		</Label>
 		<div class="flex justify-end mt-5"><Button content="Save" /></div>
 	</form>

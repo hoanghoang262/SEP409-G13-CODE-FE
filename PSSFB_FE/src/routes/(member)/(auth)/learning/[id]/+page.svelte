@@ -11,16 +11,17 @@
 	import CommentContainer from '../../../../../components/CommentContainer.svelte';
 
 	export let data;
-	const course:any = data.course;
+	const course: any = data.course;
+	const comments = data.comments;
 	//const sysllabus = data.sysllabus;
-	const quiz = course.chapters.flatMap((chapter:any) => chapter.lessons);
-	const code = course.chapters.flatMap((chapter:any) => chapter.codeQuestions);
+	const quiz = course.chapters.flatMap((chapter: any) => chapter.lessons);
+	const code = course.chapters.flatMap((chapter: any) => chapter.codeQuestions);
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
 </script>
 
 <div>
-	<div class="flex pt-40 px-40 bg-black text-white">
+	<div class="flex pt-40 px-40 bg-blue-950 text-white">
 		<div class="w-2/3">
 			<div class="text-6xl my-5">{course.name}</div>
 			<div class="flex text-4xl my-5">
@@ -51,9 +52,9 @@
 		<div class="flex text-2xl mb-10">
 			{#each sections as s}
 				<div
-				tabindex=0
-				role="button"
-				on:keydown={() => (section = s)}
+					tabindex="0"
+					role="button"
+					on:keydown={() => (section = s)}
 					on:click={() => (section = s)}
 					class="mr-10 {s == section ? 'underline underline-offset-8' : ''}"
 				>
@@ -86,7 +87,7 @@
 					<div class="text-center text-3xl my-10">
 						Syllabus - What you will learn from this learn
 					</div>
-					<div class="text-2xl mb-5">{course.title}</div>
+					<div class="text-2xl mb-5">{course.name}</div>
 					<div class="flex items-center text-xl">
 						<Icon class="mr-3" icon="ph:book-open-fill" style="color: #008ee6" />
 						{quiz.length} quizzes, {code.length} codes
@@ -124,7 +125,7 @@
 					</div>
 				</div>
 			{:else if section == 'Comments'}
-				<CommentContainer comments={[]} />
+				<CommentContainer {comments} />
 			{/if}
 		</div>
 

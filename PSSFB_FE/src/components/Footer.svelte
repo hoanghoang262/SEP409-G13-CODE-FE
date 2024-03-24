@@ -1,5 +1,5 @@
 <script>
-    import BigLogBlack from "../assets/Đen 1.png"
+    import BigLogBlack from "../assets/Xanh final.png"
 </script>
 
 <hr class="my-10"/>

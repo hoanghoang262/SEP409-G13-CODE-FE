@@ -45,9 +45,9 @@ const firebaseAuth = getAuth(firebaseApp);
 
 const storage = getStorage();
 
-export function uploadImage(image: any) {
+export async function uploadImage(image: any) {
 	const imageStorageRef = ref(storage, `images/${image.path}`);
-	uploadBytes(imageStorageRef, image).then((snapshot) => {
+	await uploadBytes(imageStorageRef, image).then((snapshot) => {
 		console.log('Uploaded a blob or file!');
 		console.log(snapshot);
 	});
@@ -64,6 +64,20 @@ export async function uploadVid(vid: any) {
 export async function getURL(imagePath: string) {
 	let URL = ''
 	await getDownloadURL(ref(storage, `images/${imagePath}`))
+		.then((url) => {
+			console.log(url);
+			URL = url
+		})
+		.catch((error) => {
+			// Handle any errors
+			console.log(error);
+		});
+	return URL;
+}
+
+export async function getVideoURL(videoPath: string) {
+	let URL = ''
+	await getDownloadURL(ref(storage, `videos/${videoPath}`))
 		.then((url) => {
 			console.log(url);
 			URL = url

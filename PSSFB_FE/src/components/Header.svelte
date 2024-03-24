@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { headerAdminData, headerData } from '../data/data';
-	import logoWhite from '../assets/Đen 2.png';
+	import logoWhite from '../assets/Xanh final.png';
 	import LoginBtn from '../atoms/LoginBtn.svelte';
 	import RegisterBtn from '../atoms/RegisterBtn.svelte';
 	import { page } from '$app/stores';
@@ -22,7 +22,7 @@
 			{#each headerAdminData as header}
 				<a
 					href={header.link}
-					class="mx-5 {$page.url.pathname === header.link ? 'text-neutral-500' : ''}"
+					class="mx-5 {$page.url.pathname === header.link ? 'text-blue-500' : ''}"
 					>{$t(header.display)}</a
 				>
 			{/each}
@@ -30,7 +30,7 @@
 			{#each headerData as header}
 				<a
 					href={header.link}
-					class="mx-5 {$page.url.pathname === header.link ? 'text-neutral-500' : ''}"
+					class="mx-5 {$page.url.pathname === header.link ? 'text-blue-500' : ''}"
 					>{$t(header.display)}</a
 				>
 			{/each}

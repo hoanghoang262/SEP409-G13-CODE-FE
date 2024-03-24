@@ -43,7 +43,4 @@
 		<Button color="alternative">Close</Button>
 	</svelte:fragment>
 </Modal>
-<ToastContainer placement="top-right" let:data>
-	<FlatToast {data} />
-	<!-- Provider template for your toasts -->
-</ToastContainer>
+

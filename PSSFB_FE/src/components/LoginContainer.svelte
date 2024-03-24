@@ -78,26 +78,21 @@
 	};
 </script>
 
-<div class="rounded-xl px-7 py-10 bg-neutral-900">
+<div class="rounded-xl px-7 py-10 bg-white text-black">
 	<h3 class="font-bold text-5xl mb-8 text-center">Start Now</h3>
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
 
 	<div class="mb-3">
-		<Input classes="w-full" bind:value={Email} name="Email" placehoder="Email" />
+		<Input classes="w-full border border-black" bind:value={Email} name="Email" placehoder="Email" />
 	</div>
 	<div class="mb-3">
 		<PasswordInput bind:value={Password} name="Password" placehoder="Password" />
 	</div>
 	<div
-		role="button"
-		tabindex="0"
-		on:keydown={() => {
-			() => (showModal = true);
-		}}
-		on:click={() => (showModal = true)}
-		class="text-right"
+		
+		class="text-right "
 	>
-		forgot password?
+		<button on:click={() => (showModal = true)}>forgot password?</button>
 	</div>
 	<div class="my-10"></div>
 	<button

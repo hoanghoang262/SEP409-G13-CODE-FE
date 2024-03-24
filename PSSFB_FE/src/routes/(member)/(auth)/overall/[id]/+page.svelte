@@ -45,7 +45,7 @@
 	};
 </script>
 
-<div class="bg-neutral-100 pt-40 px-20 flex mb-20">
+<div class="bg-neutral-100 py-40 px-20 flex mb-20">
 	
 	<div class="w-1/4 mr-5"><CourseSideBar course={course} /></div>
 

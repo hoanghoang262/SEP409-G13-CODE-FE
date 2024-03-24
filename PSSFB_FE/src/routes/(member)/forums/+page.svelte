@@ -19,10 +19,10 @@
 			<a class="py-2 px-5 bg-blue-500 rounded-lg font-medium shadow-lg text-white" href="/addpost">Add Post</a>
 		{/if}
 	</div>
-	<div class="bg-white">
+	<div>
 		{#each searchPosts as p}
-			<div class="border flex justify-between p-5">
-				<div class="w-14"><Avatar /></div>
+			<div class="bg-white border flex justify-between p-5 mb-10 rounded-tr-3xl">
+				<div class="w-14"><Avatar classes="rounded-full" src={p?.picture}/></div>
 				<div class="w-10/12">
 					<div role="button" tabindex="0" on:keydown={() => goto(`forums/${p.id}`)} on:click={() => goto(`forums/${p.id}`)} class="text-lg">{p.title}</div>
 					<hr class="my-2" />

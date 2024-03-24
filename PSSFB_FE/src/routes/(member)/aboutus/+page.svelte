@@ -5,7 +5,7 @@
 	import { t } from '../../../translations/i18n';
 </script>
 
-<div class="bg-black text-white">
+<div class="bg-blue-950 text-white">
 	<img alt="blb" class="m-auto w-3/6" src={bigLogBlack} />
 
 	<div class="italic uppercase text-3xl font-bold ml-16 mr-52 tracking-wide text-wrap leading-loose">

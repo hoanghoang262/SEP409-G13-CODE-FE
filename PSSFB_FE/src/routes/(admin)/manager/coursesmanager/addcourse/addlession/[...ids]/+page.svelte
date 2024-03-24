@@ -3,14 +3,7 @@
 	import Input from '../../../../../../../atoms/Input.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../../../atoms/Button.svelte';
-	import {
-		initQuestion,
-		type Lession,
-		initLessions,
-
-		initAnswer
-
-	} from '$lib/type';
+	import { initQuestion, type Lession, initLessions, initAnswer } from '$lib/type';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../../../../../../../components/AdminCourseSB.svelte';
 	import { checkExist, showToast } from '../../../../../../../helpers/helpers';
@@ -18,50 +11,53 @@
 	import { page } from '$app/stores';
 	import { pageStatus } from '../../../../../../../stores/store';
 	import Dropzone from 'svelte-file-dropzone';
-	import { getURL, uploadVid } from '../../../../../../../firebase';
+	import { getURL, getVideoURL, uploadVid } from '../../../../../../../firebase';
 
 	export let data;
 	let course = data.course;
 	let lession: Lession = initLessions();
 	$: questions = lession.questions;
-	const ids = $page.params.ids.split("/");
-	const courseId = ids[0]
-	const chapterId = ids[1]
+	const ids = $page.params.ids.split('/');
+	const courseId = ids[0];
+	const chapterId = ids[1];
 	let defaultModal = false;
 	let SelectedQIndex = 0;
 	const addQues = () => {
 		lession.questions = [...questions, initQuestion()];
 	};
 
-	const DeleteQ = (index:number) => {
-		const copy = [...lession.questions ]
-		lession.questions = [...copy.slice(0, index), ...copy.slice(index+1, copy.length+1)]
-	}
+	const DeleteQ = (index: number) => {
+		const copy = [...lession.questions];
+		lession.questions = [...copy.slice(0, index), ...copy.slice(index + 1, copy.length + 1)];
+	};
 
-	const DeleteA = (index:number) => {
-		const copy = [...lession.questions[SelectedQIndex].answerOptions]
-		lession.questions[SelectedQIndex].answerOptions = [...copy.slice(0, index), ...copy.slice(index+1, copy.length+1)]
-	}
+	const DeleteA = (index: number) => {
+		const copy = [...lession.questions[SelectedQIndex].answerOptions];
+		lession.questions[SelectedQIndex].answerOptions = [
+			...copy.slice(0, index),
+			...copy.slice(index + 1, copy.length + 1)
+		];
+	};
 
 	const AddLession = async () => {
-		// if(!checkExist(video)){
-		// 	showToast("Add lession","Please upload video","warning")
-		// 	return;
-		// }
-		pageStatus.set('load')
-		//frmSubmit();
-		try{
-			const response = await addLession({chapterId, lesson:lession})
-			console.log(response)
-			showToast("Add Lession","Add lession success","success")
-			console.log(JSON.stringify({chapterId, lession}))
-			goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${chapterId}`)
-		}catch(e) {
-			console.error(e)
-			showToast("Add Lession","Something went wrong","error")
+		if (!checkExist(video)) {
+			showToast('Add lession', 'Please upload video', 'warning');
+			return;
 		}
-		pageStatus.set('done')
-	}
+		pageStatus.set('load');
+		await frmSubmit();
+		try {
+			const response = await addLession({ chapterId, lesson: lession });
+			console.log(response);
+			showToast('Add Lession', 'Add lession success', 'success');
+			console.log(JSON.stringify({ chapterId, lession }));
+			goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${chapterId}`);
+		} catch (e) {
+			console.error(e);
+			showToast('Add Lession', 'Something went wrong', 'error');
+		}
+		pageStatus.set('done');
+	};
 
 	let video: any;
 
@@ -69,41 +65,30 @@
 		const { acceptedFiles, fileRejections } = e.detail;
 		if (isVideo(acceptedFiles[0]?.path)) {
 			video = acceptedFiles[0];
-			const reader = new FileReader();
-			reader.addEventListener('load', () => {
-				// Create an image element or use a dedicated image component
-				const source: any = document.getElementById('src');
-				source.classList.remove('hidden')
-				source.src = reader.result;
-				// Append the image to a container element in your UI
-			});
-			reader.readAsDataURL(video);
+			const url = URL.createObjectURL(video);
+			const videoE: any = document.getElementById('vid');
+			videoE.classList.remove('hidden');
+			videoE.src = url;
 		}
 
-		console.log(video)
+		console.log(video);
 	}
 
 	function isVideo(path: string) {
-		if (
-			path.includes('mkv') ||
-			path.includes('mp4') 
-		){
+		if (path.includes('mkv') || path.includes('mp4')) {
 			return true;
 		}
 		return false;
 	}
 
-	function frmSubmit(){
-		
-		
-			uploadVid(video)
-			const url:any = getURL(video?.path)
-			if(!checkExist(url)){
-				showToast("Add lession","something went wrong","error")
-			}else{
-				lession.videoUrl = url
-			}
-		
+	async function frmSubmit() {
+		await uploadVid(video);
+		const url: any = await getVideoURL(video?.path);
+		if (!checkExist(url)) {
+			showToast('Add lession', 'something went wrong', 'error');
+		} else {
+			lession.videoUrl = url;
+		}
 	}
 </script>
 
@@ -142,11 +127,11 @@
 				placehoder="Video URL"
 				bind:value={lession.videoUrl}
 			/> -->
-			<!-- <video class="hidden" width="400" height="300" controls>
-				<source id="src" type="video/mp4" />
+			
+			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+			<video id="vid" class="hidden mb-5" width="400" height="300" controls>
 				<track kind="captions" />
 			</video>
-			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} /> -->
 			<Label defaultClass=" mb-3 block">Lession Content</Label>
 			<Editor
 				bind:value={lession.contentLesson}

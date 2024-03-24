@@ -38,6 +38,7 @@
 		}
 	};
 
+
 	const chapterClick = (id: number) => {
 		goto(`/manager/moderationcourses/detail/chapter/${courseId}/${id}`);
 	};
