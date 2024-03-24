@@ -25,6 +25,6 @@ jobs:
         uses: docker/build-push-action@v5
         with: 
           context: ./PSSFB_FE
-          file: ./PSSFE_FE/Dockerfile
+          file: ./PSSFB_FE/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/cloclbox:latest 
