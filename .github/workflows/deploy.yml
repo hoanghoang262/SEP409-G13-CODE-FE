@@ -27,4 +27,4 @@ jobs:
           context: ./PSSFB_FE
           file: ./PSSFE_FE/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cloclbox:latest 
+          tags: project/cloclbox:latest 
