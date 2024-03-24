@@ -24,7 +24,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v5
         with: 
-          context: ./PSSFB_FE
-          file: ./Dockerfile
+          context: .
+          file: ./PSSFB_FE/Dockerfile
           push: true
           tags: docker/cloclbox:latest 
