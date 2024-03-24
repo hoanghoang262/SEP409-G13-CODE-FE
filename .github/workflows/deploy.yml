@@ -27,4 +27,4 @@ jobs:
           context: ./PSSFB_FE
           file: ./PSSFB_FE/Dockerfile
           push: true
-          tags: docker/cloclbox:latest 
+          tags: hoang262/cloclbox:latest 
