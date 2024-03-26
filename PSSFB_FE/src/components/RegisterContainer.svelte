@@ -2,11 +2,12 @@
 	import Icon from '@iconify/svelte';
 	import Input from '../atoms/Input.svelte';
 	import { loginWithFacebook, loginWithGoogle, registerWithEmailAndPsr } from '../firebase';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
-	import { checkPasswords, showToast } from '../helpers/helpers';
+	import { checkPasswords, decodeJWT, showToast, trimUserData } from '../helpers/helpers';
+	import { loginByGoogle } from '$lib/services/AuthenticationServices';
 
 	let Email = '';
 	let RePassword = '';
@@ -14,19 +15,43 @@
 	let Username = '';
 
 	const LWF = async () => {
-		const user = await loginWithFacebook();
+		const user: any = await loginWithFacebook();
+		pageStatus.set('load')
+		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+		const decodeData: any = await decodeJWT(JWTFS);
+		console.log('decodeData', decodeData);
+		user.UserID = decodeData.UserID;
+		user.Role = decodeData.Role;
+		user.jwt = JWTFS;
+		user.displayName = decodeData.UserName;
 		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(user));
-		goto('/learning');
+		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		pageStatus.set('done')
+		if (user.Role.includes('Admin')) {
+			goto('/manager');
+		} else {
+			goto('/learning');
+		}
 	};
 
 	const LWG = async () => {
-		const user = await loginWithGoogle();
+		const user: any = await loginWithGoogle();
+		pageStatus.set('load')
+		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+		const decodeData: any = await decodeJWT(JWTFS);
+		user.UserID = decodeData.UserID;
+		user.Role = decodeData.Role;
+		user.jwt = JWTFS;
+		user.displayName = decodeData.UserName;
 		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(user));
-		goto('/learning');
+		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		pageStatus.set('done')
+		if (user.Role.includes('Admin')) {
+			goto('/manager');
+		} else {
+			goto('/learning');
+		}
 	};
-
 	const registerFrmSubmit = (event:any) => {
 		if(!checkPasswords(Password)){
 			event.preventDefault();

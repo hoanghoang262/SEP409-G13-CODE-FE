@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Label, Textarea } from 'flowbite-svelte';
 	import Input from '../atoms/Input.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
@@ -6,16 +6,10 @@
 	import { currentUser, pageStatus } from '../stores/store';
 	import Button from '../atoms/Button.svelte'
 	import { checkExist, showToast } from '../helpers/helpers';
-	import { createAdminPost } from '$lib/services/ForumsServices';
+	import { createAdminPost, putPost } from '$lib/services/ForumsServices';
 	import { createPost } from '$lib/services/ModerationServices';
 
-	let post = {
-		title:'',
-		description:'',
-		postContent:'',
-		createdBy: $currentUser?.UserID,
-		lastUpdate: new Date().toISOString(),
-	}
+	export let post:any
 
 	const savePost = async () => {
 		
@@ -25,15 +19,11 @@
 			pageStatus.set('load')
 			try {
 				post.lastUpdate = new Date().toISOString()
-				if($currentUser?.Role.includes('Admin')){
-					const response = await createAdminPost(post)
-					showToast("Save Post","create post success","success")
+					const { id, title, description, postContent} = post
+					const response = await putPost({postId:id, title, description, postContent })
+					showToast("Save Post","update post success","success")
 					console.log(response)
-				}else if($currentUser?.Role.includes('Student')){
-					const response = await createPost(post)
-					console.log(response)
-					showToast("Save Post","create post success, wait for admin approve ","info")
-				}
+				
 				console.log(JSON.stringify(post))
 				
 				
@@ -47,7 +37,7 @@
 
 <div class="px-20 py-10">
     <div class="flex items-center mb-10">
-        <div class="w-1/12 mr-5"><Avatar classes="rounded-full" src={$currentUser?.photoURL} /></div>
+        <div class="w-1/12 mr-5"><Avatar classes="rounded-full" src={$currentUser?.photoURL}/></div>
         {$currentUser?.displayName}
     </div>
 	<div class="mb-10">

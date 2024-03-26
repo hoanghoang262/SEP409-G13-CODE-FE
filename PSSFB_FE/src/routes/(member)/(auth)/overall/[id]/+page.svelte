@@ -8,7 +8,7 @@
 
 	const course = data?.course;
 	const courseId = data?.id
-	const chapters = course?.chapters
+	const chapters = course?.chapters??[]
 	const codeworks = course.chapters.flatMap((chapter:any) => chapter.codeQuestions);
 	const quizs = course.chapters.flatMap((chapter:any) => chapter.lessons);
 	const arrowR =
@@ -81,7 +81,7 @@
 						{s?.name}
 					</div>
 					<div id="lession{index}" class="transition-all" transition:fade>
-						{#each s.lessons as l}
+						{#each s?.lessons??[] as l}
 							<div
 								tabindex="0"
 								role="button"
@@ -97,7 +97,7 @@
 							</div>
 						{/each}
 
-						{#each s.codeQuestions as l}
+						{#each s?.codeQuestions??[] as l}
 							<div
 								tabindex="0"
 								role="button"

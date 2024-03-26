@@ -5,7 +5,7 @@
 	export let course: any;
 
     const courseId = course?.id
-	const chapters = course?.chapters;
+	const chapters = course?.chapters??[];
 
     const plus =
 		"<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...$$props}> <path fill='black' d='M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z' /> </svg>";
@@ -57,7 +57,7 @@
 			{s?.name}
 		</div>
 		<div id="schedule{index}">
-			{#each s.lessons as l}
+			{#each s?.lessons??[] as l}
 				<div
 					tabindex="0"
 					role="button"
@@ -75,7 +75,7 @@
 				</div>
 			{/each}
 
-			{#each s.codeQuestions as l}
+			{#each s?.codeQuestions??[] as l}
 				<div
 					tabindex="0"
 					role="button"

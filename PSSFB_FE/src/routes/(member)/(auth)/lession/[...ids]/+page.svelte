@@ -9,11 +9,12 @@
 	import { delNotes, getNotes, putNote } from '$lib/services/CourseServices';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
+	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
 	export let data;
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.lession;
-	const comments = data?.comments;
+	let comments = data?.comments;
 	let notes = data?.notes;
 	let currentTime = 0;
 	let section = 'Comments';
@@ -24,6 +25,8 @@
 		notes = await getNotes($currentUser.UserID, lession.id);
 		pageStatus.set('done');
 	}
+
+	
 
 	const EditClick = (id: number) => {
 		console.log('edit click');
@@ -80,7 +83,7 @@
 			</div>
 			<div class="pl-5">
 				{#if section == 'Comments'}
-					<CommentContainer {comments} />
+					<CommentContainer bind:comments getComment={() => getCommentByLession(lession.id)}/>
 				{:else if section == 'Notes'}
 					<div class="w-full">
 						{#each notes as note}

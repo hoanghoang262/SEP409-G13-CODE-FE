@@ -1,36 +1,92 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { deletePost, getAllPost } from '$lib/services/ForumsServices';
+	import { toasts } from 'svelte-toasts';
 	import Avatar from '../../../atoms/Avatar.svelte';
 	import Button from '../../../atoms/Button.svelte';
 	import Input from '../../../atoms/Input.svelte';
-	import { currentUser } from '../../../stores/store';
+	import Pagination from '../../../components/Pagination.svelte';
+	import { currentUser, pageStatus } from '../../../stores/store';
+	import { showToast } from '../../../helpers/helpers';
 
-	export let data:any;
-	const posts = data.posts;
-	let searchStr = ''
-	$: searchPosts = posts.filter((post:any) => post.title.includes(searchStr))
+	export let data: any;
+	let result = data.result;
+	$: posts = result.items;
+	let searchStr = '';
+	const pagiClick = async (page: number) => {
+		result = await getAllPost(searchStr, page);
+	};
+	const searchFunc = async (event: any) => {
+		pageStatus.set('load');
+		if (event.keyCode === 13) {
+			// Your code to handle Enter key press
+			try {
+				result = await getAllPost(searchStr);
+			} catch (err) {
+				console.log(err);
+			}
+		}
+		pageStatus.set('done');
+	};
 </script>
 
 <div class="bg-neutral-100 py-40 px-20">
 	<div class="mb-10">Home > Forums</div>
 	<div class="flex justify-between items-center">
-		<Input bind:value={searchStr} classes="mb-10 w-1/4" placehoder="search" />
+		<Input
+			onKeyDown={searchFunc}
+			bind:value={searchStr}
+			classes="mb-10 w-1/4"
+			placehoder="search"
+		/>
 		{#if $currentUser}
-			<a class="py-2 px-5 bg-blue-500 rounded-lg font-medium shadow-lg text-white" href="/addpost">Add Post</a>
+			<a class="py-2 px-5 bg-blue-500 rounded-lg font-medium shadow-lg text-white" href="/addpost"
+				>Add Post</a
+			>
 		{/if}
 	</div>
 	<div>
-		{#each searchPosts as p}
+		{#each posts as p}
 			<div class="bg-white border flex justify-between p-5 mb-10 rounded-tr-3xl">
-				<div class="w-14"><Avatar classes="rounded-full" src={p?.picture}/></div>
+				<div class="w-14"><Avatar classes="rounded-full" src={p?.picture} /></div>
 				<div class="w-10/12">
-					<div role="button" tabindex="0" on:keydown={() => goto(`forums/${p.id}`)} on:click={() => goto(`forums/${p.id}`)} class="text-lg">{p.title}</div>
+					<div
+						role="button"
+						tabindex="0"
+						on:keydown={() => goto(`forums/${p.id}`)}
+						on:click={() => goto(`forums/${p.id}`)}
+						class="text-lg"
+					>
+						{p.title}
+					</div>
 					<hr class="my-2" />
 					<div class="overflow-hidden whitespace-normal mb-2">
 						<p class="line-clamp-2">{p.description}</p>
 					</div>
 					<div class="text-sm mb-3">
 						<span class="mr-5">By: {p.userName}</span><span>Last Update: {p.lastUpdate}</span>
+					</div>
+					<div>
+						{#if $currentUser?.UserID == p.createdBy}
+							<span class="mr-5 text-blue-500"
+								><button
+									on:click={() => {
+										if ($currentUser.Role.includes('Admin')) {
+											goto(`/manager/postmanager/editpost/${p.id}`);
+										} else {
+											goto(`/editpost/${p.id}`);
+										}
+									}}>Edit</button
+								></span
+							>
+							<span class="mr-5 text-red-500"><button on:click={async () => {
+								pageStatus.set('load')
+								await deletePost(p.id)
+								result = await getAllPost()
+								showToast("Delete Post","Delete post successfully", "success")
+								pageStatus.set('done')
+							}}>Delete</button></span>
+						{/if}
 					</div>
 					<!-- <div>
 						{#each p.tag as t}
@@ -42,4 +98,5 @@
 			</div>
 		{/each}
 	</div>
+	<Pagination pagi={result} {pagiClick} />
 </div>

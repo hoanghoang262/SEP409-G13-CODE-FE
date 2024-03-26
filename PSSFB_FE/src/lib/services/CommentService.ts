@@ -17,8 +17,25 @@ export const getCommentByLession = async(id:number) => {
 
 export const postComment = async(comment:any) => {
     try{
-        console.log(JSON.stringify(comment))
         await axios.post(`https://commentapi.azurewebsites.net/api/Comment/CreateComment`, comment)
+    }catch(err){
+        console.log(err)
+        return err;
+    }
+}
+
+export const putComment = async(comment:any) => {
+    try{
+        await axios.put(`https://commentapi.azurewebsites.net/api/Comment/UpdateComment?id=${comment.id}`, comment)
+    }catch(err){
+        console.log(err)
+        return err;
+    }
+}
+
+export const delComment = async(id:number) => {
+    try{
+        await axios.delete(`https://commentapi.azurewebsites.net/api/Comment/Delete?id=${id}`)
     }catch(err){
         console.log(err)
         return err;
@@ -28,6 +45,24 @@ export const postComment = async(comment:any) => {
 export const postReplyComment = async(comment:any) => {
     try{
         await axios.post(`https://commentapi.azurewebsites.net/api/Comment/CreateReply`, comment)
+    }catch(err){
+        console.log(err)
+        return err;
+    }
+}
+
+export const putReplyComment = async(comment:any) => {
+    try{
+        await axios.put(`https://commentapi.azurewebsites.net/api/Comment/Update?id=${comment.replyId}`, comment)
+    }catch(err){
+        console.log(err)
+        return err;
+    }
+}
+
+export const delReplyComment = async(id:number) => {
+    try{
+        await axios.delete(`https://commentapi.azurewebsites.net/api/Comment/DeleteReply?id=${id}`)
     }catch(err){
         console.log(err)
         return err;

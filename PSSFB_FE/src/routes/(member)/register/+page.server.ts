@@ -12,7 +12,9 @@ export const actions = {
         console.log("user",user)
         if(checkExist(user)){
             const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName)
+            console.log("JWTFS",JWTFS)
             const decodeData:any = decodeJWT(JWTFS)
+            console.log("decodeData", decodeData)
             user.UserID = decodeData.UserID;
 			user.Role = decodeData.Role;
 			user.jwt = JWTFS;

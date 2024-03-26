@@ -9,15 +9,18 @@
 	import { Textarea } from 'flowbite-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import CommentContainer from '../../../../../components/CommentContainer.svelte';
+	import { delComment, delReplyComment, getCommentByCourse } from '$lib/services/CommentService';
 
 	export let data;
 	const course: any = data.course;
-	const comments = data.comments;
+	let comments = data.comments;
 	//const sysllabus = data.sysllabus;
 	const quiz = course.chapters.flatMap((chapter: any) => chapter.lessons);
 	const code = course.chapters.flatMap((chapter: any) => chapter.codeQuestions);
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
+
+	
 </script>
 
 <div>
@@ -125,7 +128,7 @@
 					</div>
 				</div>
 			{:else if section == 'Comments'}
-				<CommentContainer {comments} />
+				<CommentContainer bind:comments getComment={() => getCommentByCourse(course.id)}/>
 			{/if}
 		</div>
 
