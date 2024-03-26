@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { StudentManager } from '../../../../Enum/Paginators.js';
 	import Loading from '../../../../components/Loading.svelte';
+	import type { GetAllStudentType } from '../../../../types/param/GetAllStudent.js';
 
 	let data: any;
 	let user: any = [];
@@ -12,9 +13,11 @@
 
 	let searchName = '';
 
+	$: console.log(searchName);
+
 	//Mount and set up data
 	onMount(async () => {
-		const result = await GetAllStudent(1);
+		const result = await GetAllStudent({ pageNumber: 1 });
 		data = result;
 	});
 
@@ -27,27 +30,46 @@
 	}
 
 	const tableHeader = [
-		{ label: 'Full Name', map: 'fullName', weight: 1.0079 },
-		{ label: 'Email', map: 'email', weight: 4.0026 },
-		{ label: 'Birthdate', map: 'birthDate', weight: 1.0079 },
-		{ label: 'Status', map: 'status', weight: 9.0122 }
+		{ label: 'Full Name', map: 'fullName' },
+		{ label: 'Email', map: 'email' },
+		{ label: 'Birthdate', map: 'birthDate' },
+		{ label: 'Status', map: 'status' }
 	];
 
 	//Paginators event
+
+	const setParam = (pageNumber: number = 1) => {
+		const result: GetAllStudentType = {
+			pageNumber: pageNumber,
+			searchStr: searchName
+		};
+		return result;
+	};
+
 	const nextEvent = async () => {
-		const result = await GetAllStudent(pageNumber + 1);
+		const result = await GetAllStudent(setParam(pageNumber + 1));
 		data = result;
 	};
 
 	const previousEvent = async () => {
-		const result = await GetAllStudent(pageNumber - 1);
+		const result = await GetAllStudent(setParam(pageNumber - 1));
 		data = result;
 	};
 
 	const moveEvent = async (pageNumber: number) => {
-		const result = await GetAllStudent(pageNumber);
+		const result = await GetAllStudent(setParam(pageNumber));
 		data = result;
 	};
+
+	const searchEvent = async () => {
+		console.log('haha');
+		const result = await GetAllStudent(setParam());
+		data = result;
+	};
+
+	$: if (searchName) {
+		searchEvent();
+	}
 </script>
 
 <main>
@@ -81,7 +103,7 @@
 					id="default-search"
 					class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
 					placeholder="Search user buy name..."
-					required
+					autocomplete="off"
 				/>
 				<button
 					type="submit"

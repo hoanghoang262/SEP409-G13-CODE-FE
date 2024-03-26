@@ -1,3 +1,3 @@
 export enum StudentManager {
-    PageSize = 1
+    PageSize = 5
 }
