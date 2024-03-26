@@ -2,7 +2,7 @@ import Thanh from '../assets/Thanh.jpg';
 import Binh from '../assets/binh.jpg';
 import Hoang from '../assets/Hoang.jpg';
 import Duc from '../assets/Duc.jpg';
-import Chien from '../assets/Chien.jpg';
+import Chien from '../assets/chien.jpg';
 
 interface section {
 	display: string;

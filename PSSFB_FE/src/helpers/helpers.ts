@@ -88,3 +88,10 @@ export function convertSecondsToMmSs(seconds:number) {
   
 	return `${formattedMinutes}:${formattedSeconds}`;
   }
+
+export function checkPasswords(password:string) {
+	if(!checkExist(password)&&password.length<6){
+		return false;
+	}
+	return true;
+}

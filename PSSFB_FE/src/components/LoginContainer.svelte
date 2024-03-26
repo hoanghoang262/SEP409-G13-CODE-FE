@@ -8,7 +8,7 @@
 	import PasswordInput from '../atoms/PasswordInput.svelte';
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
-	import { checkExist, decodeJWT, showToast, trimUserData } from '../helpers/helpers';
+	import { checkExist, checkPasswords, decodeJWT, showToast, trimUserData } from '../helpers/helpers';
 
 	let Email = '';
 	let Password = '';
@@ -54,6 +54,12 @@
 	};
 
 	const login = async () => {
+		
+		if(!checkPasswords(Password)){
+			showToast("Password warning","password must be 6 character long","warning")
+			return
+		}
+
 		pageStatus.set('load')
 		const user: any = await loginWithEmailAndPsr(Email, Password);
 		if (checkExist(user)) {

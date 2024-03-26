@@ -5,9 +5,5 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
-	},
-	define:{
-		//Node Environment: development, test, production
-		'process.env.NODE_ENV': JSON.stringify('production')
 	}
 });
