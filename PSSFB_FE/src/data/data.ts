@@ -2,7 +2,7 @@ import Thanh from '../assets/Thanh.jpg';
 import Binh from '../assets/binh.jpg';
 import Hoang from '../assets/Hoang.jpg';
 import Duc from '../assets/Duc.jpg';
-import Chien from '../assets/chien.jpg';
+import Chien from '../assets/Chien.jpg';
 
 interface section {
 	display: string;
@@ -537,22 +537,22 @@ export const schedules = [
 
 export const Posts = [
 	{
-		title:"Lập trình song song",
-		lastUpdate:"2024/02/26",
-		tag:["code"],
-		description:"Trước khi tìm hiểu thế nào là lập trình song song cũng như cách code thì mình phải biết 1 chút về lịch sử hình thành nên ở bài 1 mình sẽ giới thiệu sơ lược những điều bạn nên biết ở lĩnh vực này. 1 lưu ý nhỏ là nếu bạn nào muốn đọc bằng tiếng anh thì có thể ghé qua github, vì tiếng anh nên từ ngữ dùng sẽ chính xác hơn khi viết lại bằng tiếng việt"
+		title: "Lập trình song song",
+		lastUpdate: "2024/02/26",
+		tag: ["code"],
+		description: "Trước khi tìm hiểu thế nào là lập trình song song cũng như cách code thì mình phải biết 1 chút về lịch sử hình thành nên ở bài 1 mình sẽ giới thiệu sơ lược những điều bạn nên biết ở lĩnh vực này. 1 lưu ý nhỏ là nếu bạn nào muốn đọc bằng tiếng anh thì có thể ghé qua github, vì tiếng anh nên từ ngữ dùng sẽ chính xác hơn khi viết lại bằng tiếng việt"
 	},
 	{
-		title:"Mô Hình MVC",
-		lastUpdate:"2024/02/26",
-		tag:["MVC","architecture"],
-		description:"1. Kiến thức nền tảng1.1 Tìm hiểu mô hình MVC là gì?MVC là viết tắt của cụm từ “Model-View-Controller“.Đây là mô hình thiết kế được sử dụng trong kỹ thuật phần mềm.MVC là một mẫu kiến trúc phần mềm để tạo lập giao diện người dùng trên máy tính.MVC chia thành ba phần được kết nối với nhau và mỗi thành phần đều có một nhiệm vụ riêng của nó và độc"
+		title: "Mô Hình MVC",
+		lastUpdate: "2024/02/26",
+		tag: ["MVC", "architecture"],
+		description: "1. Kiến thức nền tảng1.1 Tìm hiểu mô hình MVC là gì?MVC là viết tắt của cụm từ “Model-View-Controller“.Đây là mô hình thiết kế được sử dụng trong kỹ thuật phần mềm.MVC là một mẫu kiến trúc phần mềm để tạo lập giao diện người dùng trên máy tính.MVC chia thành ba phần được kết nối với nhau và mỗi thành phần đều có một nhiệm vụ riêng của nó và độc"
 	},
 	{
-		title:"Nội dung khóa học \"Lâp trình hướng đối tượng\"",
-		lastUpdate:"2024/01/26",
-		tag:["code","Object-Oriented-Programming"],
-		description:"Thời gian qua mình thấy khá nhiều bạn trong khóa học này gặp phải:\"Đề, TestCase, UML(Hình mô tả lớp với thuộc tính và phương thức)\", sai, thiếu rõ ràng và gây hiểu nhầm.Vậy lên mình viết Comment này để các bạn có thể: Chỉ ra chỗ sai của \" và số của bài mà các bạn đang gặp phải.Rồi mình sẽ kiểm tra, tổng hợp lại và gửi lên \"đội ngũ hỗ trợ\" để họ khắc phục.Hoặc các bạn có thể comment vào đây: https://codelearn.io/learning/lap-trinh-huong-doi-tuong-trong-cpp"
+		title: "Nội dung khóa học \"Lâp trình hướng đối tượng\"",
+		lastUpdate: "2024/01/26",
+		tag: ["code", "Object-Oriented-Programming"],
+		description: "Thời gian qua mình thấy khá nhiều bạn trong khóa học này gặp phải:\"Đề, TestCase, UML(Hình mô tả lớp với thuộc tính và phương thức)\", sai, thiếu rõ ràng và gây hiểu nhầm.Vậy lên mình viết Comment này để các bạn có thể: Chỉ ra chỗ sai của \" và số của bài mà các bạn đang gặp phải.Rồi mình sẽ kiểm tra, tổng hợp lại và gửi lên \"đội ngũ hỗ trợ\" để họ khắc phục.Hoặc các bạn có thể comment vào đây: https://codelearn.io/learning/lap-trinh-huong-doi-tuong-trong-cpp"
 	}
 ]
 
@@ -575,4 +575,4 @@ export let resultTypes = [
 	{ value: 'boolean', name: 'boolean' },
 ];
 
-export const codeLanguage = ['C#','Java']
+export const codeLanguage = ['C#', 'Java']
