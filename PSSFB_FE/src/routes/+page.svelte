@@ -21,19 +21,18 @@
 	// });
 	beforeUpdate(async () => {
 		if (checkExist($currentUser)) {
-			if($currentUser?.Role.includes('Admin')){
+			if ($currentUser?.Role.includes('Admin')) {
 				goto('/manager');
-			}else if($currentUser?.Role.includes('Student')){
+			} else if ($currentUser?.Role.includes('Student')) {
 				goto('/learning');
 			}
 		}
 	});
-	
 </script>
 
-	<div class="bg-blue-950 text-white">
-		<div class="flex items-center px-20 py-40">
-			<img alt="blb" class="m-auto w-3/6" src={bigLogBlack} />
-			<div class="w-2/6"><LoginContainer /></div>
-		</div>
+<div class="bg-blue-950 text-white">
+	<div class="flex items-center px-20 py-40">
+		<img alt="blb" class="m-auto w-3/6" src={bigLogBlack} />
+		<div class="w-2/6"><LoginContainer /></div>
 	</div>
+</div>
