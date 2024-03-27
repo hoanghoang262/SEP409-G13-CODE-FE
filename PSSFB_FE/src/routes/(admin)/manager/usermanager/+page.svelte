@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { GetAllStudent } from '$lib/services/UserAuthenticationService.js';
 	import { onMount } from 'svelte';
-	import { StudentManager } from '../../../../Enum/Paginators.js';
 	import Loading from '../../../../components/Loading.svelte';
 	import type { GetAllStudentType } from '../../../../types/param/GetAllStudent.js';
+	import { goto } from '$app/navigation';
 
 	let data: any;
 	let user: any = [];
@@ -12,12 +12,13 @@
 	let remainPage: number;
 
 	let searchName = '';
+	let selectStatus: string = '';
 
 	$: console.log(searchName);
 
 	//Mount and set up data
 	onMount(async () => {
-		const result = await GetAllStudent({ pageNumber: 1 });
+		const result = await GetAllStudent(setParam());
 		data = result;
 	});
 
@@ -33,15 +34,31 @@
 		{ label: 'Full Name', map: 'fullName' },
 		{ label: 'Email', map: 'email' },
 		{ label: 'Birthdate', map: 'birthDate' },
-		{ label: 'Status', map: 'status' }
+		{
+			label: 'Status',
+			map: 'status',
+			formatData: (data: boolean | null) => {
+				return formatStatus(data);
+			}
+		}
 	];
+
+	//Format data
+	const formatStatus = (data: boolean | null) => {
+		if (data === true) {
+			return '<span class="flex w-3 h-3 m-1 bg-green-600 rounded-full"></span><span class="active">Active</span>';
+		} else {
+			return '<span class="flex w-3 h-3 m-1 bg-red-600 rounded-full"></span><span class="deactive">Deactive</span>';
+		}
+	};
 
 	//Paginators event
 
 	const setParam = (pageNumber: number = 1) => {
 		const result: GetAllStudentType = {
 			pageNumber: pageNumber,
-			searchStr: searchName
+			searchStr: searchName,
+			status: selectStatus
 		};
 		return result;
 	};
@@ -62,7 +79,11 @@
 	};
 
 	const searchEvent = async () => {
-		console.log('haha');
+		const result = await GetAllStudent(setParam());
+		data = result;
+	};
+
+	const handleStatusChange = async (event: Event) => {
 		const result = await GetAllStudent(setParam());
 		data = result;
 	};
@@ -70,11 +91,34 @@
 	$: if (searchName) {
 		searchEvent();
 	}
+
+	//navigation
+	const navigationDetailUser = (userId: number) => {
+		goto(`/manager/usermanager/detail/${userId}`);
+	};
 </script>
 
 <main>
 	<!-- Search input -->
 	<div class="relative w-[90%] flex justify-end m-auto">
+		<div class="mr-6">
+			<!-- <label for="status" class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+				>Status</label
+			> -->
+			<select
+				id="status"
+				bind:value={selectStatus}
+				on:change={(e) => handleStatusChange(e)}
+				class="block w-full pl-4 pt-3 pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+			>
+				<option value="" selected>
+					<p>Status ?</p>
+				</option>
+				<option value="true">Active</option>
+				<option value="false">Deactive</option>
+			</select>
+		</div>
+
 		<form class="w-[25%] min-w-[250px]">
 			<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only"
 				>Search</label
@@ -113,6 +157,7 @@
 			</div>
 		</form>
 	</div>
+
 	<!--Table data-->
 	<div
 		class="relative overflow-x-auto shadow-md sm:rounded-lg w-[90%] mx-auto mt-5 border-gray-300 border-2"
@@ -121,10 +166,13 @@
 			<thead class="text-xs text-white uppercase bg-green-700">
 				<tr>
 					{#each tableHeader as item, i}
-						<th class="px-6 py-5">
-							<div class="flex items-center">{item.label}</div>
+						<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2">
+							<div class="flex items-center justify-center">{item.label}</div>
 						</th>
 					{/each}
+					<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2"
+						><div class="flex items-center justify-center">Seting</div></th
+					>
 				</tr>
 			</thead>
 			{#if data}
@@ -132,12 +180,23 @@
 					{#each user as row, rowIndex}
 						<tr class="border-b {rowIndex % 2 == 1 ? 'bg-green-200' : 'bg-write'}">
 							{#each tableHeader as head, colIndex}
-								<td class="px-6 py-4">
-									<div class="flex items-center">
-										{row[head.map]}
+								<td class="px-6 py-4 border-gray-200 border-r-2">
+									<div class="flex items-center justify-center">
+										{#if head.formatData}
+											{@html head.formatData(row[head.map])}
+										{:else}
+											{row[head.map]}
+										{/if}
 									</div>
 								</td>
 							{/each}
+							<td class="px-6 py-4 flex justify-center">
+								<button
+									on:click={() => navigationDetailUser(row.id)}
+									class="bg-blue-700 text-white py-2 px-3 rounded-lg hover:bg-blue-900"
+									>Detail</button
+								>
+							</td>
 						</tr>
 					{/each}
 				</tbody>
