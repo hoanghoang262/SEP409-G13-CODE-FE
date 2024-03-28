@@ -4,6 +4,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        'nunito': ['nunito', 'sans-serif'],
+      },
       colors: {
         // flowbite-svelte
         primary: {

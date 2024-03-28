@@ -13,55 +13,67 @@
 	import { redirect } from '@sveltejs/kit';
 
 	let old = '';
+	let verify = '';
 	let newP = '';
 
+	let status = '';
+	let errMessage = '';
+
 	const oldChange = (event: any) => (old = event.target.value);
+	const verifyChange = (event: any) => (verify = event.target.value);
 	const newChange = (event: any) => (newP = event.target.value);
 
 	const changePass = async () => {
-		pageStatus.set('load')
-        if(checkExist(old)&&checkExist(newP)){
-            const user:any = await get(currentUser)
+		pageStatus.set('load');
+		if (checkExist(old) && checkExist(newP)) {
+			const user: any = await get(currentUser);
 
-            if(!checkExist(user)) goto("/")
+			if (!checkExist(user)) goto('/');
 
-            const testUser:any = await loginWithEmailAndPsr(user.email, old)
-            console.log(testUser)
-            if(checkExist(testUser)){
-				if(testUser?.email==user.email){
-					await axios.post("/?/changePassword", JSON.stringify({newPassword: newP}))
-                showToast('Change Password','Change password successfully', 'success')
-				currentUser.set(undefined)
-                logout()
-				pageStatus.set('done')
-                goto("/")
+			const testUser: any = await loginWithEmailAndPsr(user.email, old);
+			console.log(testUser);
+			if (checkExist(testUser)) {
+				if (testUser?.email == user.email) {
+					await axios.post('/?/changePassword', JSON.stringify({ newPassword: newP }));
+					showToast('Change Password', 'Change password successfully', 'success');
+					currentUser.set(undefined);
+					logout();
+					pageStatus.set('done');
+					goto('/');
 				}
-                
-
-            }else{
-                showToast('Change Password','Password is incorrect', 'error')
-            }
-        }else{
-            showToast('Change Password','Please enter old password and new password', 'warning')
-        }
-		pageStatus.set('done')
-    };
+			} else {
+				showToast('Change Password', 'Password is incorrect', 'error');
+			}
+		} else {
+			showToast('Change Password', 'Please enter old password and new password', 'warning');
+		}
+		pageStatus.set('done');
+	};
 </script>
 
 <div>
 	<PasswordInput
 		value={old}
 		onChange={oldChange}
-		classes="w-2/3 border mb-5"
+		classes="w-2/3 ml-10 mt-5 mb-7"
 		placehoder="old password"
 	/>
 	<PasswordInput
 		value={newP}
 		onChange={newChange}
-		classes="w-2/3 border mb-5"
+		classes="w-2/3 ml-10  mb-7"
 		placehoder="new password"
 	/>
-	<div class="flex justify-end"><Button onclick={changePass} content="change password" /></div>
+	<PasswordInput
+		value={verify}
+		onChange={verifyChange}
+		classes="w-2/3 ml-10  mb-7 "
+		placehoder="verify password"
+	/>
+
+	<div class="flex justify-end w-2/3 ml-10">
+		<Button onclick={changePass} content="change password" />
+	</div>
 </div>
 
 <ToastContainer placement="top-right" let:data>
