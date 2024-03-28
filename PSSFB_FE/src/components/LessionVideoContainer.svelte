@@ -19,7 +19,7 @@
    
 	const openQuestion = () => {
         const video:any = document.getElementById("video")
-        const Q = questions.find((q:any) => q.time<currentTime)
+        const Q = questions.find((q:any) => q.time<currentTime&&currentTime-q.time<1)
         if(checkExist(Q)){
             question = Q
             showModal = true;
@@ -51,25 +51,50 @@
         notes = await getNotes($currentUser.UserID, lession.id)
         pageStatus.set("done")
 	};
+
+	const onClose = () => {
+		const video:any = document.getElementById("video")
+        video.play()
+	}
 </script>
 
 <div class="text-xl font-medium mb-10">{lession.description}</div>
 
-<video bind:currentTime={currentTime} class="ml-10" on:play={FirstPlay} id="video" width="800" height="450" controls>
+<video
+	bind:currentTime
+	class="ml-10"
+	on:play={FirstPlay}
+	id="video"
+	width="800"
+	height="450"
+	controls
+>
 	<source src={lession.videoUrl} type="video/mp4" />
 	<track kind="captions" src="captions.vtt" srclang="en" label="English" />
 	Your browser does not support the video tag.
 </video>
 
-<div class="flex justify-end pr-20 mt-3"><button class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center" on:click={() => showNoteModal=true}><Icon class="mr-2 text-xl" icon="ic:baseline-plus"  style="color: black" /> Add note at <span class="font-normal ml-2">{convertSecondsToMmSs(currentTime)}</span></button></div>
+<div class="flex justify-end pr-20 mt-3">
+	<button
+		class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center"
+		on:click={() => (showNoteModal = true)}
+		><Icon class="mr-2 text-xl" icon="ic:baseline-plus" style="color: black" /> Add note at
+		<span class="font-normal ml-2">{convertSecondsToMmSs(currentTime)}</span></button
+	>
+</div>
 
 <div class="mt-20">{@html lession.contentLesson}</div>
 
-<VideoQuestionModal bind:question={question} bind:showModal={showModal}/>
-<Modal title="Add Note" bind:open={showNoteModal} on:close={() => (showNoteModal = false)} autoclose>
+<VideoQuestionModal {onClose} bind:question bind:showModal />
+<Modal
+	title="Add Note"
+	bind:open={showNoteModal}
+	on:close={() => (showNoteModal = false)}
+	autoclose
+>
 	<Editor bind:value={note} apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83" />
 	<svelte:fragment slot="footer">
-		<Button onclick={AddNote} content={"Add Note"}/>
-		<Button content={"Close"}/>
+		<Button onclick={AddNote} content={'Add Note'} />
+		<Button content={'Close'} />
 	</svelte:fragment>
 </Modal>

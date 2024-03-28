@@ -26,12 +26,13 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		pageStatus.set('done')
+		
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
+		pageStatus.set('done')
 	};
 
 	const LWG = async () => {
@@ -45,12 +46,13 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		pageStatus.set('done')
+		
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
+		pageStatus.set('done')
 	};
 
 	const login = async () => {
@@ -72,7 +74,7 @@
 			console.log("decoded data", decodeData)
 			currentUser.set(user);
 			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-			pageStatus.set('done')
+			
 			if (user.Role.includes('Admin')) {
 				goto('/manager');
 			} else {
@@ -81,6 +83,7 @@
 		} else {
 			showToast('Login', 'Wrong email or password', 'error');
 		}
+		pageStatus.set('done')
 	};
 </script>
 

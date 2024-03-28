@@ -13,7 +13,7 @@
 		if (checkExist(email) && isValidEmail(email)) {
 			const result = await checkEmail(email)
 			console.log('result',result)
-			if(result=="Email has exist"){
+			if(result?.msgCode=="MSG06"){
 				await resetPasswordWithEmail(email);
 				showToast('Reset Password', 'Check your email to change the password', 'info')
 			}else{

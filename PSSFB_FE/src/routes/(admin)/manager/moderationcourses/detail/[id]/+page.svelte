@@ -32,7 +32,7 @@
 			<Label>
 				Language: {course?.tag}
 			</Label>
-			<div class="flex justify-end mt-5"><Button content="Approve" /></div>
+			<!-- <div class="flex justify-end mt-5"><Button content="Approve" /></div> -->
 	</div>
 	<div class="w-1/5 ml-10">
 		<AdminSystemSb bind:course />

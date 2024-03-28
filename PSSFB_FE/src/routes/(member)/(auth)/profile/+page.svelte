@@ -7,7 +7,6 @@
 	import { currentUser } from '../../../../stores/store';
 	import { checkExist, showToast } from '../../../../helpers/helpers';
 	import { loginWithEmailAndPsr, logout } from '../../../../firebase';
-	import { deleteUser } from 'firebase/auth';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 
@@ -40,11 +39,10 @@
 		const user: any = await loginWithEmailAndPsr($currentUser?.email, deactivePass);
 		if (checkExist(user) && user?.email == $currentUser?.email) {
 			try {
-				await deleteUser(user?.email);
+				await user.delete();
 				currentUser.set(undefined);
 				await logout();
 				await axios.post('/?/logout', JSON.stringify({}));
-				await user.delete();
 				goto('/');
 				showToast('De-active', 'your account had been de-active', 'info');
 			} catch (error) {

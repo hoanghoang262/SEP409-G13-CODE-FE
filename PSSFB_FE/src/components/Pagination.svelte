@@ -31,7 +31,7 @@
     {#if pagi.pageNumber < pagi.totalPages}
     <button class="p-3 text-lg" on:click={() => {btnClick(pagi.totalPages)}}>{pagi.totalPages}</button>
 	{/if}
-	{#if pagi.pageNumber != pagi.totalPages}
+	{#if pagi.pageNumber != pagi.totalPages&&pagi.pageNumber < pagi.totalPages}
 		<button class="p-3 text-lg" on:click={() => {btnClick(pagi.totalPages)}}><Icon icon="fluent:arrow-next-12-filled" style="color: #5fbdf7" /></button>
 	{/if}
 </div>

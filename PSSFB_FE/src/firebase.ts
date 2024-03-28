@@ -175,6 +175,20 @@ const loginWithEmailAndPsr = async (email: string, password: string) => {
 	return user;
 };
 
+export const deleteWithEmailAndPsr = async (email: string, password: string) => {
+	await signInWithEmailAndPassword(firebaseAuth, email, password)
+		.then((userCredential) => {
+			// Signed in
+			userCredential.user?.delete();
+			// ...
+		})
+		.catch((error) => {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			console.log('error', errorMessage);
+		});
+};
+
 const logout = () => {
 	firebaseAuth.signOut();
 };

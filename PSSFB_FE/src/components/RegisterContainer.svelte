@@ -26,12 +26,13 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		pageStatus.set('done')
+		
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
+		pageStatus.set('done')
 	};
 
 	const LWG = async () => {
@@ -45,12 +46,13 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		pageStatus.set('done')
+		
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
+		pageStatus.set('done')
 	};
 	const registerFrmSubmit = (event:any) => {
 		if(!checkPasswords(Password)){

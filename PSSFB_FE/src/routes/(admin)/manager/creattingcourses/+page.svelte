@@ -2,9 +2,25 @@
 	import CourseContainer from '../../../../components/CourseContainer.svelte';
 	import Button from '../../../../atoms/Button.svelte';
 	import { goto } from '$app/navigation';
+	import { currentUser, pageStatus } from '../../../../stores/store';
+	import { deleteModCourse, getCreatingCourseByUser } from '$lib/services/ModerationServices';
+	import { showToast } from '../../../../helpers/helpers';
+	import { getAllCourses } from '$lib/services/CourseServices';
 
 	export let data;
-	const courses: any = data.courses ?? [];
+	let courses: any = data.courses ?? [];
+	const DeleteCourse = async(id:number) => {
+		pageStatus.set('load')
+		try {
+			const response = await deleteModCourse(id)
+			courses = await getCreatingCourseByUser($currentUser.UserID)
+		console.log(response)
+		showToast("Deleted course","Deleted course successfully","success")
+		} catch (error) {
+			showToast("Deleted course","something went wrong","error")
+		}
+		pageStatus.set('done')
+	}
 </script>
 
 <!-- <Table>
@@ -43,7 +59,7 @@
 	{#if courses?.length > 0}
 		{#each courses as c}
 			<div class="w-1/3 p-5">
-				<CourseContainer course={c} />
+				<CourseContainer course={c} {DeleteCourse}/>
 			</div>
 		{/each}
 	{:else}

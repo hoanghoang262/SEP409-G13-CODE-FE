@@ -129,14 +129,16 @@ export function initLessions(): Lession {
 export interface codeQuestion {
 	description: string;
 	codeForm: string;
-	testCases: TestCase[];
+	testcaseJava: string;
+//	testCases: TestCase[];
 }
 
 export function intitCodeQuestion(): codeQuestion {
 	return {
 		description: 'description',
 		codeForm: '',
-		testCases: [initTestCase('int')]
+		testcaseJava: '',
+//		testCases: [initTestCase('int')]
 	};
 }
 

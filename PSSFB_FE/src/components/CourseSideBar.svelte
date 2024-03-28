@@ -31,7 +31,7 @@
 	};
 
 	const codelessionClick = (l: any, index: number, lindex:number) => {
-		goto(`/codelesson/${courseId}/${index}/${lindex}`);
+		goto(`/codelession/${courseId}/${index}/${lindex}`);
 	};
 </script>
 

@@ -24,7 +24,7 @@
 					showToast("Save Post","update post success","success")
 					console.log(response)
 				
-				console.log(JSON.stringify(post))
+				console.log(JSON.stringify({postId:id, title, description, postContent }))
 				
 				
 			} catch (error) {
