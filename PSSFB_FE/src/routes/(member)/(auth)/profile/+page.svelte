@@ -98,12 +98,12 @@
 						<div class="h-7">Facebook:</div>
 					</div>
 					<div class="pr-8">
-						<div class="h-7">{userInfo?.fullName ?? 'None'}</div>
-						<div class="h-7">{userInfo?.userName ?? 'None'}</div>
-						<div class="h-7">{$currentUser?.email ?? 'None'}</div>
-						<div class="h-7">{userInfo?.phone ?? 'None'}</div>
-						<div class="h-7">{userInfo?.address ?? 'None'}</div>
-						<div class="h-7">{userInfo?.facebookLink ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.fullName ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.userName ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{$currentUser?.email ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.phone ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.address ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.facebookLink ?? 'None'}</div>
 					</div>
 					<div class="h-full flex-col justify-between">
 						<div class="h-7">
