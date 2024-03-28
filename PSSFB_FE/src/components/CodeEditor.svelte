@@ -8,8 +8,7 @@
 	import {python} from "@codemirror/lang-python"
 	import { oneDark } from "@codemirror/theme-one-dark";
 
-    let value = "";
-	let text = '';
+    export let value = "";
 	export let lang = "javascript"
 	export let testCases:any[] = []
 

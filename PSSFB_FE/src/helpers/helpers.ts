@@ -84,7 +84,7 @@ export function convertSecondsToMmSs(seconds:number) {
   
 	// Pad minutes and seconds with leading zeros if necessary
 	const formattedMinutes = minutes.toString().padStart(2, "0");
-	const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
+	const formattedSeconds = Math.floor(remainingSeconds).toString().padStart(2, "0");
   
 	return `${formattedMinutes}:${formattedSeconds}`;
   }

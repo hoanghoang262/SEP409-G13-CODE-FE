@@ -557,7 +557,15 @@ export const Posts = [
 ]
 
 export const language = [
-	{ value: 'C#', name: 'C#' },
+	{ value: 'C', name: 'C' },
+	{ value: 'C++', name: 'C++' },
+	{ value: 'Java', name: 'Java' },
+];
+
+export const tags = [
+	{ value: 'All', name: 'All' },
+	{ value: 'C', name: 'C' },
+	{ value: 'C++', name: 'C++' },
 	{ value: 'Java', name: 'Java' },
 ];
 
@@ -574,5 +582,12 @@ export let resultTypes = [
 	{ value: 'String', name: 'String' },
 	{ value: 'boolean', name: 'boolean' },
 ];
+
+export let statuses = [
+	{ value: 'All', name: 'All' },
+	{ value: 'Pending', name: 'Pending' },
+	{ value: 'Accepted', name: 'Accepted' },
+	{ value: 'Rejected', name: 'Rejected' },
+]
 
 export const codeLanguage = ['C#', 'Java']

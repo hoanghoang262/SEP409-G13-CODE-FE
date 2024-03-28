@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import { checkExist } from '../../../../helpers/helpers';
 import { getUserInfo, updateUserInfo } from '$lib/services/AuthenticationServices';
-import { changeUserInfo } from '../../../../firebase';
+
 import { currentUser } from '../../../../stores/store';
 import { get } from 'svelte/store';
 

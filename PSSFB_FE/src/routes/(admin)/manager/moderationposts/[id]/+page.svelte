@@ -1,21 +1,24 @@
 <script lang="ts">
-	import { approvedPost } from '$lib/services/ModerationServices';
+	import { approvedPost, getAllModPosts } from '$lib/services/ModerationServices';
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { showToast } from '../../../../../helpers/helpers';
+	import { pageStatus } from '../../../../../stores/store';
 
 
 	export let data;
 	const post:any = data.post;
 
-	const appPost = async () => {
+	const ApprovePost = async () => {
 		try {
+			pageStatus.set('load');
 			const response = await approvedPost(post.id);
-		console.log(response);
-		showToast("Approved post","Approved post success","success")
+			console.log(response);
+			pageStatus.set('done');
+			showToast('Approved post', 'Approved post success', 'success');
 		} catch (error) {
-			console.error(error)
-			showToast("Approved post","Something went wrong","error")
+			console.error(error);
+			showToast('Approved post', 'Something went wrong', 'error');
 		}
 	};
 </script>
@@ -39,5 +42,5 @@
             </div> -->
 		</div>
 	</div>
-	<div class="flex justify-end pr-40"><Button onclick={appPost} content="Approve"/></div>
+	<!-- <div class="flex justify-end pr-40"><Button onclick={ApprovePost} content="Approve"/></div> -->
 </div>

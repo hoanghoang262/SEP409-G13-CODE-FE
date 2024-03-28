@@ -16,57 +16,57 @@
 
     let course = data.course;
     let codeQuestion = data.codeLession;
-    $: testcases = codeQuestion.testCases;
-    let selectedTestCaseIndex = 0;
-    $: selectedTestcase = codeQuestion.testCases[selectedTestCaseIndex]??[];
-    let defaultModal = false;
+    $: testcases = codeQuestion.testcaseJava;
+    // let selectedTestCaseIndex = 0;
+    // $: selectedTestcase = codeQuestion.testCases[selectedTestCaseIndex]??[];
+    // let defaultModal = false;
 
-    const getselectedInputType = () => {
-		if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeInt != undefined) {
-			return 'int';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeString != undefined) {
-			return 'String';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeBoolean != undefined) {
-			return 'boolean';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeArrayInt != undefined) {
-			return 'int[]';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeArrayString != undefined) {
-			return 'String[]';
-		}
+    // const getselectedInputType = () => {
+	// 	if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeInt != undefined) {
+	// 		return 'int';
+	// 	} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeString != undefined) {
+	// 		return 'String';
+	// 	} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeBoolean != undefined) {
+	// 		return 'boolean';
+	// 	} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeArrayInt != undefined) {
+	// 		return 'int[]';
+	// 	} else if (codeQuestion.testCases[selectedTestCaseIndex]?.inputTypeArrayString != undefined) {
+	// 		return 'String[]';
+	// 	}
 
-		return 'int';
-	};
+	// 	return 'int';
+	// };
 
-	const getselectedResultType = () => {
-		if (codeQuestion.testCases[selectedTestCaseIndex].expectedResultInt != undefined) {
-			return 'int';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex].expectedResultString != undefined) {
-			return 'String';
-		} else if (codeQuestion.testCases[selectedTestCaseIndex].expectedResultBoolean != undefined) {
-			return 'boolean';
-		}
+	// const getselectedResultType = () => {
+	// 	if (codeQuestion.testCases[selectedTestCaseIndex].expectedResultInt != undefined) {
+	// 		return 'int';
+	// 	} else if (codeQuestion.testCases[selectedTestCaseIndex].expectedResultString != undefined) {
+	// 		return 'String';
+	// 	} else if (codeQuestion.testCases[selectedTestCaseIndex].expectedResultBoolean != undefined) {
+	// 		return 'boolean';
+	// 	}
 
-		return 'int';
-	};
+	// 	return 'int';
+	// };
 
-	let selectedInputType = getselectedInputType();
-	let selectedResultType = getselectedResultType();
+	// let selectedInputType = getselectedInputType();
+	// let selectedResultType = getselectedResultType();
     
    
 
-    const RTChange = () => {
-        selectedTestcase.expectedResultBoolean = undefined;
-        selectedTestcase.expectedResultInt = undefined;
-        selectedTestcase.expectedResultString = undefined;
-    }
+    // const RTChange = () => {
+    //     selectedTestcase.expectedResultBoolean = undefined;
+    //     selectedTestcase.expectedResultInt = undefined;
+    //     selectedTestcase.expectedResultString = undefined;
+    // }
 
-    const ITChange = () => {
-        selectedTestcase.inputTypeInt = undefined;
-        selectedTestcase.inputTypeArrayString = undefined;
-        selectedTestcase.inputTypeBoolean = undefined;
-        selectedTestcase.inputTypeArrayInt = undefined;
-        selectedTestcase.inputTypeArrayString = undefined;
-    }
+    // const ITChange = () => {
+    //     selectedTestcase.inputTypeInt = undefined;
+    //     selectedTestcase.inputTypeArrayString = undefined;
+    //     selectedTestcase.inputTypeBoolean = undefined;
+    //     selectedTestcase.inputTypeArrayInt = undefined;
+    //     selectedTestcase.inputTypeArrayString = undefined;
+    // }
 
     const saveCQ = async () => {
         pageStatus.set('load')
@@ -95,19 +95,20 @@
 				<Textarea bind:value={codeQuestion.description} name="description" placeholder="Description" />
 			</div>
             <Label>CodeForm</Label>
-            <CodeEditor2 bind:value={codeQuestion.codeForm}/>
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
             <Label>TestCases</Label>
-            <hr class="my-5"/>
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testcaseJava}/>
+            <!-- <hr class="my-5"/>
             {#each testcases as t, index}
                 <div class="flex justify-between">
                     <button on:click={() => {defaultModal=true; selectedTestCaseIndex=index}}>testcase #{index+1}</button>
                     <Button content="Delete" />
                 </div>
             {/each}
-            <Button onclick={() => {codeQuestion.testCases = [...codeQuestion.testCases, initTestCase('int')]}} content="Add test case" />
+            <Button onclick={() => {codeQuestion.testCases = [...codeQuestion.testCases, initTestCase('int')]}} content="Add test case" /> -->
             <div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
     
-            <Modal title="Terms of Service" bind:open={defaultModal}>
+            <!-- <Modal title="Terms of Service" bind:open={defaultModal}>
                 <Label>Input type</Label>
                 <Select items={inputTypes} bind:value={selectedInputType} on:change={ITChange}/>
                 <div>
@@ -143,7 +144,7 @@
                     <Button onclick={() => {}} content="Save" />
                     <Button onclick={() => (defaultModal = false)} content="Cancel" />
                 </svelte:fragment>
-            </Modal>
+            </Modal> -->
         </div>
     </div>
     <div class="w-1/5 ml-10">

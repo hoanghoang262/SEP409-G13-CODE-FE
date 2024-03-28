@@ -109,7 +109,7 @@
 		name: undefined,
 		description: undefined,
 		picture: undefined,
-		tag: 'C#',
+		tag: 'C',
 		createdBy: $currentUser.UserID
 	};
 

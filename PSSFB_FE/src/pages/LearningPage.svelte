@@ -65,7 +65,7 @@
 		<div class="mr-10">{$t('Completed')} (0)</div>
 	</div>
 	<div class="flex flex-wrap my-10">
-		{#each courses as c, index}
+		{#each courses.slice(0, 4) as c, index}
 			<div class="w-1/4 pr-5">
 				<CourseContainer course={c} />
 			</div>

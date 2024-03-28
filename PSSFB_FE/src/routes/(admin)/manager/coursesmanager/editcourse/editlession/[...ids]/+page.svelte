@@ -13,11 +13,13 @@
 	} from '$lib/type';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../../../../../../../components/AdminCourseSB.svelte';
-	import { showToast } from '../../../../../../../helpers/helpers';
+	import { checkExist, showToast } from '../../../../../../../helpers/helpers';
 	import { addLession, getModCourseById, updateLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import { getCourseById } from '$lib/services/CourseServices';
 	import { pageStatus } from '../../../../../../../stores/store';
+	import Dropzone from 'svelte-file-dropzone';
+	import { getVideoURL, uploadVid } from '../../../../../../../firebase';
 
 	export let data;
 	let course = data.course;
@@ -44,6 +46,9 @@
 
 	const EditLession = async () => {
 		pageStatus.set('load')
+		if (checkExist(video)) {
+			await frmSubmit();
+		}
 		try{
 			const response = await updateLession({lessonId: lessionId, lesson:lession})
 			console.log(response)
@@ -56,6 +61,38 @@
 			showToast("Edit Lession","Something went wrong","error")
 		}
 		pageStatus.set('done')
+	}
+
+	let video: any;
+
+	function handleFilesSelect(e: any) {
+		const { acceptedFiles, fileRejections } = e.detail;
+		if (isVideo(acceptedFiles[0]?.path)) {
+			video = acceptedFiles[0];
+			const url = URL.createObjectURL(video);
+			const videoE: any = document.getElementById('vid');
+			videoE.classList.remove('hidden');
+			videoE.src = url;
+		}
+
+		console.log(video);
+	}
+
+	function isVideo(path: string) {
+		if (path.includes('mkv') || path.includes('mp4')) {
+			return true;
+		}
+		return false;
+	}
+
+	async function frmSubmit() {
+		await uploadVid(video);
+		const url: any = await getVideoURL(video?.path);
+		if (!checkExist(url)) {
+			showToast('Add lession', 'something went wrong', 'error');
+		} else {
+			lession.videoUrl = url;
+		}
 	}
 </script>
 
@@ -86,14 +123,19 @@
 				placeholder="duration"
 				bind:value={lession.duration}
 			/>
-			<Label defaultClass=" mb-3 block">Video URL</Label>
-			<Input
+			<Label defaultClass=" mb-3 block">Video</Label>
+			<!-- <Input
 				required={true}
 				name="videoUrl"
 				classes="block w-1/3 ml-4 border mb-5"
 				placehoder="Video URL"
 				bind:value={lession.videoUrl}
-			/>
+			/> -->
+			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+			<video id="vid" class="mb-5" width="400" height="300" controls>
+				<track kind="captions" />
+				<source src="{lession.videoUrl}" type="video/mp4">
+			</video>
 			<Label defaultClass=" mb-3 block">Lession Content</Label>
 			<Editor
 				bind:value={lession.contentLesson}

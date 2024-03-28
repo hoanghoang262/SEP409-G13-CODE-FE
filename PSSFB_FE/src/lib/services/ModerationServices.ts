@@ -160,9 +160,9 @@ export const getCreatingCourseByUser = async (id:number) => {
 	return result.data.value;
 };
 
-export const getAllModCourse = async (courseName:string="",page:number=1,pageSize:number=6) => {
+export const getAllModCourse = async (tag:string="All",courseName:string="",page:number=1,pageSize:number=6) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName)?`courseName=${courseName}`:``}&page=${page}&pageSize=${pageSize}`
+		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName)?`courseName=${courseName}&`:``}${tag=="All"?``:`Tag=${tag}&`}page=${page}&pageSize=${pageSize}`
 	);
 	return result.data.value;
 };
@@ -175,7 +175,7 @@ export const getModCourseById = async (id: number) => {
 };
 
 export const getAllModPosts = async (postTitle:string="",page:number=1,pageSize:number=10) => {
-	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost?${checkExist(postTitle)?`postTitle=${postTitle}`:``}&page=${page}&pageSize=${pageSize}`)
+	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost?${checkExist(postTitle)?`postTitle=${postTitle}&`:``}page=${page}&pageSize=${pageSize}`)
 	return result.data.value
 }
 
@@ -212,9 +212,50 @@ export const getModPraticeQuestionById = async (id: number) => {
 	return result.data.value
 }
 
+export const approvePost= async (postId: number) => {
+	try {
+		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationPost?postId=${postId}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
+
+export const deleteModPost= async (postId: number) => {
+	try {
+		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/Post/DeletePost?postId=${postId}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
+
+export const deleteModCourse= async (courseId: number) => {
+	try {
+		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/CourseModeration/DeleteCourse?courseId=${courseId}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
+
 export const approveCourse = async (courseId: number) => {
 	try {
+		console.log(courseId)
 		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationCourse?courseId=${courseId}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
+
+export const reject = async (data: any) => {
+	try {
+		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/Reject`,data)
 		return result.data
 	} catch (error) {
 		console.log(error)

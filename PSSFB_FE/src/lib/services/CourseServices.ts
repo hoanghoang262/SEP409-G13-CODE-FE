@@ -2,12 +2,14 @@ import axios from 'axios';
 import { checkExist, showToast } from '../../helpers/helpers';
 
 export const getAllCourses = async (
+	tag="All",
 	courseName: string = '',
 	page: number = 1,
-	pageSize: number = 6
+	pageSize: number = 4,
+	
 ) => {
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}`
+		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag=="All"?``:`&Tag=${tag}`}`
 	);
 	return result.data.value;
 };
@@ -30,14 +32,14 @@ export const getPraticeQuestionById = async (id: number) => {
 	const result = await axios.get(
 		`https://coursesservices.azurewebsites.net/api/Course/GetPracticeQuestionById?practiceQuestionId=${id}`
 	);
-	return result.data;
+	return result.data.value;
 };
 
 export const getChapterById = async (id: number) => {
 	const result = await axios.get(
 		`https://coursesservices.azurewebsites.net/api/Course/GetChapterById?chapterId=${id}`
 	);
-	return result.data;
+	return result.data.value;
 };
 
 export const getNotes = async (userId: number, lessionId: number) => {

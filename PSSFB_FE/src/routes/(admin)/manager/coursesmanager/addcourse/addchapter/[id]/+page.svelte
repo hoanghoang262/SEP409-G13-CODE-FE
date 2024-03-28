@@ -42,7 +42,6 @@
 			/>
 			<div class="flex justify-end">
 				<Button
-					onclick={() => goto('/manager/coursesmanager/addcourse/addlession/0')}
 					content="Save"
 				/>
 			</div>

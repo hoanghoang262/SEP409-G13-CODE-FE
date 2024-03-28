@@ -4,10 +4,14 @@
 	import Button from '../atoms/Button.svelte';
 	import { Modal } from 'flowbite-svelte';
 	import {
+	approveCourse,
 		deleteChapter,
 		deleteCodeQuestion,
 		deleteLession,
-		getModCourseById
+		getModCourseById,
+
+		sendCourseToApprove
+
 	} from '$lib/services/ModerationServices';
 	import { showToast } from '../helpers/helpers';
 	import { pageStatus } from '../stores/store';
@@ -169,6 +173,14 @@
 		<button class="text-blue-500"
 			on:click={() => goto(`/manager/coursesmanager/addcourse/addchapter/${courseId}`)}
 		>Add Chapter</button>
+	</div>
+	<div class="flex justify-end my-5">
+		<button class="text-blue-500"
+			on:click={async () => {
+				 sendCourseToApprove(courseId)
+				showToast("Waiting for approved","Waiting for approved","info")
+			}}
+		>Send to approved</button>
 	</div>
 </div>
 

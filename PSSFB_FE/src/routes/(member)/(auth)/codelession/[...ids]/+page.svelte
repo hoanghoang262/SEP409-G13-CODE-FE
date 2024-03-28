@@ -17,6 +17,6 @@
 				{@html lession.description}
 			</p>
 		</div>
-		<div class="w-1/2"><CodeEditor lang={course.tag.toLowerCase()} /></div>
+		<div class="w-1/2"><CodeEditor value={lession.codeForm} lang={course.tag} /></div>
 	</div>
 </div>
