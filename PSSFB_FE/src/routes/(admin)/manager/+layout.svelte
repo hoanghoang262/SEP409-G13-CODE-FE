@@ -47,8 +47,13 @@
 				<a href="/manager/postmanager/addpost" class="pl-3 hover:bg-neutral-100">Add Post</a>
 			</div>
 			<div class="font-medium text-xl mb-2">User Manager</div>
-			<div>
-				<a href="/manager/usermanager" class="pl-3 hover:bg-neutral-100">dashbroad</a>
+			<div class="">
+				<div>
+					<a href="/manager/usermanager" class="pl-3 hover:bg-neutral-100">Student manager</a>
+				</div>
+				<div>
+					<a href="/manager/bamanager" class="pl-3 hover:bg-neutral-100">Bussiness Admin manager</a>
+				</div>
 			</div>
 		</div>
 	</div>

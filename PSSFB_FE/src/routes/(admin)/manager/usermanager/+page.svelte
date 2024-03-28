@@ -4,6 +4,8 @@
 	import Loading from '../../../../components/Loading.svelte';
 	import type { GetAllStudentType } from '../../../../types/param/GetAllStudent.js';
 	import { goto } from '$app/navigation';
+	import Avatar from '../../../../atoms/Avatar.svelte';
+	import { page } from '$app/stores';
 
 	let data: any;
 	let user: any = [];
@@ -14,11 +16,16 @@
 	let searchName = '';
 	let selectStatus: string = '';
 
-	$: console.log(searchName);
-
 	//Mount and set up data
 	onMount(async () => {
-		const result = await GetAllStudent(setParam());
+		// @ts-ignore
+		const paginators = $page.state.paginators;
+		if (paginators) {
+			pageNumber = paginators.pageNumber;
+			searchName = paginators.searchStr;
+			selectStatus = paginators.status;
+		}
+		const result = await GetAllStudent(setParam(pageNumber));
 		data = result;
 	});
 
@@ -94,7 +101,7 @@
 
 	//navigation
 	const navigationDetailUser = (userId: number) => {
-		goto(`/manager/usermanager/detail/${userId}`);
+		goto(`/manager/usermanager/detail/${userId}`, { state: { paginators: setParam(pageNumber) } });
 	};
 </script>
 
@@ -165,6 +172,9 @@
 		<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 			<thead class="text-xs text-white uppercase bg-green-700">
 				<tr>
+					<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2"
+						><div class="flex items-center justify-center">Avata</div></th
+					>
 					{#each tableHeader as item, i}
 						<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2">
 							<div class="flex items-center justify-center">{item.label}</div>
@@ -179,8 +189,13 @@
 				<tbody>
 					{#each user as row, rowIndex}
 						<tr class="border-b {rowIndex % 2 == 1 ? 'bg-green-200' : 'bg-write'}">
+							<td class=" border-gray-200 border-r-2">
+								<div class="flex justify-center items-center">
+									<Avatar classes=" w-10" src={row?.profilePict} />
+								</div>
+							</td>
 							{#each tableHeader as head, colIndex}
-								<td class="px-6 py-4 border-gray-200 border-r-2">
+								<td class="border-gray-200 border-r-2">
 									<div class="flex items-center justify-center">
 										{#if head.formatData}
 											{@html head.formatData(row[head.map])}
@@ -202,9 +217,11 @@
 				</tbody>
 			{:else}
 				<tr>
+					<td class="py-4"><Loading /></td>
 					{#each tableHeader as _, i}
 						<td class="py-4"><Loading /></td>
 					{/each}
+					<td class="py-4"><Loading /></td>
 				</tr>
 			{/if}
 		</table>
