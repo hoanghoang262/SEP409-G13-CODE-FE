@@ -40,7 +40,6 @@
 	const tableHeader = [
 		{ label: 'Full Name', map: 'fullName' },
 		{ label: 'Email Account', map: 'email' },
-		{ label: 'Password', map: 'password' },
 		{
 			label: 'Status',
 			map: 'status',
@@ -101,68 +100,72 @@
 
 	//navigation
 	const navigationDetailUser = (userId: number) => {
-		goto(`/manager/usermanager/detail/${userId}`, { state: { paginators: setParam(pageNumber) } });
+		goto(`/manager/bamanager/detail/${userId}`, { state: { paginators: setParam(pageNumber) } });
 	};
 </script>
 
 <main>
 	<!-- Search input -->
-	<div class="relative w-[90%] flex justify-end m-auto">
-		<div class="mr-6">
-			<!-- <label for="status" class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
-				>Status</label
-			> -->
-			<select
-				id="status"
-				bind:value={selectStatus}
-				on:change={(e) => handleStatusChange(e)}
-				class="block w-full pl-4 pt-3 pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-			>
-				<option value="" selected>
-					<p>Status ?</p>
-				</option>
-				<option value="true">Active</option>
-				<option value="false">Deactive</option>
-			</select>
-		</div>
-
-		<form class="w-[25%] min-w-[250px]">
-			<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only"
-				>Search</label
-			>
-			<div class="relative">
-				<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-					<svg
-						class="w-4 h-4 text-gray-500 dark:text-gray-400"
-						aria-hidden="true"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 20 20"
-					>
-						<path
-							stroke="currentColor"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-						/>
-					</svg>
-				</div>
-				<input
-					type="search"
-					bind:value={searchName}
-					id="default-search"
-					class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-					placeholder="Search user buy name..."
-					autocomplete="off"
-				/>
-				<button
-					type="submit"
-					class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-					>Search</button
+	<div class="relative w-[90%] flex justify-between items-center m-auto">
+		<button class="px-6 py-2 bg-blue-700 text-white rounded-lg border-gray-400 border-2">Add</button
+		>
+		<div class="flex">
+			<div class="mr-6">
+				<!-- <label for="status" class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+                    >Status</label
+                > -->
+				<select
+					id="status"
+					bind:value={selectStatus}
+					on:change={(e) => handleStatusChange(e)}
+					class="block w-full pl-4 pt-3 pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
 				>
+					<option value="" selected>
+						<p>Status ?</p>
+					</option>
+					<option value="true">Active</option>
+					<option value="false">Deactive</option>
+				</select>
 			</div>
-		</form>
+
+			<form class="w-[25%] min-w-[250px]">
+				<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only"
+					>Search</label
+				>
+				<div class="relative">
+					<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+						<svg
+							class="w-4 h-4 text-gray-500 dark:text-gray-400"
+							aria-hidden="true"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 20 20"
+						>
+							<path
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+							/>
+						</svg>
+					</div>
+					<input
+						type="search"
+						bind:value={searchName}
+						id="default-search"
+						class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+						placeholder="Search user buy name..."
+						autocomplete="off"
+					/>
+					<button
+						type="submit"
+						class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+						>Search</button
+					>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<!--Table data-->
