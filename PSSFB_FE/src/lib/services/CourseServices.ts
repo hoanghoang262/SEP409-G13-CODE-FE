@@ -85,3 +85,13 @@ export const delNotes = async (id: number) => {
         return error
     }
 };
+
+export const getExam = async (id: number) => {
+	try {
+		const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetExamQuestionDetail?lastExamId=${id}`)
+		return result.data
+	} catch (error) {
+		console.log(error);
+        return error
+	}
+}

@@ -18,7 +18,8 @@
 >
 	<div class="flex items-center w-3/5">
 		<a href="/" class="w-1/12"><img alt="logo" class="full" src={logoWhite} /></a>
-		{#if $currentUser?.Roles?.includes('Admin')}
+		{#if $currentUser?.Role?.includes('Admin')}
+		
 			{#each headerAdminData as header}
 				<a
 					href={header.link}

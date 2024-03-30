@@ -95,3 +95,14 @@ export function checkPasswords(password:string) {
 	}
 	return true;
 }
+
+export function secondsToDateTime(seconds:number) {
+    var date = new Date(seconds * 1000); // Convert seconds to milliseconds
+    var day = ("0" + date.getDate()).slice(-2);
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var year = date.getFullYear();
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+
+    return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
+}

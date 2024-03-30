@@ -11,6 +11,6 @@
 		goto("/")
 	}
 </script>
-<button on:click={onLogout} class="bg-black rounded-lg p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out"
+<button on:click={onLogout} class="bg-blue-500 rounded-lg p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-blue-500 hover:bg-white transition ease-in-out"
 	>Logout</button
 >
