@@ -101,7 +101,7 @@ export interface Question {
 export function initQuestion(): Question {
 	return {
 		contentQuestion: 'Question',
-		time: 3000,
+		time: 3,
 		answerOptions: [initAnswer(true), initAnswer(false)]
 	};
 }
@@ -158,4 +158,35 @@ export function initChapter(): Chapter {
 		lessons: [initLessions()],
 		codeQuestions: [intitCodeQuestion()]
 	};
+}
+
+export interface questionExam {
+	contentQuestion: string,
+	answerExams: answerOption[]
+}
+
+export function initQuestionExam(): questionExam {
+	return {
+		contentQuestion: "contentQuestion",
+		answerExams: [initAnswer(true), initAnswer(false)]
+	}
+}
+
+export interface Exam {
+	name: string,
+	time: number,
+	chapterId:number
+	percentageCompleted: number,
+	questionExams: questionExam[],
+
+}
+
+export function initExam(chapterId:number) : Exam {
+	return {
+		name: 'ExamName',
+		time: 120,
+		chapterId,
+		percentageCompleted: 50,
+		questionExams: [initQuestionExam()]
+	}
 }

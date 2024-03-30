@@ -21,7 +21,7 @@
 		const decodeData: any = await decodeJWT(JWTFS);
 		console.log('decodeData', decodeData);
 		user.UserID = decodeData.UserID;
-		user.Role = decodeData.Role;
+		user.Role = decodeData.Roles;
 		user.jwt = JWTFS;
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
@@ -41,7 +41,7 @@
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		user.UserID = decodeData.UserID;
-		user.Role = decodeData.Role;
+		user.Role = decodeData.Roles;
 		user.jwt = JWTFS;
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
@@ -68,7 +68,7 @@
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
 			const decodeData: any = decodeJWT(JWTFS);
 			user.UserID = decodeData.UserID;
-			user.Role = decodeData.Role;
+			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
 			console.log("decoded data", decodeData)

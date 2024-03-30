@@ -14,8 +14,8 @@
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.lession;
-	let comments = data?.comments;
-	let notes = data?.notes;
+	let comments = data?.comments??[];
+	let notes = data?.notes??[];
 	let currentTime = 0;
 	let section = 'Comments';
 

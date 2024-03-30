@@ -1,6 +1,6 @@
 import { loginByGoogle } from "$lib/services/AuthenticationServices";
 import { registerWithEmailAndPsr } from "../../../firebase";
-import { checkExist, decodeJWT } from "../../../helpers/helpers";
+import { checkExist, decodeJWT, trimUserData } from "../../../helpers/helpers";
 
 export const actions = {
     
@@ -19,7 +19,7 @@ export const actions = {
 			user.Role = decodeData.Role;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
-            cookies.set('user', JSON.stringify(user), {
+            cookies.set('user', JSON.stringify(trimUserData(user)), {
                 path: '/',
                 httpOnly: true,
                 sameSite: 'strict',

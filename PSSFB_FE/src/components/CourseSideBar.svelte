@@ -33,6 +33,10 @@
 	const codelessionClick = (l: any, index: number, lindex:number) => {
 		goto(`/codelession/${courseId}/${index}/${lindex}`);
 	};
+
+	const examclick = (l: any, index: number, lindex:number) => {
+		goto(`/exam/${courseId}/${index}/${lindex}`);
+	};
 </script>
 
 <div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white">
@@ -88,6 +92,16 @@
 					<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
 
 					<p class="truncate pr-10">{l.description}</p>
+				</div>
+			{/each}
+
+			{#each s.lastExam as l}
+				<div class="pl-10 mb-5 flex items-center justify-between">
+					<Icon class="mr-3 text-2xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: gray" />
+
+					<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
+						>{l.name}</button
+					>
 				</div>
 			{/each}
 		</div>

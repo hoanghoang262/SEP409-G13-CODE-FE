@@ -4,14 +4,13 @@
 	import Button from '../atoms/Button.svelte';
 	import { Modal } from 'flowbite-svelte';
 	import {
-	approveCourse,
+		approveCourse,
 		deleteChapter,
 		deleteCodeQuestion,
 		deleteLession,
+		deleteModExam,
 		getModCourseById,
-
 		sendCourseToApprove
-
 	} from '$lib/services/ModerationServices';
 	import { showToast } from '../helpers/helpers';
 	import { pageStatus } from '../stores/store';
@@ -56,8 +55,12 @@
 		goto(`/manager/coursesmanager/editcourse/editcodelession/${courseId}/${lindex}`);
 	};
 
+	const examclick = (l: any, index: number, lindex: number) => {
+		goto(`/manager/coursesmanager/editcourse/editexam/${courseId}/${lindex}`);
+	};
+
 	const deleteFunc = async () => {
-		pageStatus.set('load')
+		pageStatus.set('load');
 		if (deleteObject) {
 			switch (deleteObject.type) {
 				case 'chapter':
@@ -87,15 +90,28 @@
 						showToast('Deleted practice question ', 'Something went wrong', 'error');
 					}
 					break;
+				case 'exam':
+					try {
+						await deleteModExam(deleteObject.id);
+						showToast('Deleted exam ', 'Delete exam success', 'success');
+					} catch (error) {
+						console.log(error);
+						showToast('Deleted exam ', 'Something went wrong', 'error');
+					}
+					break;
 			}
 			course = await getModCourseById(course.id);
-			pageStatus.set('done')
+			pageStatus.set('done');
 		}
 	};
 </script>
 
 <div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white pr-3">
-	<div class="text-2xl font-medium px-3 py-5"><button on:click={() => goto(`/manager/coursesmanager/editcourse/${courseId}`)}>{course.name}</button></div>
+	<div class="text-2xl font-medium px-3 py-5">
+		<button on:click={() => goto(`/manager/coursesmanager/editcourse/${courseId}`)}
+			>{course.name}</button
+		>
+	</div>
 
 	<hr class="my-5" />
 
@@ -140,9 +156,11 @@
 				</div>
 			{/each}
 			<div class="flex justify-end my-5">
-				<button class="text-blue-500"
+				<button
+					class="text-blue-500"
 					on:click={() => goto(`/manager/coursesmanager/addcourse/addlession/${courseId}/${s.id}`)}
-				>Add Lession</button>
+					>Add Lession</button
+				>
 			</div>
 
 			{#each s.codeQuestions as l}
@@ -162,25 +180,54 @@
 			{/each}
 
 			<div class="flex justify-end my-5">
-				<button class="text-blue-500"
+				<button
+					class="text-blue-500"
 					on:click={() =>
 						goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${s.id}`)}
-				>Add Practice Question</button>
+					>Add Practice Question</button
+				>
+			</div>
+
+			{#each s.lastExam as l}
+				<div class="pl-10 mb-5 flex items-center justify-between">
+					<Icon class="mr-3 text-2xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: gray" />
+
+					<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
+						>{l.name}</button
+					>
+					<button
+						on:click={() => {
+							deleteObject = { id: l.id, type: 'exam' };
+							firstWM = true;
+						}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
+					>
+				</div>
+			{/each}
+			<div class="flex justify-end my-5">
+				<button
+					class="text-blue-500"
+					on:click={() =>
+						goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${s.id}`)}
+					>Add Exam</button
+				>
 			</div>
 		</div>
 	{/each}
 	<div class="flex justify-end my-5">
-		<button class="text-blue-500"
+		<button
+			class="text-blue-500"
 			on:click={() => goto(`/manager/coursesmanager/addcourse/addchapter/${courseId}`)}
-		>Add Chapter</button>
+			>Add Chapter</button
+		>
 	</div>
 	<div class="flex justify-end my-5">
-		<button class="text-blue-500"
+		<button
+			class="text-blue-500"
 			on:click={async () => {
-				 sendCourseToApprove(courseId)
-				showToast("Waiting for approved","Waiting for approved","info")
-			}}
-		>Send to approved</button>
+				sendCourseToApprove(courseId);
+				showToast('Waiting for approved', 'Waiting for approved', 'info');
+			}}>Send to approved</button
+		>
 	</div>
 </div>
 

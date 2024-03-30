@@ -1,6 +1,7 @@
 <script>
 	import Avatar from '../../../../../atoms/Avatar.svelte';
     import CodeEditor from '../../../../../components/CodeEditor.svelte';
+	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
 	export let data;
 	const course = data?.course;
 	const chapter = data?.chapter;
@@ -10,13 +11,14 @@
 <div class="pt-32 bg-slate-200 text-black">
 	<div class="px-5 py-2 font-medium truncate">{course.name} > {chapter.name} > {lession.description}</div>
 	<div class="flex bg-white text-black">
-		<div class="w-1/2 p-3 overflow-y-scroll max-h-screen">
+		<div class="w-1/5"><CourseSideBar {course} /></div>
+		<div class="w-2/5 p-3 overflow-y-scroll max-h-screen">
 			<div class="flex items-center"><Avatar classes="w-10 mr-3"/> {course.created_Name}</div>
 			<hr class="my-5"/>
 			<p>
 				{@html lession.description}
 			</p>
 		</div>
-		<div class="w-1/2"><CodeEditor value={lession.codeForm} lang={course.tag} /></div>
+		<div class="w-2/5"><CodeEditor value={lession.codeForm} lang={course.tag} /></div>
 	</div>
 </div>
