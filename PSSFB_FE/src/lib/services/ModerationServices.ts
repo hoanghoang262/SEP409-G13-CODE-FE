@@ -53,6 +53,19 @@ export const addCodeQuestion = async (codeques: any) => {
 	}
 };
 
+export const addExam = async (exam: any) => {
+	try {
+		const result = await axios.post(
+			`https://moderationservice.azurewebsites.net/api/LastExam/CreateLastExam`,
+			exam
+		);
+		return result.data.value;
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+};
+
 export const updateCourse = async (course: any) => {
 	try {
 		const result = await axios.put(
@@ -97,6 +110,19 @@ export const updateCodeQuestion = async (codeques: any) => {
 		const result = await axios.put(
 			`https://moderationservice.azurewebsites.net/api/PracticeQuestion/UpdatePracticeQuestion?id=${codeques.practiceQuestionId}`,
 			codeques
+		);
+		return result.data.value;
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+};
+
+export const updateExam = async (exam: any) => {
+	try {
+		const result = await axios.put(
+			`https://moderationservice.azurewebsites.net/api/LastExam/UpdateLastExam?id=${exam.lastExamId}`,
+			exam
 		);
 		return result.data.value;
 	} catch (err) {
@@ -212,6 +238,13 @@ export const getModPraticeQuestionById = async (id: number) => {
 	return result.data.value
 }
 
+export const getModExamById = async (id: number) => {
+	const result = await axios.get(
+		`https://moderationservice.azurewebsites.net/api/LastExam/GetLastExamById?id=${id}`
+	);
+	return result.data.value
+}
+
 export const approvePost= async (postId: number) => {
 	try {
 		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationPost?postId=${postId}`)
@@ -235,6 +268,16 @@ export const deleteModPost= async (postId: number) => {
 export const deleteModCourse= async (courseId: number) => {
 	try {
 		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/CourseModeration/DeleteCourse?courseId=${courseId}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
+
+export const deleteModExam= async (examId: number) => {
+	try {
+		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/LastExam/DeleteLastExam?id=${examId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)

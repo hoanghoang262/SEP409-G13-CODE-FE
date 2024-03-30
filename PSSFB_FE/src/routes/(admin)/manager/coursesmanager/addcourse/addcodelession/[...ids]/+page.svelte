@@ -11,6 +11,7 @@
 	import { showToast } from '../../../../../../../helpers/helpers';
 	import { onMount } from 'svelte';
 	import { pageStatus } from '../../../../../../../stores/store';
+	import { goto } from '$app/navigation';
 
 	export let data;
 	const ids = $page.params.ids.split('/');
@@ -76,8 +77,7 @@
 			const response = await addCodeQuestion({ chapterId, practiceQuestion: codeQuestion });
             console.log(response)
 			showToast('Add Practice Question', 'Add practice Question Success', 'success');
-            course = await getModCourseById(courseId);
-            console.log(course)
+            goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${chapterId}`);
 		} catch (e) {
 			console.log(e);
 			showToast('Add Practice Question', 'Something went wrong', 'error');

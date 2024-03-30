@@ -2,12 +2,12 @@ import axios from "axios"
 
 export const getCommentByPost = async(id:number) => {
     const result = await axios.get(`https://commentapi.azurewebsites.net/api/Comment/GetAllCommentInPost?postId=${id}`)
-    return result.data
+    return result.data.value
 }
 
 export const getCommentByCourse = async(id:number) => {
     const result = await axios.get(`https://commentapi.azurewebsites.net/api/Comment/GetAllCommentInCourse?courseId=${id}`)
-    return result.data
+    return result.data.value
 }
 
 export const getCommentByLession = async(id:number) => {

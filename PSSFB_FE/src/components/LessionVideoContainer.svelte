@@ -39,12 +39,13 @@
         const video:any = document.getElementById("video")
         video.pause()
         pageStatus.set("load")
+		
 		const response = await addNote(
 			{
 				lessonId: lession.id,
 				userId: $currentUser.UserID,
 				contentNote: note,
-				videoLink: currentTime
+				videoLink: Math.floor(currentTime)
 			},
 		);
         console.log("response",response)

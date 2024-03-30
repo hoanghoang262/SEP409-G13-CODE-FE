@@ -1,6 +1,6 @@
 import { loginByGoogle } from "$lib/services/AuthenticationServices";
 import { changePasswordWithEmail, loginWithEmailAndPsr, registerWithEmailAndPsr } from "../firebase";
-import { checkExist, decodeJWT } from "../helpers/helpers";
+import { checkExist, decodeJWT, trimUserData } from "../helpers/helpers";
 import { currentUser } from "../stores/store";
 
 
@@ -77,10 +77,10 @@ export const actions = {
             const decodeData:any = await decodeJWT(JWTFS)
             console.log("decodeData", decodeData)
             user.UserID = decodeData.UserID;
-			user.Role = decodeData.Role;
+			user.Role = decodeData?.Roles??'Student';
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
-            cookies.set('user', JSON.stringify(user), {
+            cookies.set('user', JSON.stringify(trimUserData(user)), {
                 path: '/',
                 httpOnly: true,
                 sameSite: 'strict',

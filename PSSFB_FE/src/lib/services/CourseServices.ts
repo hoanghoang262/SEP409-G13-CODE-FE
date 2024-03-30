@@ -46,7 +46,7 @@ export const getNotes = async (userId: number, lessionId: number) => {
 	const result = await axios.get(
 		`https://coursesservices.azurewebsites.net/api/Note/GetAllNoteOfUser?userId=${userId}&lessonId=${lessionId}`
 	);
-	return result.data;
+	return result.data.value;
 };
 
 export const addNote = async (Note:any) => {

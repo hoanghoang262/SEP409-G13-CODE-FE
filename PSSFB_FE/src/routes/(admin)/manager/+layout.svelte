@@ -23,13 +23,13 @@
 		<div class="pl-5">
 			<div class="font-medium text-xl mb-2">Courses Manager</div>
 			<div class="mb-5">
-				{#if $currentUser?.Role == 'Admin System'}
+				{#if $currentUser?.Role == 'AdminSystem'}
 					<a class="pl-3 hover:bg-neutral-100 block" href="/manager/moderationcourses"
 						>Moderation Courses</a
 					>
 				{/if}
 
-				{#if $currentUser?.Role == 'Admin Bussiness'}
+				{#if $currentUser?.Role == 'AdminBussiness'}
 					<a href="/manager/creattingcourses" class="pl-3 hover:bg-neutral-100 block"
 						>Created Courses</a
 					>

@@ -29,7 +29,7 @@
 		<div class="px-2 py-5 flex justify-between items-center">
 			<div class="flex items-center text-sm">{course.tag}</div>
 
-			{#if $currentUser?.Role == 'Admin System'}
+			{#if $currentUser?.Role == 'AdminSystem'}
 				<div>
 					{#if course?.status != 'Accepted'}
 						<Button
@@ -51,7 +51,7 @@
 						content="Detail"
 					/>
 				</div>
-			{:else if $currentUser?.Role == 'Admin Bussiness'}
+			{:else if $currentUser?.Role == 'AdminBussiness'}
 				<div>
 					<Button
 						onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
@@ -84,7 +84,7 @@
 		<div class="px-2 py-5 flex justify-between items-center">
 			<div class="flex items-center text-sm">{course.createdAt}</div>
 
-			{#if $currentUser?.Role == 'Admin System'}
+			{#if $currentUser?.Role == 'AdminSystem'}
 				<div>
 					{#if course?.status != 'Accepted'}
 						<Button
@@ -107,7 +107,7 @@
 						content="Detail"
 					/> -->
 				</div>
-			{:else if $currentUser?.Role == 'Admin Bussiness'}
+			{:else if $currentUser?.Role == 'AdminBussiness'}
 				<div>
 					<Button
 						onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}

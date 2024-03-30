@@ -41,7 +41,7 @@
 			<Button2
 				onclick={() => goto(`/overall/${data.id}`)}
 				classes="py-3 px-16 bg-white text-black my-10"
-				content="Entrol for free"
+				content="Enroll for free"
 			/>
 			<div>There are 65,273 already enrolled</div>
 		</div>
