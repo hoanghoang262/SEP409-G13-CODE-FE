@@ -4,9 +4,9 @@
 	import RegisterContainer from '../../../components/RegisterContainer.svelte';
 </script>
 
-<div class="bg-blue-950 text-white">
-	<div class="flex items-center px-20 py-40">
-		<img alt="blb" class="m-auto w-3/6" src={bigLogBlack} />
-		<div class="w-2/6"><RegisterContainer /></div>
+<div class="overflow-x-auto md:h-[calc(100vh-64px)] h-[calc(100vh-64px)] bg-blue-950 text-white">
+	<div class="h-full flex items-center justify-center md:justify-between">
+		<img alt="blb" class="md:block hidden w-3/6" src={bigLogBlack} />
+		<div class="md:w-2/6 md:mr-24"><RegisterContainer /></div>
 	</div>
 </div>

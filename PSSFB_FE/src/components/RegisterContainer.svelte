@@ -16,7 +16,7 @@
 
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
-		pageStatus.set('load')
+		pageStatus.set('load');
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		console.log('decodeData', decodeData);
@@ -26,18 +26,18 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		
+
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
-		pageStatus.set('done')
+		pageStatus.set('done');
 	};
 
 	const LWG = async () => {
 		const user: any = await loginWithGoogle();
-		pageStatus.set('load')
+		pageStatus.set('load');
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		user.UserID = decodeData.UserID;
@@ -46,32 +46,60 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		
+
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
-		pageStatus.set('done')
+		pageStatus.set('done');
 	};
-	const registerFrmSubmit = (event:any) => {
-		if(!checkPasswords(Password)){
+	const registerFrmSubmit = (event: any) => {
+		if (!checkPasswords(Password)) {
 			event.preventDefault();
-			showToast("Password warning","password must be 6 character long","warning")
+			showToast('Password warning', 'password must be 6 character long', 'warning');
 		}
-	}
+	};
 </script>
 
-<div class="rounded-xl px-7 py-10 bg-white text-black">
-	<h3 class="font-bold text-5xl mb-8 text-center">Start Now</h3>
+<div class="rounded-xl px-7 py-4 md:py-10 bg-white text-black">
+	<h3 class="font-bold text-4xl md:text-5xl mb-4 md:mb-8 text-center">Register</h3>
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
 	<form on:submit={registerFrmSubmit} method="POST" action="/?/register">
-		<div class="mb-3"><Input classes="w-full border border-black" name="Username" required={true} value={Username} placehoder="Username" /></div>
-		<div class="mb-3"><Input classes="w-full border border-black" name="Email" required={true} value={Email} placehoder="Email" /></div>
-		<div class="mb-3"><PasswordInput name="Password" required={true} bind:value={Password} placehoder="Password" /></div>
-		<div class="mb-3"><PasswordInput name="RePassword" required={true} value={RePassword} placehoder="Re-Enter Password" /></div>
-		<div class="my-10">
-			<input required type="checkbox" /> <span>I agree to PSSFBE <a href="/">Terms of use</a></span>
+		<div class="mb-3">
+			<Input
+				classes="w-full border border-black"
+				name="Username"
+				required={true}
+				value={Username}
+				placehoder="Username"
+			/>
+		</div>
+		<div class="mb-3">
+			<Input
+				classes="w-full border border-black"
+				name="Email"
+				required={true}
+				value={Email}
+				placehoder="Email"
+			/>
+		</div>
+		<div class="mb-3">
+			<PasswordInput name="Password" required={true} bind:value={Password} placehoder="Password" />
+		</div>
+		<div class="mb-3">
+			<PasswordInput
+				name="RePassword"
+				required={true}
+				value={RePassword}
+				placehoder="Re-Enter Password"
+			/>
+		</div>
+		<div class="my-4 md:my-10">
+			<input class="items-center" required type="checkbox" />
+			<span class="items-center text-sm"
+				>I agree to PSSFBE <a class="items-center text-blue-700" href="/">Terms of use</a></span
+			>
 		</div>
 		<button
 			class="bg-black rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"

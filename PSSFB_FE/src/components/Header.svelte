@@ -41,7 +41,7 @@
 				{#each headerData as header}
 					<a
 						href={header.link}
-						class=" text-sm lg:text-xl mx-3 lg:mx-7 hover:text-green-500 {$page.url.pathname.includes(
+						class=" text-sm lg:text-md xl:text-xl mx-3 lg:mx-4 xl:mx-5 hover:text-green-500 {$page.url.pathname.includes(
 							header.link
 						)
 							? 'text-blue-500'
