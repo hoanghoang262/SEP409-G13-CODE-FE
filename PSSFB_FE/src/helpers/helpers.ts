@@ -89,12 +89,29 @@ export function convertSecondsToMmSs(seconds:number) {
 	return `${formattedMinutes}:${formattedSeconds}`;
   }
 
-export function checkPasswords(password:string) {
-	if(!checkExist(password)&&password.length<6){
-		return false;
+  export function checkPasswords(password:string) {
+	// Kiểm tra độ dài của mật khẩu
+	if (!checkExist(password) || password.length < 8 || password.length > 32) {
+	  return false;
 	}
-	return true;
-}
+  
+	// Kiểm tra xem mật khẩu có chứa ít nhất một ký tự viết hoa và ít nhất một chữ số hay không
+	let hasUpperCase = false;
+  let hasNumber = false;
+  let hasSpecialChar = false;
+  for (let i = 0; i < password.length; i++) {
+    const char = password[i];
+    if (char >= 'A' && char <= 'Z') {
+      hasUpperCase = true;
+    } else if (!isNaN(parseInt(char))) {
+      hasNumber = true;
+    } else if (/[^A-Za-z0-9]/.test(char)) {
+      hasSpecialChar = true;
+    }
+  }
+
+  return hasUpperCase && hasNumber && hasSpecialChar;
+  }
 
 export function secondsToDateTime(seconds:number) {
     var date = new Date(seconds * 1000); // Convert seconds to milliseconds
