@@ -1,14 +1,20 @@
 <script>
 	import { convertSecondsToMmSs, secondsToDateTime } from '../../../../../../helpers/helpers';
     import ExamAnswers from '../../../../../../atoms/ExamAnswers.svelte'
+	import { goto } from '$app/navigation';
 
     export let data;
     const exam = data.exam;
     $: questionExams = exam.questionExams;
+    const chapterId = data.chapterId;
+    const courseId = data.courseId;
     let timeleft = exam.time
     let time = exam.time
 
     setInterval(() => {
+        if(timeleft == 0){
+            goto(`exam/${courseId}/${chapterId}/${exam.id}`)
+        }
         timeleft = timeleft-1
     },1000)
 </script>

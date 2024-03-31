@@ -1,14 +1,16 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 	import Header from '../components/Header.svelte';
 	import Footer from '../components/Footer.svelte';
 	import { beforeUpdate, onMount } from 'svelte';
-	import { checkExist } from '../helpers/helpers';
+	import { checkExist, showToast } from '../helpers/helpers';
 	import { currentUser, pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
 	import { FlatToast, ToastContainer } from 'svelte-toasts';
 
 	export let data;
+
+	
 
 	if (checkExist(data?.user)) {
 		currentUser.set(data.user);

@@ -8,7 +8,8 @@ export const actions = {
         const data = await request.formData();
         console.log(data)
         console.log("server register working")
-        const user:any = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
+        try {
+            const user:any = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
         console.log("user",user)
         if(checkExist(user)){
             const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName)
@@ -16,7 +17,7 @@ export const actions = {
             const decodeData:any = await decodeJWT(JWTFS)
             console.log("decodeData", decodeData)
             user.UserID = decodeData.UserID;
-			user.Role = decodeData.Role;
+			user.Role = decodeData?.Roles??'Student';
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
             cookies.set('user', JSON.stringify(trimUserData(user)), {
@@ -26,7 +27,13 @@ export const actions = {
                 maxAge: 60 * 5
             });
         }
-        return {};
+        } catch (error:any) {
+            console.log(error)
+            return{
+                error: error?.message,
+                type: 'error',
+            }
+        }
     },
     
 }

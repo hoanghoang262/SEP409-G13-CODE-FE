@@ -136,10 +136,7 @@ const loginWithGoogle = async () => {
 			const credential = GoogleAuthProvider.credentialFromError(error);
 			// ...
 			console.log('error', errorMessage);
-			return {
-				errorMessage,
-				type: 'error'
-			}
+			
 		});
 	return user;
 };

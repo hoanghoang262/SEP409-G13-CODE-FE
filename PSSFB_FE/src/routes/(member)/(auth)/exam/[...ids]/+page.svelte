@@ -19,7 +19,7 @@
             <div class="flex items-center text-neutral-500">Exam <Icon icon="mdi:dot" class="text-4xl"  style="color: #aeadad" /> {convertSecondsToMmSs(exam.time)}</div>
             <div class="flex justify-between mt-20">
                 <div class="font-light text-3xl">MIN GRADE: {exam.percentageCompleted??0}%</div>
-                <button on:click={() => goto(`/exam/takeexam/${exam.id}`)} class="font-medium text-white text-lg bg-blue-500 px-10 py-5">Take Exam</button>
+                <button on:click={() => goto(`/exam/takeexam/${course.id}/${chapter.id}/${exam.id}`)} class="font-medium text-white text-lg bg-blue-500 px-10 py-5">Take Exam</button>
             </div>
 		</div>
 	</div>
