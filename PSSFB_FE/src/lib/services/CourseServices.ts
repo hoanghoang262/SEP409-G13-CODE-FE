@@ -95,3 +95,13 @@ export const getExam = async (id: number) => {
         return error
 	}
 }
+
+export const submitExam = async (submitData:any) => {
+	try {
+		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/CheckAnswer/SubmitLastExam`, submitData)
+		return result.data
+	} catch (error) {
+		console.log(error);
+        return error
+	}
+}
