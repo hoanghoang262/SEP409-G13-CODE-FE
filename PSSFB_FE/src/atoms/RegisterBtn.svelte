@@ -1,7 +1,9 @@
 <script>
-	export let onClick = () => {}
+	export let onClick = () => {};
 </script>
 
-<button on:click={onClick} class="bg-white rounded-lg p-3 font-medium text-black items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out"
+<button
+	on:click={onClick}
+	class="bg-white rounded-lg text-sm px-2 py-2 lg:px-3 lg:py-3 lg:text-md mr-2 lg:mr-3 font-medium text-black items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out"
 	>Register</button
 >

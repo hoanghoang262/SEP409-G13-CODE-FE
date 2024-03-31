@@ -105,35 +105,29 @@
 	};
 </script>
 
-<main>
+<main class="mx-5">
 	<!-- Search input -->
-	<div class="relative w-[90%] flex justify-end m-auto">
-		<div class="mr-6">
-			<!-- <label for="status" class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
-				>Status</label
-			> -->
+	<div class="relative w-full md:w-[90%] flex justify-end m-auto md:pt-5 pt-3">
+		<div class="mr-4 md:mr-6">
 			<select
 				id="status"
 				bind:value={selectStatus}
 				on:change={(e) => handleStatusChange(e)}
-				class="block w-full pl-4 pt-3 pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+				class="block w-full pl-2 md:pl-4 md:pt-3 md:pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
 			>
 				<option value="" selected>
-					<p>Status ?</p>
+					<p>Status</p>
 				</option>
 				<option value="true">Active</option>
 				<option value="false">Deactive</option>
 			</select>
 		</div>
 
-		<form class="w-[25%] min-w-[250px]">
-			<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only"
-				>Search</label
-			>
+		<div class="md:w-[25%] w-[40%] min-w-[150px]">
 			<div class="relative">
 				<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
 					<svg
-						class="w-4 h-4 text-gray-500 dark:text-gray-400"
+						class="w-4 h-4 text-gray-500"
 						aria-hidden="true"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -152,35 +146,32 @@
 					type="search"
 					bind:value={searchName}
 					id="default-search"
-					class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+					class="block w-full px-4 pt-2 pb-3 md:py-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
 					placeholder="Search user buy name..."
 					autocomplete="off"
 				/>
-				<button
-					type="submit"
-					class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-					>Search</button
-				>
 			</div>
-		</form>
+		</div>
 	</div>
 
 	<!--Table data-->
 	<div
-		class="relative overflow-x-auto shadow-md sm:rounded-lg w-[90%] mx-auto mt-5 border-gray-300 border-2"
+		class="overflow-x-auto shadow-md sm:rounded-lg w-full md:w-[90%] mx-auto mt-3 md:mt-5 border-gray-300 border-2"
 	>
-		<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+		<table
+			class="w-full text-xs md:text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+		>
 			<thead class="text-xs text-white uppercase bg-green-700">
 				<tr>
-					<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2"
+					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
 						><div class="flex items-center justify-center">Avata</div></th
 					>
 					{#each tableHeader as item, i}
-						<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2">
+						<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2">
 							<div class="flex items-center justify-center">{item.label}</div>
 						</th>
 					{/each}
-					<th class="px-6 py-5 border-gray-400 border-r-2 border-l-2"
+					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
 						><div class="flex items-center justify-center">Seting</div></th
 					>
 				</tr>

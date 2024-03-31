@@ -8,6 +8,7 @@
 	let paginators = $page.state.paginators;
 	// @ts-ignore
 	export let data;
+
 	let status = data?.status;
 	let banModalStatus = false;
 
@@ -168,7 +169,6 @@
 	</div> -->
 
 	<div class="w-3/4 m-auto">
-		<h1 class="text-3xl font font-semibold py-7 px-5">{data.userName}</h1>
 		<h1 class="font-thinner flex text-4xl pt-10 px-5">Your Profile</h1>
 		<div class="mx-5 my-5">
 			<label class="relative block p-3 border-2 border-black rounded" for="username">
@@ -177,18 +177,6 @@
 					class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
 					autocomplete="off"
 					id="username"
-					type="text"
-					placeholder="Your name"
-				/>
-			</label>
-		</div>
-		<div class="mx-5 my-5">
-			<label class="relative block p-3 border-2 border-black rounded" for="fullname">
-				<span class="text-md font-semibold text-zinc-900">Full Name </span>
-				<input
-					class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
-					autocomplete="off"
-					id="fullname"
 					type="text"
 					placeholder="Your name"
 				/>
@@ -227,18 +215,54 @@
 				/>
 			</label>
 		</div>
-		<div class="mx-5 my-5">
-			<label class="relative block p-3 border-2 border-black rounded" for="email">
-				<span class="text-md font-semibold text-zinc-900">Email</span>
+		<div class="flex">
+			<div class=" w-1/2 mx-5 my-5">
+				<label class="relative block p-3 border-2 border-black rounded" for="email">
+					<span class="text-md font-semibold text-zinc-900">Email</span>
+					<input
+						class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+						autocomplete="off"
+						id="email"
+						type="text"
+						placeholder="Your name"
+					/>
+				</label>
+			</div>
+			<div class="w-1/2 mx-5 my-5">
+				<label class="relative block p-3 border-2 border-black rounded" for="phone">
+					<span class="text-md font-semibold text-zinc-900">Phone Number</span>
+					<input
+						class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+						autocomplete="off"
+						id="email"
+						type="phone"
+						placeholder="Your name"
+					/>
+				</label>
+			</div>
+		</div>
+		<div class=" mx-5 my-5">
+			<label class="relative block p-3 border-2 border-black rounded" for="fblink">
+				<span class="text-md font-semibold text-zinc-900">Facebook Link</span>
 				<input
 					class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
 					autocomplete="off"
 					id="email"
-					type="text"
+					type="fblink"
 					placeholder="Your name"
 				/>
 			</label>
 		</div>
+		<button
+			on:click={() => (banModalStatus = true)}
+			class="px-5 py-3 bg-red-600 rounded-lg text-white border-black border-2 hover:bg-red-500 float-end mx-5"
+		>
+			{#if status == true}
+				<p>Ban Account</p>
+			{:else}
+				<p>Unban Account</p>
+			{/if}
+		</button>
 	</div>
 	<div class="mt-5">
 		<!--Ban Model PopUp-->

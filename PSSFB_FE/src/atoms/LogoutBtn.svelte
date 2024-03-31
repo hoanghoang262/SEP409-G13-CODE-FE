@@ -1,16 +1,19 @@
 <script lang="ts">
-	import axios from "axios";
-	import { logout } from "../firebase";
-	import { currentUser } from "../stores/store";
-	import { goto } from "$app/navigation";
+	import axios from 'axios';
+	import { logout } from '../firebase';
+	import { currentUser } from '../stores/store';
+	import { goto } from '$app/navigation';
 
 	const onLogout = async () => {
-		currentUser.set(undefined)
-		await logout()
-		await axios.post("/?/logout",JSON.stringify({}))
-		goto("/")
-	}
+		currentUser.set(undefined);
+		await logout();
+		await axios.post('/?/logout', JSON.stringify({}));
+		goto('/');
+	};
 </script>
-<button on:click={onLogout} class="bg-black rounded-lg p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out"
+
+<button
+	on:click={onLogout}
+	class="bg-black text-sm lg:text-md rounded-lg px-2 py-1 lg:px-3 lg:py-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out"
 	>Logout</button
 >
