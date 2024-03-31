@@ -21,7 +21,9 @@
 		class=" fixed flex w-full bg-white text-black items-center font-medium border-b-2 z-10 justify-between lg:h-24 h-16"
 	>
 		<div class="flex items-center justify-center lg:w-64">
-			<a href="/" class="lg:w-28 w-24"><img alt="logo" class="full" src={logoWhite} /></a>
+			<a href="/" class="lg:w-28 w-24"
+				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
+			>
 		</div>
 		<div class="font-medium text-xl hidden md:block">
 			{#if $currentUser?.Role?.includes('Admin')}
@@ -73,7 +75,10 @@
 					<LoginBtn onClick={() => goto('/')} />
 					<RegisterBtn onClick={() => goto('/register')} />
 				{:else}
-					<a href="/profile" class="flex justify-center items-center mr-2 lg:mr-4">
+					<a
+						href="/profile"
+						class="flex justify-center items-center mr-2 lg:mr-4 hover:bg-green-200 lg:px-2 rounded-full"
+					>
 						<Avatar classes="w-8 lg:w-10 rounded-full lg:mr-3" src={$currentUser.photoURL} />
 						<p class="lg:mr-3 hidden lg:block">{$currentUser.displayName}</p>
 					</a>

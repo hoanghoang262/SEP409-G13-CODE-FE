@@ -8,7 +8,13 @@
 	import PasswordInput from '../atoms/PasswordInput.svelte';
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
-	import { checkExist, checkPasswords, decodeJWT, showToast, trimUserData } from '../helpers/helpers';
+	import {
+		checkExist,
+		checkPasswords,
+		decodeJWT,
+		showToast,
+		trimUserData
+	} from '../helpers/helpers';
 
 	let Email = '';
 	let Password = '';
@@ -16,7 +22,7 @@
 
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
-		pageStatus.set('load')
+		pageStatus.set('load');
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		console.log('decodeData', decodeData);
@@ -26,18 +32,18 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		
+
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
-		pageStatus.set('done')
+		pageStatus.set('done');
 	};
 
 	const LWG = async () => {
 		const user: any = await loginWithGoogle();
-		pageStatus.set('load')
+		pageStatus.set('load');
 		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 		const decodeData: any = await decodeJWT(JWTFS);
 		user.UserID = decodeData.UserID;
@@ -46,23 +52,22 @@
 		user.displayName = decodeData.UserName;
 		currentUser.set(user);
 		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-		
+
 		if (user.Role.includes('Admin')) {
 			goto('/manager');
 		} else {
 			goto('/learning');
 		}
-		pageStatus.set('done')
+		pageStatus.set('done');
 	};
 
 	const login = async () => {
-		
-		if(!checkPasswords(Password)){
-			showToast("Password warning","password must be 6 character long","warning")
-			return
+		if (!checkPasswords(Password)) {
+			showToast('Password warning', 'password must be 6 character long', 'warning');
+			return;
 		}
 
-		pageStatus.set('load')
+		pageStatus.set('load');
 		const user: any = await loginWithEmailAndPsr(Email, Password);
 		if (checkExist(user)) {
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
@@ -71,10 +76,10 @@
 			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
-			console.log("decoded data", decodeData)
+			console.log('decoded data', decodeData);
 			currentUser.set(user);
 			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
-			
+
 			if (user.Role.includes('Admin')) {
 				goto('/manager');
 			} else {
@@ -83,7 +88,7 @@
 		} else {
 			showToast('Login', 'Wrong email or password', 'error');
 		}
-		pageStatus.set('done')
+		pageStatus.set('done');
 	};
 </script>
 
@@ -92,15 +97,17 @@
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
 
 	<div class="mb-3">
-		<Input classes="w-full border border-black" bind:value={Email} name="Email" placehoder="Email" />
+		<Input
+			classes="w-full border border-black"
+			bind:value={Email}
+			name="Email"
+			placehoder="Email"
+		/>
 	</div>
 	<div class="mb-3">
 		<PasswordInput bind:value={Password} name="Password" placehoder="Password" />
 	</div>
-	<div
-		
-		class="text-right "
-	>
+	<div class="text-right">
 		<button on:click={() => (showModal = true)}>forgot password?</button>
 	</div>
 	<div class="my-10"></div>

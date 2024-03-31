@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import axios from 'axios';
+	import { DatePicker } from 'stwui';
 
 	// @ts-ignore
 	let paginators = $page.state.paginators;
@@ -178,7 +179,9 @@
 					autocomplete="off"
 					id="username"
 					type="text"
-					placeholder="Your name"
+					placeholder="Your user name"
+					value={data?.userName}
+					readonly
 				/>
 			</label>
 		</div>
@@ -190,7 +193,9 @@
 					autocomplete="off"
 					id="fullname"
 					type="text"
-					placeholder="Your name"
+					placeholder="Your fullname"
+					value={data?.fullName}
+					readonly
 				/>
 			</label>
 		</div>
@@ -198,10 +203,10 @@
 			<!-- svelte-ignore a11y-img-redundant-alt -->
 			<img
 				class="h-20 w-20 object-cover rounded-full"
-				src="https://sahilnetic.xyz/sahilnetic.png"
+				src={data?.profilePict}
 				alt="Current profile photo"
 			/>
-			<label class="block pt-2">
+			<!-- <label class="block pt-2">
 				<span class="sr-only t-2">Choose profile photo</span>
 				<input
 					type="file"
@@ -213,8 +218,13 @@
 				  hover:file:bg-rose-300
 				"
 				/>
-			</label>
+			</label> -->
 		</div>
+
+		<DatePicker name="date" allowClear>
+			<DatePicker.Label slot="label">Date</DatePicker.Label>
+		</DatePicker>
+
 		<div class="flex">
 			<div class=" w-1/2 mx-5 my-5">
 				<label class="relative block p-3 border-2 border-black rounded" for="email">
@@ -224,7 +234,9 @@
 						autocomplete="off"
 						id="email"
 						type="text"
-						placeholder="Your name"
+						placeholder="Your email"
+						value={data?.email}
+						readonly
 					/>
 				</label>
 			</div>
@@ -234,12 +246,28 @@
 					<input
 						class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
 						autocomplete="off"
-						id="email"
-						type="phone"
-						placeholder="Your name"
+						id="phone"
+						type="text"
+						placeholder="Your phone"
+						value={data?.phone}
+						readonly
 					/>
 				</label>
 			</div>
+		</div>
+		<div class=" mx-5 my-5">
+			<label class="relative block p-3 border-2 border-black rounded" for="address">
+				<span class="text-md font-semibold text-zinc-900">Address</span>
+				<input
+					class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+					autocomplete="off"
+					id="address"
+					type="text"
+					placeholder="Your address"
+					value={data?.address}
+					readonly
+				/>
+			</label>
 		</div>
 		<div class=" mx-5 my-5">
 			<label class="relative block p-3 border-2 border-black rounded" for="fblink">
@@ -247,12 +275,15 @@
 				<input
 					class="w-full bg-transparent p-0 text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
 					autocomplete="off"
-					id="email"
-					type="fblink"
-					placeholder="Your name"
+					id="fblink"
+					type="text"
+					placeholder="Your facebook link"
+					value={data?.facebookLink}
+					readonly
 				/>
 			</label>
 		</div>
+
 		<button
 			on:click={() => (banModalStatus = true)}
 			class="px-5 py-3 bg-red-600 rounded-lg text-white border-black border-2 hover:bg-red-500 float-end mx-5"
