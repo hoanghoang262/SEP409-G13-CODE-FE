@@ -4,9 +4,9 @@ import { checkExist, getFormData } from "../../../../../../helpers/helpers";
 
 export async function load ({params}:any) {
     const id = params.id
-    const course = await getModCourseById(id)
+    const promise =  getModCourseById(id)
     return {
-        course
+        promise
     }
 }
 

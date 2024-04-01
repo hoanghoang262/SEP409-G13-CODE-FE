@@ -6,7 +6,7 @@
 </script>
 
 {#if type == 'default'}
-<button on:click={onclick} class=" bg-black rounded-md p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out "
+<button on:click={onclick} class=" bg-blue-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-blue hover:bg-white transition ease-in-out "
 	>{content}</button
 >
 {:else if type == 'danger'}

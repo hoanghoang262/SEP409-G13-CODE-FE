@@ -62,10 +62,10 @@
 	};
 
 	const login = async () => {
-		if (!checkPasswords(Password)) {
-			showToast('Password warning', 'password must be 6 character long', 'warning');
-			return;
-		}
+		// if (!checkPasswords(Password)) {
+		// 	showToast('Password warning', 'password must be 6 character long', 'warning');
+		// 	return;
+		// }
 
 		pageStatus.set('load');
 		const user: any = await loginWithEmailAndPsr(Email, Password);

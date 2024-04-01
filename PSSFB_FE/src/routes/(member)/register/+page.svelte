@@ -1,5 +1,6 @@
-<script>
-	import bigLogBlack from '../../../assets/Trắng 1.png';
+<script lang="ts">
+	import { beforeUpdate } from 'svelte';
+	import bigLogBlack from '../../../assets/Trắng final.png';
 	import LoginContainer from '../../../components/LoginContainer.svelte';
 	import RegisterContainer from '../../../components/RegisterContainer.svelte';
 </script>

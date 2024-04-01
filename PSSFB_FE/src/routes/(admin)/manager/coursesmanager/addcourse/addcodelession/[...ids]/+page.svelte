@@ -96,7 +96,14 @@
 			<Label>CodeForm</Label>
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
 			<Label>TestCases</Label>
-			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testcaseJava}/>
+			<Label>TestCases</Label>
+            {#if course?.tag == "Java"}
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testcaseJava}/>
+            {:else if course?.tag == "C"}
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC}/>
+            {:else if course?.tag == "C++"}
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus}/>
+            {/if}
 			<hr class="my-5" />
 			<!-- {#each testcases as t, index}
 				<div class="flex justify-between">

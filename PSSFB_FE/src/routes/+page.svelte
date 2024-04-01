@@ -4,7 +4,7 @@
 
 	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { checkExist } from '../helpers/helpers';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
 	import LearningPage from '../pages/LearningPage.svelte';
 	import RegisterContainer from '../components/RegisterContainer.svelte';

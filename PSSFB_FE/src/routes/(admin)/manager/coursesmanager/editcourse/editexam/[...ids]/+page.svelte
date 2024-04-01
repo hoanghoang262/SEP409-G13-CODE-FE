@@ -4,7 +4,7 @@
 	import Button from '../../../../../../../atoms/Button.svelte';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../../../../../../../components/AdminCourseSB.svelte';
-	import { initAnswer, initExam, initQuestionExam } from '$lib/type';
+	import { initAnswer, initAnswerExam, initExam, initQuestionExam, initQuestionExam2 } from '$lib/type';
 	import { pageStatus } from '../../../../../../../stores/store';
 	import { getModCourseById, updateExam } from '$lib/services/ModerationServices';
 	import { showToast } from '../../../../../../../helpers/helpers';
@@ -36,6 +36,7 @@
 	const UpdateExam = async () => {
 		pageStatus.set("load")
 		try{
+			console.log(JSON.stringify({lastExamId: Exam.id, lastExam: Exam}))
 			const response = await updateExam({lastExamId: Exam.id, lastExam: Exam})
 			console.log(response)
 			course = await getModCourseById(course.id)
@@ -116,7 +117,7 @@
 		onclick={() =>
 			(Exam.questionExams[SelectedQIndex].answerExams = [
 				...Exam.questionExams[SelectedQIndex].answerExams,
-				initAnswer(false)
+				initAnswerExam(false, Exam.id)
 			])}
 		content="Add Answer"
 	/>
