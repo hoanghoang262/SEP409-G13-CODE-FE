@@ -74,7 +74,7 @@
 
 		if(!isValidEmail(Email)){
 			event.preventDefault();
-			showToast('Email warning', 'please input an email', 'warning');
+			showToast('Email warning', 'invalid email', 'warning');
 		}
 	};
 </script>
