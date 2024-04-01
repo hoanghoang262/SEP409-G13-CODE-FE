@@ -3,9 +3,8 @@ import { courses, schedules, sysllabuses } from "../../../../../data/data";
 
 export async function load ({params}:any){
     const id = params.id;
-    const course = await getCourseById(id);
+    const promise = getCourseById(id);
     return {
-        course: course,
-        id:id
+        promise,
     }
 }

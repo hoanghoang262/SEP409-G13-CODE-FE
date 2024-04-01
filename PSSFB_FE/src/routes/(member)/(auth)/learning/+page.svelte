@@ -2,11 +2,17 @@
 	import { goto } from "$app/navigation";
 	import { checkExist } from "../../../../helpers/helpers";
 	import LearningPage from "../../../../pages/LearningPage.svelte";
+	import LoadingPage from "../../../../pages/LoadingPage.svelte";
 	import { currentUser } from "../../../../stores/store";
 
 export let data:any
-const courses = data.result.items
+const promise = data.promise
 
 </script>
 
-<LearningPage courses={courses}/>
+{#await promise}
+<LoadingPage />
+{:then result} 
+<LearningPage courses={result.items}/>
+{/await}
+

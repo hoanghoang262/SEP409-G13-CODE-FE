@@ -90,6 +90,20 @@ export function initAnswer(correctAnswer: boolean): answerOption {
 		optionsText: 'Answer',
 		correctAnswer
 	};
+} 
+
+export interface answerExam {
+	examId:number;
+	optionsText: string;
+	correctAnswer: boolean;
+}
+
+export function initAnswerExam(correctAnswer: boolean, examId:number): answerExam {
+	return {
+		examId,
+		optionsText: 'Answer',
+		correctAnswer
+	};
 }
 
 export interface Question {
@@ -129,7 +143,9 @@ export function initLessions(): Lession {
 export interface codeQuestion {
 	description: string;
 	codeForm: string;
-	testcaseJava: string;
+	testcaseJava: string|undefined;
+	testCaseC:string|undefined;
+	testCaseCplus:string|undefined
 //	testCases: TestCase[];
 }
 
@@ -137,7 +153,9 @@ export function intitCodeQuestion(): codeQuestion {
 	return {
 		description: 'description',
 		codeForm: '',
-		testcaseJava: '',
+		testcaseJava:undefined,
+		testCaseC:undefined,
+		testCaseCplus:undefined
 //		testCases: [initTestCase('int')]
 	};
 }
@@ -162,13 +180,20 @@ export function initChapter(): Chapter {
 
 export interface questionExam {
 	contentQuestion: string,
-	answerExams: answerOption[]
+	answerExams: answerOption[]|answerExam[]
 }
 
 export function initQuestionExam(): questionExam {
 	return {
 		contentQuestion: "contentQuestion",
 		answerExams: [initAnswer(true), initAnswer(false)]
+	}
+}
+
+export function initQuestionExam2(examId:number): questionExam {
+	return {
+		contentQuestion: "contentQuestion",
+		answerExams: [initAnswerExam(true, examId), initAnswerExam(false, examId)]
 	}
 }
 

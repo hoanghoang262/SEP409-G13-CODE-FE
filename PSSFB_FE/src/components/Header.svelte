@@ -87,10 +87,18 @@
 			</div>
 		</div>
 	</div>
-	<!--top div bar-->
-	<div class="h-16 lg:h-24"></div>
-	<!--Drop bar-->
-	<div class={topbarStatus ? '' : 'hidden'}>
-		<DropBar />
+	<div class="flex w-2/5 items-center justify-end">
+		<select on:change={changelang} class="border-2 mr-5">
+			<option>en</option>
+			<option>vn</option>
+		</select>
+		{#if !$currentUser}
+			<LoginBtn onClick={() => goto('/')} />
+			<RegisterBtn onClick={() => goto('/register')} />
+		{:else}
+			<Avatar classes="w-1/12 rounded-full mr-3" src={$currentUser.photoURL} />
+			<a href="/profile" class="mr-3">{$currentUser.displayName}</a>
+			<LogoutBtn />
+		{/if}
 	</div>
-</main>
+</div>

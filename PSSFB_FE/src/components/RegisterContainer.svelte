@@ -69,7 +69,7 @@
 <div class="rounded-xl px-7 py-4 md:py-10 bg-white text-black">
 	<h3 class="font-bold text-4xl md:text-5xl mb-4 md:mb-8 text-center">Register</h3>
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
-	<form on:submit={registerFrmSubmit} method="POST" action="/?/register">
+	<form on:submit={registerFrmSubmit} method="POST" action="?/register">
 		<div class="mb-3">
 			<Input
 				classes="w-full border border-black"
