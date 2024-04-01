@@ -101,4 +101,4 @@
 			<LogoutBtn />
 		{/if}
 	</div>
-</div>
+</main>
