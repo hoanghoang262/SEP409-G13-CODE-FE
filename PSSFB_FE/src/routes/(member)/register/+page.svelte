@@ -3,6 +3,13 @@
 	import bigLogBlack from '../../../assets/Trắng final.png';
 	import LoginContainer from '../../../components/LoginContainer.svelte';
 	import RegisterContainer from '../../../components/RegisterContainer.svelte';
+	import { showToast } from '../../../helpers/helpers';
+
+	export let form:any;
+
+	if(form?.type=='error'){
+		showToast(`${form?.error??"error"}`,`${form?.message??"something went wrong"}`,"error")
+	}
 </script>
 
 <div class="overflow-x-auto md:h-[calc(100vh-64px)] h-[calc(100vh-64px)] bg-blue-950 text-white">
