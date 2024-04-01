@@ -2,16 +2,25 @@
 	import '../app.css';
 	import Header from '../components/Header.svelte';
 	import Footer from '../components/Footer.svelte';
-	import { checkExist } from '../helpers/helpers';
+	import { checkExist, showToast } from '../helpers/helpers';
 	import { currentUser, pageStatus } from '../stores/store';
 	import { FlatToast, ToastContainer } from 'svelte-toasts';
 	import { page } from '$app/stores';
+	import LoadingPage from '../pages/LoadingPage.svelte';
 
 	export let data;
 
+	export let form:any;
+
+	if(form?.type=='error'){
+		showToast(`${form?.error??"error"}`,`${form?.message??"something went wrong"}`,"error")
+	}
+
+	
 	if (checkExist(data?.user)) {
 		currentUser.set(data.user);
 	}
+
 </script>
 
 <Header />
@@ -24,9 +33,5 @@
 	<!-- Provider template for your toasts -->
 </ToastContainer>
 {#if $pageStatus == 'load'}
-	<div class="z-10 absolute top-0 opacity-30 bg-black h-[10000px] w-full m-auto text-center pt-80">
-		<p class="text-white text-4xl font-medium italic flex items-center justify-center">
-			<svg class="animate-spin h-5 w-5 mr-3 inline bg-white" viewBox="0 0 24 24" />Loading . . .
-		</p>
-	</div>
+	<LoadingPage />
 {/if}

@@ -18,7 +18,7 @@
 </script>
 
 <main class="h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)]">
-	<div class="flex h-full">
+	<div class="flex h-full pt-36">
 		<!--side bar-->
 		<aside
 			class=" flex-col min-w-60 w-72 h-full px-5 pt-8 overflow-y-auto bg-white border-r-2 border-gray-400 hidden md:block"
@@ -79,7 +79,7 @@
 									/>
 								</svg>
 
-								<span class="mx-2 text-sm font-medium">Create Courses</span>
+								<span class="mx-2 text-sm font-medium">Created Courses</span>
 							</a>
 							<a
 								class="{$page.url.pathname.includes('/manager/coursesmanager/addcourse')
@@ -120,13 +120,32 @@
 								viewBox="0 0 24 24"
 								{...$$props}
 							>
+								<path fill="currentColor" d="M3 21V3h18v18zm3-7h12v-2H6zm0 3h12v-1.5H6z" />
+							</svg>
+
+							<span class="mx-2 text-sm font-medium">Moderation Post</span>
+						</a>
+
+						<a
+							class="{$page.url.pathname.includes('/manager/postmanager/addpost')
+								? 'bg-green-200 hover:bg-green-400'
+								: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
+							href="/manager/postmanager/addpost"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								{...$$props}
+							>
 								<path
 									fill="currentColor"
 									d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h9v2H5v14h14v-9h2v9q0 .825-.587 1.413T19 21zm3-4v-2h8v2zm0-3v-2h8v2zm0-3V9h8v2zm9-2V7h-2V5h2V3h2v2h2v2h-2v2z"
 								/>
 							</svg>
 
-							<span class="mx-2 text-sm font-medium">Moderation Post</span>
+							<span class="mx-2 text-sm font-medium">Add Post</span>
 						</a>
 					</div>
 					<!--User Manager-->

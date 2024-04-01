@@ -70,7 +70,7 @@
 			pageStatus.set('load');
 			const response = await approvedPost(id);
 			console.log(response);
-			Posts = await getAllModPosts();
+			result = await getAllModPosts();
 			pageStatus.set('done');
 			showToast('Approved post', 'Approved post success', 'success');
 		} catch (error) {

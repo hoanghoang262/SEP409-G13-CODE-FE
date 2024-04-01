@@ -8,7 +8,7 @@
 
 	export let data;
 	const exam = data.exam;
-	$: questionExams = exam.questionExams;
+	const questionExams = exam.questionExams;
 	const chapterId = data.chapterId;
 	const courseId = data.courseId;
 	let timeleft = exam.time;
