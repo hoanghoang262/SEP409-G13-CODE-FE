@@ -6,7 +6,7 @@
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
-	import { checkPasswords, decodeJWT, showToast, trimUserData } from '../helpers/helpers';
+	import { checkPasswords, decodeJWT, isValidEmail, showToast, trimUserData } from '../helpers/helpers';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
 
 	let Email = '';
@@ -59,6 +59,23 @@
 			event.preventDefault();
 			showToast('Password warning', 'password must be 8-32 character long contain 1 number and 1 special character', 'warning');
 		}
+
+		if(Username.includes(" ")){
+			event.preventDefault();
+			showToast('Username warning', 'username cant has empty space', 'warning');
+		
+		}
+
+		if(RePassword!=Password){
+			event.preventDefault();
+			showToast('Password warning', 'repassword and password are not alike', 'warning');
+		
+		}
+
+		if(!isValidEmail(Email)){
+			event.preventDefault();
+			showToast('Email warning', 'please input an email', 'warning');
+		}
 	};
 </script>
 
@@ -71,7 +88,7 @@
 				classes="w-full border border-black"
 				name="Username"
 				required={true}
-				value={Username}
+				bind:value={Username}
 				placehoder="Username"
 			/>
 		</div>
@@ -80,7 +97,7 @@
 				classes="w-full border border-black"
 				name="Email"
 				required={true}
-				value={Email}
+				bind:value={Email}
 				placehoder="Email"
 			/>
 		</div>
@@ -91,7 +108,7 @@
 			<PasswordInput
 				name="RePassword"
 				required={true}
-				value={RePassword}
+				bind:value={RePassword}
 				placehoder="Re-Enter Password"
 			/>
 		</div>

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { convertSecondsToMmSs, secondsToDateTime } from '../../../../../../helpers/helpers';
-	import ExamAnswers from '../../../../../../atoms/ExamAnswers.svelte';
 	import { goto } from '$app/navigation';
 	import { currentUser, pageStatus } from '../../../../../../stores/store';
 	import Button from '../../../../../../atoms/Button.svelte';
 	import { submitExam } from '$lib/services/CourseServices';
+	import ExamAnswers from '../../../../../../atoms/ExamAnswers.svelte';
 
 	export let data;
 	const exam = data.exam;

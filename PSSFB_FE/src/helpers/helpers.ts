@@ -124,3 +124,4 @@ export function secondsToDateTime(seconds:number) {
 
     return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
 }
+
