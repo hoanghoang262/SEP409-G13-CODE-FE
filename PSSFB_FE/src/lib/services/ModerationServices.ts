@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { checkExist } from '../../helpers/helpers';
+import { MorderationPostManager } from '../../Enum/Paginators';
 
 export const addCourse = async (course: any) => {
 	try {
@@ -179,16 +180,16 @@ export const deleteCodeQuestion = async (id: number) => {
 	}
 };
 
-export const getCreatingCourseByUser = async (id:number) => {
+export const getCreatingCourseByUser = async (id: number) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/CourseModeration/GetCourseByUserId?userId=${id}`
 	);
 	return result.data.value;
 };
 
-export const getAllModCourse = async (tag:string="All",courseName:string="",page:number=1,pageSize:number=6) => {
+export const getAllModCourse = async (tag: string = "All", courseName: string = "", page: number = 1, pageSize: number = 6) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName)?`courseName=${courseName}&`:``}${tag=="All"?``:`Tag=${tag}&`}page=${page}&pageSize=${pageSize}`
+		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName) ? `courseName=${courseName}&` : ``}${tag == "All" ? `` : `Tag=${tag}&`}page=${page}&pageSize=${pageSize}`
 	);
 	return result.data.value;
 };
@@ -200,10 +201,12 @@ export const getModCourseById = async (id: number) => {
 	return result.data;
 };
 
-export const getAllModPosts = async (postTitle:string="",page:number=1,pageSize:number=10) => {
-	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost?${checkExist(postTitle)?`postTitle=${postTitle}&`:``}page=${page}&pageSize=${pageSize}`)
-	return result.data.value
-}
+export const getAllModPosts = async (param: any) => {
+	const result = await axios.get(
+		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost${(param.postTitle !== '' ? "?postTitle=" + param.postTitle + "&" : "?")}page=${(param.pageNumber ? param.pageNumber : "1")}&pageSize=${(param.pageSize ? param.pageSize : MorderationPostManager.PageSize)}${param.tag !== '' ? "&Tag=" + param.tag : ""}`
+	);
+	return result.data.value;
+};
 
 export const getModPostById = async (id: number) => {
 	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostById?postId=${id}`)
@@ -245,7 +248,7 @@ export const getModExamById = async (id: number) => {
 	return result.data.value
 }
 
-export const approvePost= async (postId: number) => {
+export const approvePost = async (postId: number) => {
 	try {
 		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationPost?postId=${postId}`)
 		return result.data
@@ -255,7 +258,7 @@ export const approvePost= async (postId: number) => {
 	}
 }
 
-export const deleteModPost= async (postId: number) => {
+export const deleteModPost = async (postId: number) => {
 	try {
 		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/Post/DeletePost?postId=${postId}`)
 		return result.data
@@ -265,7 +268,7 @@ export const deleteModPost= async (postId: number) => {
 	}
 }
 
-export const deleteModCourse= async (courseId: number) => {
+export const deleteModCourse = async (courseId: number) => {
 	try {
 		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/CourseModeration/DeleteCourse?courseId=${courseId}`)
 		return result.data
@@ -275,7 +278,7 @@ export const deleteModCourse= async (courseId: number) => {
 	}
 }
 
-export const deleteModExam= async (examId: number) => {
+export const deleteModExam = async (examId: number) => {
 	try {
 		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/LastExam/DeleteLastExam?id=${examId}`)
 		return result.data
@@ -298,7 +301,7 @@ export const approveCourse = async (courseId: number) => {
 
 export const reject = async (data: any) => {
 	try {
-		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/Reject`,data)
+		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/Reject`, data)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -316,9 +319,9 @@ export const sendCourseToApprove = async (courseId: number) => {
 	}
 }
 
-export const createPost = async (post:any) => {
+export const createPost = async (post: any) => {
 	try {
-		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Moderation/CreatePost',post)
+		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Moderation/CreatePost', post)
 		return result.data.value
 	} catch (error) {
 		console.log(error);
