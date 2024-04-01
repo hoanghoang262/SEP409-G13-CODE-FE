@@ -43,6 +43,10 @@
 	const codelessionClick = (l: any, index: number, lindex:number) => {
 		goto(`/codelession/${courseId}/${index}/${lindex}`);
 	};
+
+	const exanclick = (l: any, index: number, lindex:number) => {
+		goto(`/exam/${courseId}/${index}/${lindex}`);
+	};
 </script>
 
 <div class="bg-neutral-100 py-40 px-20 flex mb-20">
@@ -109,6 +113,21 @@
 								transition:fade
 							>
 								<div>{l.description}</div>
+							</div>
+						{/each}
+
+						{#each s?.lastExam??[] as l}
+							<div
+								tabindex="0"
+								role="button"
+								on:keydown={() => {
+									exanclick(l, s.id, l.id);
+								}}
+								on:click={() => exanclick(l, s.id, l.id)}
+								class="pl-10 mb-5"
+								transition:fade
+							>
+								<div>{l.name}</div>
 							</div>
 						{/each}
 					</div>
