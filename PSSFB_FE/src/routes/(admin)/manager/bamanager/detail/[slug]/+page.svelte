@@ -28,15 +28,15 @@
 			>
 				Business Admin Profile
 			</p>
-			<button>Add</button>
 		</div>
-		<div class="md:mx-5 md:mt-3 mt-2">
+		<div class="md:mx-5 md:mt-3 mt-2 flex justify-between items-end">
 			<!-- svelte-ignore a11y-img-redundant-alt -->
 			<img
 				class="w-16 h-16 md:h-20 md:w-20 object-cover rounded-full"
 				src={data?.profilePict}
 				alt="Current profile photo"
 			/>
+			<button class="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Add New</button>
 			<!-- <label class="block pt-2">
 				<span class="sr-only t-2">Choose profile photo</span>
 				<input
