@@ -39,7 +39,7 @@
 	};
 </script>
 
-<div class="w-full h-full min-h-screen shadow-xl rounded-2xl mr-10 border bg-white">
+<div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white">
 	<div class="text-2xl font-medium px-3 py-5">Schedule</div>
 
 	<hr class="my-5" />
@@ -96,7 +96,7 @@
 			{/each}
 
 			{#each s.lastExam as l}
-				<div class="pl-10 mb-5 flex items-center">
+				<div class="pl-10 mb-5 flex items-center justify-between">
 					<Icon class="mr-3 text-2xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: gray" />
 
 					<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"

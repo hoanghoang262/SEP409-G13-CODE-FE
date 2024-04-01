@@ -69,8 +69,7 @@ export const actions = {
         const data = await request.formData();
         console.log(data)
         console.log("server register working")
-        try {
-            const user:any = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
+        const user:any = await registerWithEmailAndPsr(data.get("Email"), data.get("Password"),data.get("Username"));
         console.log("user",user)
         if(checkExist(user)){
             const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName)
@@ -88,14 +87,7 @@ export const actions = {
                 maxAge: 60 * 5
             });
         }
-        } catch (error:any) {
-            console.log(error)
-            return{
-                message: error?.message,
-                type: 'error',
-                error:'authentication'
-            }
-        }
+        return {};
     },
     changePassword:async({cookies, request}:any) => {
         const {newPassword} = await request.json()

@@ -55,12 +55,3 @@ export const deleteUser = async (email: string) => {
 		return err;
 	}
 };
-
-export const SignUp = async (data: any) => {
-	try {
-		await axios.post(`https://authenticateservice.azurewebsites.net/api/Authenticate/SignUp`)
-	} catch (error) {
-		console.log(error);
-		return
-	}
-}

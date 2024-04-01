@@ -17,7 +17,6 @@
 	//const sysllabus = data.sysllabus;
 	const quiz = course.chapters.flatMap((chapter: any) => chapter.lessons);
 	const code = course.chapters.flatMap((chapter: any) => chapter.codeQuestions);
-	const exam = course.chapters.flatMap((chapter: any) => chapter.lastExam);
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
 
@@ -94,7 +93,7 @@
 					<div class="text-2xl mb-5">{course.name}</div>
 					<div class="flex items-center text-xl">
 						<Icon class="mr-3" icon="ph:book-open-fill" style="color: #008ee6" />
-						{quiz.length} quizzes, {code.length} codes. {exam.length} exams
+						{quiz.length} quizzes, {code.length} codes
 					</div>
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
@@ -123,22 +122,6 @@
 								<li class="pl-5 my-3 flex items-center">
 									<Icon class="mr-1 text-3xl" icon="mdi:dot" style="color: black" />
 									{q.description}
-								</li>
-							{/each}
-						</ul>
-					</div>
-
-					<hr class="my-5" />
-					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="healthicons:i-exam-multiple-choice-outline" style="color: #008ee6" /> exams
-					</div>
-
-					<div>
-						<ul>
-							{#each exam as q}
-								<li class="pl-5 my-3 flex items-center">
-									<Icon class="mr-1 text-3xl" icon="mdi:dot" style="color: black" />
-									{q.name}
 								</li>
 							{/each}
 						</ul>

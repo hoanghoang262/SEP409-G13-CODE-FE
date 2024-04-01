@@ -57,11 +57,7 @@
 	const registerFrmSubmit = (event: any) => {
 		if (!checkPasswords(Password)) {
 			event.preventDefault();
-			showToast(
-				'Password warning',
-				'password must be 8 - 32 character long has one number, one uppercase and a special char',
-				'warning'
-			);
+			showToast('Password warning', 'password must be 6 character long', 'warning');
 		}
 	};
 </script>

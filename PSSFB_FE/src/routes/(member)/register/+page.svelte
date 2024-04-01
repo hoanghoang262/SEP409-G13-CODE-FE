@@ -1,27 +1,7 @@
-<script lang="ts">
-	import { beforeUpdate } from 'svelte';
+<script>
 	import bigLogBlack from '../../../assets/Trắng 1.png';
 	import LoginContainer from '../../../components/LoginContainer.svelte';
 	import RegisterContainer from '../../../components/RegisterContainer.svelte';
-	import { checkExist, showToast } from '../../../helpers/helpers';
-	import { currentUser } from '../../../stores/store';
-	import { goto } from '$app/navigation';
-
-	export let form:any;
-
-	if(form?.type=='error'){
-		showToast(`${form?.error??"error"}`,`${form?.message??"something went wrong"}`,"error")
-	}
-
-	beforeUpdate(async () => {
-		if (checkExist($currentUser)) {
-			if ($currentUser?.Role.includes('Admin')) {
-				goto('/manager');
-			} else if ($currentUser?.Role.includes('Student')) {
-				goto('/learning');
-			}
-		}
-	});
 </script>
 
 <div class="overflow-x-auto md:h-[calc(100vh-64px)] h-[calc(100vh-64px)] bg-blue-950 text-white">
