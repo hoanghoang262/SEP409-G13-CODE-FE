@@ -16,6 +16,11 @@ export const actions = {
 			);
 			console.log('user', user);
 			if (checkExist(user)) {
+				SignUp({
+					userName: data.get('Username'),
+					password: data.get('Password'),
+					email: data.get('Email')
+				});
 				const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 				console.log('JWTFS', JWTFS);
 				const decodeData: any = await decodeJWT(JWTFS);
@@ -30,11 +35,7 @@ export const actions = {
 					sameSite: 'strict',
 					maxAge: 60 * 5
 				});
-				SignUp({
-					userName: decodeData.UserName.replace(/\s+/g, ''),
-					password: data.get('Password'),
-					email: data.get('Email')
-				});
+				
 			}
 		} catch (error: any) {
 			console.log(error);
