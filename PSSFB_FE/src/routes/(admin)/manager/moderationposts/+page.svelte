@@ -212,9 +212,9 @@
 
 	//update data
 	$: if (data) {
-		post = data?.items;
-		totalPages = data?.totalPages;
-		pageNumber = data?.pageNumber;
+		post = data?.items ? data?.items : [];
+		totalPages = data?.totalPages ? data?.totalPages : [];
+		pageNumber = data?.pageNumber ? data?.pageNumber : [];
 		remainPage = totalPages - pageNumber;
 		if (remainPage < 6) remainPage = 5;
 	}
@@ -261,7 +261,6 @@
 
 	const searchEvent = async () => {
 		const result = await getAllModPosts(setParam());
-		console.log('re', result);
 		data = result;
 	};
 
@@ -271,7 +270,6 @@
 	};
 
 	$: if (postTitle) {
-		console.log(postTitle);
 		searchEvent();
 	}
 
