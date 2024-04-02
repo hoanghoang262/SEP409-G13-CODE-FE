@@ -3,10 +3,10 @@ interface TestCase {
 	inputTypeString: string | undefined;
 	expectedResultInt: number | undefined;
 	expectedResultString: string | undefined;
-	inputTypeBoolean: boolean|null | undefined;
-	expectedResultBoolean: boolean|null | undefined;
-	inputTypeArrayInt:  string | undefined;
-	inputTypeArrayString:  string | undefined;
+	inputTypeBoolean: boolean | null | undefined;
+	expectedResultBoolean: boolean | null | undefined;
+	inputTypeArrayInt: string | undefined;
+	inputTypeArrayString: string | undefined;
 }
 
 export function initTestCase(type: string): TestCase {
@@ -25,9 +25,9 @@ export function initTestCase(type: string): TestCase {
 		case 'String':
 			return {
 				inputTypeInt: undefined,
-				inputTypeString: "string",
+				inputTypeString: 'string',
 				expectedResultInt: undefined,
-				expectedResultString: "string",
+				expectedResultString: 'string',
 				inputTypeBoolean: undefined,
 				expectedResultBoolean: undefined,
 				inputTypeArrayInt: undefined,
@@ -68,16 +68,16 @@ export function initTestCase(type: string): TestCase {
 			};
 	}
 
-    return {
-        inputTypeInt: 0,
-        inputTypeString: undefined,
-        expectedResultInt: 0,
-        expectedResultString: undefined,
-        inputTypeBoolean: undefined,
-        expectedResultBoolean: undefined,
-        inputTypeArrayInt: undefined,
-        inputTypeArrayString: undefined
-    };
+	return {
+		inputTypeInt: 0,
+		inputTypeString: undefined,
+		expectedResultInt: 0,
+		expectedResultString: undefined,
+		inputTypeBoolean: undefined,
+		expectedResultBoolean: undefined,
+		inputTypeArrayInt: undefined,
+		inputTypeArrayString: undefined
+	};
 }
 
 export interface answerOption {
@@ -90,15 +90,15 @@ export function initAnswer(correctAnswer: boolean): answerOption {
 		optionsText: 'Answer',
 		correctAnswer
 	};
-} 
+}
 
 export interface answerExam {
-	examId:number;
+	examId: number;
 	optionsText: string;
 	correctAnswer: boolean;
 }
 
-export function initAnswerExam(correctAnswer: boolean, examId:number): answerExam {
+export function initAnswerExam(correctAnswer: boolean, examId: number): answerExam {
 	return {
 		examId,
 		optionsText: 'Answer',
@@ -125,7 +125,7 @@ export interface Lession {
 	videoUrl: string;
 	description: string;
 	duration: Number;
-	contentLesson:string;
+	contentLesson: string;
 	questions: Question[];
 }
 
@@ -135,7 +135,7 @@ export function initLessions(): Lession {
 		videoUrl: 'url',
 		description: 'description',
 		duration: 60 * 10,
-		contentLesson:"content",
+		contentLesson: 'content',
 		questions: [initQuestion()]
 	};
 }
@@ -143,20 +143,20 @@ export function initLessions(): Lession {
 export interface codeQuestion {
 	description: string;
 	codeForm: string;
-	testcaseJava: string|undefined;
-	testCaseC:string|undefined;
-	testCaseCplus:string|undefined
-//	testCases: TestCase[];
+	testCaseJava: string | undefined;
+	testCaseC: string | undefined;
+	testCaseCplus: string | undefined;
+	//	testCases: TestCase[];
 }
 
 export function intitCodeQuestion(): codeQuestion {
 	return {
 		description: 'description',
 		codeForm: '',
-		testcaseJava:undefined,
-		testCaseC:undefined,
-		testCaseCplus:undefined
-//		testCases: [initTestCase('int')]
+		testCaseJava: undefined,
+		testCaseC: undefined,
+		testCaseCplus: undefined
+		//		testCases: [initTestCase('int')]
 	};
 }
 
@@ -179,39 +179,52 @@ export function initChapter(): Chapter {
 }
 
 export interface questionExam {
-	contentQuestion: string,
-	answerExams: answerOption[]|answerExam[]
+	contentQuestion: string;
+	answerExams: answerOption[] | answerExam[];
 }
 
 export function initQuestionExam(): questionExam {
 	return {
-		contentQuestion: "contentQuestion",
+		contentQuestion: 'contentQuestion',
 		answerExams: [initAnswer(true), initAnswer(false)]
-	}
+	};
 }
 
-export function initQuestionExam2(examId:number): questionExam {
+export function initQuestionExam2(examId: number): questionExam {
 	return {
-		contentQuestion: "contentQuestion",
+		contentQuestion: 'contentQuestion',
 		answerExams: [initAnswerExam(true, examId), initAnswerExam(false, examId)]
-	}
+	};
 }
 
 export interface Exam {
-	name: string,
-	time: number,
-	chapterId:number
-	percentageCompleted: number,
-	questionExams: questionExam[],
-
+	name: string;
+	time: number;
+	chapterId: number;
+	percentageCompleted: number;
+	questionExams: questionExam[];
 }
 
-export function initExam(chapterId:number) : Exam {
+export function initExam(chapterId: number): Exam {
 	return {
 		name: 'ExamName',
 		time: 120,
 		chapterId,
 		percentageCompleted: 50,
 		questionExams: [initQuestionExam()]
-	}
+	};
+}
+
+export interface Message {
+	msgCode: string;
+	msgTextEN: string;
+	msgTextVN: string;
+}
+
+export function initMessage(): Message {
+	return {
+		msgCode: '',
+		msgTextEN: '',
+		msgTextVN: ''
+	};
 }

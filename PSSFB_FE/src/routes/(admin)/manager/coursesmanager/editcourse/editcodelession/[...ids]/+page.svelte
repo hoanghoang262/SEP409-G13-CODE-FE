@@ -100,7 +100,7 @@
             <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
             <Label>TestCases</Label>
             {#if course?.tag == "Java"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testcaseJava}/>
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava}/>
             {:else if course?.tag == "C"}
             <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC}/>
             {:else if course?.tag == "C++"}

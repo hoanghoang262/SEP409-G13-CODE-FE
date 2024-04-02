@@ -22,7 +22,7 @@ export const actions = {
             path: '/',
             httpOnly: true,
             sameSite: 'strict',
-            maxAge: 60 * 10
+            maxAge: 60 * 30
         });
     },
     setfbcu:async({cookies, request}:any) => {

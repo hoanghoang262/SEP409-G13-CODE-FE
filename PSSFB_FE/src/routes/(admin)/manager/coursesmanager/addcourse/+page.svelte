@@ -164,9 +164,13 @@
 				showToast('Add course', 'something went wrong', 'error');
 			} else {
 				course.picture = url;
-				console.log(JSON.stringify(course))
-				const response = await addCourse(course);
-				goto(`addcourse/addchapter/${response.id}`);
+				console.log(JSON.stringify(course));
+				try {
+					const response = await addCourse(course);
+					goto(`addcourse/addchapter/${response.id}`);
+				} catch (error) {
+					console.error(error);
+				}
 			}
 			pageStatus.set('done');
 		}

@@ -31,7 +31,7 @@
 	{#each answerExams as ae}
 		<div class="mb-3 flex items-center">
 			<input
-				on:change={(event) => handleCheckboxChange(event, ae.id)}
+				on:change={(event) => handleCheckboxChange2(event, ae.id)}
 				class="mr-2"
 				type="checkbox"
 				name="answerQ{questionExam.id}"
@@ -42,7 +42,7 @@
 {:else}
 	{#each answerExams as ae}
 		<div class="mb-3 flex items-center">
-			<input on:change={(event) => handleCheckboxChange2(event, ae.id)} class="mr-2" type="radio" name="answerQ{questionExam.id}" />{ae.optionsText}
+			<input on:change={(event) => handleCheckboxChange(event, ae.id)} class="mr-2" type="radio" name="answerQ{questionExam.id}" />{ae.optionsText}
 		</div>
 	{/each}
 	<div class="text-sm text-neutral-700 mt-3">Choose one correct answer</div>

@@ -20,7 +20,6 @@
 	let codeQuestion: codeQuestion = intitCodeQuestion();
 	const chapterId = ids[1];
     const courseId:any = ids[0];
-	$: testcases = codeQuestion.testcaseJava;
 	// let selectedTestCaseIndex = 0;
 	// $: selectedTestcase = codeQuestion.testCases[selectedTestCaseIndex];
 	//let defaultModal = false;
@@ -96,9 +95,8 @@
 			<Label>CodeForm</Label>
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
 			<Label>TestCases</Label>
-			<Label>TestCases</Label>
             {#if course?.tag == "Java"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testcaseJava}/>
+            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava}/>
             {:else if course?.tag == "C"}
             <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC}/>
             {:else if course?.tag == "C++"}

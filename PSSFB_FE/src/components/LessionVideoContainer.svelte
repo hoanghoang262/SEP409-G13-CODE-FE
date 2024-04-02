@@ -66,8 +66,8 @@
 	class="ml-10"
 	on:play={FirstPlay}
 	id="video"
-	width="800"
-	height="450"
+	width="960"
+	height="540"
 	controls
 >
 	<source src={lession.videoUrl} type="video/mp4" />
@@ -75,7 +75,7 @@
 	Your browser does not support the video tag.
 </video>
 
-<div class="flex justify-end pr-20 mt-3">
+<div class="flex justify-end pr-16 mt-3">
 	<button
 		class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center"
 		on:click={() => (showNoteModal = true)}

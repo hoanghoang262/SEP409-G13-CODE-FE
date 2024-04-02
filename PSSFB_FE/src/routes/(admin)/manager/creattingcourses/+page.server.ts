@@ -9,8 +9,8 @@ export async function load({cookies}:any){
         redirect(301,"/")
     }
     const user = JSON.parse(userSTR)
-    const courses = await getCreatingCourseByUser(user.UserID)
+    const promise = getCreatingCourseByUser(user.UserID)
     return {
-        courses
+        promise
     }
 }

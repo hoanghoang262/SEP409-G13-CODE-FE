@@ -8,52 +8,54 @@
 	import PasswordInput from '../atoms/PasswordInput.svelte';
 	import { checkPasswords, decodeJWT, isValidEmail, showToast, trimUserData } from '../helpers/helpers';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
+	import { LWF, LWG } from "./LoginContainer.svelte"
 
 	let Email = '';
 	let RePassword = '';
 	let Password = '';
 	let Username = '';
 
-	const LWF = async () => {
-		const user: any = await loginWithFacebook();
-		pageStatus.set('load');
-		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-		const decodeData: any = await decodeJWT(JWTFS);
-		console.log('decodeData', decodeData);
-		user.UserID = decodeData.UserID;
-		user.Role = decodeData.Role;
-		user.jwt = JWTFS;
-		user.displayName = decodeData.UserName;
-		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+	// const LWF = async () => {
+	// 	const user: any = await loginWithFacebook();
+	// 	pageStatus.set('load');
+	// 	const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+	// 	const decodeData: any = await decodeJWT(JWTFS);
+	// 	console.log('decodeData', decodeData);
+	// 	user.UserID = decodeData.UserID;
+	// 	user.Role = decodeData.Role;
+	// 	user.jwt = JWTFS;
+	// 	user.displayName = decodeData.UserName;
+	// 	currentUser.set(user);
+	// 	await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
-		if (user.Role.includes('Admin')) {
-			goto('/manager');
-		} else {
-			goto('/learning');
-		}
-		pageStatus.set('done');
-	};
+	// 	if (user.Role.includes('Admin')) {
+	// 		goto('/manager');
+	// 	} else {
+	// 		goto('/learning');
+	// 	}
+	// 	pageStatus.set('done');
+	// };
 
-	const LWG = async () => {
-		const user: any = await loginWithGoogle();
-		pageStatus.set('load');
-		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-		const decodeData: any = await decodeJWT(JWTFS);
-		user.UserID = decodeData.UserID;
-		user.Role = decodeData.Role;
-		user.jwt = JWTFS;
-		user.displayName = decodeData.UserName;
-		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+	// const LWG = async () => {
+	// 	const user: any = await loginWithGoogle();
+	// 	pageStatus.set('load');
+	// 	const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+	// 	const decodeData: any = await decodeJWT(JWTFS);
+	// 	user.UserID = decodeData.UserID;
+	// 	user.Role = decodeData.Role;
+	// 	user.jwt = JWTFS;
+	// 	user.displayName = decodeData.UserName;
+	// 	currentUser.set(user);
+	// 	await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
-		if (user.Role.includes('Admin')) {
-			goto('/manager');
-		} else {
-			goto('/learning');
-		}
-		pageStatus.set('done');
-	};
+	// 	if (user.Role.includes('Admin')) {
+	// 		goto('/manager');
+	// 	} else {
+	// 		goto('/learning');
+	// 	}
+	// 	pageStatus.set('done');
+	// };
+
 	const registerFrmSubmit = (event: any) => {
 		if (!checkPasswords(Password)) {
 			event.preventDefault();

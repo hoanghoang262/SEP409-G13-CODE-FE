@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { convertSecondsToMmSs, secondsToDateTime } from '../../../../../../helpers/helpers';
+	import { convertSecondsToMmSs, secondsToDateTime, showToast } from '../../../../../../helpers/helpers';
 	import { goto } from '$app/navigation';
 	import { currentUser, pageStatus } from '../../../../../../stores/store';
 	import Button from '../../../../../../atoms/Button.svelte';
 	import { submitExam } from '$lib/services/CourseServices';
 	import ExamAnswers from '../../../../../../atoms/ExamAnswers.svelte';
+	import { initMessage } from '$lib/type';
+
 
 	export let data;
 	const exam = data.exam;
@@ -21,7 +23,7 @@
 		})
 	};
 
-	setInterval(() => {
+	let intervalID = setInterval(() => {
 		if (timeleft == 0) {
 			SubmitExam()
 		}
@@ -30,9 +32,17 @@
 
 	const SubmitExam = async() => {
 		pageStatus.set('load')
-		const result = await submitExam(submitData)
-		goto(`exam/${courseId}/${chapterId}/${exam.id}`);
-		console.log(result)
+		console.log(JSON.stringify(submitData))
+		clearInterval(intervalID)
+		try {
+			const result:any = await submitExam(submitData)
+			if(result?.msgTextEN){
+				showToast(result.msgCode, result.msgTextEN)
+			}
+		} catch (error) {
+			console.error(error)
+		}
+		goto(`/exam/${courseId}/${chapterId}/${exam.id}`);
 		pageStatus.set('done')
 	}
 </script>

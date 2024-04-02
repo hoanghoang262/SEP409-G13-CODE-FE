@@ -8,4 +8,6 @@ const promise = data.promise
 	<LoadingPage />
 {:then course} 
 <OverallPage course={course} />
+{:catch error}
+<div>{error}</div>
 {/await}

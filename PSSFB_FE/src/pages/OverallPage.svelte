@@ -7,6 +7,7 @@
 	
 
 	export let course:any
+	console.log(course)
 	const courseId = course?.id
 	const chapters = course?.chapters??[]
 	const codeworks = course.chapters.flatMap((chapter:any) => chapter.codeQuestions);
@@ -102,6 +103,7 @@
 						{/each}
 
 						{#each s?.codeQuestions??[] as l}
+						
 							<div
 								tabindex="0"
 								role="button"

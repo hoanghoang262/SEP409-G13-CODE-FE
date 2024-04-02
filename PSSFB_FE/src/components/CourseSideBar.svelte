@@ -96,7 +96,7 @@
 			{/each}
 
 			{#each s.lastExam as l}
-				<div class="pl-10 mb-5 flex items-center justify-between">
+				<div class="pl-10 mb-5 flex items-center">
 					<Icon class="mr-3 text-2xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: gray" />
 
 					<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"

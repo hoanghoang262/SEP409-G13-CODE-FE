@@ -5,7 +5,8 @@ export async function load({ params }: any) {
 	const courseId = ids[0];
     const chapterId = ids[1];
 	const examId = ids[2];
-	const course = await getCourseById(courseId);
+	const promise = async() => {
+		const course = await getCourseById(courseId);
     const chapter = await getChapterById(chapterId);    
 	const exam = await getExam(examId);
 	return {
@@ -13,4 +14,9 @@ export async function load({ params }: any) {
         chapter,
 		exam
 	};
+	}
+	return{
+		promise: promise()
+	}
+	
 }

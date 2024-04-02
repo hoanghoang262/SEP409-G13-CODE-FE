@@ -14,5 +14,7 @@ const promise = data.promise
 <LoadingPage />
 {:then result} 
 <LearningPage courses={result.items}/>
+{:catch error}
+<div>{error}</div>
 {/await}
 

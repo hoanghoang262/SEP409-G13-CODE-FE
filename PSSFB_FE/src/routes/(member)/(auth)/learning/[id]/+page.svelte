@@ -10,4 +10,6 @@
 	<LoadingPage />
 {:then promisedata} 
 	<LearningDetailPage data={promisedata} /> 
+{:catch error}
+<div>{error}</div>
 {/await}

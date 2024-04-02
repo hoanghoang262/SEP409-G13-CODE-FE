@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" context="module">
 	import Icon from '@iconify/svelte';
 	import Input from '../atoms/Input.svelte';
 	import { loginWithEmailAndPsr, loginWithFacebook, loginWithGoogle } from '../firebase';
@@ -20,43 +20,51 @@
 	let Password = '';
 	let showModal = false;
 
-	const LWF = async () => {
+	export const LWF = async () => {
 		const user: any = await loginWithFacebook();
 		pageStatus.set('load');
-		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-		const decodeData: any = await decodeJWT(JWTFS);
-		console.log('decodeData', decodeData);
-		user.UserID = decodeData.UserID;
-		user.Role = decodeData.Roles;
-		user.jwt = JWTFS;
-		user.displayName = decodeData.UserName;
-		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		try {
+			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			const decodeData: any = await decodeJWT(JWTFS);
+			console.log('decodeData', decodeData);
+			user.UserID = decodeData.UserID;
+			user.Role = decodeData.Roles;
+			user.jwt = JWTFS;
+			user.displayName = decodeData.UserName;
+			currentUser.set(user);
+			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
-		if (user.Role.includes('Admin')) {
-			goto('/manager');
-		} else {
-			goto('/learning');
+			if (user.Role.includes('Admin')) {
+				goto('/manager');
+			} else {
+				goto('/learning');
+			}
+		} catch (error) {
+			console.error(error);
 		}
 		pageStatus.set('done');
 	};
 
-	const LWG = async () => {
+	export const LWG = async () => {
 		const user: any = await loginWithGoogle();
 		pageStatus.set('load');
-		const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-		const decodeData: any = await decodeJWT(JWTFS);
-		user.UserID = decodeData.UserID;
-		user.Role = decodeData.Roles;
-		user.jwt = JWTFS;
-		user.displayName = decodeData.UserName;
-		currentUser.set(user);
-		await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		try {
+			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			const decodeData: any = await decodeJWT(JWTFS);
+			user.UserID = decodeData.UserID;
+			user.Role = decodeData.Roles;
+			user.jwt = JWTFS;
+			user.displayName = decodeData.UserName;
+			currentUser.set(user);
+			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
-		if (user.Role.includes('Admin')) {
-			goto('/manager');
-		} else {
-			goto('/learning');
+			if (user.Role.includes('Admin')) {
+				goto('/manager');
+			} else {
+				goto('/learning');
+			}
+		} catch (error) {
+			console.error(error);
 		}
 		pageStatus.set('done');
 	};
@@ -68,25 +76,29 @@
 		// }
 
 		pageStatus.set('load');
-		const user: any = await loginWithEmailAndPsr(Email, Password);
-		if (checkExist(user)) {
-			const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
-			const decodeData: any = decodeJWT(JWTFS);
-			user.UserID = decodeData.UserID;
-			user.Role = decodeData.Roles;
-			user.jwt = JWTFS;
-			user.displayName = decodeData.UserName;
-			console.log('decoded data', decodeData);
-			currentUser.set(user);
-			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+		try {
+			const user: any = await loginWithEmailAndPsr(Email, Password);
+			if (checkExist(user)) {
+				const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
+				const decodeData: any = decodeJWT(JWTFS);
+				user.UserID = decodeData.UserID;
+				user.Role = decodeData.Roles;
+				user.jwt = JWTFS;
+				user.displayName = decodeData.UserName;
+				console.log('decoded data', decodeData);
+				currentUser.set(user);
+				await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
-			if (user.Role.includes('Admin')) {
-				goto('/manager');
+				if (user.Role.includes('Admin')) {
+					goto('/manager');
+				} else {
+					goto('/learning');
+				}
 			} else {
-				goto('/learning');
+				showToast('Login', 'Wrong email or password', 'error');
 			}
-		} else {
-			showToast('Login', 'Wrong email or password', 'error');
+		} catch (error) {
+			console.error(error);
 		}
 		pageStatus.set('done');
 	};
