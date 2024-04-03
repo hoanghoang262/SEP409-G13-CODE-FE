@@ -5,7 +5,7 @@
 	import Input from '../../../../atoms/Input.svelte';
 	import ChangePassContainer from '../../../../components/ChangePassContainer.svelte';
 	import { currentUser, pageStatus } from '../../../../stores/store';
-	import { checkExist, isImage, showToast } from '../../../../helpers/helpers';
+	import { checkExist, checkUserName, isImage, showToast } from '../../../../helpers/helpers';
 	import { getURL, loginWithEmailAndPsr, logout, uploadImage } from '../../../../firebase';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
@@ -67,6 +67,10 @@
 
 	async function frmSubmit() {
 		pageStatus.set('load');
+		if(checkUserName(info.username)){
+			showToast('Edit Profile', 'username must be 8-32 characters long', 'warning');
+			return
+		}
 		if (checkExist(image)) {
 			await uploadImage(image);
 			const url = await getURL(image?.path);

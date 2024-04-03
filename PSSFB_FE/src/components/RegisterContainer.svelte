@@ -6,7 +6,7 @@
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
-	import { checkPasswords, decodeJWT, isValidEmail, showToast, trimUserData } from '../helpers/helpers';
+	import { checkPasswords, checkUserName, decodeJWT, isValidEmail, showToast, trimUserData } from '../helpers/helpers';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
 	import { t } from '../translations/i18n';
 
@@ -77,6 +77,11 @@
 			event.preventDefault();
 			showToast('Username warning', 'username cant has empty space', 'warning');
 		
+		}
+
+		if(checkUserName(Username)){
+			showToast('Username warning', 'username must be 8-32 characters long', 'warning');
+			return
 		}
 
 		if(RePassword!=Password){

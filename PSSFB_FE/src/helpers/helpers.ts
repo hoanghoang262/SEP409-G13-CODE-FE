@@ -115,6 +115,13 @@ export function checkPasswords(password:string) {
   return hasUpperCase && hasNumber && hasSpecialChar;
   }
 
+export function checkUserName(userName: string): boolean {
+	if (!checkExist(userName) || userName.length < 8 || userName.length > 32) {
+		return false;
+	  }
+	return true
+}
+
 export function secondsToDateTime(seconds:number) {
     var date = new Date(seconds * 1000); // Convert seconds to milliseconds
     var day = ("0" + date.getDate()).slice(-2);
