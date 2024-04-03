@@ -27,27 +27,29 @@
 </script>
 
 <div class="flex">
-	<div class="w-4/5">
+	<div class="w-3/5 m-auto mt-8">
 		<form method="POST" action="?/addchapter">
-			<Label defaultClass=" mb-3 block">Add Chapter</Label>
-			<hr class="my-3"/>
-			<Label defaultClass=" mb-3 block">Add Chapter Name</Label>
-			<Input classes="ml-4 border w-2/3" name="name" placehoder="chapter name" />
-			<Label defaultClass=" mb-3 block">Part</Label>
-			<input
-				type="number"
-				name="part"
-				class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
-				required
-			/>
-			<div class="flex justify-end">
-				<Button
-					content="Save"
+			<p class=" mb-1 font-medium text-3xl">Add Chapter</p>
+			<hr class="my-1 mb-8" />
+			<div>
+				<p class=" mb-1">Add Chapter Name</p>
+				<Input classes=" border w-full" name="name" placehoder="chapter name" />
+			</div>
+			<div class="mt-5">
+				<p class=" mb-1">Part</p>
+				<input
+					type="number"
+					name="part"
+					class="block w-full border mb-5 py-3 px-5 font-light text-black rounded-md"
+					required
 				/>
+			</div>
+			<div class="flex justify-end mt-4">
+				<Button content="Save" />
 			</div>
 		</form>
 	</div>
-	<div class="w-1/5 min-h-screen ml-20">
-		<AdminCourseSb bind:course={course} />
+	<div>
+		<AdminCourseSb bind:course />
 	</div>
 </div>

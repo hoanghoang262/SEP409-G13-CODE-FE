@@ -17,6 +17,7 @@
 
 	export let course: any;
 
+	let showStatus = false;
 	let firstWM = false;
 	let secondWM = false;
 	let deleteObject: any = undefined;
@@ -106,163 +107,229 @@
 	};
 </script>
 
-<div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white pr-3">
-	<div class="text-2xl font-medium px-3 py-5">
-		<button on:click={() => goto(`/manager/coursesmanager/editcourse/${courseId}`)}
-			>{course.name}</button
-		>
-	</div>
-
-	<hr class="my-5" />
-
-	{#each chapters as s, index}
-		<div class="text-lg font-medium px-3 py-5 flex items-center text-neutral-500 justify-between">
-			<div
-				class="mr-5"
-				tabindex="0"
-				role="button"
-				on:keydown={() => {
-					() => hidden2(index);
-				}}
-				on:click={() => hidden2(index)}
-				id="si{index}"
-			>
-				{@html minus}
-			</div>
-			<button on:click={() => chapterClick(s.id)} class="font-normal">{s?.name}</button>
-			<button
-				on:click={() => {
-					deleteObject = { id: s.id, type: 'chapter' };
-					firstWM = true;
-				}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
-			>
-		</div>
-		<div id="schedule{index}">
-			{#each s.lessons as l}
-				<div class="pl-10 mb-5 flex items-center flex-wrap justify-between">
-					<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
-
-					<button on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
+<main class="fixed top-16 md:top-24 right-0">
+	{#if showStatus}
+		<div class="">
+			<div class="w-72 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] shadow-xl border bg-white pr-3">
+				<div class="text-2xl font-medium pt-4 px-4 mb-3 flex justify-between items-center">
 					<button
-						on:click={() => {
-							deleteObject = { id: l.id, type: 'lession' };
-							firstWM = true;
-						}}
+						on:click={() => (showStatus = false)}
+						class="hover:bg-gray-200 p-1 cursor-pointer mr-3"
 					>
-						<Icon icon="material-symbols:delete" style="color: #ff4d4d" />
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="28"
+							height="28"
+							viewBox="0 0 24 24"
+							{...$$props}
+						>
+							<path
+								fill="none"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M4 8h9m-9 4h16m0 0l-3-3m3 3l-3 3M4 16h9"
+							/>
+						</svg>
 					</button>
-
-					<div class="truncate w-full pl-7 pr-10 text-sm text-neutral-500">{l.description}</div>
-				</div>
-			{/each}
-			<div class="flex justify-end my-5">
-				<button
-					class="text-blue-500"
-					on:click={() => goto(`/manager/coursesmanager/addcourse/addlession/${courseId}/${s.id}`)}
-					>Add Lession</button
-				>
-			</div>
-
-			{#each s.codeQuestions as l}
-				<div class="pl-10 mb-5 flex items-center justify-between">
-					<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
-
-					<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
-						>{l.description}</button
-					>
 					<button
-						on:click={() => {
-							deleteObject = { id: l.id, type: 'practice question' };
-							firstWM = true;
-						}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
+						class="hover:underline"
+						on:click={() => goto(`/manager/coursesmanager/editcourse/${courseId}`)}
+						><p class="overflow-hidden">{course.name}</p></button
 					>
 				</div>
-			{/each}
+				<hr class="" />
+				<!--chapter loop-->
+				<div class="mx-4">
+					{#each chapters as s, index}
+						<div
+							class="justify-between text-lg font-medium my-2 rounded-md flex items-center text-neutral-500 bg-gray-200 hover:bg-gray-300"
+						>
+							<div
+								class="mr-2 bg-blue-500 p-2 rounded-l-md"
+								tabindex="0"
+								role="button"
+								on:keydown={() => {
+									() => hidden2(index);
+								}}
+								on:click={() => hidden2(index)}
+								id="si{index}"
+							>
+								{@html minus}
+							</div>
+							<button on:click={() => chapterClick(s.id)} class="w-full"
+								><p class="font-normal text-black">{s?.name}</p></button
+							>
+							<button
+								class="p-2 bg-gray-600 rounded-r-md"
+								on:click={() => {
+									deleteObject = { id: s.id, type: 'chapter' };
+									firstWM = true;
+								}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
+							>
+						</div>
+						<div id="schedule{index}">
+							{#each s.lessons as l}
+								<div class="mb-1 flex flex-wrap justify-between items-center">
+									<div class="bg-green-500 p-2 rounded-l-md">
+										<Icon class="" icon="ion:book-sharp" style="color: gray" />
+									</div>
 
-			<div class="flex justify-end my-5">
-				<button
-					class="text-blue-500"
-					on:click={() =>
-						goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${s.id}`)}
-					>Add Practice Question</button
-				>
-			</div>
+									<button on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
+									<button
+										class="bg-gray-600 p-2 rounded-r-md"
+										on:click={() => {
+											deleteObject = { id: l.id, type: 'lession' };
+											firstWM = true;
+										}}
+									>
+										<Icon icon="material-symbols:delete" style="color: #ff4d4d" />
+									</button>
+								</div>
+							{/each}
+							<div class="flex justify-end my-5">
+								<button
+									class="text-blue-500"
+									on:click={() =>
+										goto(`/manager/coursesmanager/addcourse/addlession/${courseId}/${s.id}`)}
+									>Add Lession</button
+								>
+							</div>
 
-			{#each s.lastExam as l}
-				<div class="pl-10 mb-5 flex items-center justify-between">
-					<Icon class="mr-3 text-2xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: gray" />
+							{#each s.codeQuestions as l}
+								<div class="pl-10 mb-5 flex items-center justify-between">
+									<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
 
-					<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
-						>{l.name}</button
-					>
+									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
+										>{l.description}</button
+									>
+									<button
+										on:click={() => {
+											deleteObject = { id: l.id, type: 'practice question' };
+											firstWM = true;
+										}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
+									>
+								</div>
+							{/each}
+
+							<div class="flex justify-end my-5">
+								<button
+									class="text-blue-500"
+									on:click={() =>
+										goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${s.id}`)}
+									>Add Practice Question</button
+								>
+							</div>
+
+							{#each s.lastExam as l}
+								<div class="pl-10 mb-5 flex items-center justify-between">
+									<Icon
+										class="mr-3 text-2xl"
+										icon="healthicons:i-exam-multiple-choice-outline"
+										style="color: gray"
+									/>
+
+									<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
+										>{l.name}</button
+									>
+									<button
+										on:click={() => {
+											deleteObject = { id: l.id, type: 'exam' };
+											firstWM = true;
+										}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
+									>
+								</div>
+							{/each}
+							<div class="flex justify-end my-5">
+								<button
+									class="text-blue-500"
+									on:click={() =>
+										goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${s.id}`)}
+									>Add Exam</button
+								>
+							</div>
+						</div>
+					{/each}
+				</div>
+				<div class="flex justify-end my-5">
 					<button
-						on:click={() => {
-							deleteObject = { id: l.id, type: 'exam' };
-							firstWM = true;
-						}}><Icon icon="material-symbols:delete" style="color: #ff4d4d" /></button
+						class="text-blue-500"
+						on:click={() => goto(`/manager/coursesmanager/addcourse/addchapter/${courseId}`)}
+						>Add Chapter</button
 					>
 				</div>
-			{/each}
-			<div class="flex justify-end my-5">
-				<button
-					class="text-blue-500"
-					on:click={() =>
-						goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${s.id}`)}
-					>Add Exam</button
-				>
+				<div class="flex justify-end my-5">
+					<button
+						class="text-blue-500"
+						on:click={async () => {
+							sendCourseToApprove(courseId);
+							showToast('Waiting for approved', 'Waiting for approved', 'info');
+						}}>Send to approved</button
+					>
+				</div>
 			</div>
 		</div>
-	{/each}
-	<div class="flex justify-end my-5">
+	{:else}
 		<button
-			class="text-blue-500"
-			on:click={() => goto(`/manager/coursesmanager/addcourse/addchapter/${courseId}`)}
-			>Add Chapter</button
+			on:click={() => (showStatus = true)}
+			class="hover:bg-gray-200 p-1 cursor-pointer mr-6 mt-3 border-2 border-gray-700"
 		>
-	</div>
-	<div class="flex justify-end my-5">
-		<button
-			class="text-blue-500"
-			on:click={async () => {
-				sendCourseToApprove(courseId);
-				showToast('Waiting for approved', 'Waiting for approved', 'info');
-			}}>Send to approved</button
-		>
-	</div>
-</div>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				viewBox="0 0 24 24"
+				{...$$props}
+			>
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M20 8h-9m9 4H4m0 0l3-3m-3 3l3 3m13 1h-9"
+				/>
+			</svg>
+		</button>
+	{/if}
 
-<Modal on:close={() => (firstWM = false)} title="Warning" bind:open={firstWM} autoclose>
-	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-		Do you sure you want to delete this.
-	</p>
-	<svelte:fragment slot="footer">
-		<div class="flex justify-center">
-			<button
-				on:click={() => (secondWM = true)}
-				class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
-				>Yes</button
-			>
-			<button
-				class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
-				>No</button
-			>
-		</div>
-	</svelte:fragment>
-</Modal>
+	<!--modal-->
+	<Modal on:close={() => (firstWM = false)} title="Warning" bind:open={firstWM} autoclose>
+		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+			Do you sure you want to delete this.
+		</p>
+		<svelte:fragment slot="footer">
+			<div class="flex justify-center">
+				<button
+					on:click={() => (secondWM = true)}
+					class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
+					>Yes</button
+				>
+				<button
+					class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
+					>No</button
+				>
+			</div>
+		</svelte:fragment>
+	</Modal>
 
-<Modal on:close={() => (secondWM = false)} title="Warning" bind:open={secondWM} autoclose>
-	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">Confirm again to delete</p>
-	<svelte:fragment slot="footer">
-		<div class="flex justify-center">
-			<button
-				on:click={deleteFunc}
-				class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
-				>Yes</button
-			>
-			<button
-				class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
-				>No</button
-			>
-		</div>
-	</svelte:fragment>
-</Modal>
+	<Modal on:close={() => (secondWM = false)} title="Warning" bind:open={secondWM} autoclose>
+		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+			Confirm again to delete
+		</p>
+		<svelte:fragment slot="footer">
+			<div class="flex justify-center">
+				<button
+					on:click={deleteFunc}
+					class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
+					>Yes</button
+				>
+				<button
+					class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
+					>No</button
+				>
+			</div>
+		</svelte:fragment>
+	</Modal>
+</main>

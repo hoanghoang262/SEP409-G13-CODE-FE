@@ -417,38 +417,53 @@
 	</form>
 </div> -->
 
-<div class="w-4/5">
+<div class="w-4/5 m-auto mt-8">
 	<form on:submit={frmSubmit} method="POST" action="?/addcourse">
-		<Label defaultClass=" mb-3 block">Add Course</Label>
-		<input name="createdBy" readonly value={$currentUser.UserID}/>
-		<hr class="my-3" />
-		<Label defaultClass=" mb-3 block">Course Name</Label>
-		<Input
-			required={true}
-			bind:value={course.name}
-			name="name"
-			classes="block w-1/3 ml-4 border mb-5"
-			placehoder="Course Name"
-		/>
-
-		<Label defaultClass=" mb-3 block">Description</Label>
-		<div class="mb-5 ml-4">
-			<Textarea name="description" bind:value={course.description} placeholder="Description" />
+		<p class=" mb-1 font-medium text-3xl">Add Course</p>
+		<input name="createdBy" readonly value={$currentUser.UserID} />
+		<hr class="my-1 mb-8" />
+		<div>
+			<p class=" mb-1">Course Name</p>
+			<Input
+				required={true}
+				bind:value={course.name}
+				name="name"
+				classes="block w-full md:w-1/2 border mb-5"
+				placehoder="Course Name"
+			/>
 		</div>
-		<Label defaultClass=" mb-3 block">Picture</Label>
-		<!-- <Input
+
+		<div>
+			<p class="mb-1">Description</p>
+			<div class="mb-5">
+				<Textarea
+					style="height:100px"
+					name="description"
+					bind:value={course.description}
+					placeholder="Description"
+				/>
+			</div>
+		</div>
+		<div>
+			<p class="mb-1">Picture</p>
+			<!-- <Input
 			id="imginput"
 			name="picture"
 			value={course?.picture}
 			classes="block w-1/3 ml-4 border mb-5"
 			placehoder="url link"
 		/> -->
-		<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
-		<img class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" />
-		<Label>
-			Language
-			<Select name="tag" class="mt-2 ml-4" items={language} bind:value={course.tag} />
-		</Label>
-		<div class="flex justify-end mt-5"><Button content="Save" /></div>
+			<div class="border-2 rounded-sm border-gray-400 mb-5">
+				<Dropzone containerClasses="" on:drop={handleFilesSelect} />
+			</div>
+			<img class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" />
+		</div>
+		<div>
+			<Label>
+				Language
+				<Select name="tag" class="mt-2 " items={language} bind:value={course.tag} />
+			</Label>
+			<div class="flex justify-end mt-5"><Button content="Save" /></div>
+		</div>
 	</form>
 </div>

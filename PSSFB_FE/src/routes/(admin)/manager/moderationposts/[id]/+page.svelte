@@ -5,9 +5,8 @@
 	import { showToast } from '../../../../../helpers/helpers';
 	import { pageStatus } from '../../../../../stores/store';
 
-
 	export let data;
-	const post:any = data.post;
+	const post: any = data.post;
 
 	const ApprovePost = async () => {
 		try {
@@ -25,7 +24,7 @@
 
 <div class="pt-20">
 	<div class="flex px-32">
-		<div class="w-1/12 mr-5"><Avatar classes="rounded-full" src="{post?.userPicture}"/></div>
+		<div class="w-1/12 mr-5"><Avatar classes="rounded-full" src={post?.userPicture} /></div>
 		<div>
 			<div class="text-2xl mb-3">{post?.title}</div>
 			<div class="mb-5">
@@ -35,11 +34,11 @@
 			<div class="mb-5">
 				{@html post?.postContent}
 			</div>
-            <!-- <div class="flex">
-                {#each post.tag as t}
-                    <div class="px-5 py-1 rounded-lg bg-neutral-100">{t}</div>
-                {/each}
-            </div> -->
+			<!-- <div class="flex">
+				{#each post.tag as t}
+					<div class="px-5 py-1 rounded-lg bg-neutral-100">{t}</div>
+				{/each}
+			</div> -->
 		</div>
 	</div>
 	<!-- <div class="flex justify-end pr-40"><Button onclick={ApprovePost} content="Approve"/></div> -->

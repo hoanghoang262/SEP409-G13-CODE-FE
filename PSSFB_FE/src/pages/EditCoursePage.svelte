@@ -15,7 +15,7 @@
 	import { getURL, uploadImage } from '../firebase';
 	import { updateCourse } from '$lib/services/ModerationServices';
 
-	export let course: any
+	export let course: any;
 
 	// if (form?.type == 'success') {
 	// 	showToast('Edit Course', form.message, form.type);
@@ -64,35 +64,36 @@
 			const url = await getURL(image?.path);
 			if (!checkExist(url)) {
 				showToast('Edit course', 'something went wrong', 'error');
-				return
+				return;
 			} else {
 				course.picture = url;
 			}
 		}
-		
 
 		const response = await updateCourse(course);
-		showToast('Edit course success', 'Edit course success', 'success')
+		showToast('Edit course success', 'Edit course success', 'success');
 
 		pageStatus.set('done');
 	}
 </script>
 
 <div class="flex">
-	<div class="w-4/5">
+	<div class="w-3/5 m-auto mt-8">
 		<form on:submit={frmSubmit} method="POST" action="?/editcourse">
-			<input readonly hidden name="id" value={course.id} />
+			<input hidden name="id" value={course.id} />
 			<input readonly hidden name="createdBy" value={$currentUser.UserID} />
-			<Label defaultClass=" mb-3 block">Edit Course</Label>
-			<hr class="my-3" />
-			<Label defaultClass=" mb-3 block">Course Name</Label>
-			<Input
-				required={true}
-				bind:value={course.name}
-				name="name"
-				classes="block w-1/3 ml-4 border mb-5"
-				placehoder="Course Name"
-			/>
+			<p class=" mb-1 font-medium text-3xl">Edit Course</p>
+			<hr class="my-1 mb-8" />
+			<div>
+				<p class=" mb-1">Course Name</p>
+				<Input
+					required={true}
+					bind:value={course.name}
+					name="name"
+					classes="block w-full md:w-1/2 border mb-5"
+					placehoder="Course Name"
+				/>
+			</div>
 
 			<Label defaultClass=" mb-3 block">Description</Label>
 			<div class="mb-5 ml-4">
@@ -124,7 +125,7 @@
 			<div class="flex justify-end mt-5"><Button content="Save" /></div>
 		</form>
 	</div>
-	<div class="w-1/5 ml-10">
+	<div class="">
 		<AdminCourseSb bind:course />
 	</div>
 </div>
