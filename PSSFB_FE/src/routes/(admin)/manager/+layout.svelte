@@ -217,7 +217,7 @@
 										/>
 									</svg>
 
-									<span class="mx-2 text-sm font-medium">$t('Business Admin Manager')</span>
+									<span class="mx-2 text-sm font-medium">{$t('Business Admin Manager')}</span>
 								</a>
 							</div>
 						</nav>
