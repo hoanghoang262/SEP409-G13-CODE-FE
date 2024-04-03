@@ -89,7 +89,7 @@
 			</div>
 			<div class="pl-5">
 				{#if section == 'Comments'}
-					<CommentContainer bind:comments getComment={() => getCommentByLession(lession.id)}/>
+					<CommentContainer type="lession" lessionId={lession.id} bind:comments getComment={() => getCommentByLession(lession.id)}/>
 				{:else if section == 'Notes'}
 					<div class="w-full">
 						{#each notes as note}

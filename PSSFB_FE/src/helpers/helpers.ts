@@ -63,7 +63,7 @@ export function trimUserData(user: any) {
 		UserID: user.UserID,
 		Role: user.Role,
 		jwt: user.jwt,
-		stsTokenManager: user.stsTokenManager,
+		//stsTokenManager: user.stsTokenManager,
 		uid: user.uid,
 		displayName: user.displayName
 	};

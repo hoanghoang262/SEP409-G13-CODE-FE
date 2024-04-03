@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { beforeUpdate } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 	import bigLogBlack from '../../../assets/Trắng final.png';
 	import LoginContainer from '../../../components/LoginContainer.svelte';
 	import RegisterContainer from '../../../components/RegisterContainer.svelte';
@@ -8,13 +8,16 @@
 	import { goto } from '$app/navigation';
 
 	export let form:any;
-
 	if(form?.type=='error'){
 		showToast(`${form?.error??"error"}`,`${form?.message??"something went wrong"}`,"error")
-	}else if(form?.user){
+	}
+
+	onMount(() => {
+		if(form?.user){
 		localStorage.setItem("user", JSON.stringify(form?.user))
 		currentUser.setUser(form?.user)
 	}
+	})
 
 	beforeUpdate(async () => {
 		if (checkExist($currentUser)) {

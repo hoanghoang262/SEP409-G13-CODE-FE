@@ -4,13 +4,13 @@
 	import Button from '../../../../atoms/Button.svelte';
 	import Input from '../../../../atoms/Input.svelte';
 	import ChangePassContainer from '../../../../components/ChangePassContainer.svelte';
-	import { currentUser } from '../../../../stores/store';
+	import { currentUser, pageStatus } from '../../../../stores/store';
 	import { checkExist, isImage, showToast } from '../../../../helpers/helpers';
-	import { loginWithEmailAndPsr, logout } from '../../../../firebase';
+	import { getURL, loginWithEmailAndPsr, logout, uploadImage } from '../../../../firebase';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
-	import { beforeUpdate } from 'svelte';
-	import { getUserInfo } from '$lib/services/AuthenticationServices';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
+	import { getUserInfo, updateUserInfo } from '$lib/services/AuthenticationServices';
 	import Dropzone from 'svelte-file-dropzone';
 
 	export let form: any;
@@ -22,22 +22,75 @@
 	let section = 'Infomation & Contact';
 	const sections = ['Infomation & Contact', 'Change Password'];
 	//export let data: any;
-	let userInfo:any;
+	let userInfo: any;
 	let defaultModal = false;
 	let firstWM = false;
 	let secondWM = false;
 	let deactivePass = '';
 
-	beforeUpdate(async ()=> {
-		if(checkExist($currentUser)){
-			userInfo = await getUserInfo($currentUser.UserID)
+	onMount(async () => {
+		if (checkExist($currentUser)) {
+			userInfo = await getUserInfo($currentUser.UserID);
+			info = userInfoTrim()
 		}
-	})
+	});
 
-	const editFrmSubmit = () => {
-		const editfrm: any = document.getElementById('editfrm');
-		editfrm.submit();
+	let image: any;
+	let info = {
+		userId: userInfo?.id,
+		fullname:'',
+		email: userInfo?.email ?? '',
+		profilePict: '',
+		username: '',
+		phone:'',
+		address: '',
+		facebookLink: ''
 	};
+
+	const userInfoTrim = () => {
+		return {
+			userId: userInfo?.id,
+			fullname: userInfo?.fullName ?? '',
+			email: userInfo?.email ?? '',
+			profilePict: userInfo?.profilePict ?? '',
+			username: userInfo?.userName ?? '',
+			phone: userInfo?.phone ?? '',
+			address: userInfo?.address ?? '',
+			facebookLink: userInfo?.facebookLink ?? ''
+		};
+	};
+
+	// const editFrmSubmit = () => {
+	// 	const editfrm: any = document.getElementById('editfrm');
+	// 	editfrm.submit();
+	// };
+
+	async function frmSubmit() {
+		pageStatus.set('load');
+		if (checkExist(image)) {
+			await uploadImage(image);
+			const url = await getURL(image?.path);
+			if (!checkExist(url)) {
+				showToast('Edit Profile', 'something went wrong', 'error');
+				return;
+			}
+			console.log("url",url);
+			info.profilePict = url;
+		}
+
+		try {
+			console.log(JSON.stringify(info))
+			const response = await updateUserInfo(info.userId, info);
+			console.log(response);
+			userInfo = await getUserInfo($currentUser.UserID);
+			info = userInfoTrim();
+			currentUser.set({...$currentUser, displayName: userInfo.userName, photoURL: userInfo.profilePict})
+		} catch (error) {
+			console.error(error);
+		}
+
+		pageStatus.set('done');
+	}
 
 	const deleteFunc = async () => {
 		if (!checkExist(deactivePass)) {
@@ -65,7 +118,7 @@
 	function handleFilesSelect(e: any) {
 		const { acceptedFiles, fileRejections } = e.detail;
 		if (isImage(acceptedFiles[0]?.path)) {
-			let image = acceptedFiles[0];
+			image = acceptedFiles[0];
 			const reader = new FileReader();
 			reader.addEventListener('load', () => {
 				// Create an image element or use a dedicated image component
@@ -78,8 +131,7 @@
 			reader.readAsDataURL(image);
 			console.log(image);
 		}
-
-		
+		console.log(image);
 	}
 </script>
 
@@ -89,7 +141,9 @@
 			<button on:click={() => (section = 'Infomation & Contact')}>Infomation & Contact</button>
 		</div>
 		<div><button on:click={() => (section = 'Change Password')}>Change Password</button></div>
-		<div><button on:click={() => firstWM = true} class="text-red-500">De-active account</button></div>
+		<div>
+			<button on:click={() => (firstWM = true)} class="text-red-500">De-active account</button>
+		</div>
 	</div>
 	<div class="w-3/4 p-5 rounded-xl bg-white">
 		{#if section == 'Infomation & Contact'}
@@ -124,32 +178,22 @@
 </div>
 
 <Modal title="Edit profile" bind:open={defaultModal}>
-	<form id="editfrm" method="POST" action="?/editinfo">
+	<form id="editfrm" on:submit={frmSubmit}>
 		<div>
 			<Label>FullName</Label>
-			<Input classes="border w-2/3" required={true} name="fullname" value={userInfo?.fullName} />
+			<Input classes="border w-2/3" required={true} name="fullname" bind:value={info.fullname} />
 		</div>
 		<div>
 			<Label>Username</Label>
-			<Input classes="border w-2/3" required={true} name="displayName" value={userInfo?.userName} />
+			<Input classes="border w-2/3" required={true} name="displayName" bind:value={info.username} />
 		</div>
 		<div>
 			<Label>PhoneNumber</Label>
-			<Input
-				classes="border w-2/3"
-				required={true}
-				name="phoneNumber"
-				value={userInfo?.phone ?? ''}
-			/>
+			<Input classes="border w-2/3" required={true} name="phoneNumber" bind:value={info.phone} />
 		</div>
 		<div>
 			<Label>Address</Label>
-			<Input
-				classes="border w-2/3"
-				required={true}
-				name="address"
-				value={userInfo?.address ?? ''}
-			/>
+			<Input classes="border w-2/3" required={true} name="address" bind:value={info.address} />
 		</div>
 		<div>
 			<Label>Facebook</Label>
@@ -157,21 +201,26 @@
 				classes="border w-2/3"
 				required={true}
 				name="facebook"
-				value={userInfo?.facebookLink ?? ''}
+				bind:value={info.facebookLink}
 			/>
 		</div>
 		<div>
 			<Label>Avatar</Label>
 			<Dropzone containerClasses="w-2/3 ml-4 mb-5" on:drop={handleFilesSelect} />
-			{#if checkExist(userInfo?.profilePict)}
-			<img src="{userInfo?.profilePict}" class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" />
-			{/if}
 			
-			<Input classes="border w-2/3 hidden" required={true} name="photoURL" value={userInfo?.profilePict} />
+				<img src={info.profilePict} class="w-1/3 ml-4 mb-5" id="img" alt="img" />
+			
+
+			<Input
+				classes="border w-2/3 hidden"
+				required={true}
+				name="photoURL"
+				value={info?.profilePict}
+			/>
 		</div>
 	</form>
 	<svelte:fragment slot="footer">
-		<Button onclick={editFrmSubmit} content="Save" />
+		<Button onclick={async() => frmSubmit()} content="Save" />
 		<Button onclick={() => (defaultModal = false)} content="Cancel" />
 	</svelte:fragment>
 </Modal>

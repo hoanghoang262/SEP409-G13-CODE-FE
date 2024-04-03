@@ -36,8 +36,10 @@ export const actions = {
 				// 	sameSite: 'strict',
 				// 	maxAge: 60 * 5
 				// });
+				const trimUser = trimUserData(user)
+				console.log('trimUser', trimUser);
 				return {
-					user: trimUserData(user)
+					user: trimUser
 				};
 			}
 		} catch (error: any) {

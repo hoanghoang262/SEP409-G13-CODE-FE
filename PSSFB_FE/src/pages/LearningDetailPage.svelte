@@ -144,7 +144,7 @@
 					</div>
 				</div>
 			{:else if section == 'Comments'}
-				<CommentContainer bind:comments getComment={() => getCommentByCourse(course.id)}/>
+				<CommentContainer type="course" courseId={course.id} bind:comments getComment={() => getCommentByCourse(course.id)}/>
 			{/if}
 		</div>
 

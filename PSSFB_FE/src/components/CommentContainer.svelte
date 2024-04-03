@@ -9,6 +9,7 @@
 	import {
 		delComment,
 		delReplyComment,
+		postComment,
 		putComment,
 		putReplyComment
 	} from '$lib/services/CommentService';
@@ -17,8 +18,13 @@
 	export let editcomment: any = {};
 	export let editreply: any = {};
 	export let getComment: any;
+	export let type: string;
+	export let courseId: any = undefined;
+	export let postId: any = undefined;
+	export let lessionId: any = undefined;
 	$: replies = comments.flatMap((item) => item?.replies);
 	//export let type = 'post';
+	let content = '';
 
 	const replyClick = (id: number) => {
 		const replyFrm = document.getElementById(`replyFrm#${id}`);
@@ -47,7 +53,7 @@
 		const editor = document.getElementById(`replyeditor${id}`);
 		const content = document.getElementById(`replycontent${id}`);
 		if (editor?.classList.contains('hidden')) {
-			const {replyContent} = replies.find((c: any) => c.id == id);
+			const { replyContent } = replies.find((c: any) => c.id == id);
 			editreply = { replyId: id, replyContent };
 			editor?.classList.remove('hidden');
 			content?.classList.add('hidden');
@@ -78,7 +84,7 @@
 	async function updateReply() {
 		pageStatus.set('load');
 		try {
-			console.log(editreply)
+			console.log(editreply);
 			await putReplyComment(editreply);
 			comments = await getComment();
 			showToast('Update Comment', 'Update Comment Success', 'success');
@@ -113,6 +119,41 @@
 		await delReplyComment(id);
 		comments = await getComment();
 		pageStatus.set('done');
+	}
+
+	async function comment() {
+		pageStatus.set('load');
+		try {
+			switch (type) {
+				case 'course':
+					await postComment({
+						courseId,
+						commentContent: content,
+						date: new Date().toISOString,
+						userId: $currentUser.UserID
+					});
+					break;
+				case 'post':
+					await postComment({
+						postId,
+						commentContent: content,
+						date: new Date().toISOString,
+						userId: $currentUser.UserID
+					});
+					break;
+				case 'lession':
+					await postComment({
+						lessonId:lessionId,
+						commentContent: content,
+						date: new Date().toISOString,
+						userId: $currentUser.UserID
+					});
+					break;
+			}
+			comments = await getComment();
+		} catch (error) {
+			console.log(error);
+		}
 	}
 </script>
 

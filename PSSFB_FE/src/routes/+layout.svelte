@@ -7,7 +7,7 @@
 	import { FlatToast, ToastContainer } from 'svelte-toasts';
 	import { page } from '$app/stores';
 	import LoadingPage from '../pages/LoadingPage.svelte';
-	import { beforeUpdate } from 'svelte';
+	import { beforeUpdate, onMount } from 'svelte';
 
 	// export let data;
 
@@ -15,7 +15,7 @@
 	// 	currentUser.set(data.user);
 	// }
 
-	beforeUpdate(() => {
+	onMount(() => {
 		const user = localStorage.getItem('user')??"";
 
 		if (checkExist(user)) {

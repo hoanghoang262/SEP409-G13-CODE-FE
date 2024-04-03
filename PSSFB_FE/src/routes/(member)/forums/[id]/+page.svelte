@@ -43,6 +43,6 @@
 		</div>
 	</div>
 	<div>
-		<CommentContainer bind:comments getComment={() => getCommentByPost(post.id)} />
+		<CommentContainer type="post" postId={post.id} bind:comments getComment={() => getCommentByPost(post.id)} />
 	</div>
 </div>

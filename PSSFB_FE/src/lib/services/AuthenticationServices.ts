@@ -37,6 +37,7 @@ export const updateUserInfo = async (id: number, info:any) => {
 		const result = await axios.put(
 			`https://authenticateservice.azurewebsites.net/api/Profile/UpdateProfile?id=${id}`,info
 		);
+		console.log(result)
 		result.data;
 	} catch (err) {
 		console.log(err);
