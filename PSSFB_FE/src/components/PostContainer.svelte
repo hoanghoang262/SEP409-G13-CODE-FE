@@ -1,22 +1,23 @@
 <script lang="ts">
+	import { formatDateTime } from "../helpers/datetime";
 	import { t } from "../translations/i18n";
 
 	export let post: any;
 </script>
 
 <div class="border hover:shadow-2xl hover:-translate-y-5 transition-all">
-	<img src={post.image} alt="postimg" class="w-full" />
+	<!-- <img src={post.image} alt="postimg" class="w-full" /> -->
 	<div class="px-3">
 		<div class="py-5">
 			<h3 class="text-2xl font-medium truncate mb-2">{post.title}</h3>
-			<p class=" truncate">{post.content}</p>
+			<p class=" truncate">{post.description}</p>
 		</div>
 		<div class="pb-5 flex justify-between items-center">
             <div>
-                <div class="font-light text-lg">{@html $t('Commentinfo', {n: post.comment})}</div>
-                <div>{$t('Created time')}: {post.createdDate}</div>
+                <div class="font-light text-lg">{@html $t('Commentinfo', {n: 10})}</div>
+                <div>{$t('Created time')}: {formatDateTime(post.lastUpdate)}</div>
             </div>
-            <a href="/home">{$t('see the post')}</a>
+            <a href="/forums/{post.id}">{$t('see the post')}</a>
         </div>
 	</div>
 </div>

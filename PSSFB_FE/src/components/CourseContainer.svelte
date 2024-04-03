@@ -5,6 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { currentUser } from '../stores/store';
 	import Status from '../atoms/Status.svelte';
+	import { t } from '../translations/i18n';
 	export let course: any;
 	export let type = 'public';
 	export let ApproveCourse: any = () => {};
@@ -22,7 +23,7 @@
 			{#if $currentUser?.Role == 'Student'}
 				<p class="text-sm">{course.userName}</p>
 			{/if}
-			<p class="text-sm">Language: {course.tag}</p>
+			<p class="text-sm">{$t('Language')}: {course.tag}</p>
 			<p class="truncate text-sm">{course.description}</p>
 		</div>
 		<hr />
@@ -35,7 +36,7 @@
 						<Button
 							classes="text-green-500"
 							onclick={() => ApproveCourse(course?.courseId)}
-							content="Approve"
+							content="{$t('Approve')}"
 						/>
 					{/if}
 
@@ -43,28 +44,28 @@
 						<Button
 							classes="text-red-500"
 							onclick={() => RejectCourse(course?.id)}
-							content="Reject"
+							content="{$t('Reject')}"
 						/>
 					{/if}
 					<Button
 						onclick={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)}
-						content="Detail"
+						content="{$t('Detail')}"
 					/>
 				</div>
 			{:else if $currentUser?.Role == 'AdminBussiness'}
 				<div>
 					<Button
 						onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
-						content="Edit"
+						content="{$t('Edit')}"
 					/>
 					<Button
 						type="danger"
 						onclick={() => DeleteCourse(course.id)}
-						content="Delete"
+						content="{$t('Delete')}"
 					/>
 				</div>
 			{:else}
-				<Button onclick={() => goto(`/learning/${course.id}`)} content="join now" />
+				<Button onclick={() => goto(`/learning/${course.id}`)} content="{$t('join now')}" />
 			{/if}
 		</div>
 	{:else if type == 'admin'}
@@ -90,7 +91,7 @@
 						<Button
 							type="Accepted"
 							onclick={() => ApproveCourse(course?.courseId)}
-							content="Approve"
+							content="{$t('Approve')}"
 						/>
 					{/if}
 
@@ -99,7 +100,7 @@
 						type="Rejected"
 							classes="text-red-500"
 							onclick={() => RejectCourse(course?.id)}
-							content="Reject"
+							content="{$t('Reject')}"
 						/>
 					{/if}
 					<!-- <Button
@@ -111,16 +112,16 @@
 				<div>
 					<Button
 						onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
-						content="Edit"
+						content="{$t('Edit')}"
 					/>
 					<Button
 						type="danger"
 						onclick={() => DeleteCourse(course.id)}
-						content="Delete"
+						content="{$t('Delete')}"
 					/>
 				</div>
 			{:else}
-				<Button onclick={() => goto(`/learning/${course.id}`)} content="join now" />
+				<Button onclick={() => goto(`/learning/${course.id}`)} content="{$t('join now')}" />
 			{/if}
 		</div>
 	{/if}

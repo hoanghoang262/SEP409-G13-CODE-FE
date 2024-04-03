@@ -11,7 +11,7 @@
 	import { language } from '../data/data';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import Dropzone from 'svelte-file-dropzone';
-	import { pageStatus } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import { getURL, uploadImage } from '../firebase';
 	import { updateCourse } from '$lib/services/ModerationServices';
 
@@ -81,7 +81,8 @@
 <div class="flex">
 	<div class="w-4/5">
 		<form on:submit={frmSubmit} method="POST" action="?/editcourse">
-			<input hidden name="id" value={course.id} />
+			<input readonly hidden name="id" value={course.id} />
+			<input readonly hidden name="createdBy" value={$currentUser.UserID} />
 			<Label defaultClass=" mb-3 block">Edit Course</Label>
 			<hr class="my-3" />
 			<Label defaultClass=" mb-3 block">Course Name</Label>

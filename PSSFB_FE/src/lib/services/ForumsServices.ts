@@ -10,7 +10,7 @@ pageSize: number = 10) => {
 
 export const getPostById = async (id:number) => {
     const result = await axios.get(`https://forumservices.azurewebsites.net/api/Forum/GetPostById?postId=${id}`)
-    return result.data
+    return result.data.value
 }
 
 export const createAdminPost = async (post:any) => {

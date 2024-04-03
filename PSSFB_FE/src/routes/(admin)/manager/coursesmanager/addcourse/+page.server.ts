@@ -6,18 +6,18 @@ import { addCourse, getModCourseById } from '$lib/services/ModerationServices';
 
 export const actions = {
 	addcourse: async ({ cookies, request }: any) => {
-		const userSTR = cookies.get('user');
-		if (!checkExist(userSTR)) {
-			redirect(301, '/');
-		}
-		const user = JSON.parse(userSTR);
+		// const userSTR = cookies.get('user');
+		// if (!checkExist(userSTR)) {
+		// 	redirect(301, '/');
+		// }
+		// const user = JSON.parse(userSTR);
 		const data = getFormData(await request.formData());
 		
 		
 		try {
-			const response = await addCourse({ ...data, createdBy: user.UserID });
+			const response = await addCourse({ ...data });
 			console.log('response', response)
-			console.log('data', {...data, createdBy: user.UserID})
+			console.log('data', {...data})
 			return {
 				type: 'success',
 				message: 'add course successfully',

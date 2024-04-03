@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
 	import Icon from '@iconify/svelte';
 	import Input from '../atoms/Input.svelte';
 	import { loginWithEmailAndPsr, loginWithFacebook, loginWithGoogle } from '../firebase';
@@ -15,12 +15,14 @@
 		showToast,
 		trimUserData
 	} from '../helpers/helpers';
+	import { t } from '../translations/i18n';
 
 	let Email = '';
 	let Password = '';
 	let showModal = false;
+	$: console.log(showModal)
 
-	export const LWF = async () => {
+	const LWF = async () => {
 		const user: any = await loginWithFacebook();
 		pageStatus.set('load');
 		try {
@@ -32,7 +34,8 @@
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
 			currentUser.set(user);
-			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+			localStorage.setItem('user', JSON.stringify(trimUserData(user)));
+			//await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
 			if (user.Role.includes('Admin')) {
 				goto('/manager');
@@ -45,7 +48,7 @@
 		pageStatus.set('done');
 	};
 
-	export const LWG = async () => {
+	const LWG = async () => {
 		const user: any = await loginWithGoogle();
 		pageStatus.set('load');
 		try {
@@ -55,8 +58,10 @@
 			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
+			localStorage.setItem('user', JSON.stringify(trimUserData(user)));
 			currentUser.set(user);
-			await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+
+			//await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
 			if (user.Role.includes('Admin')) {
 				goto('/manager');
@@ -87,7 +92,8 @@
 				user.displayName = decodeData.UserName;
 				console.log('decoded data', decodeData);
 				currentUser.set(user);
-				await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
+				localStorage.setItem('user', JSON.stringify(trimUserData(user)));
+				//await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
 
 				if (user.Role.includes('Admin')) {
 					goto('/manager');
@@ -105,7 +111,7 @@
 </script>
 
 <div class="rounded-xl px-7 py-10 bg-white text-black">
-	<h3 class="font-bold text-5xl mb-8 text-center">Start Now</h3>
+	<h3 class="font-bold text-5xl mb-8 text-center">{$t('Start Now')}</h3>
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
 
 	<div class="mb-3">
@@ -120,16 +126,20 @@
 		<PasswordInput bind:value={Password} name="Password" placehoder="Password" />
 	</div>
 	<div class="text-right">
-		<button on:click={() => (showModal = true)}>forgot password?</button>
+		<button
+			on:click={() => {
+				showModal = true;
+			}}>{$t('forgot password')} ?</button
+		>
 	</div>
 	<div class="my-10"></div>
 	<button
 		on:click={login}
 		class="bg-black rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"
-		>Start Coding Now</button
+		>{$t('Start Coding Now')}</button
 	>
 
-	<div class="text-center mb-4">or use another account</div>
+	<div class="text-center mb-4">{$t('or use another account')}</div>
 	<div class="flex justify-center text-5xl">
 		<div role="button" on:click={LWF} on:keydown={LWF} tabindex="0">
 			<Icon icon="logos:facebook" class="mr-3" />
@@ -138,5 +148,6 @@
 			<Icon icon="akar-icons:google-contained-fill" />
 		</div>
 	</div>
+
+	<ResetPasswordModal bind:showModal onClose={() => (showModal = false)} />
 </div>
-<ResetPasswordModal {showModal} onClose={() => (showModal = false)} />

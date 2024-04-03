@@ -12,16 +12,16 @@ export async function load ({params}:any) {
 
 export const actions = {
 	editcourse: async ({ cookies, request }: any) => {
-		const userSTR = cookies.get('user');
-		if (!checkExist(userSTR)) {
-			redirect(301, '/');
-		}
-		const user = JSON.parse(userSTR);
+		// const userSTR = cookies.get('user');
+		// if (!checkExist(userSTR)) {
+		// 	redirect(301, '/');
+		// }
+		// const user = JSON.parse(userSTR);
 		const data = getFormData(await request.formData());
 		
 		
 		try {
-			const response = await updateCourse({ ...data, createdBy: user.UserID });
+			const response = await updateCourse({ ...data });
 			return {
 				type: 'success',
 				message: 'update course successfully',

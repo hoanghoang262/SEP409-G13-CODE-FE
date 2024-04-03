@@ -8,6 +8,7 @@
 	import Pagination from '../../../components/Pagination.svelte';
 	import { currentUser, pageStatus } from '../../../stores/store';
 	import { showToast } from '../../../helpers/helpers';
+	import { t } from '../../../translations/i18n';
 
 	export let data: any;
 	let result = data.result;
@@ -31,17 +32,17 @@
 </script>
 
 <div class="bg-neutral-100 py-40 px-20">
-	<div class="mb-10">Home > Forums</div>
+	<div class="mb-10">{$t('Home')} > {$t('Forums')}</div>
 	<div class="flex justify-between items-center">
 		<Input
 			onKeyDown={searchFunc}
 			bind:value={searchStr}
 			classes="mb-10 w-1/4"
-			placehoder="search"
+			placehoder="{$t('search')}"
 		/>
 		{#if $currentUser}
 			<a class="py-2 px-5 bg-blue-500 rounded-lg font-medium shadow-lg text-white" href="/addpost"
-				>Add Post</a
+				>{$t('Add Post')}</a
 			>
 		{/if}
 	</div>
@@ -64,7 +65,7 @@
 						<p class="line-clamp-2">{p.description}</p>
 					</div>
 					<div class="text-sm mb-3">
-						<span class="mr-5">By: {p.userName}</span><span>Last Update: {p.lastUpdate}</span>
+						<span class="mr-5">By: {p.userName}</span><span>{$t('Last Update')}: {p.lastUpdate}</span>
 					</div>
 					<div>
 						{#if $currentUser?.UserID == p.createdBy}
@@ -76,7 +77,7 @@
 										} else {
 											goto(`/editpost/${p.id}`);
 										}
-									}}>Edit</button
+									}}>{$t('Edit')}</button
 								></span
 							>
 							<span class="mr-5 text-red-500"><button on:click={async () => {
@@ -85,7 +86,7 @@
 								result = await getAllPost()
 								showToast("Delete Post","Delete post successfully", "success")
 								pageStatus.set('done')
-							}}>Delete</button></span>
+							}}>{$t('Delete')}</button></span>
 						{/if}
 					</div>
 					<!-- <div>

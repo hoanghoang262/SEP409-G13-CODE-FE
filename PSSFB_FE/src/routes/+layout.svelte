@@ -7,12 +7,23 @@
 	import { FlatToast, ToastContainer } from 'svelte-toasts';
 	import { page } from '$app/stores';
 	import LoadingPage from '../pages/LoadingPage.svelte';
+	import { beforeUpdate } from 'svelte';
 
-	export let data;
+	// export let data;
 
-	if (checkExist(data?.user)) {
-		currentUser.set(data.user);
-	}
+	// if (checkExist(data?.user)) {
+	// 	currentUser.set(data.user);
+	// }
+
+	beforeUpdate(() => {
+		const user = localStorage.getItem('user')??"";
+
+		if (checkExist(user)) {
+			currentUser.set(JSON.parse(user));
+			console.log("currentUser",$currentUser)
+		}
+		
+	});
 </script>
 
 <Header />

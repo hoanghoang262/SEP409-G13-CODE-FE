@@ -1,7 +1,7 @@
 import { getCommentByCourse, postComment, postReplyComment } from '$lib/services/CommentService';
 import { getCourseById } from '$lib/services/CourseServices';
 import { redirect } from '@sveltejs/kit';
-import { checkExist } from '../../../../../helpers/helpers.js';
+import { checkExist } from '../../../../helpers/helpers.js';
 //import { courses, schedules, sysllabuses } from "../../../../../data/data";
 
 export async function load({ params }: any) {

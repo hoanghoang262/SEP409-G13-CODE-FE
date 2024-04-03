@@ -11,6 +11,9 @@
 
 	if(form?.type=='error'){
 		showToast(`${form?.error??"error"}`,`${form?.message??"something went wrong"}`,"error")
+	}else if(form?.user){
+		localStorage.setItem("user", JSON.stringify(form?.user))
+		currentUser.setUser(form?.user)
 	}
 
 	beforeUpdate(async () => {

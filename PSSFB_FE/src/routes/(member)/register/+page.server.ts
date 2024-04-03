@@ -1,5 +1,5 @@
 import { SignUp, loginByGoogle } from "$lib/services/AuthenticationServices";
-import { registerWithEmailAndPsr } from "../../../firebase";
+import { SendEmailVer, registerWithEmailAndPsr } from "../../../firebase";
 import { checkExist, decodeJWT, trimUserData } from "../../../helpers/helpers";
 
 export const actions = {
@@ -16,11 +16,12 @@ export const actions = {
 			);
 			console.log('user', user);
 			if (checkExist(user)) {
-				SignUp({
-					userName: data.get('Username'),
-					password: data.get('Password'),
-					email: data.get('Email')
-				});
+				// SignUp({
+				// 	userName: data.get('Username'),
+				// 	password: data.get('Password'),
+				// 	email: data.get('Email')
+				// });
+				SendEmailVer(user)
 				const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 				console.log('JWTFS', JWTFS);
 				const decodeData: any = await decodeJWT(JWTFS);
@@ -29,13 +30,15 @@ export const actions = {
 				user.Role = decodeData?.Roles ?? 'Student';
 				user.jwt = JWTFS;
 				user.displayName = decodeData.UserName;
-				cookies.set('user', JSON.stringify(trimUserData(user)), {
-					path: '/',
-					httpOnly: true,
-					sameSite: 'strict',
-					maxAge: 60 * 5
-				});
-				
+				// cookies.set('user', JSON.stringify(trimUserData(user)), {
+				// 	path: '/',
+				// 	httpOnly: true,
+				// 	sameSite: 'strict',
+				// 	maxAge: 60 * 5
+				// });
+				return {
+					user: trimUserData(user)
+				};
 			}
 		} catch (error: any) {
 			console.log(error);

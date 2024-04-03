@@ -6,7 +6,7 @@
 	import { checkExist, isValidEmail, showToast } from '../../helpers/helpers';
 	import { checkEmail } from '$lib/services/AuthenticationServices';
 
-	export let showModal = false;
+	export let showModal=false;
 	export let onClose = () => {};
 	let email = '';
 	const resetPass = async () => {
@@ -31,7 +31,7 @@
 	};
 </script>
 
-<Modal title="Reset Password" bind:open={showModal} on:close={onClose} autoclose>
+<Modal class="z-50" title="Reset Password" bind:open={showModal} on:close={onClose} autoclose>
 	<Input
 		onChange={emailChange}
 		classes="border text-black w-full"

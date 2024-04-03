@@ -4,6 +4,7 @@ import {
 	FacebookAuthProvider,
 	getAuth,
 	GoogleAuthProvider,
+	sendEmailVerification,
 	sendPasswordResetEmail,
 	signInWithEmailAndPassword,
 	signInWithPopup,
@@ -30,7 +31,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-let firebaseApp;
+let firebaseApp:any;
 
 if (!getApps().length) {
 	firebaseApp = initializeApp(firebaseConfig);
@@ -54,19 +55,19 @@ export async function uploadImage(image: any) {
 }
 
 export async function uploadVid(vid: any) {
-	 const videoStorageRef = ref(storage, `videos/${vid.path}`);
-	 await uploadBytes(videoStorageRef, vid).then((snapshot) => {
+	const videoStorageRef = ref(storage, `videos/${vid.path}`);
+	await uploadBytes(videoStorageRef, vid).then((snapshot) => {
 		console.log('Uploaded a vid!');
 		console.log(snapshot);
 	});
 }
 
 export async function getURL(imagePath: string) {
-	let URL = ''
+	let URL = '';
 	await getDownloadURL(ref(storage, `images/${imagePath}`))
 		.then((url) => {
 			console.log(url);
-			URL = url
+			URL = url;
 		})
 		.catch((error) => {
 			// Handle any errors
@@ -76,11 +77,11 @@ export async function getURL(imagePath: string) {
 }
 
 export async function getVideoURL(videoPath: string) {
-	let URL = ''
+	let URL = '';
 	await getDownloadURL(ref(storage, `videos/${videoPath}`))
 		.then((url) => {
 			console.log(url);
-			URL = url
+			URL = url;
 		})
 		.catch((error) => {
 			// Handle any errors
@@ -139,7 +140,7 @@ const loginWithGoogle = async () => {
 			return {
 				errorMessage,
 				type: 'error'
-			}
+			};
 		});
 	return user;
 };
@@ -224,6 +225,19 @@ const changePasswordWithEmail = async (newPassword: string) => {
 			});
 	}
 };
+
+export const SendEmailVer = async (user: any) => {
+	sendEmailVerification(user)
+		.then(() => {
+			// Email verification sent!
+			// ...
+		})
+		.catch((error) => {
+			console.log('error', error);
+		});
+};
+
+
 
 // export const changeUserInfo = async (uid:string, info:any) => {
 // 	const db = getDatabase();

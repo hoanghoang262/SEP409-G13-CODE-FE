@@ -11,6 +11,8 @@
     export let value = "";
 	export let lang = "javascript"
 	export let testCases:any[] = []
+	export let executeCode:any
+	export let result = ""
 
 	const getLang = () => {
 		switch (lang){
@@ -33,7 +35,7 @@
 			</select>
 		</div>
 		<div>
-			<Button2 classes="bg-blue-800" content="run code" />
+			<Button2 onclick={executeCode} classes="bg-blue-800" content="run code" />
 			<Button2 classes="bg-slate-500" content="submit" />
 		</div>
 	</div>

@@ -420,6 +420,7 @@
 <div class="w-4/5">
 	<form on:submit={frmSubmit} method="POST" action="?/addcourse">
 		<Label defaultClass=" mb-3 block">Add Course</Label>
+		<input name="createdBy" readonly value={$currentUser.UserID}/>
 		<hr class="my-3" />
 		<Label defaultClass=" mb-3 block">Course Name</Label>
 		<Input

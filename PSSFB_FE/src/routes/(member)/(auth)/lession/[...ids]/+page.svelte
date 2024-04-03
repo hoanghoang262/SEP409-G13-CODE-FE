@@ -10,14 +10,20 @@
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
+	import { afterUpdate, beforeUpdate } from 'svelte';
 	export let data;
+	
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.lession;
 	let comments = data?.comments??[];
-	let notes = data?.notes??[];
+	let notes:any;
 	let currentTime = 0;
 	let section = 'Comments';
+
+	beforeUpdate(async ()=> {
+		notes = await getNotes($currentUser.UserID, lession.id)
+	})
 
 	async function DelNote(id: number) {
 		pageStatus.set('load');

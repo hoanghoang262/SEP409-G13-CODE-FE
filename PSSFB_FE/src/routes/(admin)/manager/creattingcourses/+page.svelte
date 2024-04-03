@@ -1,8 +1,10 @@
 <script>
+	import { getCreatingCourseByUser } from "$lib/services/ModerationServices";
 	import CreatedCoursesPage from "../../../../pages/CreatedCoursesPage.svelte";
 	import LoadingPage from "../../../../pages/LoadingPage.svelte";
-	export let data;
-	const promise = data.promise
+	import { currentUser } from "../../../../stores/store";
+	//export let data;
+	const promise = getCreatingCourseByUser($currentUser.UserID)
 </script>
 
 {#await promise}

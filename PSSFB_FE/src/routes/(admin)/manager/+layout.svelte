@@ -4,6 +4,7 @@
 	import { currentUser } from '../../../stores/store';
 	import logo from '../../../assets/Xanh final.png';
 	import { page } from '$app/stores';
+	import { t } from '../../../translations/i18n';
 
 	let section = 'Courses Lists';
 	const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post'];
@@ -11,7 +12,7 @@
 	beforeUpdate(async () => {
 		if (!$currentUser) {
 			goto('/');
-		} else if ($currentUser.Role.includes('Student')) {
+		} else if ($currentUser?.Role.includes('Student')) {
 			goto('/learning');
 		}
 	});
@@ -31,7 +32,7 @@
 					<!--Public-->
 					<!--Course Manager-->
 					<div class="space-y-3">
-						<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">Courses Manager</p>
+						<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">{$t('Courses Manager')}</p>
 						{#if $currentUser?.Role == 'AdminSystem'}
 							<a
 								class="{$page.url.pathname.includes('/manager/moderationcourses')
@@ -52,7 +53,7 @@
 									/>
 								</svg>
 
-								<span class=" mx-2 text-sm font-medium">Moderation Courses</span>
+								<span class=" mx-2 text-sm font-medium">{$t('Moderation Courses')}</span>
 							</a>
 						{/if}
 						{#if $currentUser?.Role == 'AdminBussiness'}
@@ -79,7 +80,7 @@
 									/>
 								</svg>
 
-								<span class="mx-2 text-sm font-medium">Created Courses</span>
+								<span class="mx-2 text-sm font-medium">{$t('Created Courses')}</span>
 							</a>
 							<a
 								class="{$page.url.pathname.includes('/manager/coursesmanager/addcourse')
@@ -100,31 +101,33 @@
 									/>
 								</svg>
 
-								<span class="mx-2 text-sm font-medium">Add Courses</span>
+								<span class="mx-2 text-sm font-medium">{$t('Add Courses')}</span>
 							</a>
 						{/if}
 					</div>
 					<!--Post Manager-->
 					<div class="space-y-3">
-						<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">Posts Manager</p>
+						<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">{$t('Posts Manager')}</p>
+						{#if $currentUser?.Role == "AdminSystem"}
 						<a
-							class="{$page.url.pathname.includes('/manager/moderationposts')
-								? 'bg-green-200 hover:bg-green-400'
-								: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
-							href="/manager/moderationposts"
+						class="{$page.url.pathname.includes('/manager/moderationposts')
+							? 'bg-green-200 hover:bg-green-400'
+							: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
+						href="/manager/moderationposts"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="1em"
+							height="1em"
+							viewBox="0 0 24 24"
+							{...$$props}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								{...$$props}
-							>
-								<path fill="currentColor" d="M3 21V3h18v18zm3-7h12v-2H6zm0 3h12v-1.5H6z" />
-							</svg>
+							<path fill="currentColor" d="M3 21V3h18v18zm3-7h12v-2H6zm0 3h12v-1.5H6z" />
+						</svg>
 
-							<span class="mx-2 text-sm font-medium">Moderation Post</span>
-						</a>
+						<span class="mx-2 text-sm font-medium">{$t('Moderation Post')}</span>
+					</a>
+						{/if}
 
 						<a
 							class="{$page.url.pathname.includes('/manager/postmanager/addpost')
@@ -145,12 +148,12 @@
 								/>
 							</svg>
 
-							<span class="mx-2 text-sm font-medium">Add Post</span>
+							<span class="mx-2 text-sm font-medium">{$t('Add Post')}</span>
 						</a>
 					</div>
 					<!--User Manager-->
 					<div class="space-y-3">
-						<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">User Manager</p>
+						<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">{$t('User Manager')}</p>
 						<a
 							class="{$page.url.pathname.includes('/manager/usermanager')
 								? 'bg-green-200 hover:bg-green-400'
@@ -171,7 +174,7 @@
 								/>
 							</svg>
 
-							<span class="mx-2 text-sm font-medium">Student Manager</span>
+							<span class="mx-2 text-sm font-medium">{$t('Student Manager')}</span>
 						</a>
 						<a
 							class="{$page.url.pathname.includes('/manager/bamanager')
@@ -197,7 +200,7 @@
 								/>
 							</svg>
 
-							<span class="mx-2 text-sm font-medium">Business Admin Manager</span>
+							<span class="mx-2 text-sm font-medium">{$t('Business Admin Manager')}</span>
 						</a>
 					</div>
 				</nav>

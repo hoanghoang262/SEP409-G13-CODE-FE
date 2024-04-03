@@ -1,5 +1,6 @@
 <script>
 	import BigLogBlack from '../assets/Xanh final.png';
+	import { t } from '../translations/i18n';
 </script>
 
 <div
@@ -10,19 +11,19 @@
 	</div>
 	<div class="flex-grow flex justify-around md:mt-10">
 		<div class="">
-			<div class="text-blue-500 text-xl font-medium mb-5">Links</div>
-			<div class="mb-5">Learning</div>
-			<div class="mb-5">Leaderboard</div>
+			<div class="text-blue-500 text-xl font-medium mb-5">{$t('Links')}</div>
+			<div class="mb-5">{$t('Learning')}</div>
+			<div class="mb-5">{$t('Leaderboard')}</div>
 		</div>
 		<div class="">
-			<div class="text-blue-500 text-xl font-medium mb-5">information</div>
-			<div class="mb-5">About Us</div>
+			<div class="text-blue-500 text-xl font-medium mb-5">{$t('Information')}</div>
+			<div class="mb-5">{$t('About Us')}</div>
 		</div>
 		<div class="">
-			<div class="text-blue-500 text-xl font-medium mb-5">Helps</div>
-			<div class="mb-5">Help</div>
-			<div class="mb-5">Forums</div>
-			<div class="mb-5">Contact Us</div>
+			<div class="text-blue-500 text-xl font-medium mb-5">{$t('Helps')}</div>
+			<div class="mb-5">{$t('Help')}</div>
+			<div class="mb-5">{$t('Forums')}</div>
+			<div class="mb-5">{$t('Contact Us')}</div>
 		</div>
 	</div>
 </div>

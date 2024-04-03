@@ -7,11 +7,11 @@ import { checkExist } from "../../../../../helpers/helpers";
 
 
 export async function load({cookies, params}:any) {
-    const userStr = cookies.get('user');
-    if(!checkExist(userStr)){
-        redirect(301, "/")
-    }
-    const user = JSON.parse(userStr);
+    // const userStr = cookies.get('user');
+    // if(!checkExist(userStr)){
+    //     redirect(301, "/")
+    // }
+    // const user = JSON.parse(userStr);
     const ids = params.ids.split('/');
     const courseId = ids[0];
     const chapterId = ids[1];
@@ -20,13 +20,13 @@ export async function load({cookies, params}:any) {
     const chapter = await getChapterById(chapterId);
     const lession = await getLessionById(lessionId);
     const comments = await getCommentByLession(lessionId)
-    const notes = await getNotes(user.UserID, lessionId)
+    //const notes = await getNotes(user.UserID, lessionId)
     return {
         course,
         chapter,
         lession,
         comments,
-        notes
+        //notes
     }
 }
 

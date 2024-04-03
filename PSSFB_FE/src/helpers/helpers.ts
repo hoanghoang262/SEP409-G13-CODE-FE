@@ -64,7 +64,8 @@ export function trimUserData(user: any) {
 		Role: user.Role,
 		jwt: user.jwt,
 		stsTokenManager: user.stsTokenManager,
-		uid: user.uid
+		uid: user.uid,
+		displayName: user.displayName
 	};
 	return trimUser;
 }
@@ -125,3 +126,14 @@ export function secondsToDateTime(seconds:number) {
     return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
 }
 
+export function isImage(path: string) {
+	if (
+		path.includes('jpg') ||
+		path.includes('jng') ||
+		path.includes('gìf') ||
+		path.includes('png') ||
+		path.includes('svg')
+	)
+		return true;
+	return false;
+}

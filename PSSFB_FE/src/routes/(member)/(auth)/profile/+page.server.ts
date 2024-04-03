@@ -6,15 +6,15 @@ import { currentUser } from '../../../../stores/store';
 import { get } from 'svelte/store';
 
 export async function load({ cookies }: any) {
-	const userStr = cookies.get('user');
-	if (!checkExist(userStr)) {
-		redirect(301, '/');
-	}
-	const user = JSON.parse(userStr);
-	const userInfo = await getUserInfo(user.UserID);
-	return {
-		userInfo
-	};
+	// const userStr = cookies.get('user');
+	// if (!checkExist(userStr)) {
+	// 	redirect(301, '/');
+	// }
+	// const user = JSON.parse(userStr);
+	// const userInfo = await getUserInfo(user.UserID);
+	// return {
+	// 	userInfo
+	// };
 }
 
 export const actions = {

@@ -5,10 +5,13 @@
 	import Input from '../../../../atoms/Input.svelte';
 	import ChangePassContainer from '../../../../components/ChangePassContainer.svelte';
 	import { currentUser } from '../../../../stores/store';
-	import { checkExist, showToast } from '../../../../helpers/helpers';
+	import { checkExist, isImage, showToast } from '../../../../helpers/helpers';
 	import { loginWithEmailAndPsr, logout } from '../../../../firebase';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
+	import { beforeUpdate } from 'svelte';
+	import { getUserInfo } from '$lib/services/AuthenticationServices';
+	import Dropzone from 'svelte-file-dropzone';
 
 	export let form: any;
 	if (form?.type == 'success') {
@@ -18,12 +21,18 @@
 	}
 	let section = 'Infomation & Contact';
 	const sections = ['Infomation & Contact', 'Change Password'];
-	export let data: any;
-	const userInfo = data.userInfo;
+	//export let data: any;
+	let userInfo:any;
 	let defaultModal = false;
 	let firstWM = false;
 	let secondWM = false;
 	let deactivePass = '';
+
+	beforeUpdate(async ()=> {
+		if(checkExist($currentUser)){
+			userInfo = await getUserInfo($currentUser.UserID)
+		}
+	})
 
 	const editFrmSubmit = () => {
 		const editfrm: any = document.getElementById('editfrm');
@@ -52,6 +61,26 @@
 			showToast('De-active', 'incorrect password', 'warning');
 		}
 	};
+
+	function handleFilesSelect(e: any) {
+		const { acceptedFiles, fileRejections } = e.detail;
+		if (isImage(acceptedFiles[0]?.path)) {
+			let image = acceptedFiles[0];
+			const reader = new FileReader();
+			reader.addEventListener('load', () => {
+				// Create an image element or use a dedicated image component
+				const imageE: any = document.getElementById('img');
+				imageE.classList.remove('hidden');
+				imageE.src = reader.result;
+				imageE.alt = image.name;
+				// Append the image to a container element in your UI
+			});
+			reader.readAsDataURL(image);
+			console.log(image);
+		}
+
+		
+	}
 </script>
 
 <div class="px-40 py-40 flex bg-gray-100">
@@ -94,7 +123,7 @@
 	</div>
 </div>
 
-<Modal title="Terms of Service" bind:open={defaultModal}>
+<Modal title="Edit profile" bind:open={defaultModal}>
 	<form id="editfrm" method="POST" action="?/editinfo">
 		<div>
 			<Label>FullName</Label>
@@ -133,7 +162,12 @@
 		</div>
 		<div>
 			<Label>Avatar</Label>
-			<Input classes="border w-2/3" required={true} name="photoURL" value={userInfo?.profilePict} />
+			<Dropzone containerClasses="w-2/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+			{#if checkExist(userInfo?.profilePict)}
+			<img src="{userInfo?.profilePict}" class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" />
+			{/if}
+			
+			<Input classes="border w-2/3 hidden" required={true} name="photoURL" value={userInfo?.profilePict} />
 		</div>
 	</form>
 	<svelte:fragment slot="footer">
