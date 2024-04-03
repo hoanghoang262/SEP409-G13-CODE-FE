@@ -49,18 +49,18 @@
 		</div>
 		{$currentUser?.displayName}
 	</div>
-	<div class="mb-10">
-		<Label>Title</Label>
+	<div class="mb-3 md:mb-4">
+		<Label><p class="mb-2">Title</p></Label>
 		<Input required={true} bind:value={post.title} classes="border w-full" placehoder="Title" />
 	</div>
 
-	<div class="mb-10">
-		<Label>Description</Label>
+	<div class="mb-3 md:mb-4">
+		<Label><p class="mb-2">Description</p></Label>
 		<Textarea required bind:value={post.description} placehoder="Description" />
 	</div>
 
-	<div class="mb-10">
-		<Label>Content</Label>
+	<div class="mb-3 md:mb-4">
+		<Label><p class="mb-2">Content</p></Label>
 		<Editor
 			bind:value={post.postContent}
 			apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
