@@ -12,6 +12,7 @@
 	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { getUserInfo, updateUserInfo } from '$lib/services/AuthenticationServices';
 	import Dropzone from 'svelte-file-dropzone';
+	import { formatDate } from '../../../../helpers/datetime';
 
 	export let form: any;
 	if (form?.type == 'success') {
@@ -143,7 +144,7 @@
 	}
 </script>
 
-<div class="h-[calc(100vh-96px)] flex bg-gray-100">
+<div class="min-h-[calc(100vh-96px)] flex bg-gray-100 mb-2">
 	<div class="w-1/6 p-5 rounded-xl bg-white border-gray-200 border-2 pt-10">
 		<div class="w-full">
 			<button
@@ -167,118 +168,154 @@
 			<button on:click={() => (firstWM = true)} class="text-red-500">De-active account</button>
 		</div>
 	</div>
-	<div class="m-auto h-full w-4/6 p-5 rounded-xl bg-white border-gray-200 border-2 pt-10">
+	<div class="m-auto h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5">
 		{#if section == 'Infomation & Contact'}
 			<div class="flex justify-between">
-				<div class="font-bold text-2xl">Infomation</div>
+				<div class="flex justify-between items-center x-5">
+					<p
+						class="md:flex hidden font-thinner text-2xl md:text-3xl mt-5 px-5 py-2 rounded-md bg-gray-200 w-fit"
+					>
+						Profile
+					</p>
+				</div>
 
-				<Button onclick={() => (defaultModal = true)} content="Edit Info" />
+				<div class="w-fit">
+					<Button onclick={() => (defaultModal = true)} content="Edit Info" />
+				</div>
 			</div>
 			<div class="">
-				<div class=" mr-10 flex justify-center items-center mb-10 mt-5">
-					<Avatar src={userInfo?.profilePict} />
+				<div class="md:mx-5 md:mt-3 mt-2 flex flex-col justify-between items-start">
+					<!-- svelte-ignore a11y-img-redundant-alt -->
+					<img
+						class="w-16 h-16 md:h-20 md:w-20 my-4 object-cover rounded-full"
+						src={userInfo?.profilePict}
+						alt="Current profile photo"
+					/>
+					<label class="block border-2 border-gray-200 w-full">
+						<span class="sr-only t-2">Choose profile photo</span>
+						<input
+							type="file"
+							class="w-full text-sm text-slate-500
+						  file:mr-4 file:py-2 file:px-4
+						  file:rounded-full file:border-0
+						  file:text-sm file:font-semibold
+						  file:bg-pink-300 file:text-zinc-900
+						  hover:file:bg-rose-300
+						"
+						/>
+					</label>
 				</div>
-				<div class="flex justify-center items-center font-nunito">
-					<div class="pr-8 font-semibold">
-						<div class="h-7">FullName:</div>
-						<div class="h-7">Username:</div>
-						<div class="h-7">Email:</div>
-						<div class="h-7">Phone Number:</div>
-						<div class="h-7">Address:</div>
-						<div class="h-7">Facebook:</div>
-					</div>
-					<div class="pr-8">
-						<div class="h-7 text-gray-600">{userInfo?.fullName ?? 'None'}</div>
-						<div class="h-7 text-gray-600">{userInfo?.userName ?? 'None'}</div>
-						<div class="h-7 text-gray-600">{$currentUser?.email ?? 'None'}</div>
-						<div class="h-7 text-gray-600">{userInfo?.phone ?? 'None'}</div>
-						<div class="h-7 text-gray-600">{userInfo?.address ?? 'None'}</div>
-						<div class="h-7 text-gray-600">{userInfo?.facebookLink ?? 'None'}</div>
-					</div>
-					<div class="h-full flex-col justify-between">
-						<div class="h-7">
-							<svg
-								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								><path
-									fill="currentColor"
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-								/></svg
-							>
-						</div>
-						<div class="h-7">
-							<svg
-								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								><path
-									fill="currentColor"
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-								/></svg
-							>
-						</div>
-						<div class="h-7">
-							<svg
-								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								><path
-									fill="currentColor"
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-								/></svg
-							>
-						</div>
-						<div class="h-7">
-							<svg
-								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								><path
-									fill="currentColor"
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-								/></svg
-							>
-						</div>
-						<div class="h-7">
-							<svg
-								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg border-b-2"
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								><path
-									fill="currentColor"
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-								/></svg
-							>
-						</div>
-						<div class="h-7">
-							<svg
-								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
-								xmlns="http://www.w3.org/2000/svg"
-								width="1em"
-								height="1em"
-								viewBox="0 0 24 24"
-								><path
-									fill="currentColor"
-									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
-								/></svg
-							>
-						</div>
-					</div>
+				<div class="md:mx-5 md:my-5 my-3">
+					<label
+						class="relative block md:p-3 px-2 py-2 border-2 border-black rounded"
+						for="username"
+					>
+						<span class="text-sm md:text-md font-semibold text-zinc-900">User Name </span>
+						<input
+							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+							autocomplete="off"
+							id="username"
+							type="text"
+							placeholder="Your user name"
+							value={userInfo?.userName}
+							readonly
+						/>
+					</label>
 				</div>
 			</div>
+			<div class="md:mx-5 md:my-5 my-3">
+				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="fullname">
+					<span class="text-sm md:text-md font-semibold text-zinc-900">Full Name </span>
+					<input
+						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+						autocomplete="off"
+						id="fullname"
+						type="text"
+						placeholder="Your fullname"
+						value={userInfo?.fullName}
+						readonly
+					/>
+				</label>
+			</div>
+
+			<div class="flex">
+				<div class="w-1/2 md:mx-5 mr-2">
+					<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="phone">
+						<span class="text-sm md:text-md font-semibold text-zinc-900">Phone Number</span>
+						<input
+							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+							autocomplete="off"
+							id="phone"
+							type="text"
+							placeholder="Your phone"
+							value={userInfo?.phone}
+							readonly
+						/>
+					</label>
+				</div>
+				<div class="w-1/2 md:mx-5 ml-2">
+					<label
+						class="relative block md:p-3 px-2 py-2 border-2 border-black rounded"
+						for="birthDate"
+					>
+						<span class="text-sm md:text-md font-semibold text-zinc-900">BirthDate</span>
+						<input
+							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+							autocomplete="off"
+							id="birthDate"
+							type="text"
+							placeholder="Your birth date"
+							value={formatDate(userInfo?.birthDate)}
+							readonly
+						/>
+					</label>
+				</div>
+			</div>
+			<div class="  md:mx-5 md:my-5 my-3">
+				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="email">
+					<span class="text-sm md:text-md font-semibold text-zinc-900">Email</span>
+					<input
+						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+						autocomplete="off"
+						id="email"
+						type="text"
+						placeholder="Your email"
+						value={userInfo?.email}
+						readonly
+					/>
+				</label>
+			</div>
+
+			<div class=" md:mx-5 md:my-5 my-3">
+				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="address">
+					<span class="text-sm md:text-md font-semibold text-zinc-900">Address</span>
+					<input
+						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+						autocomplete="off"
+						id="address"
+						type="text"
+						placeholder="Your address"
+						value={userInfo?.address}
+						readonly
+					/>
+				</label>
+			</div>
+			<div class=" md:mx-5 md:my-5 my-3">
+				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="fblink">
+					<span class="text-sm md:text-md font-semibold text-zinc-900">Facebook Link</span>
+					<input
+						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+						autocomplete="off"
+						id="fblink"
+						type="text"
+						placeholder="Your facebook link"
+						value={userInfo?.facebookLink}
+						readonly
+					/>
+				</label>
+			</div>
 			<button
-				class="float-right bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-16"
+				class="float-right bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 mr-6 rounded my-8"
 				on:click={() => (firstWM = true)}>Deactive</button
 			>
 		{:else if section == 'Change Password'}

@@ -36,7 +36,6 @@
 				src={data?.profilePict}
 				alt="Current profile photo"
 			/>
-			<button class="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Add New</button>
 			<!-- <label class="block pt-2">
 				<span class="sr-only t-2">Choose profile photo</span>
 				<input
