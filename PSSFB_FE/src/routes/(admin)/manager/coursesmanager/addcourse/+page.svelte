@@ -420,7 +420,7 @@
 <div class="w-4/5 m-auto mt-8">
 	<form on:submit={frmSubmit} method="POST" action="?/addcourse">
 		<p class=" mb-1 font-medium text-3xl">Add Course</p>
-		<input name="createdBy" readonly value={$currentUser.UserID} />
+		<input name="createdBy" readonly class="hidden" value={$currentUser.UserID} />
 		<hr class="my-1 mb-8" />
 		<div>
 			<p class=" mb-1">Course Name</p>

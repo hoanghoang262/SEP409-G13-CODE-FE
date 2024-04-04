@@ -13,7 +13,9 @@
 	import { getUserInfo, updateUserInfo } from '$lib/services/AuthenticationServices';
 	import Dropzone from 'svelte-file-dropzone';
 	import { formatDate } from '../../../../helpers/datetime';
+	import ResetPasswordModal from '../../../../components/modals/ResetPasswordModal.svelte';
 
+	let showModal = false;
 	export let form: any;
 	if (form?.type == 'success') {
 		showToast('Edit Profile', form.message, form.type);
@@ -144,6 +146,7 @@
 </script>
 
 <div class="min-h-[calc(100vh-96px)] flex bg-gray-100 mb-2">
+	<ResetPasswordModal bind:showModal />
 	<div class="w-1/6 p-5 rounded-xl bg-white border-gray-200 border-2 pt-10">
 		<div class="w-full">
 			<button
@@ -165,7 +168,13 @@
 		</div>
 		<div class="w-full">
 			<button
-				class="mt-10 hover:bg-blue-200 w-full py-2 text-black rounded-lg font-medium text-base border-gray-100 border-2 bg-red-500"
+				class="hover:bg-gray-800 mt-10 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 bg-black text-white"
+				on:click={() => (showModal = true)}>Reset Password</button
+			>
+		</div>
+		<div class="w-full">
+			<button
+				class=" hover:bg-red-600 w-full py-2 text-black rounded-lg font-medium text-base border-gray-100 border-2 bg-red-500"
 				on:click={() => (firstWM = true)}>De-active account</button
 			>
 		</div>
