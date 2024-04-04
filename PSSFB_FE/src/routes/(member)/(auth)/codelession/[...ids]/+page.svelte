@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CComplier, CForm, CPlusComplier, CPlusForm, JavaComplier, JavaForm } from '$lib/services/CompilerService';
+	import { CComplier, CForm, CPlusComplier, CPlusForm, ExecuteResult, JavaComplier, JavaForm } from '$lib/services/CompilerService';
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import CodeEditor from '../../../../../components/CodeEditor.svelte';
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
@@ -8,7 +8,7 @@
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.practiceQuestion;
-	let result:any = ""
+	let result:any=[]
 
 	const executeCode = async () => {
 		pageStatus.set('load')
@@ -17,17 +17,17 @@
 			case 'Java':
 				const jf:string = JavaForm(lession.codeForm, lession.testCaseJava)
 				console.log(JSON.stringify({practiceQuestionId: lession.id, userCode: jf, userId: $currentUser.UserID}))
-				result = await JavaComplier({practiceQuestionId: lession.id, userCode: jf, userId: $currentUser.UserID})
+				result = ExecuteResult(await JavaComplier({practiceQuestionId: lession.id, userCode: jf, userId: $currentUser.UserID}))
 				break;
 			case 'C':
 			const cf:string = CForm(lession.codeForm, lession.testCaseC)
 				console.log({practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID})
-				result = await CComplier({practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID})
+				result = ExecuteResult(await CComplier({practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID}))
 				break;
 			case 'C++':
 			const cpf:string = CPlusForm(lession.codeForm, lession.testCaseCplus)
 				console.log({practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID})
-				result = await CPlusComplier({practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID})
+				result = ExecuteResult(await CPlusComplier({practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID}))
 				break;
 		}
 
@@ -49,6 +49,6 @@
 				{@html lession.description}
 			</p>
 		</div>
-		<div class="w-2/5"><CodeEditor {result} {executeCode} bind:value={lession.codeForm} lang={course.tag} /></div>
+		<div class="w-2/5"><CodeEditor bind:result {executeCode} bind:value={lession.codeForm} lang={course.tag} /></div>
 	</div>
 </div>

@@ -11,5 +11,5 @@
 {:then promisedata} 
 	<LearningDetailPage data={promisedata} /> 
 {:catch error}
-<div>{error}</div>
+<div>{error.message}</div>
 {/await}

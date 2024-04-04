@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { checkExist } from '../../helpers/helpers';
 
 export const CComplier = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://compilerservice.azurewebsites.net/api/C_Compiler`,
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCCodeQuestion`,
 			data
 		);
 		return result;
@@ -16,7 +17,7 @@ export const CComplier = async (data: any) => {
 export const CPlusComplier = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler`,
+			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusCodeQuestion`,
 			data
 		);
 		return result;
@@ -29,7 +30,7 @@ export const CPlusComplier = async (data: any) => {
 export const JavaComplier = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://compilerservice.azurewebsites.net/api/JavaCompiler`,
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaCodeQuestion`,
 			data
 		);
 		return result;
@@ -70,4 +71,35 @@ export const CPlusForm = (codeForm: string, testCase: string) => {
         return 0;
     }`;
 	return CPlusForm;
-}
+};
+
+export const ExecuteResult = (result: any) => {
+	let resultList = [];
+
+	try {
+		const string = result.data;
+		let lines = string.split('\n');
+		console.log(lines);
+		// Lặp qua từng dòng
+		for (let i = 0; i < lines.length; i += 4) {
+			if (checkExist(lines[i])) {
+				const expected = parseInt(lines[i].split(': ')[1]);
+				const actual = parseInt(lines[i + 1].split(': ')[1]);
+				const result = lines[i + 2].split(': ')[1].trim();
+				// Tạo đối tượng từ dữ liệu
+				const test = {
+					expected: expected,
+					actual: actual,
+					result: result
+				};
+
+				// Thêm đối tượng vào mảng
+				resultList.push(test);
+			}
+		}
+	} catch (error) {
+		resultList = [{result: result.data}]
+	}
+	console.log(resultList)
+	return resultList;
+};

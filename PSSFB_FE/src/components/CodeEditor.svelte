@@ -3,27 +3,27 @@
 	import { codeLanguage } from '../data/data';
 	//import 'codemirror/lib/codemirror.css';
 	import Button2 from '../atoms/Button2.svelte';
-	import CodeMirror from "svelte-codemirror-editor";
-	import {javascript} from "@codemirror/lang-javascript"
-	import {python} from "@codemirror/lang-python"
-	import { oneDark } from "@codemirror/theme-one-dark";
+	import CodeMirror from 'svelte-codemirror-editor';
+	import { javascript } from '@codemirror/lang-javascript';
+	import { python } from '@codemirror/lang-python';
+	import { oneDark } from '@codemirror/theme-one-dark';
 
-    export let value = "";
-	export let lang = "javascript"
-	export let testCases:any[] = []
-	export let executeCode:any
-	export let result = ""
+	export let value = '';
+	export let lang = 'javascript';
+	export let executeCode: any;
+	export let result: any = [];
+	let selectIndex = 0;
 
 	const getLang = () => {
-		switch (lang){
-			case "javascript":
+		switch (lang) {
+			case 'javascript':
 				return javascript();
-			case "python":
+			case 'python':
 				return python();
 			default:
 				return javascript();
 		}
-	}
+	};
 </script>
 
 <div class="text-slate-300">
@@ -44,38 +44,41 @@
         allowfullscreen/> -->
 
 	<!-- <textarea rows="14" class="bg-slate-950 text-base p-5 w-full"></textarea> -->
-	
-		<CodeMirror bind:value lang={getLang()} styles={{
-			"&": {
-				width: "100%",
-				maxWidth: "100%",
-				height: "500px",
-			},
-		}} theme={oneDark}/>
-	
+
+	<CodeMirror
+		bind:value
+		lang={getLang()}
+		styles={{
+			'&': {
+				width: '100%',
+				maxWidth: '100%',
+				height: '300px'
+			}
+		}}
+		theme={oneDark}
+	/>
+
 	<div class="bg-slate-800 text-white resize p-5 font-medium">
 		<div class="border-b border-white inline-block mb-3">TEST CASE</div>
 		<div class="flex">
 			<div class="w-1/6 border-r mr-10">
-				{#each testCases as tc, index}
-					<div>Test case {index+1}</div>
+				{#each result as tc, index}
+					<button on:click={() => selectIndex=index} class="w-full {selectIndex==index?"bg-blue-900":""}">Test case {index + 1}</button>
 				{/each}
 			</div>
 			<div class="w-5/6 flex">
-				<div class="w-1/2">
-					<div>Input</div>
-					<div>Actual Output</div>
-					<div>Expected output</div>
-					<div>Execute time limit</div>
-					<div>Execute time</div>
-				</div>
-				<div class="w-1/2">
-					<div>0</div>
-					<div></div>
-					<div>Hello World</div>
-					<div>500ms</div>
-					<div></div>
-				</div>
+				{#if result?.length > 0}
+					<div class="w-1/2">
+						<div>Expected Result: </div>
+						<div>Actual Result: </div>
+						<div>Test Result: </div>
+					</div>
+					<div class="w-1/2">
+						<div>{result[selectIndex]?.expected??""}</div>
+						<div>{result[selectIndex]?.actual??""}</div>
+						<div class="{result[selectIndex]?.result=="Passed"?"text-lime-600":"text-red-600"}">{result[selectIndex]?.result??""}</div>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
