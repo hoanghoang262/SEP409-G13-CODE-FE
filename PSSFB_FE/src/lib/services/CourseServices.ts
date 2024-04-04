@@ -14,9 +14,9 @@ export const getAllCourses = async (
 	return result.data.value;
 };
 
-export const getCourseById = async (id: number) => {
+export const getCourseById = async (id: number,userId:number|undefined=undefined) => {
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Course/GetCourseByCourseId?Id=${id}`
+		`https://coursesservices.azurewebsites.net/api/Course/GetCourseByCourseId?Id=${id}${userId?`&userId=${userId}`:``}`
 	);
 	return result.data.value;
 };
@@ -103,5 +103,16 @@ export const submitExam = async (submitData:any) => {
 	} catch (error) {
 		console.log(error);
         return error
+	}
+}
+
+export const enroll = async (userId:number, courseId:number) => {
+	try {
+		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/Enrollment/CreateEnrollment`,{courseId, userId})
+		console.log(result.data)
+		return result.data
+	} catch (error) {
+		console.log(error);
+		return error
 	}
 }

@@ -1,26 +1,31 @@
 <script lang="ts">
-	import Icon from "@iconify/svelte";
-	import Avatar from "../atoms/Avatar.svelte";
-	import Button2 from "../atoms/Button2.svelte";
-	import { goto } from "$app/navigation";
-	import Logo from "../assets/Trắng final.png"
-	import CommentContainer from "../components/CommentContainer.svelte";
-	import { getCommentByCourse } from "$lib/services/CommentService";
-	import SkillsSet from "../components/SkillsSet.svelte";
+	import Icon from '@iconify/svelte';
+	import Avatar from '../atoms/Avatar.svelte';
+	import Button2 from '../atoms/Button2.svelte';
+	import { goto } from '$app/navigation';
+	import Logo from '../assets/Trắng final.png';
+	import CommentContainer from '../components/CommentContainer.svelte';
+	import { getCommentByCourse } from '$lib/services/CommentService';
+	import SkillsSet from '../components/SkillsSet.svelte';
+	import { enroll, getCourseById } from '$lib/services/CourseServices';
+	import { currentUser } from '../stores/store';
+	import { beforeUpdate } from 'svelte';
 
-	
-
-	export let data:any;
+	export let data: any;
 	const course: any = data.course;
 	let comments = data.comments;
+	let enrolled = false;
+	beforeUpdate(async () => {
+		getCourseById(course.id, $currentUser.UserID).then((result:any)=>{if(result?.value?.id){
+			enrolled = true
+		}})
+	})
 	//const sysllabus = data.sysllabus;
 	const quiz = course?.chapters.flatMap((chapter: any) => chapter.lessons);
 	const code = course?.chapters.flatMap((chapter: any) => chapter.codeQuestions);
 	const exam = course?.chapters.flatMap((chapter: any) => chapter.lastExam);
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
-
-	
 </script>
 
 <div>
@@ -39,9 +44,12 @@
 				<div class="text-xl">{course?.created_Name}</div>
 			</div>
 			<Button2
-				onclick={() => goto(`/overall/${course.id}`)}
+				onclick={async() => {
+					enroll($currentUser.UserID, course.id);
+					goto(`/overall/${course.id}`);
+				}}
 				classes="py-3 px-16 bg-white text-black my-10"
-				content="Enroll for free"
+				content="{enrolled?"Enroll for free":"Already Enrolled"}"
 			/>
 			<div>There are 65,273 already enrolled</div>
 		</div>
@@ -129,7 +137,11 @@
 
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="healthicons:i-exam-multiple-choice-outline" style="color: #008ee6" /> exams
+						<Icon
+							class="mr-3"
+							icon="healthicons:i-exam-multiple-choice-outline"
+							style="color: #008ee6"
+						/> exams
 					</div>
 
 					<div>
@@ -144,7 +156,12 @@
 					</div>
 				</div>
 			{:else if section == 'Comments'}
-				<CommentContainer type="course" courseId={course.id} bind:comments getComment={() => getCommentByCourse(course.id)}/>
+				<CommentContainer
+					type="course"
+					courseId={course.id}
+					bind:comments
+					getComment={() => getCommentByCourse(course.id)}
+				/>
 			{/if}
 		</div>
 
