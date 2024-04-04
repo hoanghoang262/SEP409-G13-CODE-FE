@@ -163,8 +163,11 @@
 				on:click={() => (section = 'Change Password')}>Change Password</button
 			>
 		</div>
-		<div>
-			<button on:click={() => (firstWM = true)} class="text-red-500">De-active account</button>
+		<div class="w-full">
+			<button
+				class="mt-10 hover:bg-blue-200 w-full py-2 text-black rounded-lg font-medium text-base border-gray-100 border-2 bg-red-500"
+				on:click={() => (firstWM = true)}>De-active account</button
+			>
 		</div>
 	</div>
 	<div class="m-auto h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5">
