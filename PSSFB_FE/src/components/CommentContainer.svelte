@@ -14,6 +14,7 @@
 		putReplyComment
 	} from '$lib/services/CommentService';
 	import Editor from '@tinymce/tinymce-svelte';
+	import { formatDateTime } from '../helpers/datetime';
 	export let comments: any[];
 	export let editcomment: any = {};
 	export let editreply: any = {};
@@ -126,6 +127,10 @@
 		try {
 			switch (type) {
 				case 'course':
+					console.log(JSON.stringify({courseId,
+						commentContent: content,
+						date: new Date().toISOString,
+						userId: $currentUser.UserID}))
 					await postComment({
 						courseId,
 						commentContent: content,
@@ -154,22 +159,23 @@
 		} catch (error) {
 			console.log(error);
 		}
+		pageStatus.set('done');
 	}
 </script>
 
 <div>
 	<div class="py-5 text-2xl">{comments?.length} Comments</div>
 	{#if checkExist($currentUser)}
-		<form method="POST" action="?/postcomment">
+		<!-- <form method="POST" action="?/postcomment"> -->
 			<div class="flex mb-3">
 				<div class="w-10 mr-3">
 					<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
 				</div>
 
-				<Textarea name="content" rows="5" />
+				<Textarea bind:value={content} name="content" rows="5" />
 			</div>
-			<div class="flex justify-end"><Button content="Post" /></div>
-		</form>
+			<div class="flex justify-end"><Button onclick={comment} content="Post" /></div>
+		<!-- </form> -->
 	{/if}
 	<hr class="my-5" />
 	{#each comments as c}
@@ -180,7 +186,7 @@
 			<div>
 				<div class="flex">
 					<div class="text-blue-500 mr-3">{c.userName}</div>
-					<div class="text-neutral-400">{c.date}</div>
+					<div class="text-neutral-400">{formatDateTime(c.date)}</div>
 				</div>
 				<di id="commentcontent{c.id}">{c.commentContent}</di>
 				<div class="hidden" id="commenteditor{c.id}">

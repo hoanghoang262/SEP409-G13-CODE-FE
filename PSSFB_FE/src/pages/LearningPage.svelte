@@ -77,7 +77,7 @@
 
 	<div class="flex justify-between items-center my-10">
 		<span class="text-3xl font-medium">{$t('Forums')}</span>
-		<a href="/home" class="text-xl">{$t('See all')}</a>
+		<a href="/forums" class="text-xl">{$t('See all')}</a>
 	</div>
 	<div class="flex flex-wrap my-10">
 		{#each posts.slice(0,2) as p}
@@ -89,7 +89,7 @@
 
 	<div class="flex justify-between items-center my-10">
 		<span class="text-3xl font-medium">{$t('Daily Streak')}</span>
-		<a href="/home" class="text-xl">{$t('See all')}</a>
+		<!-- <a href="/" class="text-xl">{$t('See all')}</a> -->
 	</div>
 
 	<div class="border p-5 hover:shadow-lg hover:-translate-y-1 transition-all">
@@ -117,7 +117,7 @@
 
 	<div class="flex justify-between items-center my-10">
 		<span class="text-3xl font-medium">{$t('Your skills')}</span>
-		<a href="/home" class="text-xl">{$t('See all')}</a>
+		<!-- <a href="/" class="text-xl">{$t('See all')}</a> -->
 	</div>
 
 	<SkillsSet />
