@@ -32,12 +32,12 @@ export const actions = {
 		const fullname = data.get('fullname');
 		const address = data.get('address')
 		const facebook = data.get('facebook')
-        console.log(user.uid)
+		console.log(user.uid)
 		try {
 			// await changeUserInfo(user.uid, { displayName, phoneNumber, photoURL });
 
 			await updateUserInfo(user.UserID, {
-                userId: user.UserID,
+				userId: user.UserID,
 				fullname,
 				email: user.email,
 				profilePict: photoURL,
@@ -58,7 +58,7 @@ export const actions = {
 				type: 'success'
 			}
 		} catch (err) {
-            console.log(err)
+			console.log(err)
 			return {
 				error: err,
 				message: 'Something went wrong',

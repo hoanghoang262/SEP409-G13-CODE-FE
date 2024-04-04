@@ -31,18 +31,18 @@
 	onMount(async () => {
 		if (checkExist($currentUser)) {
 			userInfo = await getUserInfo($currentUser.UserID);
-			info = userInfoTrim()
+			info = userInfoTrim();
 		}
 	});
 
 	let image: any;
 	let info = {
 		userId: userInfo?.id,
-		fullname:'',
+		fullname: '',
 		email: userInfo?.email ?? '',
 		profilePict: '',
 		username: '',
-		phone:'',
+		phone: '',
 		address: '',
 		facebookLink: ''
 	};
@@ -67,9 +67,9 @@
 
 	async function frmSubmit() {
 		pageStatus.set('load');
-		if(checkUserName(info.username)){
+		if (checkUserName(info.username)) {
 			showToast('Edit Profile', 'username must be 8-32 characters long', 'warning');
-			return
+			return;
 		}
 		if (checkExist(image)) {
 			await uploadImage(image);
@@ -78,17 +78,21 @@
 				showToast('Edit Profile', 'something went wrong', 'error');
 				return;
 			}
-			console.log("url",url);
+			console.log('url', url);
 			info.profilePict = url;
 		}
 
 		try {
-			console.log(JSON.stringify(info))
+			console.log(JSON.stringify(info));
 			const response = await updateUserInfo(info.userId, info);
 			console.log(response);
 			userInfo = await getUserInfo($currentUser.UserID);
 			info = userInfoTrim();
-			currentUser.set({...$currentUser, displayName: userInfo.userName, photoURL: userInfo.profilePict})
+			currentUser.set({
+				...$currentUser,
+				displayName: userInfo.userName,
+				photoURL: userInfo.profilePict
+			});
 		} catch (error) {
 			console.error(error);
 		}
@@ -140,41 +144,144 @@
 </script>
 
 <div class="px-40 py-40 flex bg-gray-100">
-	<div class="w-1/4 p-5 mr-5 rounded-xl bg-white">
-		<div>
-			<button on:click={() => (section = 'Infomation & Contact')}>Infomation & Contact</button>
+	<div class="w-1/6 p-5 mr-5 rounded-xl bg-white border-gray-200 border-2">
+		<div class="w-full">
+			<button
+				class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border {section ==
+				'Infomation & Contact'
+					? 'bg-green-100 '
+					: ''}"
+				on:click={() => (section = 'Infomation & Contact')}>Infomation & Contact</button
+			>
+		</div>
+		<div class="w-full">
+			<button
+				class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 {section ==
+				'Change Password'
+					? 'bg-green-100 '
+					: ''}"
+				on:click={() => (section = 'Change Password')}>Change Password</button
+			>
 		</div>
 		<div><button on:click={() => (section = 'Change Password')}>Change Password</button></div>
 		<div>
 			<button on:click={() => (firstWM = true)} class="text-red-500">De-active account</button>
 		</div>
 	</div>
-	<div class="w-3/4 p-5 rounded-xl bg-white">
+	<div class="w-3/4 p-5 rounded-xl bg-white border-gray-200 border-2">
 		{#if section == 'Infomation & Contact'}
 			<div class="flex justify-between">
-				<div>Infomation</div>
+				<div class="font-bold text-2xl">Infomation</div>
 
 				<Button onclick={() => (defaultModal = true)} content="Edit Info" />
 			</div>
-			<div class="flex">
-				<div class="w-1/3 mr-10">
+			<div class="">
+				<div class=" mr-10 flex justify-center items-center mb-10 mt-5">
 					<Avatar src={userInfo?.profilePict} />
 				</div>
-				<div class="w-2/3 grid grid-cols-2">
-					<div>FullName</div>
-					<div>{userInfo?.fullName ?? ''}</div>
-					<div>Username</div>
-					<div>{userInfo?.userName ?? ''}</div>
-					<div>Email</div>
-					<div>{$currentUser?.email}</div>
-					<div>Phone Number</div>
-					<div>{userInfo?.phone ?? ''}</div>
-					<div>Address</div>
-					<div>{userInfo?.address ?? ''}</div>
-					<div>Facebook</div>
-					<div>{userInfo?.facebookLink ?? ''}</div>
+				<div class="flex justify-center items-center font-nunito">
+					<div class="pr-8 font-semibold">
+						<div class="h-7">FullName:</div>
+						<div class="h-7">Username:</div>
+						<div class="h-7">Email:</div>
+						<div class="h-7">Phone Number:</div>
+						<div class="h-7">Address:</div>
+						<div class="h-7">Facebook:</div>
+					</div>
+					<div class="pr-8">
+						<div class="h-7 text-gray-600">{userInfo?.fullName ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.userName ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{$currentUser?.email ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.phone ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.address ?? 'None'}</div>
+						<div class="h-7 text-gray-600">{userInfo?.facebookLink ?? 'None'}</div>
+					</div>
+					<div class="h-full flex-col justify-between">
+						<div class="h-7">
+							<svg
+								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
+								/></svg
+							>
+						</div>
+						<div class="h-7">
+							<svg
+								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
+								/></svg
+							>
+						</div>
+						<div class="h-7">
+							<svg
+								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
+								/></svg
+							>
+						</div>
+						<div class="h-7">
+							<svg
+								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
+								/></svg
+							>
+						</div>
+						<div class="h-7">
+							<svg
+								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg border-b-2"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
+								/></svg
+							>
+						</div>
+						<div class="h-7">
+							<svg
+								class="text-blue-600 hover:text-pink-500 cursor-pointer text-lg"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								><path
+									fill="currentColor"
+									d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83l3.75 3.75z"
+								/></svg
+							>
+						</div>
+					</div>
 				</div>
 			</div>
+			<button
+				class="float-right bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-16"
+				on:click={() => (firstWM = true)}>Deactive</button
+			>
 		{:else if section == 'Change Password'}
 			<ChangePassContainer />
 		{/if}
@@ -211,9 +318,8 @@
 		<div>
 			<Label>Avatar</Label>
 			<Dropzone containerClasses="w-2/3 ml-4 mb-5" on:drop={handleFilesSelect} />
-			
-				<img src={info.profilePict} class="w-1/3 ml-4 mb-5" id="img" alt="img" />
-			
+
+			<img src={info.profilePict} class="w-1/3 ml-4 mb-5" id="img" alt="img" />
 
 			<Input
 				classes="border w-2/3 hidden"
@@ -224,7 +330,7 @@
 		</div>
 	</form>
 	<svelte:fragment slot="footer">
-		<Button onclick={async() => frmSubmit()} content="Save" />
+		<Button onclick={async () => frmSubmit()} content="Save" />
 		<Button onclick={() => (defaultModal = false)} content="Cancel" />
 	</svelte:fragment>
 </Modal>
