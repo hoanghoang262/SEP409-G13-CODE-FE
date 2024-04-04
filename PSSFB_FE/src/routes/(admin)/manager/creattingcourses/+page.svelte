@@ -4,7 +4,7 @@
 	import LoadingPage from "../../../../pages/LoadingPage.svelte";
 	import { currentUser } from "../../../../stores/store";
 	//export let data;
-	const promise = getCreatingCourseByUser($currentUser.UserID)
+	const promise = getCreatingCourseByUser($currentUser?.UserID)
 </script>
 
 {#await promise}

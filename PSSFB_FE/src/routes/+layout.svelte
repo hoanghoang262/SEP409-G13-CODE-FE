@@ -15,14 +15,15 @@
 	// 	currentUser.set(data.user);
 	// }
 
-	onMount(() => {
-		const user = localStorage.getItem('user')??"";
+	beforeUpdate(() => {
+		if (!$currentUser) {
+			const user = localStorage.getItem('user') ?? '';
 
-		if (checkExist(user)) {
-			currentUser.set(JSON.parse(user));
-			console.log("currentUser",$currentUser)
+			if (checkExist(user)) {
+				currentUser.set(JSON.parse(user));
+				console.log('currentUser', $currentUser);
+			}
 		}
-		
 	});
 </script>
 
