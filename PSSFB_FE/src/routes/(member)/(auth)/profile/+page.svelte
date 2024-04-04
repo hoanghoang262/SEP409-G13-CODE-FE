@@ -29,10 +29,9 @@
 	let secondWM = false;
 	let deactivePass = '';
 
-	onMount(async () => {
-		if (checkExist($currentUser)) {
+	beforeUpdate(async () => {
+		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
-			info = userInfoTrim();
 		}
 	});
 

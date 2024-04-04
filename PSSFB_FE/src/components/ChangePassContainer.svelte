@@ -51,28 +51,30 @@
 	};
 </script>
 
-<div>
-	<PasswordInput
-		value={old}
-		onChange={oldChange}
-		classes="w-2/3 ml-10 mt-5 mb-7"
-		placehoder="old password"
-	/>
-	<PasswordInput
-		value={newP}
-		onChange={newChange}
-		classes="w-2/3 ml-10  mb-7"
-		placehoder="new password"
-	/>
-	<PasswordInput
-		value={verify}
-		onChange={verifyChange}
-		classes="w-2/3 ml-10  mb-7 "
-		placehoder="verify password"
-	/>
+<div class="min-h-[calc(100vh-96px)]">
+	<div class="">
+		<PasswordInput
+			value={old}
+			onChange={oldChange}
+			classes="w-2/3 ml-10 mt-5 mb-7"
+			placehoder="old password"
+		/>
+		<PasswordInput
+			value={newP}
+			onChange={newChange}
+			classes="w-2/3 ml-10  mb-7"
+			placehoder="new password"
+		/>
+		<PasswordInput
+			value={verify}
+			onChange={verifyChange}
+			classes="w-2/3 ml-10  mb-7 "
+			placehoder="verify password"
+		/>
 
-	<div class="flex justify-end w-2/3 ml-10">
-		<Button onclick={changePass} content="change password" />
+		<div class="flex justify-end w-2/3 ml-10">
+			<Button onclick={changePass} content="change password" />
+		</div>
 	</div>
 </div>
 
