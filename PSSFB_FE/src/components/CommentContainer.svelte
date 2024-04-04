@@ -10,6 +10,7 @@
 		delComment,
 		delReplyComment,
 		postComment,
+		postReplyComment,
 		putComment,
 		putReplyComment
 	} from '$lib/services/CommentService';
@@ -26,6 +27,7 @@
 	$: replies = comments.flatMap((item) => item?.replies);
 	//export let type = 'post';
 	let content = '';
+	let replyContent = ''
 
 	const replyClick = (id: number) => {
 		const replyFrm = document.getElementById(`replyFrm#${id}`);
@@ -101,12 +103,12 @@
 		pageStatus.set('done');
 	}
 
-	function handleKeydown(e: any, id: number) {
-		if (e.key == 'Enter') {
-			const frm: any = document.getElementById(`rfrm${id}`);
-			frm.submit();
-		}
-	}
+	// function handleKeydown(e: any, id: number) {
+	// 	if (e.key == 'Enter') {
+	// 		const frm: any = document.getElementById(`rfrm${id}`);
+	// 		frm.submit();
+	// 	}
+	// }
 
 	async function deleteClick(id: number) {
 		pageStatus.set('load');
@@ -127,10 +129,14 @@
 		try {
 			switch (type) {
 				case 'course':
-					console.log(JSON.stringify({courseId,
-						commentContent: content,
-						date: new Date().toISOString,
-						userId: $currentUser.UserID}))
+					console.log(
+						JSON.stringify({
+							courseId,
+							commentContent: content,
+							date: new Date().toISOString,
+							userId: $currentUser.UserID
+						})
+					);
 					await postComment({
 						courseId,
 						commentContent: content,
@@ -148,7 +154,7 @@
 					break;
 				case 'lession':
 					await postComment({
-						lessonId:lessionId,
+						lessonId: lessionId,
 						commentContent: content,
 						date: new Date().toISOString,
 						userId: $currentUser.UserID
@@ -161,20 +167,37 @@
 		}
 		pageStatus.set('done');
 	}
+
+	async function reply(commentId: number) {
+		pageStatus.set('load');
+		try {
+			await postReplyComment({
+				commentId: commentId,
+				replyContent: replyContent,
+				date: new Date().toISOString,
+				userId: $currentUser.UserID
+			});
+			comments = await getComment();
+		} catch (error) {
+			console.log(error);
+		}
+		replyClick(commentId)
+		pageStatus.set('done');
+	}
 </script>
 
 <div>
 	<div class="py-5 text-2xl">{comments?.length} Comments</div>
 	{#if checkExist($currentUser)}
 		<!-- <form method="POST" action="?/postcomment"> -->
-			<div class="flex mb-3">
-				<div class="w-10 mr-3">
-					<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
-				</div>
-
-				<Textarea bind:value={content} name="content" rows="5" />
+		<div class="flex mb-3">
+			<div class="w-10 mr-3">
+				<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
 			</div>
-			<div class="flex justify-end"><Button onclick={comment} content="Post" /></div>
+
+			<Textarea bind:value={content} name="content" rows="5" />
+		</div>
+		<div class="flex justify-end"><Button onclick={comment} content="Post" /></div>
 		<!-- </form> -->
 	{/if}
 	<hr class="my-5" />
@@ -205,15 +228,17 @@
 				</div>
 				{#if checkExist($currentUser)}
 					<div id="replyFrm#{c.id}" class="mt-5 hidden">
-						<form id="rfrm{c.id}" method="POST" action="?/postreply">
+						<!-- <form id="rfrm{c.id}" method="POST" action="?/postreply"> -->
 							<div class="flex mb-3">
 								<div class="w-10 mr-3">
 									<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
 								</div>
 								<input type="hidden" name="commentId" readonly value={c.id} />
-								<Textarea on:keydown={() => handleKeydown(event, c.id)} name="content" rows="3" />
+								<Textarea bind:value={replyContent} rows="3" />
+									
 							</div>
-						</form>
+							<div class="flex justify-end"><Button onclick={() => reply(c.id)} content="Reply" /></div>
+						<!-- </form> -->
 					</div>
 				{/if}
 				{#each c.replies as reply}

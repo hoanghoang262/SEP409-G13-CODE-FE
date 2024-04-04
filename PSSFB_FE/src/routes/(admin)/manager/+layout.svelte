@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate } from 'svelte';
 	import { currentUser } from '../../../stores/store';
 	import logo from '../../../assets/Xanh final.png';
 	import { page } from '$app/stores';
@@ -10,7 +10,7 @@
 	const sections = ['Courses Lists', 'Add Course', 'Posts List', 'Add Post'];
 	let showStatus = true;
 
-	beforeUpdate(async () => {
+	afterUpdate(async () => {
 		if (!$currentUser) {
 			goto('/');
 		} else if ($currentUser?.Role.includes('Student')) {

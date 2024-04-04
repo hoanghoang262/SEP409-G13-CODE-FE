@@ -16,8 +16,9 @@
 	let comments = data.comments;
 	let enrolled = false;
 	beforeUpdate(async () => {
+		console.log("checkenroll")
 		getCourseById(course.id, $currentUser.UserID).then((result: any) => {
-			if (result?.value?.id) {
+			if (result?.isEnrolled) {
 				enrolled = true;
 			}
 		});
@@ -51,7 +52,7 @@
 					goto(`/overall/${course.id}`);
 				}}
 				classes="py-3 px-16 bg-white text-black my-10"
-				content={enrolled ? 'Enroll for free' : 'Already Enrolled'}
+				content={enrolled ? 'Go to course' : 'Enroll for free'}
 			/>
 			<div>There are 65,273 already enrolled</div>
 		</div>
