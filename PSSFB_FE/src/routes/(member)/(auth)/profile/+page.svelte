@@ -143,8 +143,8 @@
 	}
 </script>
 
-<div class="px-40 py-40 flex bg-gray-100">
-	<div class="w-1/6 p-5 mr-5 rounded-xl bg-white border-gray-200 border-2">
+<div class="h-[calc(100vh-96px)] flex bg-gray-100">
+	<div class="w-1/6 p-5 rounded-xl bg-white border-gray-200 border-2 pt-10">
 		<div class="w-full">
 			<button
 				class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border {section ==
@@ -163,12 +163,11 @@
 				on:click={() => (section = 'Change Password')}>Change Password</button
 			>
 		</div>
-		<div><button on:click={() => (section = 'Change Password')}>Change Password</button></div>
 		<div>
 			<button on:click={() => (firstWM = true)} class="text-red-500">De-active account</button>
 		</div>
 	</div>
-	<div class="w-3/4 p-5 rounded-xl bg-white border-gray-200 border-2">
+	<div class="m-auto h-full w-4/6 p-5 rounded-xl bg-white border-gray-200 border-2 pt-10">
 		{#if section == 'Infomation & Contact'}
 			<div class="flex justify-between">
 				<div class="font-bold text-2xl">Infomation</div>

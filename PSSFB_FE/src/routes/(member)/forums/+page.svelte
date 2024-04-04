@@ -38,7 +38,7 @@
 			onKeyDown={searchFunc}
 			bind:value={searchStr}
 			classes="mb-10 w-1/4"
-			placehoder="{$t('search')}"
+			placehoder={$t('search')}
 		/>
 		{#if $currentUser}
 			<a class="py-2 px-5 bg-blue-500 rounded-lg font-medium shadow-lg text-white" href="/addpost"
@@ -65,7 +65,9 @@
 						<p class="line-clamp-2">{p.description}</p>
 					</div>
 					<div class="text-sm mb-3">
-						<span class="mr-5">By: {p.userName}</span><span>{$t('Last Update')}: {p.lastUpdate}</span>
+						<span class="mr-5">By: {p.userName}</span><span
+							>{$t('Last Update')}: {p.lastUpdate}</span
+						>
 					</div>
 					<div>
 						{#if $currentUser?.UserID == p.createdBy}
@@ -80,13 +82,17 @@
 									}}>{$t('Edit')}</button
 								></span
 							>
-							<span class="mr-5 text-red-500"><button on:click={async () => {
-								pageStatus.set('load')
-								await deletePost(p.id)
-								result = await getAllPost()
-								showToast("Delete Post","Delete post successfully", "success")
-								pageStatus.set('done')
-							}}>{$t('Delete')}</button></span>
+							<span class="mr-5 text-red-500"
+								><button
+									on:click={async () => {
+										pageStatus.set('load');
+										await deletePost(p.id);
+										result = await getAllPost();
+										showToast('Delete Post', 'Delete post successfully', 'success');
+										pageStatus.set('done');
+									}}>{$t('Delete')}</button
+								></span
+							>
 						{/if}
 					</div>
 					<!-- <div>
