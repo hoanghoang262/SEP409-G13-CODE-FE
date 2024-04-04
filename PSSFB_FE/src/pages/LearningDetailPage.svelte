@@ -1,16 +1,14 @@
 <script lang="ts">
-	import Icon from "@iconify/svelte";
-	import Avatar from "../atoms/Avatar.svelte";
-	import Button2 from "../atoms/Button2.svelte";
-	import { goto } from "$app/navigation";
-	import Logo from "../assets/Trắng final.png"
-	import CommentContainer from "../components/CommentContainer.svelte";
-	import { getCommentByCourse } from "$lib/services/CommentService";
-	import SkillsSet from "../components/SkillsSet.svelte";
+	import Icon from '@iconify/svelte';
+	import Avatar from '../atoms/Avatar.svelte';
+	import Button2 from '../atoms/Button2.svelte';
+	import { goto } from '$app/navigation';
+	import Logo from '../assets/Trắng final.png';
+	import CommentContainer from '../components/CommentContainer.svelte';
+	import { getCommentByCourse } from '$lib/services/CommentService';
+	import SkillsSet from '../components/SkillsSet.svelte';
 
-	
-
-	export let data:any;
+	export let data: any;
 	const course: any = data.course;
 	let comments = data.comments;
 	//const sysllabus = data.sysllabus;
@@ -19,12 +17,10 @@
 	const exam = course?.chapters.flatMap((chapter: any) => chapter.lastExam);
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments'];
-
-	
 </script>
 
 <div>
-	<div class="flex pt-40 px-40 bg-blue-950 text-white">
+	<div class="flex pt-10 px-40 bg-blue-950 text-white h-[500px]">
 		<div class="w-2/3">
 			<div class="text-6xl my-5">{course?.name}</div>
 			<div class="flex text-4xl my-5">
@@ -45,9 +41,9 @@
 			/>
 			<div>There are 65,273 already enrolled</div>
 		</div>
-		<div class="w-1/3 text-center">
+		<div class="w-1/3 text-center overflow-hidden">
 			<div class="text-2xl">Offered by</div>
-			<img alt="logo" src={Logo} />
+			<img alt="logo" class="w-fit" src={Logo} />
 		</div>
 	</div>
 
@@ -129,7 +125,11 @@
 
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="healthicons:i-exam-multiple-choice-outline" style="color: #008ee6" /> exams
+						<Icon
+							class="mr-3"
+							icon="healthicons:i-exam-multiple-choice-outline"
+							style="color: #008ee6"
+						/> exams
 					</div>
 
 					<div>
@@ -144,10 +144,13 @@
 					</div>
 				</div>
 			{:else if section == 'Comments'}
-				<CommentContainer type="course" courseId={course.id} bind:comments getComment={() => getCommentByCourse(course.id)}/>
+				<CommentContainer
+					type="course"
+					courseId={course.id}
+					bind:comments
+					getComment={() => getCommentByCourse(course.id)}
+				/>
 			{/if}
 		</div>
-
-		<SkillsSet />
 	</div>
 </div>

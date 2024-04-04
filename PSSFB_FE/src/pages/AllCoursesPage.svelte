@@ -11,54 +11,53 @@
 	export let result: any;
 	$: courses = result.items;
 	let searchStr = '';
-	let tag = 'All'
+	let tag = 'All';
 	const pagiClick = async (page: number) => {
 		result = await getAllCourses(tag, searchStr, page);
 		console.log(result);
 	};
 
 	const searchFunc = async (event: any) => {
-		pageStatus.set('load')
+		pageStatus.set('load');
 		if (event.keyCode === 13) {
 			// Your code to handle Enter key press
-			try{
-                result = await getAllCourses(tag, searchStr);
-            }catch(err){
-                console.log(err);
-            }
-		}
-		pageStatus.set('done')
-	};
-
-	const tagChange = async () => {
-		pageStatus.set('load')
-		
 			try {
-				result = await getAllCourses(tag);
+				result = await getAllCourses(tag, searchStr);
 			} catch (err) {
 				console.log(err);
 			}
-		
-		pageStatus.set('done')
+		}
+		pageStatus.set('done');
 	};
 
+	const tagChange = async () => {
+		pageStatus.set('load');
+
+		try {
+			result = await getAllCourses(tag);
+		} catch (err) {
+			console.log(err);
+		}
+
+		pageStatus.set('done');
+	};
 </script>
 
 <div>
-	<div class="bg-blue-950 text-white px-20 py-10 font-medium pt-40">
+	<div class="bg-blue-950 text-white px-20 pb-10 pt-20 font-medium">
 		<div class="text-3xl mb-10">Learning code online. Let's start with your first course!</div>
 		<Input onKeyDown={searchFunc} bind:value={searchStr} classes="w-1/4 mr-3" placehoder="search" />
-		<div class="w-2/12 inline-block"><Select on:change={tagChange} items={tags} bind:value={tag}/></div>
-		
+		<div class="w-2/12 inline-block">
+			<Select on:change={tagChange} items={tags} bind:value={tag} />
+		</div>
 	</div>
-	<div class="my-10 px-20 flex flex-wrap">
+	<div class="mb-10 mt-20 px-20 flex flex-wrap">
 		{#each courses as c}
-			<div class="w-1/4 p-5 mb-10">
+			<div class="relative w-1/4 h-[450px] p-5 mb-10">
 				<CourseContainer course={c} />
 			</div>
 		{/each}
-		
 	</div>
-    <Pagination pagi={result} {pagiClick} />
+	<Pagination pagi={result} {pagiClick} />
 	<div class="px-20"><SkillsSet /></div>
 </div>

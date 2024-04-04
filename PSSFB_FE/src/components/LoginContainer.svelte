@@ -20,7 +20,6 @@
 	let Email = '';
 	let Password = '';
 	let showModal = false;
-	$: console.log(showModal)
 
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
