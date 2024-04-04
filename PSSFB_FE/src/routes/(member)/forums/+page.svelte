@@ -9,6 +9,7 @@
 	import { currentUser, pageStatus } from '../../../stores/store';
 	import { showToast } from '../../../helpers/helpers';
 	import { t } from '../../../translations/i18n';
+	import { formatDateTime } from '../../../helpers/datetime';
 
 	export let data: any;
 	let result = data.result;
@@ -31,32 +32,37 @@
 	};
 </script>
 
-<div class="bg-neutral-100 py-40 px-20">
+<div class="bg-neutral-100 px-20">
 	<div class="mb-10">{$t('Home')} > {$t('Forums')}</div>
 	<div class="flex justify-between items-center">
 		<Input
 			onKeyDown={searchFunc}
 			bind:value={searchStr}
-			classes="mb-10 w-1/4"
+			classes="mb-10 w-1/4 border-2 border-gray-300 focus:border-none"
 			placehoder={$t('search')}
 		/>
 		{#if $currentUser}
-			<a class="py-2 px-5 bg-blue-500 rounded-lg font-medium shadow-lg text-white" href="/addpost"
-				>{$t('Add Post')}</a
+			<a
+				class="py-3 px-5 bg-blue-500 hover:bg-blue-600 rounded-lg font-medium shadow-lg text-white"
+				href="/addpost">{$t('Add Post')}</a
 			>
 		{/if}
 	</div>
 	<div>
 		{#each posts as p}
-			<div class="bg-white border flex justify-between p-5 mb-10 rounded-tr-3xl">
-				<div class="w-14"><Avatar classes="rounded-full" src={p?.picture} /></div>
+			<div
+				class="bg-white border-4 flex justify-between py-4 px-10 mb-5 rounded-sm shadow-md transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-[1.03] hover:border-green-300"
+			>
+				<div class="w-16 flex items-center">
+					<Avatar classes="rounded-full" src={p?.picture} />
+				</div>
 				<div class="w-10/12">
 					<div
 						role="button"
 						tabindex="0"
 						on:keydown={() => goto(`forums/${p.id}`)}
 						on:click={() => goto(`forums/${p.id}`)}
-						class="text-lg"
+						class="text-lg font-semibold hover:underline"
 					>
 						{p.title}
 					</div>
@@ -66,7 +72,7 @@
 					</div>
 					<div class="text-sm mb-3">
 						<span class="mr-5">By: {p.userName}</span><span
-							>{$t('Last Update')}: {p.lastUpdate}</span
+							>{$t('Last Update')}: {formatDateTime(p.lastUpdate)}</span
 						>
 					</div>
 					<div>

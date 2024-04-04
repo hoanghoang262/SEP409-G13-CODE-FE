@@ -20,7 +20,7 @@
 		{#if type == 'public'}
 			<div class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center">
 				<!-- svelte-ignore a11y-img-redundant-alt -->
-				<img alt="Course Image" src={course.picture} class="w-full text-center" />
+				<img alt="Course Image" src={course.picture} class="w-full h-full text-center" />
 			</div>
 			<!--Course Information-->
 			<div class="p-4 transition delay-50 duration-300 ease-in-out">

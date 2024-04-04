@@ -42,12 +42,33 @@
 	};
 </script>
 
-<div class="md:px-20 px-8 md:py-10 py-6">
-	<div class="flex items-center mb-10">
-		<div class="md:w-20 w-14 mr-5">
-			<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
+<div class="md:px-40 px-8 md:py-10 py-6">
+	<div class="flex justify-between">
+		<div class="flex items-center mb-10">
+			<div class="md:w-20 w-14 mr-5">
+				<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
+			</div>
+			{$currentUser?.displayName}
 		</div>
-		{$currentUser?.displayName}
+		<button
+			on:click={() => {
+				window.history.back();
+			}}
+			class="border-2 border-gray-200 h-fit p-1 rounded-md hover:bg-gray-300"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="28"
+				height="28"
+				viewBox="0 0 24 24"
+				{...$$props}
+			>
+				<path
+					fill="currentColor"
+					d="m4 10l-.707.707L2.586 10l.707-.707zm17 8a1 1 0 1 1-2 0zM8.293 15.707l-5-5l1.414-1.414l5 5zm-5-6.414l5-5l1.414 1.414l-5 5zM4 9h10v2H4zm17 7v2h-2v-2zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"
+				/>
+			</svg>
+		</button>
 	</div>
 	<div class="mb-3 md:mb-4">
 		<Label><p class="mb-2">Title</p></Label>

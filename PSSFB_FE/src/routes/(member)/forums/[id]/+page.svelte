@@ -10,7 +10,7 @@
 	let comments: any = data.comments;
 </script>
 
-<div class="pt-40 px-40">
+<div class="pt-10 px-40">
 	<div class="mb-10">Home > Forums > {post?.title}</div>
 	<div class="flex px-32">
 		<div class="w-1/12 mr-5"><Avatar classes="rounded-full" src={post?.picture} /></div>
@@ -24,14 +24,13 @@
 				{@html post?.postContent}
 			</div>
 			<div class="flex justify-end text-neutral-500 text-lg">
-				<button class="flex items-center"
+				<button
+					class="flex items-center"
 					on:click={() => {
 						const currentUrl = window.location.href;
-						navigator.clipboard
-							.writeText(currentUrl)
-							.then(() => {
-								showToast("URL copied to clipboard","URL copied to clipboard","info")
-							})
+						navigator.clipboard.writeText(currentUrl).then(() => {
+							showToast('URL copied to clipboard', 'URL copied to clipboard', 'info');
+						});
 					}}>Share <Icon class="text-3xl" icon="mdi:share" style="color: #aeadad" /></button
 				>
 			</div>
@@ -43,6 +42,11 @@
 		</div>
 	</div>
 	<div>
-		<CommentContainer type="post" postId={post.id} bind:comments getComment={() => getCommentByPost(post.id)} />
+		<CommentContainer
+			type="post"
+			postId={post.id}
+			bind:comments
+			getComment={() => getCommentByPost(post.id)}
+		/>
 	</div>
 </div>

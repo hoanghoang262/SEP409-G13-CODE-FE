@@ -4,14 +4,12 @@
 	import { goto } from '$app/navigation';
 	import CourseSideBar from '../components/CourseSideBar.svelte';
 
-	
-
-	export let course:any
-	console.log(course)
-	const courseId = course?.id
-	const chapters = course?.chapters??[]
-	const codeworks = course.chapters.flatMap((chapter:any) => chapter.codeQuestions);
-	const quizs = course.chapters.flatMap((chapter:any) => chapter.lessons);
+	export let course: any;
+	console.log(course);
+	const courseId = course?.id;
+	const chapters = course?.chapters ?? [];
+	const codeworks = course.chapters.flatMap((chapter: any) => chapter.codeQuestions);
+	const quizs = course.chapters.flatMap((chapter: any) => chapter.lessons);
 	const arrowR =
 		"<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 1024 1024' > <path fill='#0091ff' d='M338.752 104.704a64 64 0 0 0 0 90.496l316.8 316.8l-316.8 316.8a64 64 0 0 0 90.496 90.496l362.048-362.048a64 64 0 0 0 0-90.496L429.248 104.704a64 64 0 0 0-90.496 0' /> </svg>";
 
@@ -37,22 +35,21 @@
 		}
 	};
 
-	const lessionClick = (l: any, index: number, lindex:number) => {
+	const lessionClick = (l: any, index: number, lindex: number) => {
 		goto(`/lession/${courseId}/${index}/${lindex}`);
 	};
 
-	const codelessionClick = (l: any, index: number, lindex:number) => {
+	const codelessionClick = (l: any, index: number, lindex: number) => {
 		goto(`/codelession/${courseId}/${index}/${lindex}`);
 	};
 
-	const exanclick = (l: any, index: number, lindex:number) => {
+	const exanclick = (l: any, index: number, lindex: number) => {
 		goto(`/exam/${courseId}/${index}/${lindex}`);
 	};
 </script>
 
-<div class="bg-neutral-100 py-40 px-20 flex mb-20">
-	
-	<div class="w-1/4 mr-5"><CourseSideBar course={course} /></div>
+<div class="bg-neutral-100 h-[calc(100vh-64px)] md:h-[calc(100vh-96px)] flex">
+	<div class="w-1/4 mr-5"><CourseSideBar {course} /></div>
 
 	<div class="w-3/4 shadow-xl rounded-2xl border bg-white">
 		<div class="pl-5 pt-3 text-xl text-blue-500">{course?.name}</div>
@@ -86,7 +83,7 @@
 						{s?.name}
 					</div>
 					<div id="lession{index}" class="transition-all" transition:fade>
-						{#each s?.lessons??[] as l}
+						{#each s?.lessons ?? [] as l}
 							<div
 								tabindex="0"
 								role="button"
@@ -102,8 +99,7 @@
 							</div>
 						{/each}
 
-						{#each s?.codeQuestions??[] as l}
-						
+						{#each s?.codeQuestions ?? [] as l}
 							<div
 								tabindex="0"
 								role="button"
@@ -118,7 +114,7 @@
 							</div>
 						{/each}
 
-						{#each s?.lastExam??[] as l}
+						{#each s?.lastExam ?? [] as l}
 							<div
 								tabindex="0"
 								role="button"

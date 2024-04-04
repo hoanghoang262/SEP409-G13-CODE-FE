@@ -12,18 +12,18 @@
 	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
 	import { afterUpdate, beforeUpdate } from 'svelte';
 	export let data;
-	
+
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.lession;
-	let comments = data?.comments??[];
-	let notes:any;
+	let comments = data?.comments ?? [];
+	let notes: any;
 	let currentTime = 0;
 	let section = 'Comments';
 
-	beforeUpdate(async ()=> {
-		notes = await getNotes($currentUser.UserID, lession.id)
-	})
+	beforeUpdate(async () => {
+		notes = await getNotes($currentUser.UserID, lession.id);
+	});
 
 	async function DelNote(id: number) {
 		pageStatus.set('load');
@@ -31,8 +31,6 @@
 		notes = await getNotes($currentUser.UserID, lession.id);
 		pageStatus.set('done');
 	}
-
-	
 
 	const EditClick = (id: number) => {
 		console.log('edit click');
@@ -62,7 +60,7 @@
 	}
 </script>
 
-<div class="pt-32 bg-slate-200 text-black">
+<div class="bg-slate-200 text-black">
 	<div class="px-5 py-2 font-medium">{course.name} > {chapter.name} > {lession.title}</div>
 	<div class="flex bg-white text-black">
 		<div class="w-1/5"><CourseSideBar {course} /></div>
@@ -89,7 +87,12 @@
 			</div>
 			<div class="pl-5">
 				{#if section == 'Comments'}
-					<CommentContainer type="lession" lessionId={lession.id} bind:comments getComment={() => getCommentByLession(lession.id)}/>
+					<CommentContainer
+						type="lession"
+						lessionId={lession.id}
+						bind:comments
+						getComment={() => getCommentByLession(lession.id)}
+					/>
 				{:else if section == 'Notes'}
 					<div class="w-full">
 						{#each notes as note}
