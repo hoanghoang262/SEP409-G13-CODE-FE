@@ -18,5 +18,5 @@
 	placeholder={placehoder}
 	{readonly}
 	bind:value
-	autocomplete="off"
+	autocomplete="new-password"
 />

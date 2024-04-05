@@ -5,24 +5,21 @@
 	import { checkExist } from '../../../helpers/helpers';
 
 	onMount(() => {
-		const user = localStorage.getItem('user')??"";
+		const user = localStorage.getItem('user') ?? '';
 
 		if (checkExist(user)) {
 			currentUser.set(JSON.parse(user));
-			console.log("currentUser",$currentUser)
+			console.log('currentUser', $currentUser);
 		}
-		
 	});
-	
+
 	afterUpdate(async () => {
 		if (!$currentUser) {
 			goto('/');
-		}else if($currentUser?.Role.includes('Admin')){
+		} else if ($currentUser?.Role.includes('Admin')) {
 			goto('/manager');
 		}
 	});
 </script>
 
-
 <slot />
-
