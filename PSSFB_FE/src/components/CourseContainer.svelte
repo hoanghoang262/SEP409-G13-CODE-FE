@@ -6,6 +6,7 @@
 	import { currentUser } from '../stores/store';
 	import Status from '../atoms/Status.svelte';
 	import { t } from '../translations/i18n';
+	import { formatDateTime } from '../helpers/datetime';
 	export let course: any;
 	export let type = 'public';
 	export let ApproveCourse: any = () => {};
@@ -93,7 +94,7 @@
 			</div>
 			<hr />
 			<div class="px-2 py-5 flex justify-between items-center">
-				<div class="flex items-center text-sm">{course.createdAt}</div>
+				<div class="flex items-center text-sm">{formatDateTime(course.createdAt)}</div>
 
 				{#if $currentUser?.Role == 'AdminSystem'}
 					<div>

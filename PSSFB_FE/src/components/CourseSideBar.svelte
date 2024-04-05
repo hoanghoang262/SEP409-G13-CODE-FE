@@ -62,45 +62,38 @@
 		</div>
 		<div id="schedule{index}">
 			{#each s?.lessons??[] as l}
-				<div
-					tabindex="0"
-					role="button"
-					on:keydown={() => {
-						lessionClick(l, s.id, l.id);
-					}}
-					on:click={() => lessionClick(l, s.id, l.id)}
-					class="pl-10 mb-5 flex items-center flex-wrap"
+				<a
+				href="/lession/{courseId}/{s.id}/{l.id}"
+				target="_blank"
+					class=" pl-10 mb-5 flex items-center flex-wrap"
 				>
 
 					<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
 
 					{l.title}
 					<div class="truncate w-full pl-7 pr-10 text-sm text-neutral-500">{l.description}</div>
-				</div>
+				</a>
 			{/each}
 
 			{#each s?.codeQuestions??[] as l}
-				<div
-					tabindex="0"
-					role="button"
-					on:keydown={() => {
-						codelessionClick(l, s.id, l.id);
-					}}
-					on:click={() => codelessionClick(l, s.id, l.id)}
+				<a
+				href="/codelession/{courseId}/{s.id}/{l.id}"
+				target="_blank"
 					class="pl-10 mb-5 flex items-center"
 				>
 					<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
 
 					<p class="truncate pr-10">{l.description}</p>
-				</div>
+				</a>
 			{/each}
 
 			{#each s.lastExam as l}
 				<div class="pl-10 mb-5 flex items-center">
 					<Icon class="mr-3 text-2xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: gray" />
 
-					<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
-						>{l.name}</button
+					<a href="/exam/{courseId}/{s.id}/{l.id}"
+					target="_blank" class="truncate pr-10"
+						>{l.name}</a
 					>
 				</div>
 			{/each}
