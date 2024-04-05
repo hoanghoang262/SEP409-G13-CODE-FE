@@ -47,7 +47,7 @@
 		username: userInfo?.userName ?? '',
 		phone: userInfo?.phone ?? '',
 		address: userInfo?.address ?? '',
-		facebookLink: userInfo?.facebookLink ?? ''
+		facebookLink: userInfo?.facebookLink ?? '',
 	};
 
 	const userInfoTrim = () => {

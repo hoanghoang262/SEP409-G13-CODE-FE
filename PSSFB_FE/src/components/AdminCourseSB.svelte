@@ -171,10 +171,10 @@
 						</div>
 						<div id="schedule{index}">
 							{#each s.lessons as l}
-								<div class="mb-1 flex flex-wrap justify-between items-center">
-									<div class="bg-green-500 p-2 rounded-l-md">
+								<div class="mb-1 pl-10 flex flex-wrap justify-between items-center">
+									
 										<Icon class="" icon="ion:book-sharp" style="color: gray" />
-									</div>
+									
 
 									<button on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
 									<button
@@ -199,12 +199,14 @@
 
 							{#each s.codeQuestions as l}
 								<div class="pl-10 mb-5 flex items-center justify-between">
-									<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
+									<div>
+										<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
+									</div>
 
 									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
 										>{l.description}</button
 									>
-									<button
+									<button class="bg-gray-600 p-2 rounded-r-md"
 										on:click={() => {
 											deleteObject = { id: l.id, type: 'practice question' };
 											firstWM = true;
@@ -224,16 +226,18 @@
 
 							{#each s.lastExam as l}
 								<div class="pl-10 mb-5 flex items-center justify-between">
-									<Icon
+									<div>
+										<Icon
 										class="mr-3 text-2xl"
 										icon="healthicons:i-exam-multiple-choice-outline"
 										style="color: gray"
 									/>
+									</div>
 
 									<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
 										>{l.name}</button
 									>
-									<button
+									<button class="bg-gray-600 p-2 rounded-r-md"
 										on:click={() => {
 											deleteObject = { id: l.id, type: 'exam' };
 											firstWM = true;

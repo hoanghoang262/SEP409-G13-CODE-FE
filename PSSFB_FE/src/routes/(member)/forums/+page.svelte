@@ -13,7 +13,7 @@
 
 	export let data: any;
 	let result = data.result;
-	$: posts = result.items;
+	$: posts = result?.items;
 	let searchStr = '';
 	const pagiClick = async (page: number) => {
 		result = await getAllPost(searchStr, page);

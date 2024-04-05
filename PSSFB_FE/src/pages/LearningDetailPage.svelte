@@ -60,6 +60,7 @@
 		<Button2
 			classes="py-3 px-16 bg-white text-black my-10"
 			content="Sign in to enroll"
+			onclick={() => goto('/')}
 		/>
 			{/if}
 			<div>There are 65,273 already enrolled</div>
@@ -112,11 +113,11 @@
 					<div class="text-2xl mb-5">{course.name}</div>
 					<div class="flex items-center text-xl">
 						<Icon class="mr-3" icon="ph:book-open-fill" style="color: #008ee6" />
-						{quiz.length} quizzes, {code.length} codes. {exam.length} exams
+						{quiz.length} Quizzes, {code.length} Codes, {exam.length} Exams
 					</div>
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="majesticons:list-box" style="color: #008ee6" /> quizzes
+						<Icon class="mr-3" icon="majesticons:list-box" style="color: #008ee6" /> Quizzes
 					</div>
 
 					<div>
@@ -132,7 +133,7 @@
 
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="material-symbols:code" style="color: #008ee6" /> codes
+						<Icon class="mr-3" icon="material-symbols:code" style="color: #008ee6" /> Codes
 					</div>
 
 					<div>
@@ -152,7 +153,7 @@
 							class="mr-3"
 							icon="healthicons:i-exam-multiple-choice-outline"
 							style="color: #008ee6"
-						/> exams
+						/> Exams
 					</div>
 
 					<div>

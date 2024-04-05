@@ -10,6 +10,7 @@
 	const chapters = course?.chapters ?? [];
 	const codeworks = course.chapters.flatMap((chapter: any) => chapter.codeQuestions);
 	const quizs = course.chapters.flatMap((chapter: any) => chapter.lessons);
+	const exam = course?.chapters.flatMap((chapter: any) => chapter.lastExam);
 	const arrowR =
 		"<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 1024 1024' > <path fill='#0091ff' d='M338.752 104.704a64 64 0 0 0 0 90.496l316.8 316.8l-316.8 316.8a64 64 0 0 0 90.496 90.496l362.048-362.048a64 64 0 0 0 0-90.496L429.248 104.704a64 64 0 0 0-90.496 0' /> </svg>";
 
@@ -56,11 +57,15 @@
 		<div class="flex pl-10 mt-20">
 			<div class="flex items-center mr-20">
 				<Icon class="text-3xl" icon="material-symbols:code" style="color: 0054c2" />
-				<div class="ml-5">{codeworks?.length ?? 0} code(s)</div>
+				<div class="ml-5">{codeworks?.length ?? 0} Code(s)</div>
 			</div>
 			<div class="flex items-center mr-20">
 				<Icon class="text-3xl" icon="ion:book-sharp" style="color: 0054c2" />
-				<div class="ml-5">{quizs?.length ?? 0} quiz(s)</div>
+				<div class="ml-5">{quizs?.length ?? 0} Quiz(s)</div>
+			</div>
+			<div class="flex items-center mr-20">
+				<Icon class="text-3xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: 0054c2" />
+				<div class="ml-5">{exam?.length ?? 0} Exams</div>
 			</div>
 		</div>
 

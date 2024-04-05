@@ -35,7 +35,7 @@ export const putComment = async(comment:any) => {
 
 export const delComment = async(id:number) => {
     try{
-        await axios.delete(`https://commentapi.azurewebsites.net/api/Comment/Delete?id=${id}`)
+        await axios.delete(`https://commentapi.azurewebsites.net/api/Comment/DeleteComment?id=${id}`)
     }catch(err){
         console.log(err)
         return err;

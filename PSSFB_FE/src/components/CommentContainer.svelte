@@ -27,7 +27,7 @@
 	$: replies = comments.flatMap((item) => item?.replies);
 	//export let type = 'post';
 	let content = '';
-	let replyContent = ''
+	let replyContent = '';
 
 	const replyClick = (id: number) => {
 		const replyFrm = document.getElementById(`replyFrm#${id}`);
@@ -126,17 +126,13 @@
 
 	async function comment() {
 		pageStatus.set('load');
+		if(!checkExist(content.trim())){
+			showToast("Comment warning","Please enter content","warning")
+			return;
+		}
 		try {
 			switch (type) {
 				case 'course':
-					console.log(
-						JSON.stringify({
-							courseId,
-							commentContent: content,
-							date: new Date().toISOString,
-							userId: $currentUser.UserID
-						})
-					);
 					await postComment({
 						courseId,
 						commentContent: content,
@@ -146,7 +142,7 @@
 					break;
 				case 'post':
 					await postComment({
-						postId,
+						forumPostId: postId,
 						commentContent: content,
 						date: new Date().toISOString,
 						userId: $currentUser.UserID
@@ -181,7 +177,7 @@
 		} catch (error) {
 			console.log(error);
 		}
-		replyClick(commentId)
+		replyClick(commentId);
 		pageStatus.set('done');
 	}
 </script>
@@ -229,15 +225,16 @@
 				{#if checkExist($currentUser)}
 					<div id="replyFrm#{c.id}" class="mt-5 hidden">
 						<!-- <form id="rfrm{c.id}" method="POST" action="?/postreply"> -->
-							<div class="flex mb-3">
-								<div class="w-10 mr-3">
-									<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
-								</div>
-								<input type="hidden" name="commentId" readonly value={c.id} />
-								<Textarea bind:value={replyContent} rows="3" />
-									
+						<div class="flex mb-3">
+							<div class="w-10 mr-3">
+								<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
 							</div>
-							<div class="flex justify-end"><Button onclick={() => reply(c.id)} content="Reply" /></div>
+							<input type="hidden" name="commentId" readonly value={c.id} />
+							<Textarea bind:value={replyContent} rows="3" />
+						</div>
+						<div class="flex justify-end">
+							<Button onclick={() => reply(c.id)} content="Reply" />
+						</div>
 						<!-- </form> -->
 					</div>
 				{/if}
