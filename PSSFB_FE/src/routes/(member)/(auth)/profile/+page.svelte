@@ -34,19 +34,20 @@
 	beforeUpdate(async () => {
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
+			info = userInfoTrim();
 		}
 	});
 
 	let image: any;
 	let info = {
 		userId: userInfo?.id,
-		fullname: '',
+		fullname: userInfo?.fullName ?? '',
 		email: userInfo?.email ?? '',
-		profilePict: '',
-		username: '',
-		phone: '',
-		address: '',
-		facebookLink: ''
+		profilePict: userInfo?.profilePict ?? '',
+		username: userInfo?.userName ?? '',
+		phone: userInfo?.phone ?? '',
+		address: userInfo?.address ?? '',
+		facebookLink: userInfo?.facebookLink ?? ''
 	};
 
 	const userInfoTrim = () => {
