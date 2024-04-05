@@ -28,7 +28,10 @@
 			</div>
 			<!--Course Information-->
 			<div class="p-4 transition delay-50 duration-300 ease-in-out">
-				<h3 class="font-medium text-xl mb-2 group-hover:underline">{course.name}</h3>
+				<button
+					on:click={() => goto(`/learning/${course.id}`)}
+					class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
+				>
 				{#if $currentUser?.Role == 'Student'}
 					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
 				{/if}
@@ -39,7 +42,7 @@
 			</div>
 			<hr />
 			<div class="px-2 py-5 flex justify-between items-center">
-				<div class="flex items-center text-sm">{course.tag}</div>
+				<div class="flex items-center text-sm"></div>
 
 				{#if $currentUser?.Role == 'AdminSystem'}
 					<div>

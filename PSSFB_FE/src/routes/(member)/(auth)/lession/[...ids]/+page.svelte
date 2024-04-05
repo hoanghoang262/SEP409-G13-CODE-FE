@@ -10,7 +10,7 @@
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
-	import { afterUpdate, beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	export let data;
 
 	const course = data?.course;
@@ -21,7 +21,7 @@
 	let currentTime = 0;
 	let section = 'Comments';
 
-	beforeUpdate(async () => {
+	onMount(async () => {
 		notes = await getNotes($currentUser.UserID, lession.id);
 	});
 

@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { CComplier, CForm, CPlusComplier, CPlusForm, ExecuteResult, JavaComplier, JavaForm } from '$lib/services/CompilerService';
+	import {
+		CComplier,
+		CForm,
+		CPlusComplier,
+		CPlusForm,
+		ExecuteResult,
+		JavaComplier,
+		JavaForm
+	} from '$lib/services/CompilerService';
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import CodeEditor from '../../../../../components/CodeEditor.svelte';
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
@@ -8,36 +16,59 @@
 	const course = data?.course;
 	const chapter = data?.chapter;
 	const lession = data?.practiceQuestion;
-	let result:any=[]
+	let result: any = [];
 
 	const executeCode = async () => {
-		pageStatus.set('load')
+		pageStatus.set('load');
 		switch (course?.tag) {
-			
 			case 'Java':
-				const jf:string = JavaForm(lession.codeForm, lession.testCaseJava)
-				console.log(JSON.stringify({practiceQuestionId: lession.id, userCode: jf, userId: $currentUser.UserID}))
-				result = ExecuteResult(await JavaComplier({practiceQuestionId: lession.id, userCode: jf, userId: $currentUser.UserID}))
+				const jf: string = JavaForm(lession.codeForm, lession.testCaseJava);
+				console.log(
+					JSON.stringify({
+						practiceQuestionId: lession.id,
+						userCode: jf,
+						userId: $currentUser.UserID
+					})
+				);
+				result = ExecuteResult(
+					await JavaComplier({
+						practiceQuestionId: lession.id,
+						userCode: jf,
+						userId: $currentUser.UserID
+					})
+				);
 				break;
 			case 'C':
-			const cf:string = CForm(lession.codeForm, lession.testCaseC)
-				console.log({practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID})
-				result = ExecuteResult(await CComplier({practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID}))
+				const cf: string = CForm(lession.codeForm, lession.testCaseC);
+				console.log({ practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID });
+				result = ExecuteResult(
+					await CComplier({
+						practiceQuestionId: lession.id,
+						userCode: cf,
+						userId: $currentUser.UserID
+					})
+				);
 				break;
 			case 'C++':
-			const cpf:string = CPlusForm(lession.codeForm, lession.testCaseCplus)
-				console.log({practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID})
-				result = ExecuteResult(await CPlusComplier({practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID}))
+				const cpf: string = CPlusForm(lession.codeForm, lession.testCaseCplus);
+				console.log({ practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID });
+				result = ExecuteResult(
+					await CPlusComplier({
+						practiceQuestionId: lession.id,
+						userCode: cpf,
+						userId: $currentUser.UserID
+					})
+				);
 				break;
 		}
 
-		console.log(result)
-		pageStatus.set('done')
+		console.log(result);
+		pageStatus.set('done');
 	};
 </script>
 
-<div class="pt-32 bg-slate-200 text-black">
-	<div class="px-5 py-2 font-medium truncate">
+<div class="min-h-[calc(100vh-64px)] md:min-h[calc(100vh-96px)] bg-slate-200 text-black">
+	<div class="px-5 py-2 font-medium">
 		{course.name} > {chapter.name} > {lession.description}
 	</div>
 	<div class="flex bg-white text-black">
@@ -49,6 +80,8 @@
 				{@html lession.description}
 			</p>
 		</div>
-		<div class="w-2/5"><CodeEditor bind:result {executeCode} bind:value={lession.codeForm} lang={course.tag} /></div>
+		<div class="w-2/5">
+			<CodeEditor bind:result {executeCode} bind:value={lession.codeForm} lang={course.tag} />
+		</div>
 	</div>
 </div>

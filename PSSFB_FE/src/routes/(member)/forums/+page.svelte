@@ -9,7 +9,7 @@
 	import { currentUser, pageStatus } from '../../../stores/store';
 	import { showToast } from '../../../helpers/helpers';
 	import { t } from '../../../translations/i18n';
-	import { formatDateTime } from '../../../helpers/datetime';
+	import { getTimeDifference } from '../../../helpers/datetime';
 
 	export let data: any;
 	let result = data.result;
@@ -72,7 +72,7 @@
 					</div>
 					<div class="text-sm mb-3">
 						<span class="mr-5">By: {p.userName}</span><span
-							>{$t('Last Update')}: {formatDateTime(p.lastUpdate)}</span
+							>{$t('Last Update')}: {getTimeDifference(p.lastUpdate)}</span
 						>
 					</div>
 					<div>

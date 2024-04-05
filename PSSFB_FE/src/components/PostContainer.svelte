@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { formatDateTime } from "../helpers/datetime";
-	import { t } from "../translations/i18n";
+	import { formatDateTime } from '../helpers/datetime';
+	import { t } from '../translations/i18n';
 
 	export let post: any;
 </script>
@@ -13,11 +13,11 @@
 			<p class=" truncate">{post.description}</p>
 		</div>
 		<div class="pb-5 flex justify-between items-center">
-            <div>
-                <div class="font-light text-lg">{@html $t('Commentinfo', {n: 10})}</div>
-                <div>{$t('Created time')}: {formatDateTime(post.lastUpdate)}</div>
-            </div>
-            <a href="/forums/{post.id}">{$t('see the post')}</a>
-        </div>
+			<div>
+				<div class="font-light text-lg">{@html $t('Commentinfo', { n: 10 })}</div>
+				<div>{$t('Created time')}: {formatDateTime(post.lastUpdate)}</div>
+			</div>
+			<a href="/forums/{post.id}">{$t('see the post')}</a>
+		</div>
 	</div>
 </div>
