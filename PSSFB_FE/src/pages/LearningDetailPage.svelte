@@ -10,6 +10,7 @@
 	import { enroll, getCourseById } from '$lib/services/CourseServices';
 	import { currentUser } from '../stores/store';
 	import { beforeUpdate } from 'svelte';
+	import { checkExist } from '../helpers/helpers';
 
 	export let data: any;
 	const course: any = data.course;
@@ -46,14 +47,21 @@
 				<Avatar src={course?.avatar} classes="w-10 rounded-full mr-3" />
 				<div class="text-xl">{course?.created_Name}</div>
 			</div>
+			{#if checkExist($currentUser)}
 			<Button2
-				onclick={async () => {
-					enroll($currentUser.UserID, course.id);
-					goto(`/overall/${course.id}`);
-				}}
-				classes="py-3 px-16 bg-white text-black my-10"
-				content={enrolled ? 'Go to course' : 'Enroll for free'}
-			/>
+			onclick={async () => {
+				enroll($currentUser.UserID, course.id);
+				goto(`/overall/${course.id}`);
+			}}
+			classes="py-3 px-16 bg-white text-black my-10"
+			content={enrolled ? 'Go to course' : 'Enroll for free'}
+		/>
+		{:else}
+		<Button2
+			classes="py-3 px-16 bg-white text-black my-10"
+			content="Sign in to enroll"
+		/>
+			{/if}
 			<div>There are 65,273 already enrolled</div>
 		</div>
 		<div class="w-1/3 text-center overflow-hidden">

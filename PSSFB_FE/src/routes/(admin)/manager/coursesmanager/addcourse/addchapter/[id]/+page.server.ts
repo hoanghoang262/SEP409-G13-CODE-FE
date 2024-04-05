@@ -3,9 +3,9 @@ import { getFormData } from "../../../../../../../helpers/helpers";
 
 export async function load({params}:any){
     const courseId = params.id
-    const course = await getModCourseById(courseId)
+    const promise = getModCourseById(courseId)
     return {
-        course
+        promise
     }
 }
 

@@ -1,55 +1,17 @@
-<script lang="ts">
-	import { Label } from 'flowbite-svelte';
-	import Input from '../../../../../../../atoms/Input.svelte';
-	import Button from '../../../../../../../atoms/Button.svelte';
-	import { goto } from '$app/navigation';
-	import { showToast } from '../../../../../../../helpers/helpers';
-	import AdminCourseSb from '../../../../../../../components/AdminCourseSB.svelte';
-	import { afterUpdate } from 'svelte';
+<script>
+	import AddChapterPage from '../../../../../../../pages/AddChapterPage.svelte';
+	import AddCodeLessionPage from '../../../../../../../pages/AddCodeLessionPage.svelte';
+	import LoadingPage from '../../../../../../../pages/LoadingPage.svelte';
 
-	export let form: any;
-	export let data: any;
-	let course = data.course;
-	console.log('data', data);
-	let chapter: any = form?.response;
-
-	if (form?.type == 'success') {
-		showToast('Add Chapter', form.message, form.type);
-	} else if (form?.type == 'error') {
-		showToast('Add Chapter', form.message, form.type);
-	}
-
-	afterUpdate(() => {
-		if (form?.response && form?.type == 'success') {
-			goto(`/manager/coursesmanager/addcourse/addlession/${course.id}/${chapter.id}`);
-		}
-	});
+	export let data;
+	export let form;
+	const promise = data.promise;
 </script>
 
-<div class="flex">
-	<div class="w-3/5 m-auto mt-8">
-		<form method="POST" action="?/addchapter">
-			<p class=" mb-1 font-medium text-3xl">Add Chapter</p>
-			<hr class="my-1 mb-8" />
-			<div>
-				<p class=" mb-1">Add Chapter Name</p>
-				<Input classes=" border w-full" name="name" placehoder="chapter name" />
-			</div>
-			<div class="mt-5">
-				<p class=" mb-1">Part</p>
-				<input
-					type="number"
-					name="part"
-					class="block w-full border mb-5 py-3 px-5 font-light text-black rounded-md"
-					required
-				/>
-			</div>
-			<div class="flex justify-end mt-4">
-				<Button content="Save" />
-			</div>
-		</form>
-	</div>
-	<div>
-		<AdminCourseSb bind:course />
-	</div>
-</div>
+{#await promise}
+	<LoadingPage />
+{:then course}
+	<AddChapterPage bind:form {course} />
+{:catch error}
+	<div>{error.message}</div>
+{/await}
