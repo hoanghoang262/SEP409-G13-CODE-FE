@@ -7,11 +7,12 @@
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
-	import { loginByGoogle } from '$lib/services/AuthenticationServices';
+	import { checkEmail, loginByGoogle } from '$lib/services/AuthenticationServices';
 	import {
 		checkExist,
 		checkPasswords,
 		decodeJWT,
+		isValidEmail,
 		showToast,
 		trimUserData
 	} from '../helpers/helpers';
@@ -78,6 +79,21 @@
 		// 	showToast('Password warning', 'password must be 6 character long', 'warning');
 		// 	return;
 		// }
+
+		if(isValidEmail(Email)){
+			showToast('Email warning', 'invalid email', 'warning');
+			return
+		}
+
+		if(checkExist(Email)){
+			showToast('Email warning', 'please input email', 'warning');
+			return
+		}
+
+		if(checkExist(Password)){
+			showToast('Password warning', 'please input password', 'warning');
+			return
+		}
 
 		pageStatus.set('load');
 		try {
