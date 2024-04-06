@@ -7,7 +7,7 @@
 	import CommentContainer from '../components/CommentContainer.svelte';
 	import { getCommentByCourse } from '$lib/services/CommentService';
 	import SkillsSet from '../components/SkillsSet.svelte';
-	import { enroll, getCourseById } from '$lib/services/CourseServices';
+	import { addWishList, enroll, getCourseById } from '$lib/services/CourseServices';
 	import { currentUser } from '../stores/store';
 	import { beforeUpdate } from 'svelte';
 	import { t } from '../translations/i18n';
@@ -56,22 +56,30 @@
 				<Avatar src={course?.avatar} classes="w-10 rounded-full mr-3" />
 				<div class="text-xl">{course?.created_Name}</div>
 			</div>
-			{#if checkExist($currentUser)}
-				<Button2
-					onclick={async () => {
-						enroll($currentUser.UserID, course.id);
-						goto(`/overall/${course.id}`);
-					}}
-					classes="py-3 px-16 bg-white text-black my-10"
-					content={enrolled ? 'Go to course' : 'Enroll for free'}
-				/>
-			{:else}
-				<Button2
-					classes="py-3 px-16 bg-white text-black my-10"
-					content="Sign in to enroll"
-					onclick={() => goto('/')}
-				/>
-			{/if}
+			<div class="flex items-center">
+				{#if checkExist($currentUser)}
+					<Button2
+						onclick={async () => {
+							enroll($currentUser.UserID, course.id);
+							goto(`/overall/${course.id}`);
+						}}
+						classes="py-3 px-16 bg-white text-black my-10"
+						content={enrolled ? 'Go to course' : 'Enroll for free'}
+					/>
+				{:else}
+					<Button2
+						classes="py-3 px-16 bg-white text-black my-10"
+						content="Sign in to enroll"
+						onclick={() => goto('/')}
+					/>
+				{/if}
+				<button
+					on:click={() => addWishList($currentUser.UserID, course.id)}
+					class="hover:text-red-300 text-slate-400 pl-3"
+					><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
+				>
+			</div>
+
 			<div>There are 65,273 already enrolled</div>
 		</div>
 		<div class="w-1/3 text-center overflow-hidden">

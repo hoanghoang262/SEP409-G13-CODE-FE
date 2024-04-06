@@ -104,6 +104,8 @@
 							</div>
 						{/each}
 
+						<hr class="my-5"/>
+
 						{#each s?.codeQuestions ?? [] as l}
 							<div
 								tabindex="0"
@@ -115,9 +117,11 @@
 								class="pl-10 mb-5"
 								transition:fade
 							>
-								<div>{l.description}</div>
+								<div class="truncate w-3/4">{l.description}</div>
 							</div>
 						{/each}
+
+						<hr class="my-5"/>
 
 						{#each s?.lastExam ?? [] as l}
 							<div
@@ -133,6 +137,8 @@
 								<div>{l.name}</div>
 							</div>
 						{/each}
+
+						<hr class="my-5"/>
 					</div>
 				</div>
 			{/each}

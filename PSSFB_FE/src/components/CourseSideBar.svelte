@@ -81,9 +81,11 @@
 				target="_blank"
 					class="pl-10 mb-5 flex items-center"
 				>
-					<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
+					<div>
+						<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
+					</div>
 
-					<p class="truncate pr-10">{l.description}</p>
+					<div class="truncate pr-10">{l.description}</div>
 				</a>
 			{/each}
 

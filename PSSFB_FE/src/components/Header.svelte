@@ -26,7 +26,7 @@
 				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
 			>
 		</div>
-		<div class="font-medium text-xl hidden md:block">
+		<div class="font-medium text-xl flex items-center">
 			{#if $currentUser?.Role?.includes('Admin')}
 				{#each headerAdminData as header}
 					<a
@@ -49,6 +49,14 @@
 							: ''}">{$t(header.display)}</a
 					>
 				{/each}
+				<a
+						href=''
+						class="flex items-center text-sm lg:text-md xl:text-xl mx-3 lg:mx-4 xl:mx-5 hover:text-green-500 {$page.url.pathname.includes(
+							'wishlist'
+						)
+							? 'text-blue-500'
+							: ''}">{$t('WishList')} <span class="text-4xl"><Icon icon="lets-icons:favorites-duotone" /></span></a
+					>
 			{/if}
 		</div>
 		<!--Top bar button-->
@@ -67,12 +75,7 @@
 			</svg>
 		</button>
 		<div class=" flex items-center justify-end mr-5 lg:mr-20">
-			{#if $currentUser?.Role == 'Student'}
-				<a href="" class="hover:text-green-500 flex items-center text-4xl mr-3">
-					<Icon icon="lets-icons:favorites-duotone" />
-					<span class="text-sm w-14 text-wrap">Favorite Courses</span>
-				</a>
-			{/if}
+			
 			<select on:change={changelang} class="border-2 mr-5 hidden lg:flex">
 				<option>en</option>
 				<option>vn</option>
