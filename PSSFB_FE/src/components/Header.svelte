@@ -21,7 +21,7 @@
 	<div
 		class=" fixed flex w-full bg-white text-black items-center font-medium border-b-2 z-10 justify-between lg:h-24 h-16"
 	>
-		<div class="flex items-center justify-center ">
+		<div class="flex items-center justify-center">
 			<a href="/" class="lg:w-28 w-24"
 				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
 			>
@@ -49,14 +49,18 @@
 							: ''}">{$t(header.display)}</a
 					>
 				{/each}
-				<a
-						href=''
+				{#if $currentUser}
+					<a
+						href="/wishlist"
 						class="flex items-center text-sm lg:text-md xl:text-xl mx-3 lg:mx-4 xl:mx-5 hover:text-green-500 {$page.url.pathname.includes(
 							'wishlist'
 						)
 							? 'text-blue-500'
-							: ''}">{$t('WishList')} <span class="text-4xl"><Icon icon="lets-icons:favorites-duotone" /></span></a
+							: ''}"
+						>{$t('WishList')}
+						<span class="text-4xl"><Icon icon="lets-icons:favorites-duotone" /></span></a
 					>
+				{/if}
 			{/if}
 		</div>
 		<!--Top bar button-->
@@ -75,7 +79,6 @@
 			</svg>
 		</button>
 		<div class=" flex items-center justify-end mr-5 lg:mr-20">
-			
 			<select on:change={changelang} class="border-2 mr-5 hidden lg:flex">
 				<option>en</option>
 				<option>vn</option>

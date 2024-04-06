@@ -6,11 +6,14 @@ export const getAllCourses = async (
 	courseName: string = '',
 	page: number = 1,
 	pageSize: number = 4,
+	userId:number|undefined = undefined
 	
 ) => {
+	const string = `https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag=="All"?``:`&Tag=${tag}`}${userId?`&UserId=${userId}`:``}`
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag=="All"?``:`&Tag=${tag}`}`
+		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``} ${tag=="All"?``:`&Tag=${tag}`} ${userId?`&UserId=${userId}`:``}`
 	);
+	console.log(string);
 	return result.data.value;
 };
 
@@ -125,7 +128,7 @@ export const getWishList = async (
 	pageSize: number = 4,
 ) => {
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/WishList/GetWishListByUserId?userId=${userId}`
+		`https://coursesservices.azurewebsites.net/api/WishList/GetWishListByUserId?UserId=${userId}&Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag=="All"?``:`&Tag=${tag}`}`
 	);
 	return result.data.value;
 };

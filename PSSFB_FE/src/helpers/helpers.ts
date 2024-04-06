@@ -51,6 +51,7 @@ export function decodeJWT(token: string) {
 		const decodedPayload = JSON.parse(atob(payload));
 		console.log('decoded', decodedPayload);
 		return decodedPayload;
+	
 	} catch (error: any) {
 		console.error('Error decoding JWT:', error.message);
 		return null;
