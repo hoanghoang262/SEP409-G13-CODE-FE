@@ -9,10 +9,35 @@
 	import { currentUser } from '../stores/store';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { goto } from '$app/navigation';
+	import { beforeUpdate } from 'svelte';
+	import {
+		getAllCourses,
+		getStudyingCourseByUserId,
+		getCompleteCourseByUserId
+	} from '$lib/services/CourseServices';
 
+	const courseTableTitle = ['Free Courses', 'Pro Courses', 'Studying', 'Complete'];
+	let session = 'Free Courses';
 	export let data: any;
-	export const courses = data.courses.items;
-	export const posts = data.posts.items;
+	let courses = data.courses.items;
+	let posts = data.posts.items;
+
+	beforeUpdate(async () => {
+		if (session == 'Free Courses') {
+			let result = await getAllCourses();
+			courses = result.item;
+		} else if (session == 'Pro Courses') {
+			let result = await getAllCourses();
+			courses = result.item;
+		} else if (session == 'Studying') {
+			let result = await getStudyingCourseByUserId(currentUser.id);
+			courses = result.item;
+		} else if (session == 'Complete') {
+			let result = await getCompleteCourseByUserId(currentUser.id);
+			courses = result.item;
+		}
+		console.log(courses);
+	});
 </script>
 
 <main>
@@ -75,8 +100,9 @@
 		</div>
 
 		<div class="text-xl font-medium flex my-5">
-			<div class="mr-10 border-b-2 border-black">{$t('Free Courses')}</div>
-			<div class="mr-10">{$t('Pro Courses')}</div>
+			{#each courseTableTitle as item}
+				<div class="mr-10">{$t(item)}</div>
+			{/each}
 		</div>
 		<div class="flex flex-wrap my-10">
 			{#if courses?.length > 0}

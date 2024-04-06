@@ -2,21 +2,35 @@ import axios from 'axios';
 import { checkExist, showToast } from '../../helpers/helpers';
 
 export const getAllCourses = async (
-	tag="All",
+	tag = "All",
 	courseName: string = '',
 	page: number = 1,
 	pageSize: number = 4,
-	
+	type: string = ""
 ) => {
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag=="All"?``:`&Tag=${tag}`}`
+		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag == "All" ? `` : `&Tag=${tag}`}`
 	);
 	return result.data.value;
 };
 
-export const getCourseById = async (id: number,userId:number|undefined=undefined) => {
+export const getCourseById = async (id: number, userId: number | undefined = undefined) => {
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Course/GetCourseByCourseId?Id=${id}${userId?`&userId=${userId}`:``}`
+		`https://coursesservices.azurewebsites.net/api/Course/GetCourseByCourseId?Id=${id}${userId ? `&userId=${userId}` : ``}`
+	);
+	return result.data.value;
+};
+
+export const getStudyingCourseByUserId = async (id: number) => {
+	const result = await axios.get(
+		`https://coursesservices.azurewebsites.net/api/Course/GetCourseByCourseId?Id=${id}`
+	);
+	return result.data.value;
+};
+
+export const getCompleteCourseByUserId = async (id: number) => {
+	const result = await axios.get(
+		`https://coursesservices.azurewebsites.net/api/Course/GetCourseByCourseId?Id=${id}`
 	);
 	return result.data.value;
 };
@@ -49,41 +63,41 @@ export const getNotes = async (userId: number, lessionId: number) => {
 	return result.data.value;
 };
 
-export const addNote = async (Note:any) => {
+export const addNote = async (Note: any) => {
 	try {
 		const result = await axios.post(
-			`https://coursesservices.azurewebsites.net/api/Note/CreateNote`,Note
+			`https://coursesservices.azurewebsites.net/api/Note/CreateNote`, Note
 		);
-        return result.data;
+		return result.data;
 	} catch (error) {
 		console.log(error);
-        return error
+		return error
 	}
-	
+
 };
 
-export const putNote = async (id: number, Note:any) => {
+export const putNote = async (id: number, Note: any) => {
 	try {
-        const result = await axios.put(
-            `https://coursesservices.azurewebsites.net/api/Note/UpdateNote?id=${id}`,Note
-        );
-        return result.data;
-    } catch (error) {
-        console.log(error);
-        return error
-    }
+		const result = await axios.put(
+			`https://coursesservices.azurewebsites.net/api/Note/UpdateNote?id=${id}`, Note
+		);
+		return result.data;
+	} catch (error) {
+		console.log(error);
+		return error
+	}
 };
 
 export const delNotes = async (id: number) => {
 	try {
-        const result = await axios.delete(
-            `https://coursesservices.azurewebsites.net/api/Note/DeleteNote?id=${id}`
-        );
-        return result.data;
-    } catch (error) {
-        console.log(error);
-        return error
-    }
+		const result = await axios.delete(
+			`https://coursesservices.azurewebsites.net/api/Note/DeleteNote?id=${id}`
+		);
+		return result.data;
+	} catch (error) {
+		console.log(error);
+		return error
+	}
 };
 
 export const getExam = async (id: number) => {
@@ -92,23 +106,23 @@ export const getExam = async (id: number) => {
 		return result.data
 	} catch (error) {
 		console.log(error);
-        return error
+		return error
 	}
 }
 
-export const submitExam = async (submitData:any) => {
+export const submitExam = async (submitData: any) => {
 	try {
 		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/CheckAnswer/SubmitLastExam`, submitData)
 		return result.data
 	} catch (error) {
 		console.log(error);
-        return error
+		return error
 	}
 }
 
-export const enroll = async (userId:number, courseId:number) => {
+export const enroll = async (userId: number, courseId: number) => {
 	try {
-		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/Enrollment/CreateEnrollment`,{courseId, userId})
+		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/Enrollment/CreateEnrollment`, { courseId, userId })
 		console.log(result.data)
 		return result.data
 	} catch (error) {
@@ -119,7 +133,7 @@ export const enroll = async (userId:number, courseId:number) => {
 
 export const getWishList = async (
 	userId: number,
-	tag="All",
+	tag = "All",
 	courseName: string = '',
 	page: number = 1,
 	pageSize: number = 4,
@@ -132,11 +146,11 @@ export const getWishList = async (
 
 export const addWishList = async (
 	userId: number,
-	courseId:number
+	courseId: number
 ) => {
 	try {
 		const result = await axios.post(
-			`https://coursesservices.azurewebsites.net/api/WishList/AddToWishlist`,{courseId, userId}
+			`https://coursesservices.azurewebsites.net/api/WishList/AddToWishlist`, { courseId, userId }
 		);
 		console.log(result.data);
 		return result.data;
