@@ -10,6 +10,7 @@
 	import Avatar from '../atoms/Avatar.svelte';
 	import { goto } from '$app/navigation';
 	import DropBar from './DropBar.svelte';
+	import Icon from '@iconify/svelte';
 
 	let topbarStatus = false;
 
@@ -20,7 +21,7 @@
 	<div
 		class=" fixed flex w-full bg-white text-black items-center font-medium border-b-2 z-10 justify-between lg:h-24 h-16"
 	>
-		<div class="flex items-center justify-center lg:w-64">
+		<div class="flex items-center justify-center ">
 			<a href="/" class="lg:w-28 w-24"
 				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
 			>
@@ -66,6 +67,12 @@
 			</svg>
 		</button>
 		<div class=" flex items-center justify-end mr-5 lg:mr-20">
+			{#if $currentUser?.Role == 'Student'}
+				<a href="" class="hover:text-green-500 flex items-center text-4xl mr-3">
+					<Icon icon="lets-icons:favorites-duotone" />
+					<span class="text-sm w-14 text-wrap">Favorite Courses</span>
+				</a>
+			{/if}
 			<select on:change={changelang} class="border-2 mr-5 hidden lg:flex">
 				<option>en</option>
 				<option>vn</option>

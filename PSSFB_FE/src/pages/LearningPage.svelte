@@ -79,11 +79,15 @@
 			<div class="mr-10">{$t('Pro Courses')}</div>
 		</div>
 		<div class="flex flex-wrap my-10">
-			{#each courses.slice(0, 4) as c, index}
-				<div class=" w-1/4 pr-5">
-					<CourseContainer course={c} />
-				</div>
-			{/each}
+			{#if courses?.length > 0}
+				{#each courses.slice(0, 4) as c, index}
+					<div class=" w-1/4 pr-5">
+						<CourseContainer course={c} />
+					</div>
+				{/each}
+			{:else}
+				<div class="pr-5">There are no course avaiable</div>
+			{/if}
 		</div>
 
 		<div class="flex justify-between items-center my-10">
@@ -91,11 +95,15 @@
 			<a href="/forums" class="text-xl">{$t('See all')}</a>
 		</div>
 		<div class="flex flex-wrap my-10">
-			{#each posts.slice(0, 2) as p}
-				<div class="w-1/2 pr-5">
-					<PostContainer post={p} />
-				</div>
-			{/each}
+			{#if posts?.length > 0}
+				{#each posts.slice(0, 2) as p}
+					<div class="w-1/2 pr-5">
+						<PostContainer post={p} />
+					</div>
+				{/each}
+			{:else}
+				<div class="pr-5">There are no post</div>
+			{/if}
 		</div>
 
 		<div class="flex justify-between items-center my-10">

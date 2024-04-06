@@ -116,3 +116,32 @@ export const enroll = async (userId:number, courseId:number) => {
 		return error
 	}
 }
+
+export const getWishList = async (
+	userId: number,
+	tag="All",
+	courseName: string = '',
+	page: number = 1,
+	pageSize: number = 4,
+) => {
+	const result = await axios.get(
+		`https://coursesservices.azurewebsites.net/api/WishList/GetWishListByUserId?userId=${userId}`
+	);
+	return result.data.value;
+};
+
+export const addWishList = async (
+	userId: number,
+	courseId:number
+) => {
+	try {
+		const result = await axios.post(
+			`https://coursesservices.azurewebsites.net/api/WishList/AddToWishlist`,{courseId, userId}
+		);
+		console.log(result.data);
+		return result.data;
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+};

@@ -81,7 +81,7 @@
 	<div class="w-3/5 m-auto mt-8">
 		<form on:submit={frmSubmit} method="POST" action="?/editcourse">
 			<input hidden name="id" value={course.id} />
-			<input readonly hidden name="createdBy" value={$currentUser.UserID} />
+			<input readonly hidden name="createdBy" value={$currentUser?.UserID} />
 			<p class=" mb-1 font-medium text-3xl">Edit Course</p>
 			<hr class="my-1 mb-8" />
 			<div>

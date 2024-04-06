@@ -1,6 +1,6 @@
 <script>
-	import AllCoursesPage from "../../../../pages/AllCoursesPage.svelte";
-	import LoadingPage from "../../../../pages/LoadingPage.svelte"
+	import AllCoursesPage from "../../../pages/AllCoursesPage.svelte";
+	import LoadingPage from "../../../pages/LoadingPage.svelte"
 	export let data 
 	const promise = data.promise
 </script>
