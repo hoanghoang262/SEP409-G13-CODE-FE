@@ -80,17 +80,17 @@
 		// 	return;
 		// }
 
-		if(isValidEmail(Email)){
+		if(!isValidEmail(Email)){
 			showToast('Email warning', 'invalid email', 'warning');
 			return
 		}
 
-		if(checkExist(Email)){
+		if(!checkExist(Email)){
 			showToast('Email warning', 'please input email', 'warning');
 			return
 		}
 
-		if(checkExist(Password)){
+		if(!checkExist(Password)){
 			showToast('Password warning', 'please input password', 'warning');
 			return
 		}

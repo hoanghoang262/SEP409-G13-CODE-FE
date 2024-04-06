@@ -52,11 +52,15 @@
 		</div>
 	</div>
 	<div class="mb-10 mt-20 px-20 flex flex-wrap">
-		{#each courses as c}
-			<div class="relative w-1/4 h-[450px] p-5 mb-10">
-				<CourseContainer course={c} />
-			</div>
-		{/each}
+		{#if courses?.length > 0}
+			{#each courses as c}
+				<div class="relative w-1/4 h-[450px] p-5 mb-10">
+					<CourseContainer course={c} />
+				</div>
+			{/each}
+		{:else}
+			<div class="p-5">There are no course avaiable</div>
+		{/if}
 	</div>
 	<Pagination pagi={result} {pagiClick} />
 	<div class="px-20"><SkillsSet /></div>

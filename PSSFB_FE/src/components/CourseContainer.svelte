@@ -36,19 +36,24 @@
 						class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
 					>
 					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
-					{:else if $currentUser?.Role == "AdminBussiness"}
-					<button
-						class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
-					>
+				{:else if $currentUser?.Role == 'AdminBussiness'}
+					<button class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button>
 				{/if}
 				<p class="text-sm flex items-center justify-between">
 					<span><span class="font-semibold">{$t('Language')}</span>: {course.tag}</span>
 					{#if $currentUser?.Role == 'Student'}
-						<button
-							on:click={() => addWishList($currentUser.UserID, course.id)}
-							class="hover:text-red-300 text-slate-400 text-2xl pr-3"
-							><Icon icon="material-symbols:favorite" /></button
-						>
+					
+						{#if course?.isInWishList == false}
+							<button
+								on:click={() => addWishList($currentUser.UserID, course.id)}
+								class="hover:text-red-300 text-slate-400 text-2xl pr-3"
+								><Icon icon="material-symbols:favorite" /></button
+							>
+						{:else if course?.isInWishList == true}
+							<button class="text-red-300 text-2xl pr-3"
+								><Icon icon="material-symbols:favorite" /></button
+							>
+						{/if}
 					{/if}
 				</p>
 				<p class="text-sm line-clamp-1 group-hover:line-clamp-3">

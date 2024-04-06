@@ -1,8 +1,9 @@
 <script>
+	import { getAllCourses } from "$lib/services/CourseServices";
 	import AllCoursesPage from "../../../pages/AllCoursesPage.svelte";
 	import LoadingPage from "../../../pages/LoadingPage.svelte"
-	export let data 
-	const promise = data.promise
+	import { currentUser } from "../../../stores/store";
+	const promise = getAllCourses("All", '',1,4, $currentUser?.UserID)
 </script>
 
 {#await promise}
