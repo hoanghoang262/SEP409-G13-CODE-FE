@@ -11,7 +11,7 @@ export const getAllCourses = async (
 ) => {
 	const string = `https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag == "All" ? `` : `&Tag=${tag}`}${userId ? `&UserId=${userId}` : ``}`
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``} ${tag == "All" ? `` : `&Tag=${tag}`} ${userId ? `&UserId=${userId}` : ``}`
+		`https://coursesservices.azurewebsites.net/api/Course/GetAllCourses?Page=${page}&PageSize=${pageSize}${checkExist(courseName) ? `&CourseName=${courseName}` : ``}${tag == "All" ? `` : `&Tag=${tag}`}${userId ? `&UserId=${userId}` : ``}`
 	);
 	console.log(string);
 	return result.data.value;
@@ -154,6 +154,21 @@ export const addWishList = async (
 	try {
 		const result = await axios.post(
 			`https://coursesservices.azurewebsites.net/api/WishList/AddToWishlist`, { courseId, userId }
+		);
+		console.log(result.data);
+		return result.data;
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+};
+
+export const removeWishList = async (
+	wishlistId:number
+) => {
+	try {
+		const result = await axios.delete(
+			`https://coursesservices.azurewebsites.net/api/WishList/RemoveFromWishlist?wishlistId=${wishlistId}`
 		);
 		console.log(result.data);
 		return result.data;

@@ -6,15 +6,19 @@
 	import PostContainer from '../components/PostContainer.svelte';
 	import SkillsSet from '../components/SkillsSet.svelte';
 	import { t } from '../translations/i18n';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { goto } from '$app/navigation';
 	import { beforeUpdate } from 'svelte';
 	import {
 		getAllCourses,
 		getStudyingCourseByUserId,
-		getCompleteCourseByUserId
+		getCompleteCourseByUserId,
+
+		addWishList
+
 	} from '$lib/services/CourseServices';
+	import { showToast } from '../helpers/helpers';
 
 	const courseTableTitle = ['Free Courses', 'Pro Courses', 'Studying', 'Complete'];
 	let session = 'Free Courses';
@@ -22,22 +26,24 @@
 	let courses = data.courses.items;
 	let posts = data.posts.items;
 
-	beforeUpdate(async () => {
-		if (session == 'Free Courses') {
-			let result = await getAllCourses();
-			courses = result.item;
-		} else if (session == 'Pro Courses') {
-			let result = await getAllCourses();
-			courses = result.item;
-		} else if (session == 'Studying') {
-			let result = await getStudyingCourseByUserId(currentUser.id);
-			courses = result.item;
-		} else if (session == 'Complete') {
-			let result = await getCompleteCourseByUserId(currentUser.id);
-			courses = result.item;
-		}
-		console.log(courses);
-	});
+	// beforeUpdate(async () => {
+	// 	if (session == 'Free Courses') {
+	// 		let result = await getAllCourses();
+	// 		courses = result.item;
+	// 	} else if (session == 'Pro Courses') {
+	// 		let result = await getAllCourses();
+	// 		courses = result.item;
+	// 	} else if (session == 'Studying') {
+	// 		let result = await getStudyingCourseByUserId(currentUser.id);
+	// 		courses = result.item;
+	// 	} else if (session == 'Complete') {
+	// 		let result = await getCompleteCourseByUserId(currentUser.id);
+	// 		courses = result.item;
+	// 	}
+	// 	console.log(courses);
+	// });
+
+	
 </script>
 
 <main>

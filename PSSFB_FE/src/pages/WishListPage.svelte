@@ -4,9 +4,10 @@
 	import CourseContainer from '../components/CourseContainer.svelte';
 	import SkillsSet from '../components/SkillsSet.svelte';
 	import Pagination from '../components/Pagination.svelte';
-	import { getWishList } from '$lib/services/CourseServices';
+	import { getWishList, removeWishList } from '$lib/services/CourseServices';
 	import { currentUser, pageStatus } from '../stores/store';
 	import { tags } from '../data/data';
+	import WishListContainer from '../components/WishListContainer.svelte';
 
 	export let result: any;
 	$: courses = result.items;
@@ -41,6 +42,17 @@
 
 		pageStatus.set('done');
 	};
+
+	const RemoveFromWishList = async (wishListId:number) => {
+		pageStatus.set('load')
+		try {
+			await removeWishList(wishListId)
+			result = await getWishList($currentUser.UserID,tag, searchStr)
+		} catch (error) {
+			console.log(error);
+		}
+		pageStatus.set('done')
+	}
 </script>
 
 <div>
@@ -55,7 +67,7 @@
 		{#if courses?.length > 0}
 			{#each courses as c}
 				<div class="relative w-1/4 h-[450px] p-5 mb-10">
-					<CourseContainer course={c} />
+					<WishListContainer {RemoveFromWishList} course={c} />
 				</div>
 			{/each}
 		{:else}
