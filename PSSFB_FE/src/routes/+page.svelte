@@ -19,7 +19,7 @@
 	// 		goto('/');
 	// 	}
 	// });
-	beforeUpdate(async () => {
+	afterUpdate(async () => {
 		if (checkExist($currentUser)) {
 			if ($currentUser?.Role.includes('Admin')) {
 				goto('/manager');

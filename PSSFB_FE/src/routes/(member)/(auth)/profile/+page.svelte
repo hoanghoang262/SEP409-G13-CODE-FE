@@ -32,6 +32,7 @@
 	let deactivePass = '';
 
 	beforeUpdate(async () => {
+		console.log('update');
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
 			info = userInfoTrim();
@@ -47,7 +48,7 @@
 		username: userInfo?.userName ?? '',
 		phone: userInfo?.phone ?? '',
 		address: userInfo?.address ?? '',
-		facebookLink: userInfo?.facebookLink ?? '',
+		facebookLink: userInfo?.facebookLink ?? ''
 	};
 
 	const userInfoTrim = () => {
