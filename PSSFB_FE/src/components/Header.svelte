@@ -92,7 +92,10 @@
 						href="/profile"
 						class="flex justify-center items-center mr-2 lg:mr-4 hover:bg-green-200 lg:px-2 rounded-full"
 					>
-						<Avatar classes="w-8 lg:w-10 rounded-full lg:mr-3" src={$currentUser.photoURL} />
+						<Avatar
+							classes="w-8 h-8 lg:h-10 lg:w-10 rounded-full lg:mr-3 "
+							src={$currentUser.photoURL}
+						/>
 						<p class="lg:mr-3 hidden lg:block">{$currentUser.displayName}</p>
 					</a>
 					<LogoutBtn />

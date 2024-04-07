@@ -14,6 +14,7 @@
 	import Dropzone from 'svelte-file-dropzone';
 	import { formatDate } from '../../../../helpers/datetime';
 	import ResetPasswordModal from '../../../../components/modals/ResetPasswordModal.svelte';
+	import { trimUserData } from '../../../../helpers/helpers';
 
 	let showModal = false;
 	export let form: any;
@@ -30,9 +31,9 @@
 	let firstWM = false;
 	let secondWM = false;
 	let deactivePass = '';
+	let changeStatus = false;
 
-	beforeUpdate(async () => {
-		console.log('update');
+	afterUpdate(async () => {
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
 			info = userInfoTrim();
@@ -48,7 +49,8 @@
 		username: userInfo?.userName ?? '',
 		phone: userInfo?.phone ?? '',
 		address: userInfo?.address ?? '',
-		facebookLink: userInfo?.facebookLink ?? ''
+		facebookLink: userInfo?.facebookLink ?? '',
+		birthDate: userInfo?.birthDate ? formatDate(userInfo?.birthDate) : ''
 	};
 
 	const userInfoTrim = () => {
@@ -60,9 +62,12 @@
 			username: userInfo?.userName ?? '',
 			phone: userInfo?.phone ?? '',
 			address: userInfo?.address ?? '',
-			facebookLink: userInfo?.facebookLink ?? ''
+			facebookLink: userInfo?.facebookLink ?? '',
+			birthDate: userInfo?.birthDate ? formatDate(userInfo?.birthDate) : ''
 		};
 	};
+
+	const changeHandle = () => {};
 
 	// const editFrmSubmit = () => {
 	// 	const editfrm: any = document.getElementById('editfrm');
@@ -191,30 +196,36 @@
 						Profile
 					</p>
 				</div>
-
-				<div class="w-fit">
-					<Button onclick={() => (defaultModal = true)} content="Edit Info" />
-				</div>
 			</div>
 			<div class="">
 				<div class="md:mx-5 md:mt-3 mt-2 flex flex-col justify-between items-start">
 					<!-- svelte-ignore a11y-img-redundant-alt -->
-					<img
-						class="w-16 h-16 md:h-20 md:w-20 my-4 object-cover rounded-full"
-						src={userInfo?.profilePict}
-						alt="Current profile photo"
-					/>
+					<div class="flex justify-between items-end w-full">
+						<img
+							class="w-16 h-16 md:h-20 md:w-20 my-4 object-cover rounded-full"
+							src={info.profilePict}
+							id="img"
+							alt="Current profile photo"
+						/>
+						<div class="w-fit mb-4">
+							<button
+								class=" px-3 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+								on:click={() => frmSubmit()}>Edit Info</button
+							>
+						</div>
+					</div>
+					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label class="block border-2 border-gray-200 w-full">
 						<span class="sr-only t-2">Choose profile photo</span>
-						<input
-							type="file"
-							class="w-full text-sm text-slate-500
-						  file:mr-4 file:py-2 file:px-4
-						  file:rounded-full file:border-0
-						  file:text-sm file:font-semibold
-						  file:bg-pink-300 file:text-zinc-900
-						  hover:file:bg-rose-300
-						"
+						<div class="border-2 border-black">
+							<Dropzone containerClasses="" on:drop={handleFilesSelect} />
+						</div>
+
+						<Input
+							classes="border w-2/3 hidden"
+							required={true}
+							name="photoURL"
+							value={info?.profilePict}
 						/>
 					</label>
 				</div>
@@ -230,8 +241,7 @@
 							id="username"
 							type="text"
 							placeholder="Your user name"
-							value={userInfo?.userName}
-							readonly
+							bind:value={info.username}
 						/>
 					</label>
 				</div>
@@ -245,8 +255,7 @@
 						id="fullname"
 						type="text"
 						placeholder="Your fullname"
-						value={userInfo?.fullName}
-						readonly
+						bind:value={info.fullname}
 					/>
 				</label>
 			</div>
@@ -261,8 +270,7 @@
 							id="phone"
 							type="text"
 							placeholder="Your phone"
-							value={userInfo?.phone}
-							readonly
+							bind:value={info.phone}
 						/>
 					</label>
 				</div>
@@ -277,9 +285,8 @@
 							autocomplete="off"
 							id="birthDate"
 							type="text"
-							placeholder="Your birth date"
-							value={formatDate(userInfo?.birthDate)}
-							readonly
+							placeholder="dd-MM-yyyy"
+							bind:value={info.birthDate}
 						/>
 					</label>
 				</div>
@@ -293,8 +300,7 @@
 						id="email"
 						type="text"
 						placeholder="Your email"
-						value={userInfo?.email}
-						readonly
+						bind:value={info.email}
 					/>
 				</label>
 			</div>
@@ -308,8 +314,7 @@
 						id="address"
 						type="text"
 						placeholder="Your address"
-						value={userInfo?.address}
-						readonly
+						bind:value={info.address}
 					/>
 				</label>
 			</div>
@@ -322,8 +327,7 @@
 						id="fblink"
 						type="text"
 						placeholder="Your facebook link"
-						value={userInfo?.facebookLink}
-						readonly
+						bind:value={info.facebookLink}
 					/>
 				</label>
 			</div>
