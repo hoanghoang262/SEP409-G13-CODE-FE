@@ -5,19 +5,19 @@ import { checkExist } from '../../../../helpers/helpers.js';
 //import { courses, schedules, sysllabuses } from "../../../../../data/data";
 
 export async function load({ params }: any) {
-	const id = params.id;
-	const promise = async ():Promise<any> => {
-		const course = await getCourseById(id);
-		const comments = await getCommentByCourse(id);
-		return {
-			course,
-			comments,
-		};
-	};
+	// const id = params.id;
+	// const promise = async ():Promise<any> => {
+	// 	const course = await getCourseById(id);
+	// 	const comments = await getCommentByCourse(id);
+	// 	return {
+	// 		course,
+	// 		comments,
+	// 	};
+	// };
 
-	return {
-		promise: promise()
-	};
+	// return {
+	// 	promise: promise()
+	// };
 }
 
 export const actions = {

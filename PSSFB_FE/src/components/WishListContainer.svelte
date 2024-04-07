@@ -14,7 +14,7 @@
 	export let ApproveCourse: any = () => {};
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
-	export let AddToWishList: any = (event:any) => {
+	export let AddToWishList: any = (event:any, courseId:number) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
@@ -40,7 +40,7 @@
 			<div class="p-4 transition delay-50 duration-300 ease-in-out">
 				{#if $currentUser?.Role == 'Student'}
 					<button
-						on:click={() => goto(`/learning/${course.id}`)}
+						on:click={() => goto(`/learning/${course.courseId}`)}
 						class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
 					>
 					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
@@ -52,7 +52,7 @@
 					{#if $currentUser?.Role == 'Student'}
 						{#if course?.isInWishList == false}
 							<button
-								on:click={AddToWishList}
+								on:click={(event) => AddToWishList(event, course.id)}
 								class="hover:text-red-300 text-slate-400 text-2xl pr-3"
 								><Icon icon="material-symbols:favorite" /></button
 							>
@@ -71,38 +71,9 @@
 			<div class="px-2 py-5 flex justify-between items-center">
 				<div class="flex items-center text-sm"></div>
 
-				{#if $currentUser?.Role == 'AdminSystem'}
-					<div>
-						{#if course?.status != 'Accepted'}
-							<Button
-								classes="text-green-500"
-								onclick={() => ApproveCourse(course?.courseId)}
-								content={$t('Approve')}
-							/>
-						{/if}
-
-						{#if course?.status != 'Rejected'}
-							<Button
-								classes="text-red-500"
-								onclick={() => RejectCourse(course?.id)}
-								content={$t('Reject')}
-							/>
-						{/if}
-						<Button
-							onclick={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)}
-							content={$t('Detail')}
-						/>
-					</div>
-				{:else if $currentUser?.Role == 'AdminBussiness'}
-					<div>
-						<Button
-							onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
-							content={$t('Edit')}
-						/>
-						<Button type="danger" onclick={() => DeleteCourse(course.id)} content={$t('Delete')} />
-					</div>
-				{:else if $currentUser?.Role == 'Student'}
-					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('join now')} />
+				
+				{#if $currentUser?.Role == 'Student'}
+					<Button onclick={() => goto(`/learning/${course.courseId}`)} content={$t('join now')} />
 				{/if}
 			</div>
 			{#if $page.url.pathname.includes('wishlist') && $currentUser?.Role == 'Student'}
@@ -113,61 +84,7 @@
 					>
 				</div>
 			{/if}
-		{:else if type == 'admin'}
-			<button on:click={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)}
-				><img alt="courseimg" src={course.coursePicture} class="w-full" /></button
-			>
-
-			<div class="p-4">
-				<h3 class="font-medium text-xl mb-2">{course.courseName}</h3>
-
-				<p class="text-sm text-neutral-500 mb-3">{course.userName}</p>
-				<p class="truncate text-sm">{course.courseDescription}</p>
-				<p>
-					{#if course?.status}
-						<Status status={course?.status} />
-					{/if}
-				</p>
-			</div>
-			<hr />
-			<div class="px-2 py-5 flex justify-between items-center">
-				<div class="flex items-center text-sm">{formatDateTime(course.createdAt)}</div>
-
-				{#if $currentUser?.Role == 'AdminSystem'}
-					<div>
-						{#if course?.status != 'Accepted'}
-							<Button
-								type="Accepted"
-								onclick={() => ApproveCourse(course?.courseId)}
-								content={$t('Approve')}
-							/>
-						{/if}
-
-						{#if course?.status != 'Rejected'}
-							<Button
-								type="Rejected"
-								classes="text-red-500"
-								onclick={() => RejectCourse(course?.id)}
-								content={$t('Reject')}
-							/>
-						{/if}
-						<!-- <Button
-						onclick={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)}
-						content="Detail"
-					/> -->
-					</div>
-				{:else if $currentUser?.Role == 'AdminBussiness'}
-					<div>
-						<Button
-							onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
-							content={$t('Edit')}
-						/>
-						<Button type="danger" onclick={() => DeleteCourse(course.id)} content={$t('Delete')} />
-					</div>
-				{:else}
-					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('join now')} />
-				{/if}
-			</div>
+		
 		{/if}
 	</div>
 </div>

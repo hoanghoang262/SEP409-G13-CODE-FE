@@ -7,7 +7,7 @@
 	import LoadingPage from "../../../pages/LoadingPage.svelte";
 	import { currentUser } from "../../../stores/store";
 
-export let data:any
+//export let data:any
 //const promise = data.promise
 const p = async () => {
 	console.log("learning", $currentUser?.UserID)
