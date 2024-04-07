@@ -11,6 +11,7 @@
 	import { goto } from '$app/navigation';
 	import DropBar from './DropBar.svelte';
 	import Icon from '@iconify/svelte';
+	import Notification from './Notification.svelte';
 
 	let topbarStatus = false;
 
@@ -26,7 +27,7 @@
 				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
 			>
 		</div>
-		<div class="font-medium text-xl flex items-center">
+		<div class="md:flex hidden font-medium text-xl items-center">
 			{#if $currentUser?.Role?.includes('Admin')}
 				{#each headerAdminData as header}
 					<a
@@ -83,20 +84,21 @@
 				<option>en</option>
 				<option>vn</option>
 			</select>
-			<div class="flex">
+			<div class="flex items-center">
 				{#if !$currentUser}
 					<LoginBtn onClick={() => goto('/')} />
 					<RegisterBtn onClick={() => goto('/register')} />
 				{:else}
+					<Notification />
 					<a
 						href="/profile"
-						class="flex justify-center items-center mr-2 lg:mr-4 hover:bg-green-200 lg:px-2 rounded-full"
+						class="flex justify-center items-center mr-2 lg:mr-4 hover:bg-green-200 lg:px-2 rounded-full max-w-[200px]"
 					>
 						<Avatar
-							classes="w-8 h-8 lg:h-10 lg:w-10 rounded-full lg:mr-3 "
+							classes="w-8 h-8 lg:h-10 lg:w-10 rounded-full lg:mr-2 "
 							src={$currentUser.photoURL}
 						/>
-						<p class="lg:mr-3 hidden lg:block">{$currentUser.displayName}</p>
+						<p class="lg:mr-3 hidden lg:block truncate">{$currentUser.displayName}</p>
 					</a>
 					<LogoutBtn />
 				{/if}
