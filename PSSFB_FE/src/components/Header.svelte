@@ -89,10 +89,9 @@
 					<LoginBtn onClick={() => goto('/')} />
 					<RegisterBtn onClick={() => goto('/register')} />
 				{:else}
-					<Notification />
 					<a
 						href="/profile"
-						class="flex justify-center items-center mr-2 lg:mr-4 hover:bg-green-200 lg:px-2 rounded-full max-w-[200px]"
+						class="flex justify-center items-center mr-2 border-2 border-blue-200 hover:bg-green-200 lg:pr-1 rounded-full max-w-[200px]"
 					>
 						<Avatar
 							classes="w-8 h-8 lg:h-10 lg:w-10 rounded-full lg:mr-2 "
@@ -100,6 +99,7 @@
 						/>
 						<p class="lg:mr-3 hidden lg:block truncate">{$currentUser.displayName}</p>
 					</a>
+					<div class="mr-5"><Notification /></div>
 					<LogoutBtn />
 				{/if}
 			</div>

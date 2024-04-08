@@ -14,7 +14,7 @@
 	export let ApproveCourse: any = () => {};
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
-	export let AddToWishList: any = (event:any) => {
+	export let AddToWishList: any = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
@@ -24,8 +24,11 @@
 </script>
 
 <div class="relative h-[450px]">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
-		class="absolute top-0 left-0 w-[90%] border rounded shadow-xl hover:-translate-y-5 transition group"
+		on:click={() => goto(`/learning/${course.id}`)}
+		class="absolute top-0 left-0 w-[90%] border rounded shadow-xl hover:-translate-y-5 transition group cursor-pointer"
 	>
 		{#if type == 'public'}
 			<div class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center">

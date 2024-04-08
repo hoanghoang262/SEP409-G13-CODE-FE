@@ -40,7 +40,7 @@
 	let section = 'Evaluation';
 	const sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 
-	const AddToWishList = (event:any) => {
+	const AddToWishList = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
@@ -78,9 +78,7 @@
 							><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
 						>
 					{:else if course?.inWishList == false}
-						<button
-							on:click={AddToWishList}
-							class="hover:text-red-300 text-slate-400 pl-3"
+						<button on:click={AddToWishList} class="hover:text-red-300 text-slate-400 pl-3"
 							><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
 						>
 					{/if}

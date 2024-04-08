@@ -9,14 +9,12 @@
 	import { currentUser, pageStatus } from '../stores/store';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { goto } from '$app/navigation';
-	import { beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate } from 'svelte';
 	import {
 		getAllCourses,
 		getStudyingCourseByUserId,
 		getCompleteCourseByUserId,
-
 		addWishList
-
 	} from '$lib/services/CourseServices';
 	import { showToast } from '../helpers/helpers';
 
@@ -25,6 +23,8 @@
 	export let data: any;
 	let courses = data.courses.items;
 	let posts = data.posts.items;
+
+	const freeCourseHandle = () => {};
 
 	// beforeUpdate(async () => {
 	// 	if (session == 'Free Courses') {
@@ -42,8 +42,6 @@
 	// 	}
 	// 	console.log(courses);
 	// });
-
-	
 </script>
 
 <main>
@@ -107,7 +105,10 @@
 
 		<div class="text-xl font-medium flex my-5">
 			{#each courseTableTitle as item}
-				<div class="mr-10">{$t(item)}</div>
+				<button
+					on:click={() => (session = item)}
+					class="mr-10 cursor-pointer {item === session ? 'underline' : ''}">{$t(item)}</button
+				>
 			{/each}
 		</div>
 		<div class="flex flex-wrap my-10">
