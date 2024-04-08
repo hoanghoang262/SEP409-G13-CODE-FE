@@ -14,7 +14,8 @@
 	export let ApproveCourse: any = () => {};
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
-	export let AddToWishList: any = (event: any) => {
+
+	export const AddToWishList: any = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
@@ -24,11 +25,8 @@
 </script>
 
 <div class="relative h-[450px]">
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
-		on:click={() => goto(`/learning/${course.id}`)}
-		class="absolute top-0 left-0 w-[90%] border rounded shadow-xl hover:-translate-y-5 transition group cursor-pointer"
+		class="absolute top-0 left-0 w-[90%] border rounded shadow-xl hover:-translate-y-5 transition group"
 	>
 		{#if type == 'public'}
 			<div class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center">
@@ -42,29 +40,49 @@
 			<!--Course Information-->
 			<div class="p-4 transition delay-50 duration-300 ease-in-out">
 				{#if $currentUser?.Role == 'Student'}
-					<button
-						on:click={() => goto(`/learning/${course.id}`)}
-						class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
-					>
+					<div class="flex justify-between items-center">
+						<button
+							on:click={() => goto(`/learning/${course.id}`)}
+							class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
+						>
+
+						<button on:click={AddToWishList} class="mb-2">
+							{#if course?.isInWishList == false}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 26 26"
+									{...$$props}
+								>
+									<path
+										fill="currentColor"
+										d="M17.869 3.889c-2.096 0-3.887 1.494-4.871 2.524c-.984-1.03-2.771-2.524-4.866-2.524C4.521 3.889 2 6.406 2 10.009c0 3.97 3.131 6.536 6.16 9.018c1.43 1.173 2.91 2.385 4.045 3.729c.191.225.471.355.765.355h.058c.295 0 .574-.131.764-.355c1.137-1.344 2.616-2.557 4.047-3.729C20.867 16.546 24 13.98 24 10.009c0-3.603-2.521-6.12-6.131-6.12"
+									/>
+								</svg>
+							{:else if course?.isInWishList == true}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 48 48"
+									{...$$props}
+								>
+									<path
+										fill="#f44336"
+										d="M34 9c-4.2 0-7.9 2.1-10 5.4C21.9 11.1 18.2 9 14 9C7.4 9 2 14.4 2 21c0 11.9 22 24 22 24s22-12 22-24c0-6.6-5.4-12-12-12"
+									/>
+								</svg>
+							{/if}
+						</button>
+					</div>
+
 					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
 				{:else if $currentUser?.Role == 'AdminBussiness'}
 					<button class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button>
 				{/if}
 				<p class="text-sm flex items-center justify-between">
 					<span><span class="font-semibold">{$t('Language')}</span>: {course.tag}</span>
-					{#if $currentUser?.Role == 'Student'}
-						{#if course?.isInWishList == false}
-							<button
-								on:click={AddToWishList}
-								class="hover:text-red-300 text-slate-400 text-2xl pr-3"
-								><Icon icon="material-symbols:favorite" /></button
-							>
-						{:else if course?.isInWishList == true}
-							<button class="text-red-300 text-2xl pr-3"
-								><Icon icon="material-symbols:favorite" /></button
-							>
-						{/if}
-					{/if}
 				</p>
 				<p class="text-sm line-clamp-1 group-hover:line-clamp-3">
 					<span class="font-semibold">Description</span>: {course.description}
