@@ -1,10 +1,10 @@
 import { derived, writable } from "svelte/store";
 import { translations } from "./translations";
 
-export const locale = writable("en");
+export const locale = writable("vn");
 export const locales = Object.keys(translations);
 
-function translate(locale:string, key:string, vars:any) {
+function translate(locale: string, key: string, vars: any) {
   // Let's throw some errors if we're trying to use keys/locales that don't exist.
   // We could improve this by using Typescript and/or fallback values.
   if (!key) throw new Error("no key provided to $t()");
@@ -24,6 +24,6 @@ function translate(locale:string, key:string, vars:any) {
   return text;
 }
 
-export const t = derived(locale, ($locale) => (key:string, vars = {}) =>
+export const t = derived(locale, ($locale) => (key: string, vars = {}) =>
   translate($locale, key, vars)
 );

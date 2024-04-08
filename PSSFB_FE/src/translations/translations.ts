@@ -68,7 +68,7 @@ export const translations: any = {
     "forgot password": "Quên mật khẩu",
     "Start Coding Now": "Bắt đầu code",
     "User Manager": "Quản lý người dùng",
-    "Student Manager": "Quản lý nhọc viên",
+    "Student Manager": "Quản lý học viên",
     "Business Admin Manager": "Quản lý nhân viên",
     "Manager": "Quản lý",
     'Studying': "Dang hoc",

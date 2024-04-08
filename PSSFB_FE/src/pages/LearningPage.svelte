@@ -17,14 +17,20 @@
 		addWishList
 	} from '$lib/services/CourseServices';
 	import { showToast } from '../helpers/helpers';
+	import { getUserInfo } from '$lib/services/AuthenticationServices';
 
 	const courseTableTitle = ['Free Courses', 'Pro Courses', 'Studying', 'Complete'];
 	let session = 'Free Courses';
 	export let data: any;
 	let courses = data.courses.items;
 	let posts = data.posts.items;
+	let userInfo: any;
 
-	const freeCourseHandle = () => {};
+	afterUpdate(async () => {
+		if (!userInfo) {
+			userInfo = await getUserInfo($currentUser.UserID);
+		}
+	});
 
 	afterUpdate(async () => {
 		if (session == 'Free Courses') {
@@ -61,8 +67,8 @@
 					<div class="w-full md:w-1/3">
 						<div class="rounded-md flex items-center bg-white py-5 px-5">
 							<Avatar
-								src={$currentUser?.photoURL}
-								classes="rounded-full border-neutral-400 border-2 w-1/4 mr-8"
+								src={userInfo?.profilePict}
+								classes="rounded-full border-neutral-400 border-2 w-28 h-28 mr-8"
 							/>
 							<div class="overflow-hidden text-3xl font-medium">{$currentUser?.displayName}</div>
 						</div>

@@ -12,10 +12,23 @@
 	import DropBar from './DropBar.svelte';
 	import Icon from '@iconify/svelte';
 	import Notification from './Notification.svelte';
+	import { afterUpdate, onMount } from 'svelte';
+	import { getUserInfo } from '$lib/services/AuthenticationServices';
 
 	let topbarStatus = false;
+	let userInfo: any;
 
 	const changelang = (e: any) => locale.update(() => e.target.value);
+
+	onMount(async () => {
+		userInfo = await getUserInfo($currentUser.UserID);
+	});
+
+	$: if ($currentUser) {
+		if ($currentUser?.UserID) {
+			getUserInfo($currentUser?.UserID).then((result) => (userInfo = result));
+		}
+	}
 </script>
 
 <main>
@@ -81,8 +94,8 @@
 		</button>
 		<div class=" flex items-center justify-end mr-5 lg:mr-20">
 			<select on:change={changelang} class="border-2 mr-5 hidden lg:flex">
-				<option>en</option>
 				<option>vn</option>
+				<option>en</option>
 			</select>
 			<div class="flex items-center">
 				{#if !$currentUser}
@@ -95,7 +108,7 @@
 					>
 						<Avatar
 							classes="w-8 h-8 lg:h-10 lg:w-10 rounded-full lg:mr-2 "
-							src={$currentUser.photoURL}
+							src={userInfo?.profilePict}
 						/>
 						<p class="lg:mr-3 hidden lg:block truncate">{$currentUser.displayName}</p>
 					</a>

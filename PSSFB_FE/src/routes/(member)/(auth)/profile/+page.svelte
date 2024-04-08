@@ -5,7 +5,13 @@
 	import Input from '../../../../atoms/Input.svelte';
 	import ChangePassContainer from '../../../../components/ChangePassContainer.svelte';
 	import { currentUser, pageStatus } from '../../../../stores/store';
-	import { checkExist, checkUserName, isImage, showToast } from '../../../../helpers/helpers';
+	import {
+		checkExist,
+		checkPasswords,
+		checkUserName,
+		isImage,
+		showToast
+	} from '../../../../helpers/helpers';
 	import { getURL, loginWithEmailAndPsr, logout, uploadImage } from '../../../../firebase';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
@@ -32,6 +38,7 @@
 	let secondWM = false;
 	let deactivePass = '';
 	let changeStatus = false;
+	let editStatus = false;
 
 	afterUpdate(async () => {
 		if (!userInfo) {
@@ -67,8 +74,6 @@
 		};
 	};
 
-	const changeHandle = () => {};
-
 	// const editFrmSubmit = () => {
 	// 	const editfrm: any = document.getElementById('editfrm');
 	// 	editfrm.submit();
@@ -76,7 +81,7 @@
 
 	async function frmSubmit() {
 		pageStatus.set('load');
-		if (checkUserName(info.username)) {
+		if (!checkUserName(info.username)) {
 			showToast('Edit Profile', 'username must be 8-32 characters long', 'warning');
 			return;
 		}
@@ -87,14 +92,11 @@
 				showToast('Edit Profile', 'something went wrong', 'error');
 				return;
 			}
-			console.log('url', url);
 			info.profilePict = url;
 		}
 
 		try {
-			console.log(JSON.stringify(info));
 			const response = await updateUserInfo(info.userId, info);
-			console.log(response);
 			userInfo = await getUserInfo($currentUser.UserID);
 			info = userInfoTrim();
 			currentUser.set({
@@ -107,7 +109,12 @@
 		}
 
 		pageStatus.set('done');
+		showToast('Profile', 'Edit profile success', 'success');
 	}
+
+	const editHandle = () => {
+		editStatus = true;
+	};
 
 	const deleteFunc = async () => {
 		if (!checkExist(deactivePass)) {
@@ -146,9 +153,7 @@
 				// Append the image to a container element in your UI
 			});
 			reader.readAsDataURL(image);
-			console.log(image);
 		}
-		console.log(image);
 	}
 </script>
 
@@ -207,17 +212,35 @@
 							id="img"
 							alt="Current profile photo"
 						/>
-						<div class="w-fit mb-4">
-							<button
-								class=" px-3 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-								on:click={() => frmSubmit()}>Edit Info</button
-							>
-						</div>
+						{#if editStatus}
+							<div class="flex">
+								<div class="w-fit mb-4">
+									<button
+										class=" px-3 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md mr-3"
+										on:click={() => frmSubmit()}>Save</button
+									>
+								</div>
+
+								<div class="w-fit mb-4">
+									<button
+										class=" px-3 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+										on:click={() => (editStatus = false)}>Cancel</button
+									>
+								</div>
+							</div>
+						{:else}
+							<div class="w-fit mb-4">
+								<button
+									class=" px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+									on:click={() => editHandle()}>Edit</button
+								>
+							</div>
+						{/if}
 					</div>
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label class="block border-2 border-gray-200 w-full">
 						<span class="sr-only t-2">Choose profile photo</span>
-						<div class="border-2 border-black">
+						<div class="border-2 {editStatus ? 'border-blue-500' : 'border-black'}">
 							<Dropzone containerClasses="" on:drop={handleFilesSelect} />
 						</div>
 
@@ -231,7 +254,9 @@
 				</div>
 				<div class="md:mx-5 md:my-5 my-3">
 					<label
-						class="relative block md:p-3 px-2 py-2 border-2 border-black rounded"
+						class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+							? 'border-blue-500'
+							: 'border-black'} rounded"
 						for="username"
 					>
 						<span class="text-sm md:text-md font-semibold text-zinc-900">User Name </span>
@@ -242,12 +267,18 @@
 							type="text"
 							placeholder="Your user name"
 							bind:value={info.username}
+							disabled={editStatus ? false : true}
 						/>
 					</label>
 				</div>
 			</div>
 			<div class="md:mx-5 md:my-5 my-3">
-				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="fullname">
+				<label
+					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						? 'border-blue-500'
+						: 'border-black'} rounded"
+					for="fullname"
+				>
 					<span class="text-sm md:text-md font-semibold text-zinc-900">Full Name </span>
 					<input
 						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -256,13 +287,19 @@
 						type="text"
 						placeholder="Your fullname"
 						bind:value={info.fullname}
+						disabled={editStatus ? false : true}
 					/>
 				</label>
 			</div>
 
 			<div class="flex">
 				<div class="w-1/2 md:mx-5 mr-2">
-					<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="phone">
+					<label
+						class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+							? 'border-blue-500'
+							: 'border-black'} rounded"
+						for="phone"
+					>
 						<span class="text-sm md:text-md font-semibold text-zinc-900">Phone Number</span>
 						<input
 							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -271,12 +308,15 @@
 							type="text"
 							placeholder="Your phone"
 							bind:value={info.phone}
+							disabled={editStatus ? false : true}
 						/>
 					</label>
 				</div>
 				<div class="w-1/2 md:mx-5 ml-2">
 					<label
-						class="relative block md:p-3 px-2 py-2 border-2 border-black rounded"
+						class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+							? 'border-blue-500'
+							: 'border-black'} rounded"
 						for="birthDate"
 					>
 						<span class="text-sm md:text-md font-semibold text-zinc-900">BirthDate</span>
@@ -287,12 +327,18 @@
 							type="text"
 							placeholder="dd-MM-yyyy"
 							bind:value={info.birthDate}
+							disabled={editStatus ? false : true}
 						/>
 					</label>
 				</div>
 			</div>
 			<div class="  md:mx-5 md:my-5 my-3">
-				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="email">
+				<label
+					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						? 'border-blue-500'
+						: 'border-black'} rounded"
+					for="email"
+				>
 					<span class="text-sm md:text-md font-semibold text-zinc-900">Email</span>
 					<input
 						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -301,12 +347,18 @@
 						type="text"
 						placeholder="Your email"
 						bind:value={info.email}
+						disabled={editStatus ? false : true}
 					/>
 				</label>
 			</div>
 
 			<div class=" md:mx-5 md:my-5 my-3">
-				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="address">
+				<label
+					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						? 'border-blue-500'
+						: 'border-black'} rounded"
+					for="address"
+				>
 					<span class="text-sm md:text-md font-semibold text-zinc-900">Address</span>
 					<input
 						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -315,11 +367,17 @@
 						type="text"
 						placeholder="Your address"
 						bind:value={info.address}
+						disabled={editStatus ? false : true}
 					/>
 				</label>
 			</div>
 			<div class=" md:mx-5 md:my-5 my-3">
-				<label class="relative block md:p-3 px-2 py-2 border-2 border-black rounded" for="fblink">
+				<label
+					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						? 'border-blue-500'
+						: 'border-black'} rounded"
+					for="fblink"
+				>
 					<span class="text-sm md:text-md font-semibold text-zinc-900">Facebook Link</span>
 					<input
 						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -328,6 +386,7 @@
 						type="text"
 						placeholder="Your facebook link"
 						bind:value={info.facebookLink}
+						disabled={editStatus ? false : true}
 					/>
 				</label>
 			</div>
@@ -412,7 +471,11 @@
 		Confirm again to delete
 	</div>
 	<Label>Password</Label>
-	<Input placehoder="password" bind:value={deactivePass} />
+	<Input
+		placehoder="password"
+		classes="border-2 border-gray-400 focus:border-none"
+		bind:value={deactivePass}
+	/>
 	<svelte:fragment slot="footer">
 		<div class="flex justify-center">
 			<button

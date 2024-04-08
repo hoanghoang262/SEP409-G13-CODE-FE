@@ -147,7 +147,7 @@
 					bind:value={searchName}
 					id="default-search"
 					class="block w-full px-4 pt-2 pb-3 md:py-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-					placeholder="Search user buy gmail..."
+					placeholder="Search user by gmail..."
 					autocomplete="off"
 				/>
 			</div>

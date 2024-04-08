@@ -30,7 +30,7 @@
 	const quiz = course?.chapters.flatMap((chapter: any) => chapter.lessons);
 	const code = course?.chapters.flatMap((chapter: any) => chapter.codeQuestions);
 	const exam = course?.chapters.flatMap((chapter: any) => chapter.lastExam);
-	let section = 'Evaluation';
+	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 
 	afterUpdate(async () => {
@@ -41,11 +41,18 @@
 		});
 	});
 
+	const evaludatioHandle = () => {
+		if (rating == 0) {
+			showToast('Evaluation Error', 'Missing evaluation', 'warning');
+		} else {
+		}
+	};
+
 	const AddToWishList = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
-		event?.target?.classList?.add('text-red-300');
+		event?.target?.classList?.add('text-red-500');
 	};
 </script>
 
@@ -66,43 +73,48 @@
 			</div>
 			<div class="flex items-center">
 				{#if checkExist($currentUser)}
-					<Button2
-						onclick={async () => {
-							enroll($currentUser.UserID, course.id);
-							goto(`/overall/${course.id}`);
-						}}
-						classes="py-3 px-16 bg-white text-black my-10"
-						content={enrolled ? 'Go to course' : 'Enroll for free'}
-					/>
-					<button class="p-2 ml-2 rounded-full hover:bg-white cursor-pointer">
-						{#if course?.inWishList == true}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="28"
-								height="28"
-								viewBox="0 0 48 48"
-								{...$$props}
-							>
-								<path
-									fill="#f44336"
-									d="M34 9c-4.2 0-7.9 2.1-10 5.4C21.9 11.1 18.2 9 14 9C7.4 9 2 14.4 2 21c0 11.9 22 24 22 24s22-12 22-24c0-6.6-5.4-12-12-12"
-								/>
-							</svg>
-						{:else if course?.inWishList == false}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="28"
-								height="28"
-								viewBox="0 0 26 26"
-								{...$$props}
-							>
-								<path
-									fill="currentColor"
-									d="M17.869 3.889c-2.096 0-3.887 1.494-4.871 2.524c-.984-1.03-2.771-2.524-4.866-2.524C4.521 3.889 2 6.406 2 10.009c0 3.97 3.131 6.536 6.16 9.018c1.43 1.173 2.91 2.385 4.045 3.729c.191.225.471.355.765.355h.058c.295 0 .574-.131.764-.355c1.137-1.344 2.616-2.557 4.047-3.729C20.867 16.546 24 13.98 24 10.009c0-3.603-2.521-6.12-6.131-6.12"
-								/>
-							</svg>
-						{/if}
-					</button>
+					<div class=" flex justify-between items-center mt-10">
+						<button
+							on:click={async () => {
+								enroll($currentUser.UserID, course.id);
+								goto(`/overall/${course.id}`);
+							}}
+							class=" px-16 text-black rounded-l-md bg-white py-2"
+							>{enrolled ? 'Go to course' : 'Enroll for free'}</button
+						>
+						<button
+							on:click={AddToWishList}
+							class="py-2 px-2 rounded-r-md cursor-pointer border-l-2 border-black bg-black"
+						>
+							{#if course?.inWishList == true}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 48 48"
+									{...$$props}
+								>
+									<path
+										fill="#f44336"
+										d="M34 9c-4.2 0-7.9 2.1-10 5.4C21.9 11.1 18.2 9 14 9C7.4 9 2 14.4 2 21c0 11.9 22 24 22 24s22-12 22-24c0-6.6-5.4-12-12-12"
+									/>
+								</svg>
+							{:else if course?.inWishList == false}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="28"
+									height="28"
+									viewBox="0 0 26 26"
+									{...$$props}
+								>
+									<path
+										fill="currentColor"
+										d="M17.869 3.889c-2.096 0-3.887 1.494-4.871 2.524c-.984-1.03-2.771-2.524-4.866-2.524C4.521 3.889 2 6.406 2 10.009c0 3.97 3.131 6.536 6.16 9.018c1.43 1.173 2.91 2.385 4.045 3.729c.191.225.471.355.765.355h.058c.295 0 .574-.131.764-.355c1.137-1.344 2.616-2.557 4.047-3.729C20.867 16.546 24 13.98 24 10.009c0-3.603-2.521-6.12-6.131-6.12"
+									/>
+								</svg>
+							{/if}
+						</button>
+					</div>
 				{:else}
 					<Button2
 						classes="py-3 px-16 bg-white text-black my-10"
@@ -311,6 +323,12 @@
 							>
 						</div>
 					</div>
+				</div>
+				<div class="flex justify-center items-center">
+					<button
+						on:click={evaludatioHandle}
+						class="bg-green-500 rounded-md px-3 py-3 hover:bg-green-600 text-white">Supmit</button
+					>
 				</div>
 			{/if}
 		</div>

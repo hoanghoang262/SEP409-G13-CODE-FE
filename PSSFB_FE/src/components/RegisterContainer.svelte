@@ -6,7 +6,14 @@
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
-	import { checkPasswords, checkUserName, decodeJWT, isValidEmail, showToast, trimUserData } from '../helpers/helpers';
+	import {
+		checkPasswords,
+		checkUserName,
+		decodeJWT,
+		isValidEmail,
+		showToast,
+		trimUserData
+	} from '../helpers/helpers';
 	import { loginByGoogle } from '$lib/services/AuthenticationServices';
 	import { t } from '../translations/i18n';
 
@@ -70,27 +77,29 @@
 	const registerFrmSubmit = (event: any) => {
 		if (!checkPasswords(Password)) {
 			event.preventDefault();
-			showToast('Password warning', 'password must be 8-32 character long contain 1 number and 1 special character', 'warning');
+			showToast(
+				'Password warning',
+				'password must be 8-32 character long contain 1 number and 1 special character',
+				'warning'
+			);
 		}
 
-		if(Username.includes(" ")){
+		if (Username.includes(' ')) {
 			event.preventDefault();
 			showToast('Username warning', 'username cant has empty space', 'warning');
-		
 		}
 
-		if(checkUserName(Username)){
+		if (checkUserName(Username)) {
 			showToast('Username warning', 'username must be 8-32 characters long', 'warning');
-			return
+			return;
 		}
 
-		if(RePassword!=Password){
+		if (RePassword != Password) {
 			event.preventDefault();
 			showToast('Password warning', 'repassword and password are not alike', 'warning');
-		
 		}
 
-		if(!isValidEmail(Email)){
+		if (!isValidEmail(Email)) {
 			event.preventDefault();
 			showToast('Email warning', 'invalid email', 'warning');
 		}
@@ -131,13 +140,14 @@
 			/>
 		</div>
 		<div class="my-4 md:my-10">
-			<input class="items-center" required type="checkbox" />
-			<span class="items-center text-sm"
-				>I agree to PSSFBE <a class="items-center text-blue-700" href="/aboutus">Terms of use</a></span
+			<input id="term" class="items-center" required type="checkbox" />
+			<label for="term" class="items-center text-sm"
+				>I agree to PSSFBE <a class="items-center text-blue-700" href="/aboutus">Terms of use</a
+				></label
 			>
 		</div>
 		<button
-			class="bg-black rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"
+			class="bg-blue-600 rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:bg-blue-700 transition ease-in-out w-full mb-2"
 			>{$t('Start Coding Now')}</button
 		>
 	</form>

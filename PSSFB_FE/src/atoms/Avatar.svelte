@@ -10,4 +10,4 @@
 	}
 </script>
 
-<img {src} alt="avatar" class="{classes} rounded-full" />
+<img {src} alt="avatar" class="{classes} rounded-full object-cover" />

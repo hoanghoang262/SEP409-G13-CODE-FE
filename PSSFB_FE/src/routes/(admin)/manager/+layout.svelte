@@ -193,32 +193,34 @@
 
 									<span class="mx-2 text-sm font-medium">{$t('Student Manager')}</span>
 								</a>
-								<a
-									class="{$page.url.pathname.includes('/manager/bamanager')
-										? 'bg-green-200 hover:bg-green-400'
-										: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
-									href="/manager/bamanager"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="1em"
-										height="1em"
-										viewBox="0 0 24 24"
-										{...$$props}
+								{#if $currentUser?.Role == 'AdminBussiness'}
+									<a
+										class="{$page.url.pathname.includes('/manager/bamanager')
+											? 'bg-green-200 hover:bg-green-400'
+											: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
+										href="/manager/bamanager"
 									>
-										<path
-											fill="currentColor"
-											d="M12 23C6.443 21.765 2 16.522 2 11V5l10-4l10 4v6c0 5.524-4.443 10.765-10 12M4 6v5a10.58 10.58 0 0 0 8 10a10.58 10.58 0 0 0 8-10V6l-8-3Z"
-										/>
-										<circle cx="12" cy="8.5" r="2.5" fill="currentColor" />
-										<path
-											fill="currentColor"
-											d="M7 15a5.782 5.782 0 0 0 5 3a5.782 5.782 0 0 0 5-3c-.025-1.896-3.342-3-5-3c-1.667 0-4.975 1.104-5 3"
-										/>
-									</svg>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="1em"
+											height="1em"
+											viewBox="0 0 24 24"
+											{...$$props}
+										>
+											<path
+												fill="currentColor"
+												d="M12 23C6.443 21.765 2 16.522 2 11V5l10-4l10 4v6c0 5.524-4.443 10.765-10 12M4 6v5a10.58 10.58 0 0 0 8 10a10.58 10.58 0 0 0 8-10V6l-8-3Z"
+											/>
+											<circle cx="12" cy="8.5" r="2.5" fill="currentColor" />
+											<path
+												fill="currentColor"
+												d="M7 15a5.782 5.782 0 0 0 5 3a5.782 5.782 0 0 0 5-3c-.025-1.896-3.342-3-5-3c-1.667 0-4.975 1.104-5 3"
+											/>
+										</svg>
 
-									<span class="mx-2 text-sm font-medium">{$t('Business Admin Manager')}</span>
-								</a>
+										<span class="mx-2 text-sm font-medium">{$t('Business Admin Manager')}</span>
+									</a>
+								{/if}
 							</div>
 						</nav>
 					</div>

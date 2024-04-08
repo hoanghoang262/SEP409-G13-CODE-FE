@@ -29,8 +29,8 @@ export function showToast(title: string, description: string, type: ToastType = 
 		duration: 5000, // 0 or negative to avoid auto-remove
 		placement: 'top-right',
 		type,
-		onClick: () => {},
-		onRemove: () => {}
+		onClick: () => { },
+		onRemove: () => { }
 		// component: BootstrapToast, // allows to override toast component/template per toast
 	});
 
@@ -51,7 +51,7 @@ export function decodeJWT(token: string) {
 		const decodedPayload = JSON.parse(atob(payload));
 		console.log('decoded', decodedPayload);
 		return decodedPayload;
-	
+
 	} catch (error: any) {
 		console.error('Error decoding JWT:', error.message);
 		return null;
@@ -80,59 +80,59 @@ export function getFormData(formData: any) {
 	return data;
 }
 
-export function convertSecondsToMmSs(seconds:number) {
+export function convertSecondsToMmSs(seconds: number) {
 	const minutes = Math.floor(seconds / 60);
 	const remainingSeconds = seconds % 60;
-  
+
 	// Pad minutes and seconds with leading zeros if necessary
 	const formattedMinutes = minutes.toString().padStart(2, "0");
 	const formattedSeconds = Math.floor(remainingSeconds).toString().padStart(2, "0");
-  
+
 	return `${formattedMinutes}:${formattedSeconds}`;
-  }
+}
 
 
-export function checkPasswords(password:string) {
+export function checkPasswords(password: string) {
 	// Kiểm tra độ dài của mật khẩu
 	if (!checkExist(password) || password.length < 8 || password.length > 32) {
-	  return false;
+		return false;
 	}
-  
+
 	// Kiểm tra xem mật khẩu có chứa ít nhất một ký tự viết hoa và ít nhất một chữ số hay không
 	let hasUpperCase = false;
-  let hasNumber = false;
-  let hasSpecialChar = false;
-  for (let i = 0; i < password.length; i++) {
-    const char = password[i];
-    if (char >= 'A' && char <= 'Z') {
-      hasUpperCase = true;
-    } else if (!isNaN(parseInt(char))) {
-      hasNumber = true;
-    } else if (/[^A-Za-z0-9]/.test(char)) {
-      hasSpecialChar = true;
-    }
-  }
+	let hasNumber = false;
+	let hasSpecialChar = false;
+	for (let i = 0; i < password.length; i++) {
+		const char = password[i];
+		if (char >= 'A' && char <= 'Z') {
+			hasUpperCase = true;
+		} else if (!isNaN(parseInt(char))) {
+			hasNumber = true;
+		} else if (/[^A-Za-z0-9]/.test(char)) {
+			hasSpecialChar = true;
+		}
+	}
 
-  return hasUpperCase && hasNumber && hasSpecialChar;
-  }
+	return hasUpperCase && hasNumber && hasSpecialChar;
+}
 
 export function checkUserName(userName: string): boolean {
-	console.log(userName)
-	if (checkExist(userName) || userName.length < 8 || userName.length > 32) {
+	console.log(userName.length)
+	if (!checkExist(userName) || userName.length < 8 || userName.length > 32) {
 		return false;
-	  }
+	}
 	return true
 }
 
-export function secondsToDateTime(seconds:number) {
-    var date = new Date(seconds * 1000); // Convert seconds to milliseconds
-    var day = ("0" + date.getDate()).slice(-2);
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);
-    var year = date.getFullYear();
-    var hours = ("0" + date.getHours()).slice(-2);
-    var minutes = ("0" + date.getMinutes()).slice(-2);
+export function secondsToDateTime(seconds: number) {
+	var date = new Date(seconds * 1000); // Convert seconds to milliseconds
+	var day = ("0" + date.getDate()).slice(-2);
+	var month = ("0" + (date.getMonth() + 1)).slice(-2);
+	var year = date.getFullYear();
+	var hours = ("0" + date.getHours()).slice(-2);
+	var minutes = ("0" + date.getMinutes()).slice(-2);
 
-    return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
+	return day + '/' + month + '/' + year + ' ' + hours + ':' + minutes;
 }
 
 export function isImage(path: string) {

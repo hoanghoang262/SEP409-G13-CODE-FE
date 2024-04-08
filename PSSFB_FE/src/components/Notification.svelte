@@ -12,14 +12,14 @@
 		let result = await getNotificationByUserId($currentUser.UserID);
 		data = result;
 	});
+
+	const clickHandle = () => {
+		notificationShow = !notificationShow;
+	};
 </script>
 
 <main class="relative">
-	<button
-		on:focus={() => (notificationShow = true)}
-		on:blur={() => (notificationShow = false)}
-		class="p-1 text-gray-600"
-	>
+	<button on:click={() => clickHandle()} class="p-1 text-gray-600">
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" {...$$props}>
 			<path
 				fill="currentColor"
@@ -30,7 +30,7 @@
 	<div
 		class=" absolute {notificationShow
 			? 'flex'
-			: 'hidden'}  py-2 right-0 w-[400px] bg-gray-100 shadow-xl rounded-lg flex flex-col max-h-[calc(100vh-64px)] md:max-h-[calc(100vh-96px)]"
+			: 'hidden'} mt-2 py-2 right-0 w-[400px] bg-gray-100 shadow-xl rounded-lg flex flex-col max-h-[calc(100vh-64px)] md:max-h-[calc(100vh-96px)]"
 	>
 		<div class="px-5 underline py-3"><p class="">Notification</p></div>
 		{#if data?.length > 0}

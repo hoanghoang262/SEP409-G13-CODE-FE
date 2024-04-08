@@ -15,11 +15,11 @@
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
 
-	export const AddToWishList: any = (event: any) => {
+	export const WishListHandle: any = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
-		event?.target?.classList?.add('text-red-300');
+		event?.target?.classList?.add('text-red-600');
 	};
 	export let RemoveFromWishList: any = () => {};
 </script>
@@ -43,10 +43,14 @@
 					<div class="flex justify-between items-center">
 						<button
 							on:click={() => goto(`/learning/${course.id}`)}
-							class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
+							class="font-medium text-xl mb-2 group-hover:underline truncate mr-4"
+							>{course.name}</button
 						>
 
-						<button on:click={AddToWishList} class="mb-2">
+						<button
+							on:click={WishListHandle}
+							class="mb-2 rounded-full p-1 hover:border-2 border-blue-500"
+						>
 							{#if course?.isInWishList == false}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
