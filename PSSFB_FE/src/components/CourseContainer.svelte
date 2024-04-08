@@ -14,7 +14,7 @@
 	export let ApproveCourse: any = () => {};
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
-	export let AddToWishList: any = (event:any) => {
+	export let AddToWishList: any = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
@@ -38,14 +38,14 @@
 			</div>
 			<!--Course Information-->
 			<div class="p-4 transition delay-50 duration-300 ease-in-out">
-				{#if $currentUser?.Role == 'Student'}
+				{#if $currentUser?.Role == 'AdminBussiness'}
+					<button class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button>
+				{:else}
 					<button
 						on:click={() => goto(`/learning/${course.id}`)}
 						class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
 					>
 					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
-				{:else if $currentUser?.Role == 'AdminBussiness'}
-					<button class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button>
 				{/if}
 				<p class="text-sm flex items-center justify-between">
 					<span><span class="font-semibold">{$t('Language')}</span>: {course.tag}</span>
@@ -101,7 +101,7 @@
 						/>
 						<Button type="danger" onclick={() => DeleteCourse(course.id)} content={$t('Delete')} />
 					</div>
-				{:else if $currentUser?.Role == 'Student'}
+				{:else}
 					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('join now')} />
 				{/if}
 			</div>

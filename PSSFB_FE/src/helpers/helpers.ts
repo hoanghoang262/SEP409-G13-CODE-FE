@@ -146,3 +146,57 @@ export function isImage(path: string) {
 		return true;
 	return false;
 }
+
+export function customIsNaN(value: any) {
+	// Kiểm tra xem giá trị có phải NaN không bằng cách so sánh nó với chính nó
+	// Vì NaN không bằng bất kỳ giá trị nào, kể cả chính nó, nên sẽ trả về true trong trường hợp này
+	return value !== value;
+}
+
+export function checkNumber(input: any) {
+	// Xóa các ký tự không phải số khỏi giá trị nhập vào
+	input.value = input.value.replace(/[^0-9]/g, '');
+
+	// Lấy giá trị số từ input
+	var k = parseInt(input.value);
+
+	// Kiểm tra xem k có phải là một số hợp lệ
+	if (!customIsNaN(k)) {
+		// Nếu k là một số hợp lệ, thay đổi giá trị của input
+		input.value = k;
+	} else {
+		// Nếu k không phải là một số hợp lệ, xóa giá trị của input
+		input.value = 0;
+	}
+
+	input.value = convertToVND(k);
+}
+
+export function convertToVND(number: number) {
+	// Chuyển đổi số thành chuỗi và thêm dấu chấm phân tách hàng nghìn
+	if (customIsNaN(number)) {
+		number = 0;
+	}
+	var formattedNumber = new Intl.NumberFormat('vi-VN', {
+		style: 'currency',
+		currency: 'VND'
+	}).format(number);
+
+	// Hiển thị giá trị đã được định dạng
+	return formattedNumber;
+}
+
+export function convertVNDToNumber(vnd: string) {
+	// Xóa các ký tự không phải số khỏi chuỗi VNĐ
+	var cleanNumber = vnd.replace(/[₫.]/g, '');
+
+	// Chuyển đổi chuỗi số thành một số nguyên
+	var number = parseInt(cleanNumber.trim());
+
+	// Hiển thị số nguyên đã chuyển đổi
+	return number;
+}
+
+export function isVND(string: string) {
+	return string.includes('₫');
+}

@@ -11,9 +11,6 @@
 	import { page } from '$app/stores';
 	export let course: any;
 	export let type = 'public';
-	export let ApproveCourse: any = () => {};
-	export let RejectCourse: any = () => {};
-	export let DeleteCourse: any = () => {};
 	export let AddToWishList: any = (event:any, courseId:number) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');

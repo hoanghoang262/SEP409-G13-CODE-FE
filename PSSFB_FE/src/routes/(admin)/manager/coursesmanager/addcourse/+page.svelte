@@ -3,11 +3,11 @@
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
 	import Input from '../../../../../atoms/Input.svelte';
 
-	import { checkExist, showToast } from '../../../../../helpers/helpers';
+	import { checkExist, checkNumber, convertVNDToNumber, isVND, showToast } from '../../../../../helpers/helpers';
 	import { goto } from '$app/navigation';
 	import Button from '../../../../../atoms/Button.svelte';
-	import { language } from '../../../../../data/data';
-	import { beforeUpdate } from 'svelte';
+	import { language, payments } from '../../../../../data/data';
+	import {} from '../../../../../helpers/helpers'
 
 	import Dropzone from 'svelte-file-dropzone';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
@@ -110,6 +110,7 @@
 		description: undefined,
 		picture: undefined,
 		tag: 'C',
+		price: 0,
 		createdBy: $currentUser.UserID
 	};
 
@@ -120,6 +121,8 @@
 	// });
 
 	let image: any;
+
+	let payment = 'Free';
 
 	function handleFilesSelect(e: any) {
 		const { acceptedFiles, fileRejections } = e.detail;
@@ -154,6 +157,11 @@
 
 	async function frmSubmit(event: any) {
 		event.preventDefault();
+
+		if(isVND(course.price)){
+			course.price = convertVNDToNumber(course.price);
+		}
+
 		if (!checkExist(image)) {
 			showToast('Add course', 'Please upload image', 'warning');
 		} else {
@@ -175,247 +183,28 @@
 			pageStatus.set('done');
 		}
 	}
+
+	
+
+	function handleKeyPress(event:any) {
+    // Lấy mã phím từ sự kiện
+    var keyCode = event.keyCode || event.which;
+
+    // Kiểm tra xem mã phím có phải là mã của phím Backspace (mã 8) không
+    if (keyCode === 8) {
+		const priceE:any = document.getElementById('price');
+		let k = priceE.value
+		console.log(isVND(priceE.value))
+        // Người dùng đã nhấn phím Backspace
+        if(isVND(priceE.value)){
+			
+			k = convertVNDToNumber(priceE.value)
+		}
+
+		priceE.value = k+''.slice(0, -1);
+    }
+}
 </script>
-
-<!-- <div>
-	<form>
-		<Label defaultClass=" mb-3 block">Course Name</Label>
-		<Input
-			bind:value={CourseName}
-			classes="block w-1/3 ml-4 border mb-5"
-			placehoder="Course Name"
-		/>
-		
-		<Label defaultClass=" mb-3 block">Description</Label>
-		<div class="mb-5 ml-4"><Textarea bind:value={Description} placeholder="Description" /></div>
-		<Label defaultClass=" mb-3 block">Picture</Label>
-		<Input bind:value={Picture} classes="block w-1/3 ml-4 border mb-5" placehoder="url link" />
-		<Label>
-			Language
-			<Select class="mt-2 ml-4" items={language} bind:value={Tag} />
-		</Label>
-
-		<hr class="my-5 block" />
-
-		<div class="pl-5">
-			<div class="text-3xl font-medium mb-5">Chapters</div>
-
-			{#each Chapters as chapter, indexc}
-				<div
-					role="button"
-					tabindex="0"
-					on:keydown={() => hiddenChapter(indexc)}
-					on:click={() => hiddenChapter(indexc)}
-					class="flex items-center text-xl font-medium mb-5"
-				>
-					Chapters #{indexc + 1}
-					<Icon icon="eva:arrow-down-fill" class="ml-3" />
-				</div>
-				<div id="chap{indexc + 1}div" class="overflow-hidden h-full transition-all">
-					<Label defaultClass=" mb-3 block">Chapter Name</Label>
-					<input
-						class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
-						placeholder="Chapter Name"
-						bind:value={chapter.Name}
-					/>
-					<Label defaultClass=" mb-3 block">Part</Label>
-					<input
-						class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
-						placeholder="Chapter Name"
-						bind:value={chapter.Part}
-					/>
-					<Label defaultClass=" mb-3 block">Chapter Description</Label>
-					<div class="mb-5 ml-3">
-						<Textarea bind:value={chapter.Description} placeholder="Chapter Description" />
-					</div>
-
-					<hr class="my-5" />
-
-					<div class="pl-5 mb-5">
-						<div class="text-2xl font-medium mb-5">Lessions of chapter {chapter.Name}</div>
-
-						{#each chapter.lessons as lession, indexl}
-							<div
-								role="button"
-								tabindex="0"
-								on:keydown={() => hiddenLession(indexc, indexl)}
-								on:click={() => hiddenLession(indexc, indexl)}
-								class="flex items-center text-xl font-medium mb-5"
-							>
-								Lessions #{indexl + 1}
-								<Icon icon="eva:arrow-down-fill" class="ml-3" />
-							</div>
-							<div id="lession{indexl + 1}ofc{indexc + 1}div" class="h-full overflow-hidden">
-								<Label defaultClass=" mb-3 block">Lession Title</Label>
-								<input
-									class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
-									placeholder="Lession Name"
-									bind:value={lession.title}
-								/>
-								<Label defaultClass=" mb-3 block">Video URL</Label>
-								<input
-									class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
-									placeholder="Lession Name"
-									bind:value={lession.videoUrl}
-								/>
-								<Label defaultClass=" mb-3 block">Duration</Label>
-								<input
-									class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
-									placeholder="Lession Name"
-									bind:value={lession.duration}
-								/>
-								<Label defaultClass=" mb-3 block">Lession Content</Label>
-								<div class="mb-5 ml-3">
-									
-									<Editor
-										bind:value={lession.description}
-										apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
-									/>
-								</div>
-
-								<Label defaultClass=" mb-3 block">Questions of lession {lession.title}</Label>
-
-								{#each lession.questions as question, qindex}
-									<input
-										class="p-3 ml-5 text-black w-1/3 mb-5 border rounded-lg block"
-										placeholder="Question"
-										bind:value={question.contentQuestion}
-									/>
-									<input
-										class="p-3 ml-5 text-black w-1/3 mb-5 border rounded-lg block"
-										placeholder="Time"
-										bind:value={question.time}
-									/>
-									{#each question.answerOptions as answer}
-										<div class="ml-10 mb-5">
-											<input placeholder="Answer" bind:value={answer.optionsText} />
-											<input type="checkbox" bind:checked={answer.correctAnswer} /> Correct
-										</div>
-									{/each}
-									<button
-										on:click={() => AddAnswer(indexc, indexl, qindex)}
-										class="py-2 px-5 border rounded-lg ml-5 mb-5 block">Add Answers</button
-									>
-								{/each}
-								<button
-									on:click={() => AddQuestion(indexc, indexl)}
-									class="py-2 px-5 border rounded-lg mb-5">Add Question</button
-								>
-							</div>
-						{/each}
-						<button on:click={() => AddLession(indexc)} class="py-2 px-5 border rounded-lg mb-5"
-							>Add Lession</button
-						>
-					</div>
-
-					{#if checkExist(chapter.codeQuestions) && chapter.codeQuestions.length > 0}
-						<div class="pl-5 mb-5">
-							<div class="text-2xl font-medium mb-5">CodeQuestions of chapter {chapter.Name}</div>
-
-							{#each chapter.codeQuestions as cq, cqIndex}
-								<div
-									role="button"
-									tabindex="0"
-									on:keydown={() => hiddenCodeQuestion(indexc, cqIndex)}
-									on:click={() => hiddenCodeQuestion(indexc, cqIndex)}
-									class="flex items-center text-xl font-medium mb-5"
-								>
-									CodeQuestion #{cqIndex + 1}
-									<Icon icon="eva:arrow-down-fill" class="ml-3" />
-								</div>
-								<div
-									id="CodeQuestion{cqIndex + 1}ofc{indexc + 1}div"
-									class="h-full overflow-hidden"
-								>
-									<Label defaultClass=" mb-3 block">Description</Label>
-									<input
-										class="p-3 text-black border rounded-lg ml-3 w-1/3 mb-5"
-										placeholder="Lession Name"
-										bind:value={cq.description}
-									/>
-									<Label defaultClass=" mb-3 block">Code Form</Label>
-									<CodeEditor2 bind:value={cq.codeForm} />
-
-									<Label defaultClass=" my-3 block">Testcases of codeQuestion</Label>
-
-									{#each cq.testCases as testcase, index}
-										<Label defaultClass=" mb-5 ml-5 block">Testcases {index + 1}</Label>
-										{#if testcase.inputTypeInt != null || testcase.expectedResultInt!=null}
-											Input
-											<input
-												bind:value={testcase.inputTypeInt}
-												type="number"
-												class="p-3 ml-5 text-black mb-5 border rounded-lg"
-												placeholder="Input"
-											/>
-											Result
-											<input
-												bind:value={testcase.expectedResultInt}
-												type="number"
-												class="p-3 ml-5 text-black mb-5 border rounded-lg"
-												placeholder="Result"
-											/>
-										
-
-										{:else if testcase.inputTypeString!=null || testcase.expectedResultString!=null}
-											Input
-											<input
-												bind:value={testcase.inputTypeString}
-												class="p-3 ml-5 text-black w-1/3 mb-5 border rounded-lg block"
-												placeholder="Input"
-											/>
-											Result
-											<input
-												bind:value={testcase.expectedResultString}
-												class="p-3 ml-5 text-black w-1/3 mb-5 border rounded-lg block"
-												placeholder="Result"
-											/>
-										
-
-										{:else if testcase.inputTypeBoolean != null || testcase.expectedResultBoolean !=null}
-											<input
-												bind:checked={testcase.inputTypeBoolean}
-												type="checkbox"
-												class="p-3 ml-5 text-black mb-5 border rounded-lg"
-												placeholder="Input"
-											/>
-											Input
-
-											<input
-												bind:checked={testcase.expectedResultBoolean}
-												type="checkbox"
-												class="p-3 ml-5 text-black mb-5 border rounded-lg"
-												placeholder="Result"
-											/> Result
-										{/if}
-									{/each}
-									<div>
-										<Label>
-											Testcase Input
-											<Select items={inputTypes} bind:value={inputType} />
-										</Label>
-										<button
-											on:click={() => addTestCase(indexc, cqIndex)}
-											class="py-2 px-5 border rounded-lg mb-5 block">Add Testcase</button
-										>
-									</div>
-								</div>
-							{/each}
-							<button
-								on:click={() => AddCodeQuestion(indexc)}
-								class="py-2 px-5 border rounded-lg mb-5">Add Code Question</button
-							>
-						</div>
-					{/if}
-				</div>
-			{/each}
-			<button on:click={AddChapter} class="py-2 px-5 border rounded-lg">Add Chapter</button>
-			<div class="flex justify-end">
-				<button on:click={AddCourse} class="py-2 px-5 border rounded-lg">Add Course</button>
-			</div>
-		</div>
-	</form>
-</div> -->
 
 <div class="w-4/5 m-auto mt-8">
 	<form on:submit={frmSubmit} method="POST" action="?/addcourse">
@@ -463,7 +252,26 @@
 				Language
 				<Select name="tag" class="mt-2 " items={language} bind:value={course.tag} />
 			</Label>
-			<div class="flex justify-end mt-5"><Button content="Save" /></div>
 		</div>
+		<div class="mt-5">
+			<Label>
+				Payment
+				<Select class="mt-2 " items={payments} bind:value={payment} />
+			</Label>
+		</div>
+		<div class="{payment == 'Free' ? 'hidden' : ''} mt-5">
+			<p class=" mb-1">Price</p>
+			<input
+				on:keydown={handleKeyPress}
+				on:input={(event) => checkNumber(event.target)}
+				required={true}
+				bind:value={course.price}
+				id="price"
+				name="price"
+				class="block w-full md:w-1/3 p-2 rounded-lg border mb-5"
+				placeholder="Price"
+			/>
+		</div>
+		<div class="flex justify-end mt-5"><Button content="Save" /></div>
 	</form>
 </div>

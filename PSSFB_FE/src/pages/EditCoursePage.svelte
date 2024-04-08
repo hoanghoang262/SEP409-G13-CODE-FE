@@ -4,7 +4,7 @@
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
 
 	import { afterUpdate, beforeUpdate } from 'svelte';
-	import { checkExist, showToast } from '../helpers/helpers';
+	import { checkExist, checkNumber, convertVNDToNumber, isVND, showToast } from '../helpers/helpers';
 	import { goto } from '$app/navigation';
 	import Input from '../atoms/Input.svelte';
 	import Button from '../atoms/Button.svelte';
@@ -58,6 +58,11 @@
 
 	async function frmSubmit(event: any) {
 		event.preventDefault();
+		
+		if(isVND(course.price)){
+			course.price = convertVNDToNumber(course.price);
+		}
+		
 		pageStatus.set('load');
 		if (checkExist(image)) {
 			await uploadImage(image);
@@ -75,6 +80,25 @@
 
 		pageStatus.set('done');
 	}
+
+	function handleKeyPress(event:any) {
+    // Lấy mã phím từ sự kiện
+    var keyCode = event.keyCode || event.which;
+
+    // Kiểm tra xem mã phím có phải là mã của phím Backspace (mã 8) không
+    if (keyCode === 8) {
+		const priceE:any = document.getElementById('price');
+		let k = priceE.value
+		console.log(isVND(priceE.value))
+        // Người dùng đã nhấn phím Backspace
+        if(isVND(priceE.value)){
+			
+			k = convertVNDToNumber(priceE.value)
+		}
+
+		priceE.value = k+''.slice(0, -1);
+    }
+}
 </script>
 
 <div class="flex">
@@ -122,6 +146,21 @@
 				Language
 				<Select name="tag" class="mt-2 ml-4" items={language} bind:value={course.tag} />
 			</Label>
+
+			<div class="mt-5">
+				<p class=" mb-1">Price</p>
+				<input
+					on:keydown={handleKeyPress}
+					on:input={(event) => checkNumber(event.target)}
+					required={true}
+					bind:value={course.price}
+					id="price"
+					name="price"
+					class="block w-full md:w-1/3 p-2 rounded-lg border mb-5"
+					placeholder="Price"
+				/>
+			</div>
+
 			<div class="flex justify-end mt-5"><Button content="Save" /></div>
 		</form>
 	</div>

@@ -8,15 +8,16 @@
 	import { getCommentByCourse } from '$lib/services/CommentService';
 	import SkillsSet from '../components/SkillsSet.svelte';
 	import { addWishList, enroll, getCourseById } from '$lib/services/CourseServices';
-	import { currentUser } from '../stores/store';
+	import { currentUser, pageStatus } from '../stores/store';
 	import { beforeUpdate } from 'svelte';
 	import { t } from '../translations/i18n';
-	import { checkExist, showToast } from '../helpers/helpers';
+	import { checkExist, convertToVND, showToast } from '../helpers/helpers';
+	import { createPayment } from '$lib/services/PaymentService';
 
 	export let data: any;
-	const course: any = data.course;
+	let course: any = data.course;
 	let comments = data.comments;
-	let enrolled = false;
+	//let enrolled = false;
 	let rating = 0;
 	const fullStar =
 		'M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z';
@@ -40,11 +41,62 @@
 	let section = 'Evaluation';
 	const sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 
-	const AddToWishList = (event:any) => {
+	const AddToWishList = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
 		event?.target?.classList?.add('text-red-300');
+	};
+
+	const payment = async () => {
+		pageStatus.set('load');
+		try {
+			const result = await createPayment({
+				paymentContent: `${course.name}`,
+				requiredAmount: course?.price ?? 0,
+				userCreateCourseId: course.createdBy,
+				courseId: course.id,
+				userBuyId: $currentUser?.UserID
+			});
+			if (result?.paymentUrl) {
+				var url = result?.paymentUrl;
+				var windowName = '_blank'; // Name of the window, '_blank' opens in a new tab
+				var windowWidth = 600; // Width of the window
+				var windowHeight = 400; // Height of the window
+
+				// Calculate the position to center the window
+				var windowLeft = (window.screen.width - windowWidth) / 2;
+				var windowTop = (window.screen.height - windowHeight) / 2;
+
+				// Features of the new window
+				var windowFeatures =
+					'width=' +
+					windowWidth +
+					',height=' +
+					windowHeight +
+					',toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=' +
+					windowLeft +
+					',top=' +
+					windowTop;
+
+				// Open a new window with the specified URL and features
+				var popup: any = window.open(url, windowName, windowFeatures);
+				console.log('popup: ' + popup);
+
+				var timer = setInterval(function () {
+					if (popup.closed) {
+						clearInterval(timer);
+						console.log("clear timer")
+						getCourseById(course.id, $currentUser.UserID).then((course2) => {
+							course = course2;
+						});
+					}
+				}, 1000);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		pageStatus.set('done');
 	};
 </script>
 
@@ -65,22 +117,40 @@
 			</div>
 			<div class="flex items-center">
 				{#if checkExist($currentUser)}
-					<Button2
-						onclick={async () => {
-							enroll($currentUser.UserID, course.id);
-							goto(`/overall/${course.id}`);
-						}}
-						classes="py-3 px-16 bg-white text-black my-10"
-						content={enrolled ? 'Go to course' : 'Enroll for free'}
-					/>
+					{#if course?.isEnrolled == true}
+						<Button2
+							onclick={async () => {
+								enroll($currentUser.UserID, course.id);
+								goto(`/overall/${course.id}`);
+							}}
+							classes="py-3 px-16 bg-white text-black my-10"
+							content="Go to course"
+						/>
+					{:else if course?.isEnrolled == false}
+						{#if course?.price > 0}
+							<Button2
+								onclick={payment}
+								classes="py-3 px-16 bg-white text-black my-10 active:bg-slate-500"
+								content="Enroll for {convertToVND(course?.price)}"
+							/>
+						{:else}
+							<Button2
+								onclick={async () => {
+									enroll($currentUser.UserID, course.id);
+									goto(`/overall/${course.id}`);
+								}}
+								classes="py-3 px-16 bg-white text-black my-10"
+								content="Go to course"
+							/>
+						{/if}
+					{/if}
+
 					{#if course?.inWishList == true}
 						<button class="text-red-300 pl-3"
 							><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
 						>
 					{:else if course?.inWishList == false}
-						<button
-							on:click={AddToWishList}
-							class="hover:text-red-300 text-slate-400 pl-3"
+						<button on:click={AddToWishList} class="hover:text-red-300 text-slate-400 pl-3"
 							><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
 						>
 					{/if}
