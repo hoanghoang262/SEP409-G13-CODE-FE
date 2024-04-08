@@ -158,8 +158,8 @@
 							>
 								{@html minus}
 							</div>
-							<button on:click={() => chapterClick(s.id)} class="w-full"
-								><p class="font-normal text-black">{s?.name}</p></button
+							<button on:click={() => chapterClick(s.id)} class="w-full truncate"
+								><p class="font-normal text-black truncate">{s?.name}</p></button
 							>
 							<button
 								class="p-2 bg-gray-600 rounded-r-md"
@@ -171,12 +171,12 @@
 						</div>
 						<div id="schedule{index}">
 							{#each s.lessons as l}
-								<div class="mb-1 pl-10 flex flex-wrap justify-between items-center">
-									
-										<Icon class="" icon="ion:book-sharp" style="color: gray" />
-									
+								<div class="pl-10 mb-5 flex items-center justify-between">
+									<div>
+										<Icon class="mr-3 text-2xl" icon="ion:book-sharp" style="color: gray" />
+									</div>
 
-									<button on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
+									<button class="truncate pr-10" on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
 									<button
 										class="bg-gray-600 p-2 rounded-r-md"
 										on:click={() => {
@@ -206,7 +206,8 @@
 									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
 										>{l.description}</button
 									>
-									<button class="bg-gray-600 p-2 rounded-r-md"
+									<button
+										class="bg-gray-600 p-2 rounded-r-md"
 										on:click={() => {
 											deleteObject = { id: l.id, type: 'practice question' };
 											firstWM = true;
@@ -228,16 +229,17 @@
 								<div class="pl-10 mb-5 flex items-center justify-between">
 									<div>
 										<Icon
-										class="mr-3 text-2xl"
-										icon="healthicons:i-exam-multiple-choice-outline"
-										style="color: gray"
-									/>
+											class="mr-3 text-2xl"
+											icon="healthicons:i-exam-multiple-choice-outline"
+											style="color: gray"
+										/>
 									</div>
 
 									<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
 										>{l.name}</button
 									>
-									<button class="bg-gray-600 p-2 rounded-r-md"
+									<button
+										class="bg-gray-600 p-2 rounded-r-md"
 										on:click={() => {
 											deleteObject = { id: l.id, type: 'exam' };
 											firstWM = true;

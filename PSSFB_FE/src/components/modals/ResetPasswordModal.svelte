@@ -22,7 +22,7 @@
 			
            
 		} else {
-			showToast('Reset Password', 'Please input an email', 'error');
+			showToast('Reset Password', 'Invalid email', 'error');
 		}
 	};
 

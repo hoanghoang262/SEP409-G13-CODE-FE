@@ -561,6 +561,11 @@ export const language = [
 	{ value: 'Java', name: 'Java' },
 ];
 
+export const payments = [
+	{ value: 'Free', name: 'Free' },
+	{ value: 'With Fee', name: 'With Fee' },
+];
+
 export const tags = [
 	{ value: 'All', name: 'All' },
 	{ value: 'C', name: 'C' },

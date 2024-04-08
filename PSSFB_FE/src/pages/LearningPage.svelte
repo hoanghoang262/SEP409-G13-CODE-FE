@@ -24,6 +24,26 @@
 	export let data: any;
 	let courses = data.courses.items;
 	let posts = data.posts.items;
+	$: freeC = courses?.filter((c: any) => c.price == null || c.price == 0);
+	$: feeC = courses?.filter((c: any) => c.price > 0);
+	$: console.log(freeC);
+
+	// beforeUpdate(async () => {
+	// 	if (session == 'Free Courses') {
+	// 		let result = await getAllCourses();
+	// 		courses = result.item;
+	// 	} else if (session == 'Pro Courses') {
+	// 		let result = await getAllCourses();
+	// 		courses = result.item;
+	// 	} else if (session == 'Studying') {
+	// 		let result = await getStudyingCourseByUserId(currentUser.id);
+	// 		courses = result.item;
+	// 	} else if (session == 'Complete') {
+	// 		let result = await getCompleteCourseByUserId(currentUser.id);
+	// 		courses = result.item;
+	// 	}
+	// 	console.log(courses);
+	// });
 	let userInfo: any;
 
 	afterUpdate(async () => {
@@ -118,14 +138,26 @@
 			{/each}
 		</div>
 		<div class="flex flex-wrap my-10">
-			{#if courses?.length > 0}
-				{#each courses.slice(0, 4) as c, index}
-					<div class=" w-1/4 pr-5">
-						<CourseContainer course={c} />
-					</div>
-				{/each}
-			{:else}
-				<div class="pr-5">There are no course avaiable</div>
+			{#if session == 'Free Courses'}
+				{#if freeC?.length > 0}
+					{#each freeC.slice(0, 4) as c, index}
+						<div class=" w-1/4 pr-5">
+							<CourseContainer course={c} />
+						</div>
+					{/each}
+				{:else}
+					<div class="pr-5">There are no course avaiable</div>
+				{/if}
+			{:else if session == 'Pro Courses'}
+				{#if feeC?.length > 0}
+					{#each feeC.slice(0, 4) as c, index}
+						<div class=" w-1/4 pr-5">
+							<CourseContainer course={c} />
+						</div>
+					{/each}
+				{:else}
+					<div class="pr-5">There are no course avaiable</div>
+				{/if}
 			{/if}
 		</div>
 

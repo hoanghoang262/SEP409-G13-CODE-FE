@@ -38,7 +38,6 @@
 		}
 	};
 
-
 	const chapterClick = (id: number) => {
 		goto(`/manager/moderationcourses/detail/chapter/${courseId}/${id}`);
 	};
@@ -50,12 +49,13 @@
 	const codelessionClick = (l: any, index: number, lindex: number) => {
 		goto(`/manager/moderationcourses/detail/codelession/${courseId}/${lindex}`);
 	};
-
-	
 </script>
 
 <div class="w-full h-full shadow-xl rounded-2xl mr-10 border bg-white pr-3">
-	<button on:click={() => goto(`/manager/moderationcourses/detail/${courseId}`)} class="text-2xl font-medium px-3 py-5">{course.name}</button>
+	<button
+		on:click={() => goto(`/manager/moderationcourses/detail/${courseId}`)}
+		class="text-2xl font-medium px-3 py-5">{course.name}</button
+	>
 
 	<hr class="my-5" />
 
@@ -73,21 +73,19 @@
 			>
 				{@html minus}
 			</div>
-			<button on:click={() => chapterClick(s.id)} class="font-normal">{s?.name}</button>
-			
+			<button on:click={() => chapterClick(s.id)} class="font-normal truncate">{s?.name}</button>
 		</div>
 		<div id="schedule{index}">
 			{#each s.lessons as l}
-				<div class="pl-10 mb-5 flex items-center flex-wrap">
-					<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
+				<div class="pl-10 flex items-center">
+					<div><Icon class="mr-3" icon="ion:book-sharp" style="color: gray" /></div>
 
-					<button on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
-					
-
-					<div class="truncate w-full pl-7 pr-10 text-sm text-neutral-500">{l.description}</div>
+					<button class="truncate pr-10" on:click={() => lessionClick(l, s.id, l.id)}
+						>{l.title}</button
+					>
 				</div>
+				<div class="truncate w-full pl-16 mb-5 text-sm text-neutral-500">{l.description}</div>
 			{/each}
-			
 
 			{#each s.codeQuestions as l}
 				<div class="pl-10 mb-5 flex items-center">
@@ -96,14 +94,8 @@
 					<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
 						>{l.description}</button
 					>
-					
 				</div>
 			{/each}
-
-			
 		</div>
 	{/each}
-	
 </div>
-
-
