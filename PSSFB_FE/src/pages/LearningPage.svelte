@@ -26,47 +26,13 @@
 	let posts = data.posts.items;
 	$: freeC = courses?.filter((c: any) => c.price == null || c.price == 0);
 	$: feeC = courses?.filter((c: any) => c.price > 0);
-	$: console.log(freeC);
 
-	// beforeUpdate(async () => {
-	// 	if (session == 'Free Courses') {
-	// 		let result = await getAllCourses();
-	// 		courses = result.item;
-	// 	} else if (session == 'Pro Courses') {
-	// 		let result = await getAllCourses();
-	// 		courses = result.item;
-	// 	} else if (session == 'Studying') {
-	// 		let result = await getStudyingCourseByUserId(currentUser.id);
-	// 		courses = result.item;
-	// 	} else if (session == 'Complete') {
-	// 		let result = await getCompleteCourseByUserId(currentUser.id);
-	// 		courses = result.item;
-	// 	}
-	// 	console.log(courses);
-	// });
 	let userInfo: any;
 
 	afterUpdate(async () => {
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
 		}
-	});
-
-	afterUpdate(async () => {
-		if (session == 'Free Courses') {
-			const result = await getAllCourses('All', '', 1, 4, $currentUser?.UserID);
-			console.log(result);
-		} else if (session == 'Pro Courses') {
-			let result = await getAllCourses();
-			courses = result.item;
-		} else if (session == 'Studying') {
-			let result = await getStudyingCourseByUserId(currentUser.id);
-			courses = result.item;
-		} else if (session == 'Complete') {
-			let result = await getCompleteCourseByUserId(currentUser.id);
-			courses = result.item;
-		}
-		console.log(courses);
 	});
 </script>
 

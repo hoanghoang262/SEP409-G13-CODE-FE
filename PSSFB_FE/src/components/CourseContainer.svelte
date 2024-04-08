@@ -15,7 +15,7 @@
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
 
-	export const WishListHandle: any = (event:  any) => {
+	export const WishListHandle: any = (event: any) => {
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
@@ -46,6 +46,7 @@
 						on:click={() => goto(`/learning/${course.id}`)}
 						class="font-medium text-xl mb-2 group-hover:underline">{course.name}</button
 					>
+				{/if}
 				{#if $currentUser?.Role == 'Student'}
 					<div class="flex justify-between items-center">
 						<button
@@ -86,9 +87,9 @@
 								</svg>
 							{/if}
 						</button>
-					</div>
 
-					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
+						<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
+					</div>
 				{/if}
 				<p class="text-sm flex items-center justify-between">
 					<span><span class="font-semibold">{$t('Language')}</span>: {course.tag}</span>

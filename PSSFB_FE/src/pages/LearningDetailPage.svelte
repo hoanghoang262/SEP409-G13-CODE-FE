@@ -68,57 +68,7 @@
 				userBuyId: $currentUser?.UserID
 			});
 			if (result?.paymentUrl) {
-				var url = result?.paymentUrl;
-				var windowName = '_blank'; // Name of the window, '_blank' opens in a new tab
-				var windowWidth = 600; // Width of the window
-				var windowHeight = 400; // Height of the window
-
-				// Calculate the position to center the window
-				var windowLeft = (window.screen.width - windowWidth) / 2;
-				var windowTop = (window.screen.height - windowHeight) / 2;
-
-				// Features of the new window
-				var windowFeatures =
-					'width=' +
-					windowWidth +
-					',height=' +
-					windowHeight +
-					',toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=' +
-					windowLeft +
-					',top=' +
-					windowTop;
-
-				// Open a new window with the specified URL and features
-				var popup: any = window.open(url, windowName, windowFeatures);
-				console.log('popup: ' + popup);
-
-				var timer = setInterval(function () {
-					if (popup.closed) {
-						clearInterval(timer);
-						console.log('clear timer');
-						getCourseById(course.id, $currentUser.UserID).then((course2) => {
-							course = course2;
-						});
-					}
-				}, 1000);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-		pageStatus.set('done');
-	};
-
-	const payment = async () => {
-		pageStatus.set('load');
-		try {
-			const result = await createPayment({
-				paymentContent: `${course.name}`,
-				requiredAmount: course?.price ?? 0,
-				userCreateCourseId: course.createdBy,
-				courseId: course.id,
-				userBuyId: $currentUser?.UserID
-			});
-			if (result?.paymentUrl) {
+				console.log(result);
 				var url = result?.paymentUrl;
 				var windowName = '_blank'; // Name of the window, '_blank' opens in a new tab
 				var windowWidth = 600; // Width of the window
