@@ -17,7 +17,7 @@
 	export let data: any;
 	let course: any = data.course;
 	let comments = data.comments;
-	let enrolled = false;
+	//let enrolled = false;
 	//let enrolled = false;
 	let rating = 0;
 	const fullStar =
@@ -35,13 +35,13 @@
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 
-	afterUpdate(async () => {
-		getCourseById(course.id, $currentUser.UserID).then((result: any) => {
-			if (result?.isEnrolled) {
-				enrolled = true;
-			}
-		});
-	});
+	// afterUpdate(async () => {
+	// 	getCourseById(course.id, $currentUser.UserID).then((result: any) => {
+	// 		if (result?.isEnrolled) {
+	// 			enrolled = true;
+	// 		}
+	// 	});
+	// });
 
 	const evaludatioHandle = () => {
 		if (rating == 0) {
@@ -150,7 +150,7 @@
 									goto(`/overall/${course.id}`);
 								}}
 								classes="py-3 px-16 bg-white text-black my-10"
-								content="Go to course"
+								content="Enroll for free"
 							/>
 						{/if}
 					{/if}

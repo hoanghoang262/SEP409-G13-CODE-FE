@@ -569,7 +569,7 @@ export const payments = [
 export const tags = [
 	{ value: 'All', name: 'All' },
 	{ value: 'C', name: 'C' },
-	{ value: 'C++', name: 'C++' },
+	{ value: 'C%2B%2B', name: 'C++' },
 	{ value: 'Java', name: 'Java' },
 ];
 
