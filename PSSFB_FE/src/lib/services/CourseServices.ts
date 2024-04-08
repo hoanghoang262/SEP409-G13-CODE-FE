@@ -164,7 +164,7 @@ export const addWishList = async (
 };
 
 export const removeWishList = async (
-	wishlistId:number
+	wishlistId: number
 ) => {
 	try {
 		const result = await axios.delete(

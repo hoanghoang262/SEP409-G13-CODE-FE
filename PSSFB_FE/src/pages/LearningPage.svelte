@@ -26,22 +26,22 @@
 
 	const freeCourseHandle = () => {};
 
-	// beforeUpdate(async () => {
-	// 	if (session == 'Free Courses') {
-	// 		let result = await getAllCourses();
-	// 		courses = result.item;
-	// 	} else if (session == 'Pro Courses') {
-	// 		let result = await getAllCourses();
-	// 		courses = result.item;
-	// 	} else if (session == 'Studying') {
-	// 		let result = await getStudyingCourseByUserId(currentUser.id);
-	// 		courses = result.item;
-	// 	} else if (session == 'Complete') {
-	// 		let result = await getCompleteCourseByUserId(currentUser.id);
-	// 		courses = result.item;
-	// 	}
-	// 	console.log(courses);
-	// });
+	afterUpdate(async () => {
+		if (session == 'Free Courses') {
+			const result = await getAllCourses('All', '', 1, 4, $currentUser?.UserID);
+			console.log(result);
+		} else if (session == 'Pro Courses') {
+			let result = await getAllCourses();
+			courses = result.item;
+		} else if (session == 'Studying') {
+			let result = await getStudyingCourseByUserId(currentUser.id);
+			courses = result.item;
+		} else if (session == 'Complete') {
+			let result = await getCompleteCourseByUserId(currentUser.id);
+			courses = result.item;
+		}
+		console.log(courses);
+	});
 </script>
 
 <main>
