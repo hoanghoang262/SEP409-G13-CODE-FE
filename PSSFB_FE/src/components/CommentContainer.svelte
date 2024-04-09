@@ -128,6 +128,7 @@
 		pageStatus.set('load');
 		if(!checkExist(content.trim())){
 			showToast("Comment warning","Please enter content","warning")
+			pageStatus.set('done');
 			return;
 		}
 		try {
