@@ -177,3 +177,21 @@ export const removeWishList = async (
 		return error
 	}
 };
+
+export const getUserEvaluation = async (userId: number, courseId: number) => {
+	const response = await axios.get(
+		`https://coursesservices.azurewebsites.net/api/EvaluateCourse/GetRateOfUser?courseId=${courseId}&userId=${userId}`
+	);
+	return response.data;
+}
+
+export const createUserEvaluation = async (userId: number, courseId: number, star: Number) => {
+	const response = await axios.post(
+		`https://coursesservices.azurewebsites.net/api/EvaluateCourse/AddCourseEvaluation`, {
+		courseId: courseId,
+		userId: userId,
+		star: star
+	}
+	);
+	return response.data;
+}

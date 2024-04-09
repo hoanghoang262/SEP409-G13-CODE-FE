@@ -7,16 +7,24 @@
 	import CommentContainer from '../components/CommentContainer.svelte';
 	import { getCommentByCourse } from '$lib/services/CommentService';
 	import SkillsSet from '../components/SkillsSet.svelte';
-	import { addWishList, enroll, getCourseById } from '$lib/services/CourseServices';
+	import {
+		addWishList,
+		createUserEvaluation,
+		enroll,
+		getCourseById,
+		getUserEvaluation
+	} from '$lib/services/CourseServices';
 	import { currentUser, pageStatus } from '../stores/store';
-	import { afterUpdate, beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { t } from '../translations/i18n';
 	import { checkExist, convertToVND, showToast } from '../helpers/helpers';
 	import { createPayment } from '$lib/services/PaymentService';
+	import axios from 'axios';
 
 	export let data: any;
 	let course: any = data.course;
 	let comments = data.comments;
+	let evaluationState = true;
 	//let enrolled = false;
 	//let enrolled = false;
 	let rating = 0;
@@ -43,10 +51,20 @@
 	// 	});
 	// });
 
-	const evaludatioHandle = () => {
+	onMount(async () => {
+		const response = await getUserEvaluation($currentUser.UserID, course.id);
+		if (response.value) {
+			rating = response.value;
+			evaluationState = false;
+		}
+	});
+
+	const evaludatioHandle = async () => {
 		if (rating == 0) {
 			showToast('Evaluation Error', 'Missing evaluation', 'warning');
 		} else {
+			const response = await createUserEvaluation($currentUser.UserID, course.id, rating);
+			console.log(response);
 		}
 	};
 
@@ -293,7 +311,9 @@
 						class="grid w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible"
 					>
 						<div class="inline-flex items-center">
-							<button on:click={() => (rating = 1)}
+							<button
+								disabled={evaluationState == false ? true : false}
+								on:click={() => (rating = 1)}
 								><svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"
@@ -308,7 +328,9 @@
 										clip-rule="evenodd"
 									></path>
 								</svg></button
-							><button on:click={() => (rating = 2)}
+							><button
+								disabled={evaluationState == false ? true : false}
+								on:click={() => (rating = 2)}
 								><svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"
@@ -323,7 +345,9 @@
 										clip-rule="evenodd"
 									></path>
 								</svg></button
-							><button on:click={() => (rating = 3)}
+							><button
+								disabled={evaluationState == false ? true : false}
+								on:click={() => (rating = 3)}
 								><svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"
@@ -338,7 +362,9 @@
 										clip-rule="evenodd"
 									></path>
 								</svg></button
-							><button on:click={() => (rating = 4)}
+							><button
+								disabled={evaluationState == false ? true : false}
+								on:click={() => (rating = 4)}
 								><svg
 									xmlns="http://www.w3.org/2000/svg"
 									viewBox="0 0 24 24"
@@ -353,7 +379,9 @@
 										clip-rule="evenodd"
 									></path>
 								</svg></button
-							><button on:click={() => (rating = 5)}
+							><button
+								disabled={evaluationState == false ? true : false}
+								on:click={() => (rating = 5)}
 								><svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill={rating >= 5 ? 'currentColor' : 'none'}
@@ -376,7 +404,10 @@
 				<div class="flex justify-center items-center">
 					<button
 						on:click={evaludatioHandle}
-						class="bg-green-500 rounded-md px-3 py-3 hover:bg-green-600 text-white">Supmit</button
+						disabled={evaluationState == false ? true : false}
+						class=" rounded-md px-3 py-3 text-white {evaluationState
+							? 'hover:bg-green-600 bg-green-500'
+							: 'hover:bg-red-500 bg-red-400'}">Submit</button
 					>
 				</div>
 			{/if}

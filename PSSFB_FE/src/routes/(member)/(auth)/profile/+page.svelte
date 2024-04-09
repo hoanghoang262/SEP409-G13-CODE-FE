@@ -43,10 +43,25 @@
 
 	let date: any;
 
+	function formatDateForInput(dateString: any) {
+		const date = new Date(dateString);
+
+		// Option 1: Adjust for specific time zone (if known)
+		//   - Replace '+07:00' with the appropriate time zone offset for the original date
+		date.setTime(date.getTime() + 24 * 60 * 60 * 1000); // Adjust for +07:00 (Indochina Time)
+
+		// Option 2: Use a library for time zone handling (recommended)
+		//   - Consider moment.js or date-fns for more flexibility and accuracy
+
+		const formattedDate = date.toISOString().slice(0, 10);
+		return formattedDate;
+	}
+
 	onMount(async () => {
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
-			date = new Date(userInfo.birthDate);
+			console.log(userInfo.birthDate);
+			date = formatDateForInput(new Date(userInfo.birthDate).toJSON().slice(0, 10));
 			info = userInfoTrim();
 		}
 	});
@@ -83,18 +98,10 @@
 	// 	editfrm.submit();
 	// };
 
-	function addOneDay(date: Date) {
-		// Create a copy of the original date to avoid modifying it
-		const newDate = new Date(date.getTime());
-
-		// Add one day in milliseconds (24 hours)
-		newDate.setDate(newDate.getDate() + 1);
-
-		return newDate;
-	}
+	$: console.log(date);
 
 	async function frmSubmit() {
-		info.birthDate = addOneDay(date);
+		info.birthDate = date;
 		pageStatus.set('load');
 		if (!checkUserName(info.username)) {
 			showToast('Edit Profile', 'username must be 8-32 characters long', 'warning');
@@ -262,14 +269,14 @@
 						{/if}
 					</div>
 					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="block border-2 border-gray-200 w-full">
+					<label class=" border-2 border-gray-200 w-full {editStatus ? 'block' : 'hidden'}">
 						<span class="sr-only t-2">Choose profile photo</span>
 						<div class="border-2 {editStatus ? 'border-blue-500' : 'border-black'}">
 							<Dropzone containerClasses="" on:drop={handleFilesSelect} />
 						</div>
 
-						<Input
-							classes="border w-2/3 hidden"
+						<input
+							class="border w-2/3 hidden"
 							required={true}
 							name="photoURL"
 							value={info?.profilePict}
@@ -344,9 +351,10 @@
 						for="birthDate"
 					>
 						<span class="text-sm md:text-md font-semibold text-zinc-900">BirthDate</span>
-						<DateInput
+						<input
+							class=" bg-transparent p-4 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+							type="date"
 							bind:value={date}
-							format="dd-MM-yyyy"
 							disabled={editStatus ? false : true}
 							placeholder="birth date"
 						/>
