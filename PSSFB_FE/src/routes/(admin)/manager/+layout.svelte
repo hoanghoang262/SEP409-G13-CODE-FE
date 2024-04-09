@@ -193,7 +193,7 @@
 
 									<span class="mx-2 text-sm font-medium">{$t('Student Manager')}</span>
 								</a>
-								{#if $currentUser?.Role == 'AdminBussiness'}
+								{#if $currentUser?.Role == 'AdminSystem'}
 									<a
 										class="{$page.url.pathname.includes('/manager/bamanager')
 											? 'bg-green-200 hover:bg-green-400'
