@@ -53,9 +53,15 @@ export function formatDateTime(inputDate: string) {
 
 }
 
+function getDateMinusSevenHours(dateString: string) {
+    const targetDate = new Date(dateString);
+    targetDate.setHours(targetDate.getHours() + 7); // Subtract 7 hours
+    return targetDate;
+}
+
 export function getTimeDifference(dateString: string) {
     // Parse the given date string
-    const targetDate: any = new Date(dateString);
+    const targetDate: any = new Date(getDateMinusSevenHours(dateString));
 
     // Get the current date and time
     const currentDate: any = new Date();
