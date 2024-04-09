@@ -32,19 +32,19 @@
 			? 'flex'
 			: 'hidden'} mt-2 py-2 right-0 w-[400px] bg-gray-100 shadow-xl rounded-lg flex flex-col max-h-[calc(100vh-64px)] md:max-h-[calc(100vh-96px)]"
 	>
-		<div class="px-5 underline py-3"><p class="">Notification</p></div>
+		<div class="px-5 underline py-3 w-full"><p class="">Notification</p></div>
 		{#if data?.length > 0}
-			<div class="flex flex-col justify-start">
+			<div class="flex flex-col justify-start w-full">
 				{#each data as item}
-					<div class="px-5 bg-gray-100 hover:bg-blue-100 py-2 my-1 flex justify-start items-center">
-						<div class="mx-2">
+					<div class="px-5 bg-gray-100 hover:bg-blue-100 py-2 my-1 flex items-center w-full">
+						<div class="mx-2 w-10 h-10">
 							<Avatar
-								classes="w-10 h-10 rounded-full border-2 border-blue-300"
+								classes="w-full h-full rounded-full border-2 border-blue-300"
 								src="/src/assets/Xanh final.png"
 							/>
 						</div>
-						<div>
-							<p class="truncate">{item.notificationContent}</p>
+						<div class="flex-1">
+							<p class="line-clamp-1">{item.notificationContent}</p>
 							<p class="text-xs font-light">{getTimeDifference(item.sendDate)}</p>
 						</div>
 					</div>
