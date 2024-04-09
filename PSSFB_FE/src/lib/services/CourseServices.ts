@@ -178,6 +178,11 @@ export const removeWishList = async (
 	}
 };
 
+export const getProgressCourses = async (userId: number) => {
+	const result = await axios.get(`https://coursesservices.azurewebsites.net/api/GetProgressCourse/GetProgress?userId=${userId}`)
+	return result.data.value
+}
+
 export const getUserEvaluation = async (userId: number, courseId: number) => {
 	const response = await axios.get(
 		`https://coursesservices.azurewebsites.net/api/EvaluateCourse/GetRateOfUser?courseId=${courseId}&userId=${userId}`

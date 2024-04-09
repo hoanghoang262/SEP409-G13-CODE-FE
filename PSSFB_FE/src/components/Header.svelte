@@ -72,7 +72,7 @@
 							? 'text-blue-500'
 							: ''}"
 						>{$t('WishList')}
-						<span class="text-4xl"><Icon icon="lets-icons:favorites-duotone" /></span></a
+						<span class="text-xl ml-1"><Icon icon="pepicons-pop:bookmark-filled-circle-filled" /></span></a
 					>
 				{/if}
 			{/if}

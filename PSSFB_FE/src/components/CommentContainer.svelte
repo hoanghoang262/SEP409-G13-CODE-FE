@@ -87,7 +87,7 @@
 	async function updateReply() {
 		pageStatus.set('load');
 		try {
-			console.log(editreply);
+			console.log(JSON.stringify(editreply));
 			await putReplyComment(editreply);
 			comments = await getComment();
 			showToast('Update Comment', 'Update Comment Success', 'success');

@@ -53,7 +53,7 @@ export const postReplyComment = async(comment:any) => {
 
 export const putReplyComment = async(comment:any) => {
     try{
-        await axios.put(`https://commentapi.azurewebsites.net/api/Comment/Update?id=${comment.replyId}`, comment)
+        await axios.put(`https://commentapi.azurewebsites.net/api/Comment/UpdateReply?id=${comment.replyId}`, comment)
     }catch(err){
         console.log(err)
         return err;
