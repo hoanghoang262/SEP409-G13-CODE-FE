@@ -49,7 +49,7 @@ export function formatDateTime(inputDate: string) {
     const minute = date.getMinutes()
 
 
-    return `${day}/${month}/${year}-${hour}h${minute}p`;
+    return `${day}/${month}/${year}-${hour}:${minute}`;
 
 }
 
