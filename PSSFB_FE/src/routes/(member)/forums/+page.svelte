@@ -55,7 +55,7 @@
 					class="bg-white border-4 flex justify-between py-4 px-10 mb-5 rounded-sm shadow-md transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-[1.03] hover:border-green-300"
 				>
 					<div class="w-16 flex items-center">
-						<Avatar classes="rounded-full" src={p?.picture} />
+						<Avatar classes="rounded-full w-16 h-16" src={p?.picture} />
 					</div>
 					<div class="w-10/12">
 						<div

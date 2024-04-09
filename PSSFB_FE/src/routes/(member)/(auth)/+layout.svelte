@@ -13,13 +13,13 @@
 		}
 	});
 
-	afterUpdate(async () => {
-		if (!$currentUser) {
-			goto('/');
-		} else if ($currentUser?.Role.includes('Admin')) {
-			goto('/manager');
-		}
-	});
+	// afterUpdate(async () => {
+	// 	if (!$currentUser) {
+	// 		goto('/');
+	// 	} else if ($currentUser?.Role.includes('Admin')) {
+	// 		goto('/manager');
+	// 	}
+	// });
 </script>
 
 <slot />

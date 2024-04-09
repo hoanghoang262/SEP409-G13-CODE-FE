@@ -7,17 +7,17 @@
 	import { currentUser } from '../../../stores/store';
 	import { goto } from '$app/navigation';
 
-	export let form:any;
-	if(form?.type=='error'){
-		showToast(`${form?.error??"error"}`,`${form?.message??"something went wrong"}`,"error")
+	export let form: any;
+	if (form?.type == 'error') {
+		showToast(`${form?.error ?? 'error'}`, `${form?.message ?? 'something went wrong'}`, 'error');
 	}
 
 	onMount(() => {
-		if(form?.user){
-		localStorage.setItem("user", JSON.stringify(form?.user))
-		currentUser.setUser(form?.user)
-	}
-	})
+		if (form?.user) {
+			localStorage.setItem('user', JSON.stringify(form?.user));
+			currentUser.setUser(form?.user);
+		}
+	});
 
 	beforeUpdate(async () => {
 		if (checkExist($currentUser)) {

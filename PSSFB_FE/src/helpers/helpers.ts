@@ -117,7 +117,6 @@ export function checkPasswords(password: string) {
 }
 
 export function checkUserName(userName: string): boolean {
-	console.log(userName.length)
 	if (!checkExist(userName) || userName.length < 8 || userName.length > 32) {
 		return false;
 	}
