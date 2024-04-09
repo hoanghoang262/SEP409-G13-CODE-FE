@@ -21,6 +21,7 @@
 	import { formatDate } from '../../../../helpers/datetime';
 	import ResetPasswordModal from '../../../../components/modals/ResetPasswordModal.svelte';
 	import { trimUserData } from '../../../../helpers/helpers';
+	import { DateInput } from 'date-picker-svelte';
 
 	let showModal = false;
 	export let form: any;
@@ -40,9 +41,12 @@
 	let changeStatus = false;
 	let editStatus = false;
 
-	afterUpdate(async () => {
+	let date: any;
+
+	onMount(async () => {
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
+			date = new Date(userInfo.birthDate);
 			info = userInfoTrim();
 		}
 	});
@@ -57,7 +61,7 @@
 		phone: userInfo?.phone ?? '',
 		address: userInfo?.address ?? '',
 		facebookLink: userInfo?.facebookLink ?? '',
-		birthDate: userInfo?.birthDate ? formatDate(userInfo?.birthDate) : ''
+		birthDate: date
 	};
 
 	const userInfoTrim = () => {
@@ -70,7 +74,7 @@
 			phone: userInfo?.phone ?? '',
 			address: userInfo?.address ?? '',
 			facebookLink: userInfo?.facebookLink ?? '',
-			birthDate: userInfo?.birthDate ? formatDate(userInfo?.birthDate) : ''
+			birthDate: date
 		};
 	};
 
@@ -79,10 +83,22 @@
 	// 	editfrm.submit();
 	// };
 
+	function addOneDay(date: Date) {
+		// Create a copy of the original date to avoid modifying it
+		const newDate = new Date(date.getTime());
+
+		// Add one day in milliseconds (24 hours)
+		newDate.setDate(newDate.getDate() + 1);
+
+		return newDate;
+	}
+
 	async function frmSubmit() {
+		info.birthDate = addOneDay(date);
 		pageStatus.set('load');
 		if (!checkUserName(info.username)) {
 			showToast('Edit Profile', 'username must be 8-32 characters long', 'warning');
+			pageStatus.set('done');
 			return;
 		}
 		if (checkExist(image)) {
@@ -90,13 +106,22 @@
 			const url = await getURL(image?.path);
 			if (!checkExist(url)) {
 				showToast('Edit Profile', 'something went wrong', 'error');
+				pageStatus.set('done');
 				return;
 			}
 			info.profilePict = url;
 		}
 
 		try {
-			const response = await updateUserInfo(info.userId, info);
+			const response: any = await updateUserInfo(info.userId, info);
+			console.log('re', response);
+			if (response.data.statusCode == 400) {
+				showToast('Profile', response.data.value.msgTextVN, 'error');
+				pageStatus.set('done');
+				return;
+			} else {
+				showToast('Profile', 'Edit profile success', 'success');
+			}
 			userInfo = await getUserInfo($currentUser.UserID);
 			info = userInfoTrim();
 			currentUser.set({
@@ -104,12 +129,11 @@
 				displayName: userInfo.userName,
 				photoURL: userInfo.profilePict
 			});
-		} catch (error) {
+		} catch (error: any) {
 			console.error(error);
 		}
 
 		pageStatus.set('done');
-		showToast('Profile', 'Edit profile success', 'success');
 	}
 
 	const editHandle = () => {
@@ -314,13 +338,19 @@
 				</div>
 				<div class="w-1/2 md:mx-5 ml-2">
 					<label
-						class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						class="relative block md:px-3 md:py-2 px-2 py-2 border-2 {editStatus
 							? 'border-blue-500'
 							: 'border-black'} rounded"
 						for="birthDate"
 					>
 						<span class="text-sm md:text-md font-semibold text-zinc-900">BirthDate</span>
-						<input
+						<DateInput
+							bind:value={date}
+							format="dd-MM-yyyy"
+							disabled={editStatus ? false : true}
+							placeholder="birth date"
+						/>
+						<!-- <input
 							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
 							autocomplete="off"
 							id="birthDate"
@@ -328,7 +358,7 @@
 							placeholder="dd-MM-yyyy"
 							bind:value={info.birthDate}
 							disabled={editStatus ? false : true}
-						/>
+						/> -->
 					</label>
 				</div>
 			</div>

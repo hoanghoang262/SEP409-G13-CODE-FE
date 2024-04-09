@@ -31,14 +31,12 @@ export const getUserInfo = async (id: number) => {
 	return result.data;
 };
 
-export const updateUserInfo = async (id: number, info:any) => {
-	console.log(info)
+export const updateUserInfo = async (id: number, info: any) => {
 	try {
 		const result = await axios.put(
-			`https://authenticateservice.azurewebsites.net/api/Profile/UpdateProfile?id=${id}`,info
+			`https://authenticateservice.azurewebsites.net/api/Profile/UpdateProfile?id=${id}`, info
 		);
-		console.log(result)
-		result.data;
+		return result;
 	} catch (err) {
 		console.log(err);
 		return err;
