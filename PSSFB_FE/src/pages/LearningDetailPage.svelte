@@ -7,12 +7,13 @@
 	import CommentContainer from '../components/CommentContainer.svelte';
 	import { getCommentByCourse } from '$lib/services/CommentService';
 	import SkillsSet from '../components/SkillsSet.svelte';
-	import { addWishList, enroll, getCourseById } from '$lib/services/CourseServices';
+	import { addWishList, enroll, getCourseById, getProgressCourses } from '$lib/services/CourseServices';
 	import { currentUser, pageStatus } from '../stores/store';
 	import { afterUpdate, beforeUpdate } from 'svelte';
 	import { t } from '../translations/i18n';
 	import { checkExist, convertToVND, showToast } from '../helpers/helpers';
 	import { createPayment } from '$lib/services/PaymentService';
+	import PercentCircle from '../components/PercentCircle.svelte';
 
 	export let data: any;
 	let course: any = data.course;
@@ -35,13 +36,16 @@
 	let section = 'Introduction';
 	const sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 
-	// afterUpdate(async () => {
-	// 	getCourseById(course.id, $currentUser.UserID).then((result: any) => {
-	// 		if (result?.isEnrolled) {
-	// 			enrolled = true;
-	// 		}
-	// 	});
-	// });
+	let completionPercentage = 0
+
+	afterUpdate(async () => {
+		getProgressCourses($currentUser.UserID).then((result: any) => {
+			let pcourse = result?.enrolledCourses?.find((c:any) => c.courseId = course.id)
+			if (pcourse?.completionPercentage) {
+				completionPercentage = pcourse.completionPercentage;
+			}
+		});
+	});
 
 	const evaludatioHandle = () => {
 		if (rating == 0) {
@@ -54,7 +58,7 @@
 		addWishList($currentUser?.UserID, course.id);
 		showToast('Add to wish list', 'Add to wish list successfully', 'success');
 		event?.target?.classList?.remove('text-slate-400');
-		event?.target?.classList?.add('text-red-500');
+		event?.target?.classList?.add('text-yellow-100');
 	};
 
 	const payment = async () => {
@@ -156,12 +160,16 @@
 					{/if}
 
 					{#if course?.inWishList == true}
-						<button class="text-red-300 pl-3"
-							><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
+						<button class="text-yellow-100 pl-3"
+							><div class="text-4xl">
+								<Icon icon="pepicons-pop:bookmark-filled-circle" />
+							</div></button
 						>
 					{:else if course?.inWishList == false}
-						<button on:click={AddToWishList} class="hover:text-red-300 text-slate-400 pl-3"
-							><div class="text-4xl"><Icon icon="line-md:heart-filled" /></div></button
+						<button on:click={AddToWishList} class="hover:text-yellow-100 text-slate-400 pl-3"
+							><div class="text-4xl">
+								<Icon icon="pepicons-pop:bookmark-filled-circle" />
+							</div></button
 						>
 					{/if}
 				{:else}
@@ -176,8 +184,12 @@
 			<div>There are 65,273 already enrolled</div>
 		</div>
 		<div class="w-1/3 text-center overflow-hidden">
-			<div class="text-2xl">Offered by</div>
-			<img alt="logo" class="w-fit" src={Logo} />
+			{#if course?.isEnrolled == true}
+				<div class=""><PercentCircle p={completionPercentage}/></div>
+			{:else if course?.isEnrolled == false}
+				<div class="text-2xl">Offered by</div>
+				<img alt="logo" class="w-fit" src={Logo} />
+			{/if}
 		</div>
 	</div>
 

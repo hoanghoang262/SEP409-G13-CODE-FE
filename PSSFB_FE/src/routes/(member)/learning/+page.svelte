@@ -11,7 +11,7 @@
 //const promise = data.promise
 const p = async () => {
 	console.log("learning", $currentUser?.UserID)
-        const courses = await getAllCourses("All", '',1,4, $currentUser?.UserID)
+        const courses = await getAllCourses("All", '',1,8, $currentUser?.UserID)
         const posts = await getAllPost();
         return {
             courses,
