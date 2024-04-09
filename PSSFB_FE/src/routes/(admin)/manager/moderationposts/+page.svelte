@@ -368,7 +368,7 @@
 							{/each}
 							<td class="px-6 py-4 flex justify-center">
 								<button
-									on:click={() => navigationDetailPost(row.id)}
+									on:click={() => navigationDetailPost(row.postId)}
 									class="bg-green-600 text-white py-2 px-3 rounded-lg hover:bg-green-700"
 									>Detail</button
 								>
