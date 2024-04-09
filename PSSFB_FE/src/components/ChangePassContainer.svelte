@@ -4,7 +4,7 @@
 
 	import Input from '../atoms/Input.svelte';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
-	import { checkExist, showToast } from '../helpers/helpers';
+	import { checkExist, checkPasswords, showToast } from '../helpers/helpers';
 	import { changePasswordWithEmail, loginWithEmailAndPsr, logout } from '../firebase';
 	import { get } from 'svelte/store';
 	import { currentUser, pageStatus } from '../stores/store';
@@ -24,6 +24,16 @@
 	const newChange = (event: any) => (newP = event.target.value);
 
 	const changePass = async () => {
+
+		if(checkPasswords(newP)){
+			showToast(
+				'Password warning',
+				'password must be 8-32 character long contain 1 number and 1 special character',
+				'warning'
+			);
+			return
+		}
+
 		pageStatus.set('load');
 		if (checkExist(old) && checkExist(newP)) {
 			const user: any = await get(currentUser);
@@ -34,7 +44,7 @@
 			console.log(testUser);
 			if (checkExist(testUser)) {
 				if (testUser?.email == user.email) {
-					await axios.post('/?/changePassword', JSON.stringify({ newPassword: newP }));
+					changePasswordWithEmail(newP)
 					showToast('Change Password', 'Change password successfully', 'success');
 					currentUser.set(undefined);
 					logout();

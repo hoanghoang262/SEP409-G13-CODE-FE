@@ -60,14 +60,15 @@
 
 	<div class="bg-slate-800 text-white resize p-5 font-medium">
 		<div class="border-b border-white inline-block mb-3">TEST CASE</div>
-		<div class="flex">
+		<div class="flex min-h-40">
 			<div class="w-1/6 border-r mr-10">
-				{#each result as tc, index}
+				<div>Result: </div>
+				<!-- {#each result as tc, index}
 					<button on:click={() => selectIndex=index} class="w-full {selectIndex==index?"bg-blue-900":""}">Test case {index + 1}</button>
-				{/each}
+				{/each} -->
 			</div>
 			<div class="w-5/6 flex">
-				{#if result?.length > 0}
+				<!-- {#if result?.length > 0}
 					<div class="w-1/2">
 						<div>Expected Result: </div>
 						<div>Actual Result: </div>
@@ -78,7 +79,11 @@
 						<div>{result[selectIndex]?.actual??""}</div>
 						<div class="{result[selectIndex]?.result=="Passed"?"text-lime-600":"text-red-600"}">{result[selectIndex]?.result??""}</div>
 					</div>
-				{/if}
+				{/if} -->
+				<div class="w-1/2">
+					
+					<div class="{result=='All Test Passed'?'text-lime-600':"text-red-600"}">{result}</div>
+				</div>
 			</div>
 		</div>
 	</div>

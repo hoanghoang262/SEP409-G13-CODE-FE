@@ -9,3 +9,8 @@ export const createPayment = async(data:any)=>{
         return error
     }
 }
+
+export const getPaymentByByUserId = async(userId:string) => {
+    const result = await axios.get(`https://paymentapiservice.azurewebsites.net/api/Payments/GetHistoryPaymentsOfUserBuy?userId=${userId}`)
+    return result.data.value
+}

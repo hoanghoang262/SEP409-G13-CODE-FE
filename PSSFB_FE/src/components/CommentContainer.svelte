@@ -113,6 +113,7 @@
 	async function deleteClick(id: number) {
 		pageStatus.set('load');
 		await delComment(id);
+		showToast('Delete Comment', 'Delete Comment Success', 'success');
 		comments = await getComment();
 		pageStatus.set('done');
 	}
@@ -120,6 +121,7 @@
 	async function replydeleteClick(id: number) {
 		pageStatus.set('load');
 		await delReplyComment(id);
+		showToast('Delete Comment', 'Delete Comment Success', 'success');
 		comments = await getComment();
 		pageStatus.set('done');
 	}

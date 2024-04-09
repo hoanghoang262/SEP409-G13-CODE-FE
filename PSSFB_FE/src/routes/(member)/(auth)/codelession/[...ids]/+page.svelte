@@ -23,20 +23,14 @@
 		switch (course?.tag) {
 			case 'Java':
 				const jf: string = JavaForm(lession.codeForm, lession.testCaseJava);
-				console.log(
-					JSON.stringify({
-						practiceQuestionId: lession.id,
-						userCode: jf,
-						userId: $currentUser.UserID
-					})
-				);
-				result = ExecuteResult(
+				
+				result = 
 					await JavaComplier({
 						practiceQuestionId: lession.id,
 						userCode: jf,
 						userId: $currentUser.UserID
 					})
-				);
+				
 				break;
 			case 'C':
 				const cf: string = CForm(lession.codeForm, lession.testCaseC);
@@ -68,8 +62,8 @@
 </script>
 
 <div class="min-h-[calc(100vh-64px)] md:min-h[calc(100vh-96px)] bg-slate-200 text-black">
-	<div class="px-5 py-2 font-medium">
-		{course.name} > {chapter.name} > {lession.description}
+	<div class="px-5 py-2 font-medium flex">
+		{course.name} > {chapter.name} > <div class="truncate max-w-60">{lession.description}</div>
 	</div>
 	<div class="flex bg-white text-black">
 		<div class="w-1/5"><CourseSideBar {course} /></div>
