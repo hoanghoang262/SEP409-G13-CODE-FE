@@ -1,11 +1,15 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { formatDateTime } from '../helpers/datetime';
 	import { t } from '../translations/i18n';
 
 	export let post: any;
 </script>
 
-<div class="border hover:shadow-2xl hover:-translate-y-5 transition-all">
+<button
+	on:click={() => goto('/forums/{post.id}')}
+	class="border hover:shadow-2xl hover:-translate-y-5 transition-all"
+>
 	<!-- <img src={post.image} alt="postimg" class="w-full" /> -->
 	<div class="px-3">
 		<div class="py-5">
@@ -20,4 +24,4 @@
 			<a href="/forums/{post.id}">{$t('see the post')}</a>
 		</div>
 	</div>
-</div>
+</button>

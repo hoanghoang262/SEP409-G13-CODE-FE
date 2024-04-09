@@ -43,9 +43,15 @@
 	const code = course?.chapters.flatMap((chapter: any) => chapter.codeQuestions);
 	const exam = course?.chapters.flatMap((chapter: any) => chapter.lastExam);
 	let section = 'Introduction';
-	const sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
+	let sections: any;
 
 	let completionPercentage = 0;
+
+	if (completionPercentage == 100) {
+		sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
+	} else {
+		sections = ['Introduction', 'Sysllabus', 'Comments'];
+	}
 
 	afterUpdate(async () => {
 		getProgressCourses($currentUser.UserID).then((result: any) => {

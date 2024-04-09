@@ -7,16 +7,24 @@
 	import Status from '../atoms/Status.svelte';
 	import { t } from '../translations/i18n';
 	import { formatDateTime } from '../helpers/datetime';
-	import { addWishList } from '$lib/services/CourseServices';
+	import { addWishList, getUserEvaluation } from '$lib/services/CourseServices';
 	import { page } from '$app/stores';
+	import RatingStar from '../atoms/RatingStar.svelte';
+	import { onMount } from 'svelte';
+
 	export let course: any;
 	export let type = 'public';
 	export let ApproveCourse: any = () => {};
 	export let RejectCourse: any = () => {};
 	export let DeleteCourse: any = () => {};
 
-	
 	export let RemoveFromWishList: any = () => {};
+	let rating: number;
+
+	onMount(async () => {
+		const response = await getUserEvaluation($currentUser.UserID, course.id);
+		rating = response.value;
+	});
 </script>
 
 <div class="relative h-[450px]">
@@ -40,18 +48,28 @@
 							>{course.name}</button
 						>
 					{:else}
-						<button
-							on:click={() => goto(`/learning/${course.id}`)}
-							class="w-full text-left font-medium text-xl mb-2 group-hover:underline truncate"
-							>{course.name}</button
-						>
+						<div class="flex-col">
+							<div class="float-start">
+								<RatingStar {rating} />
+							</div>
+							<button
+								on:click={() => goto(`/learning/${course.id}`)}
+								class="w-full text-left font-medium text-xl mb-2 group-hover:underline truncate"
+								>{course.name}</button
+							>
+						</div>
 					{/if}
-					
 				</div>
 				{#if $currentUser?.Role == 'AdminBussiness'}
-				<p class="text-sm truncate"><span class="font-semibold">Create By:</span> {$currentUser?.displayName}</p>
+					<p class="text-sm truncate">
+						<span class="font-semibold">Create By:</span>
+						{$currentUser?.displayName}
+					</p>
 				{:else}
-				<p class="text-sm truncate"><span class="font-semibold">Create By:</span> {course.userName}</p>
+					<p class="text-sm truncate">
+						<span class="font-semibold">Create By:</span>
+						{course.userName}
+					</p>
 				{/if}
 				<p class="text-sm flex items-center justify-between">
 					<span><span class="font-semibold">{$t('Language')}</span>: {course.tag}</span>

@@ -1,5 +1,4 @@
 export function formatDate(inputDate: string) {
-    console.log(inputDate)
     const date = new Date(inputDate);
     let day
     const pre_day = date.getDate()
@@ -24,7 +23,6 @@ export function formatDate(inputDate: string) {
 }
 
 export function formatDateTime(inputDate: string) {
-    console.log(inputDate)
     const date = new Date(inputDate);
     let day
     const pre_day = date.getDate()
