@@ -48,7 +48,7 @@
 							>{course.name}</button
 						>
 					{:else}
-						<div class="flex-col">
+						<div class="flex-col w-full">
 							<div class="float-start">
 								<RatingStar {rating} />
 							</div>
