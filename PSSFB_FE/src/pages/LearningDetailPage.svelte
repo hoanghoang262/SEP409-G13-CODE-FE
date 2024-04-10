@@ -29,7 +29,7 @@
 	let evaluationState = true;
 	//let enrolled = false;
 	//let enrolled = false;
-	let rating = 0;
+	let rating: any = 0;
 	const fullStar =
 		'M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z';
 	('M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z');
@@ -49,13 +49,9 @@
 	let completionPercentage = 0;
 	let isDone: boolean;
 
-	$: if (completionPercentage == 100 || isDone == true) {
-		sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
-	} else {
-		sections = ['Introduction', 'Sysllabus', 'Comments'];
-	}
+	sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 
-	afterUpdate(async () => {
+	onMount(async () => {
 		getProgressCourses($currentUser.UserID).then((result: any) => {
 			let pcourse = result?.enrolledCourses?.find((c: any) => (c.courseId = course.id));
 			if (pcourse?.completionPercentage) {
@@ -63,26 +59,29 @@
 				isDone = pcourse.isDone;
 			}
 		});
-	});
-
-	onMount(async () => {
 		const response = await getUserEvaluation($currentUser.UserID, course.id);
 		if (response.value) {
 			rating = response.value;
-			evaluationState = false;
+			if (rating?.mgsCode === 'MSG43') {
+				evaluationState = false;
+			}
 		}
 		let result = await axios.get(
-			'https://coursesservices.azurewebsites.net/api/Enrollment/GetQuantityOfUserEnrollCourse'
+			`https://coursesservices.azurewebsites.net/api/Enrollment/GetQuantityOfUserEnrollCourse/${course.id}`
 		);
 		enrollNumber = result.data;
 	});
 
 	const evaludatioHandle = async () => {
 		if (rating == 0) {
-			showToast('Evaluation Error', 'Missing evaluation', 'warning');
+			showToast('Evaluation Error', 'Missing evaluation', 'error');
+		} else if (completionPercentage <= 100 || isDone == false) {
+			showToast('Evaluation', 'You need to complete course first', 'error');
+		} else if (evaluationState == false) {
+			showToast('Evaluation', 'You can already take feedback', 'error');
 		} else {
 			const response = await createUserEvaluation($currentUser.UserID, course.id, rating);
-			console.log(response);
+			showToast('Evaluation', 'Add evaluation success', 'success');
 		}
 	};
 
@@ -430,7 +429,6 @@
 				<div class="flex justify-center items-center">
 					<button
 						on:click={evaludatioHandle}
-						disabled={evaluationState == false ? true : false}
 						class=" rounded-md px-3 py-3 text-white {evaluationState
 							? 'hover:bg-green-600 bg-green-500'
 							: 'hover:bg-red-500 bg-red-400'}">Submit</button
