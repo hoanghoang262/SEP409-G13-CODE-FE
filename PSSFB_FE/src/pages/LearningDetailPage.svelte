@@ -44,6 +44,7 @@
 	const exam = course?.chapters.flatMap((chapter: any) => chapter.lastExam);
 	let section = 'Introduction';
 	let sections: any;
+	let enrollNumber: number;
 
 	let completionPercentage = 0;
 

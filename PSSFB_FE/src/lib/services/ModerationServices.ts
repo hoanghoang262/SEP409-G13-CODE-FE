@@ -218,6 +218,14 @@ export const approvedPost = async (id: number) => {
 	return result.data.value
 }
 
+export const rejectPost = async (postId: number, reasonWhyReject: string) => {
+	const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/RejectPost`, {
+		postId: postId,
+		reasonWhyReject: reasonWhyReject
+	})
+	return result.data.value
+}
+
 export const getModChapterById = async (id: number) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/ChapterModeration/GetChapterById?id=${id}`
@@ -321,7 +329,7 @@ export const sendCourseToApprove = async (courseId: number) => {
 
 export const createPost = async (post: any) => {
 	try {
-		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Moderation/CreatePost', post)
+		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Post/CreatePost', post)
 		return result.data.value
 	} catch (error) {
 		console.log(error);

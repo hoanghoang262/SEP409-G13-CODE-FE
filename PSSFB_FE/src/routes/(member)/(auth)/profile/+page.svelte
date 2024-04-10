@@ -165,6 +165,7 @@
 			} catch (error) {
 				showToast('De-active', 'something went wrong', 'error');
 			}
+			secondWM = false;
 		} else {
 			showToast('De-active', 'incorrect password', 'warning');
 		}
@@ -504,7 +505,7 @@
 	</svelte:fragment>
 </Modal>
 
-<Modal on:close={() => (secondWM = false)} title="Warning" bind:open={secondWM} autoclose>
+<Modal on:close={() => (secondWM = false)} title="Warning" bind:open={secondWM}>
 	<div class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
 		Confirm again to delete
 	</div>
