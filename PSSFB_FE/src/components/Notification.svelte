@@ -53,9 +53,11 @@
 								src="/src/assets/Xanh final.png"
 							/>
 						</div>
-						<div class="flex-1">
-							<p class="line-clamp-1 float-start">{item.notificationContent}</p>
-							<p class="text-xs font-light">{getTimeDifference(item.sendDate)}</p>
+						<div class="flex flex-col flex-1">
+							<p class="line-clamp-1 float-start text-start">{item.notificationContent}</p>
+							<p class="ml-2 float-start text-start text-xs font-light">
+								{getTimeDifference(item.sendDate)}
+							</p>
 						</div>
 					</button>
 				{/each}
