@@ -9,12 +9,13 @@
 	import { currentUser, pageStatus } from '../stores/store';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { goto } from '$app/navigation';
-	import { afterUpdate, beforeUpdate } from 'svelte';
+	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import {
 		getAllCourses,
 		getStudyingCourseByUserId,
 		getCompleteCourseByUserId,
-		addWishList
+		addWishList,
+		getProgressCourses
 	} from '$lib/services/CourseServices';
 	import { showToast } from '../helpers/helpers';
 	import { getUserInfo } from '$lib/services/AuthenticationServices';
@@ -33,6 +34,10 @@
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
 		}
+	});
+
+	onMount(async () => {
+		const response = await getProgressCourses($currentUser.UserID);
 	});
 </script>
 

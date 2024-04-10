@@ -69,6 +69,10 @@
 			rating = response.value;
 			evaluationState = false;
 		}
+		let result = await axios.get(
+			'https://coursesservices.azurewebsites.net/api/Enrollment/GetQuantityOfUserEnrollCourse'
+		);
+		enrollNumber = result.data;
 	});
 
 	const evaludatioHandle = async () => {
@@ -207,7 +211,7 @@
 				{/if}
 			</div>
 
-			<div>There are 65,273 already enrolled</div>
+			<div>There are {enrollNumber} already enrolled</div>
 		</div>
 		<div class="w-1/3 text-center overflow-hidden">
 			{#if course?.isEnrolled == true}
