@@ -23,7 +23,7 @@ export function formatDate(inputDate: string) {
 }
 
 export function formatDateTime(inputDate: string) {
-    const date = new Date(inputDate);
+    const date = new Date(getDateMinusSevenHours(inputDate));
     let day
     const pre_day = date.getDate()
 

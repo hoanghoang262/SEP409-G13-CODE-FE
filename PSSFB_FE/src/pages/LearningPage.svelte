@@ -24,9 +24,12 @@
 	let session = 'Free Courses';
 	export let data: any;
 	let courses = data.courses.items;
+	let progress: any;
 	let posts = data.posts.items;
 	$: freeC = courses?.filter((c: any) => c.price == null || c.price == 0);
 	$: feeC = courses?.filter((c: any) => c.price > 0);
+	$: studying = progress?.filter((c: any) => c.isDone == false);
+	$: courseDone = progress?.filter((c: any) => c.isDone == true);
 
 	let userInfo: any;
 
@@ -38,6 +41,7 @@
 
 	onMount(async () => {
 		const response = await getProgressCourses($currentUser.UserID);
+		progress = response.enrolledCourses;
 	});
 </script>
 
@@ -122,6 +126,26 @@
 			{:else if session == 'Pro Courses'}
 				{#if feeC?.length > 0}
 					{#each feeC.slice(0, 4) as c, index}
+						<div class=" w-1/4 pr-5">
+							<CourseContainer course={c} />
+						</div>
+					{/each}
+				{:else}
+					<div class="pr-5">There are no course avaiable</div>
+				{/if}
+			{:else if session == 'Studying'}
+				{#if studying?.length > 0}
+					{#each studying.slice(0, 4) as c, index}
+						<div class=" w-1/4 pr-5">
+							<CourseContainer course={c} />
+						</div>
+					{/each}
+				{:else}
+					<div class="pr-5">There are no course avaiable</div>
+				{/if}
+			{:else if session == 'Complete'}
+				{#if courseDone?.length > 0}
+					{#each courseDone.slice(0, 4) as c, index}
 						<div class=" w-1/4 pr-5">
 							<CourseContainer course={c} />
 						</div>

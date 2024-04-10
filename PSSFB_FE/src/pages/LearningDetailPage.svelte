@@ -47,8 +47,9 @@
 	let enrollNumber: number;
 
 	let completionPercentage = 0;
+	let isDone: boolean;
 
-	if (completionPercentage == 100) {
+	$: if (completionPercentage == 100 || isDone == true) {
 		sections = ['Introduction', 'Sysllabus', 'Comments', 'Evaluation'];
 	} else {
 		sections = ['Introduction', 'Sysllabus', 'Comments'];
@@ -59,6 +60,7 @@
 			let pcourse = result?.enrolledCourses?.find((c: any) => (c.courseId = course.id));
 			if (pcourse?.completionPercentage) {
 				completionPercentage = pcourse.completionPercentage;
+				isDone = pcourse.isDone;
 			}
 		});
 	});
