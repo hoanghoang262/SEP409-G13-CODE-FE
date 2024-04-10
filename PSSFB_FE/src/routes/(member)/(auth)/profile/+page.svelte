@@ -53,7 +53,7 @@
 	let deactivePass = '';
 	let changeStatus = false;
 	let editStatus = false;
-	let payments = getPaymentByByUserId($currentUser.UserID);
+	let payments = getPaymentByByUserId($currentUser?.UserID);
 
 	let date: any;
 
@@ -246,7 +246,9 @@
 			>
 		</div>
 	</div>
-	<div class="m-auto min-h-screen h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5">
+	<div
+		class="m-auto min-h-screen h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5"
+	>
 		{#if section == 'Infomation & Contact'}
 			<div class="flex justify-between">
 				<div class="flex justify-between items-center x-5">
@@ -452,10 +454,6 @@
 					/>
 				</label>
 			</div>
-			<button
-				class="float-right bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 mr-6 rounded my-8"
-				on:click={() => (firstWM = true)}>Deactive</button
-			>
 		{:else if section == 'Change Password'}
 			<ChangePassContainer />
 		{:else if section == 'Payment History'}
@@ -464,7 +462,7 @@
 			{:then pts}
 				{#if pts?.length > 0}
 					<div class="pt-20">
-						<div class="text-center text-3xl font-bold mb-10">{$t("Payment History")}</div>
+						<div class="text-center text-3xl font-bold mb-10">{$t('Payment History')}</div>
 						<Table>
 							<TableHead>
 								<TableHeadCell># Payment</TableHeadCell>

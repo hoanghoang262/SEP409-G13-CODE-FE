@@ -4,6 +4,7 @@
 	import { getNotificationByUserId } from '$lib/services/NotificationService';
 	import Avatar from '../atoms/Avatar.svelte';
 	import { formatDateTime, getTimeDifference } from '../helpers/datetime';
+	import { goto } from '$app/navigation';
 
 	let notificationShow = false;
 	let data: any;
@@ -19,7 +20,11 @@
 </script>
 
 <main class="relative">
-	<button on:click={() => clickHandle()} class="p-1 text-gray-600">
+	<button
+		on:focus={() => (notificationShow = true)}
+		on:blur={() => (notificationShow = false)}
+		class="p-1 text-gray-600"
+	>
 		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" {...$$props}>
 			<path
 				fill="currentColor"
@@ -36,7 +41,12 @@
 		{#if data?.length > 0}
 			<div class="flex flex-col justify-start w-full">
 				{#each data as item}
-					<div class="px-5 bg-gray-100 hover:bg-blue-100 py-2 my-1 flex items-center w-full">
+					<button
+						on:click={() => {
+							goto(`/learning/${item.courseId}`);
+						}}
+						class="px-5 bg-gray-100 hover:bg-blue-100 py-2 my-1 flex items-center w-full"
+					>
 						<div class="mx-2 w-10 h-10">
 							<Avatar
 								classes="w-full h-full rounded-full border-2 border-blue-300"
@@ -44,10 +54,10 @@
 							/>
 						</div>
 						<div class="flex-1">
-							<p class="line-clamp-1">{item.notificationContent}</p>
+							<p class="line-clamp-1 float-start">{item.notificationContent}</p>
 							<p class="text-xs font-light">{getTimeDifference(item.sendDate)}</p>
 						</div>
-					</div>
+					</button>
 				{/each}
 			</div>
 		{:else}
