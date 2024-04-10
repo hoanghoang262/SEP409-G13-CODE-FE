@@ -25,7 +25,7 @@
 
 	const changePass = async () => {
 
-		if(checkPasswords(newP)){
+		if(!checkPasswords(newP)){
 			showToast(
 				'Password warning',
 				'password must be 8-32 character long contain 1 number and 1 special character',

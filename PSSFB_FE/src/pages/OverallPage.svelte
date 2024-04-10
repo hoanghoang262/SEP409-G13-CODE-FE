@@ -3,6 +3,7 @@
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import CourseSideBar from '../components/CourseSideBar.svelte';
+	import { t } from '../translations/i18n';
 
 	export let course: any;
 	console.log(course);
@@ -57,15 +58,15 @@
 		<div class="flex pl-10 mt-20">
 			<div class="flex items-center mr-20">
 				<Icon class="text-3xl" icon="material-symbols:code" style="color: 0054c2" />
-				<div class="ml-5">{codeworks?.length ?? 0} Code(s)</div>
+				<div class="ml-5">{codeworks?.length ?? 0} {$t('Code(s)')}</div>
 			</div>
 			<div class="flex items-center mr-20">
 				<Icon class="text-3xl" icon="ion:book-sharp" style="color: 0054c2" />
-				<div class="ml-5">{quizs?.length ?? 0} Quiz(s)</div>
+				<div class="ml-5">{quizs?.length ?? 0} {$t('Quiz(s)')}</div>
 			</div>
 			<div class="flex items-center mr-20">
 				<Icon class="text-3xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: 0054c2" />
-				<div class="ml-5">{exam?.length ?? 0} Exams</div>
+				<div class="ml-5">{exam?.length ?? 0} {$t('Exams')}</div>
 			</div>
 		</div>
 
