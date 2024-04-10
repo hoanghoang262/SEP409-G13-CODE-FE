@@ -78,6 +78,8 @@
 			date = formatDateForInput(new Date(userInfo.birthDate).toJSON().slice(0, 10));
 			info = userInfoTrim();
 		}
+
+		payments = getPaymentByByUserId($currentUser?.UserID);
 	});
 
 	let image: any;
@@ -212,7 +214,7 @@
 				'Infomation & Contact'
 					? 'bg-green-100 '
 					: ''}"
-				on:click={() => (section = 'Infomation & Contact')}>Infomation & Contact</button
+				on:click={() => (section = 'Infomation & Contact')}>{$t('Infomation & Contact')}</button
 			>
 		</div>
 		<div class="w-full">
@@ -221,28 +223,30 @@
 				'Change Password'
 					? 'bg-green-100 '
 					: ''}"
-				on:click={() => (section = 'Change Password')}>Change Password</button
+				on:click={() => (section = 'Change Password')}>{$t('Change Password')}</button
 			>
 		</div>
-		<div class="w-full">
-			<button
-				class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 {section ==
-				'Payment History'
-					? 'bg-green-100 '
-					: ''}"
-				on:click={() => (section = 'Payment History')}>Payment History</button
-			>
-		</div>
+		{#if $currentUser?.Role == 'Student'}
+			<div class="w-full">
+				<button
+					class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 {section ==
+					'Payment History'
+						? 'bg-green-100 '
+						: ''}"
+					on:click={() => (section = 'Payment History')}>{$t('Payment History')}</button
+				>
+			</div>
+		{/if}
 		<div class="w-full">
 			<button
 				class="hover:bg-gray-800 mt-10 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 bg-black text-white"
-				on:click={() => (showModal = true)}>Reset Password</button
+				on:click={() => (showModal = true)}>{$t('Reset Password')}</button
 			>
 		</div>
 		<div class="w-full">
 			<button
 				class=" hover:bg-red-600 w-full py-2 text-black rounded-lg font-medium text-base border-gray-100 border-2 bg-red-500"
-				on:click={() => (firstWM = true)}>De-active account</button
+				on:click={() => (firstWM = true)}>{$t('De-active account')}</button
 			>
 		</div>
 	</div>
@@ -255,7 +259,7 @@
 					<p
 						class="md:flex hidden font-thinner text-2xl md:text-3xl mt-5 px-5 py-2 rounded-md bg-gray-200 w-fit"
 					>
-						Profile
+						{$t('Profile')}
 					</p>
 				</div>
 			</div>
@@ -465,7 +469,6 @@
 						<div class="text-center text-3xl font-bold mb-10">{$t('Payment History')}</div>
 						<Table>
 							<TableHead>
-								<TableHeadCell># Payment</TableHeadCell>
 								<TableHeadCell>Course</TableHeadCell>
 								<TableHeadCell>Payid Date</TableHeadCell>
 								<TableHeadCell>Price</TableHeadCell>
@@ -473,10 +476,9 @@
 							<TableBody tableBodyClass="divide-y">
 								{#each pts as p}
 									<TableBodyRow>
-										<TableBodyCell>{p.paymentId}</TableBodyCell>
 										<TableBodyCell
 											><div class="flex items-center">
-												<img class="mr-3" alt="courseimage" src={p.coursePicture} />
+												<img class="mr-3 w-1/3" alt="courseimage" src={p.coursePicture} />
 												<div>{p.courseName ?? 'no information'}</div>
 											</div></TableBodyCell
 										>

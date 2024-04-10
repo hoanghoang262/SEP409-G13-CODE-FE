@@ -8,13 +8,13 @@
 
 <button
 	on:click={() => goto('/forums/{post.id}')}
-	class="border hover:shadow-2xl hover:-translate-y-5 transition-all"
+	class="border hover:shadow-2xl hover:-translate-y-5 transition-all w-full"
 >
 	<!-- <img src={post.image} alt="postimg" class="w-full" /> -->
 	<div class="px-3">
 		<div class="py-5">
-			<h3 class="text-2xl font-medium truncate mb-2">{post.title}</h3>
-			<p class=" truncate">{post.description}</p>
+			<h3 class="text-2xl font-medium truncate mb-2 text-left">{post.title}</h3>
+			<p class=" truncate text-left">{post.description}</p>
 		</div>
 		<div class="pb-5 flex justify-between items-center">
 			<div>

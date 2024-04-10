@@ -169,14 +169,14 @@
 								goto(`/overall/${course.id}`);
 							}}
 							classes="py-3 px-16 bg-white text-black my-10"
-							content="Go to course"
+							content={$t("Go to course")}
 						/>
 					{:else if course?.isEnrolled == false}
 						{#if course?.price > 0}
 							<Button2
 								onclick={payment}
 								classes="py-3 px-16 bg-white text-black my-10 active:bg-slate-500"
-								content="Enroll for {convertToVND(course?.price)}"
+								content="{$t('Enroll for')} {convertToVND(course?.price)}"
 							/>
 						{:else}
 							<Button2
@@ -185,7 +185,7 @@
 									goto(`/overall/${course.id}`);
 								}}
 								classes="py-3 px-16 bg-white text-black my-10"
-								content="Enroll for free"
+								content={$t("Enroll for free")}
 							/>
 						{/if}
 					{/if}
@@ -234,7 +234,7 @@
 					on:click={() => (section = s)}
 					class="mr-10 {s == section ? 'underline underline-offset-8' : ''}"
 				>
-					{s}
+					{$t(s)}
 				</div>
 			{/each}
 		</div>
@@ -261,16 +261,16 @@
 			{:else if section == 'Sysllabus'}
 				<div class="bg-neutral-100 border px-40 pb-20">
 					<div class="text-center text-3xl my-10">
-						Syllabus - What you will learn from this learn
+						{$t('Syllabus - What you will learn from this learn')}
 					</div>
 					<div class="text-2xl mb-5">{course.name}</div>
 					<div class="flex items-center text-xl">
 						<Icon class="mr-3" icon="ph:book-open-fill" style="color: #008ee6" />
-						{quiz.length} Quizzes, {code.length} Codes, {exam.length} Exams
+						{quiz.length} {$t('Quizzes')}, {code.length} {$t('Codes')}, {exam.length} {$t('Exams')}
 					</div>
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="majesticons:list-box" style="color: #008ee6" /> Quizzes
+						<Icon class="mr-3" icon="majesticons:list-box" style="color: #008ee6" /> {$t('Quizzes')}
 					</div>
 
 					<div>
@@ -286,7 +286,7 @@
 
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="material-symbols:code" style="color: #008ee6" /> Codes
+						<Icon class="mr-3" icon="material-symbols:code" style="color: #008ee6" /> {$t('Codes')}
 					</div>
 
 					<div>
@@ -306,7 +306,7 @@
 							class="mr-3"
 							icon="healthicons:i-exam-multiple-choice-outline"
 							style="color: #008ee6"
-						/> Exams
+						/> {$t('Exams')}
 					</div>
 
 					<div>
