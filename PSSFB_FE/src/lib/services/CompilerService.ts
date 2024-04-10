@@ -33,7 +33,7 @@ export const JavaComplier = async (data: any) => {
 			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaCodeQuestion`,
 			data
 		);
-		return result;
+		return result.data;
 	} catch (error) {
 		console.error(error);
 		return error;
@@ -53,7 +53,18 @@ export const JavaForm = (codeForm: string, testCase: string) => {
                         Solution s= new Solution();
                         s.TestCase();
                         
-                    } \n ${codeForm} \n ${testCase} \n}`;
+                    }
+					public static void assertEqual(Object expected, Object actual) {
+						if (expected == null && actual == null) {
+								   return;
+						}
+						if (expected == actual ) {
+							return;
+				}
+						if (expected == null || !expected.equals(actual)) {
+										System.out.println("Test Failed:Expected: " + expected + ", but was: " + actual);
+						}
+					} \n ${codeForm} \n ${testCase} \n}`;
 	return JavaForm;
 };
 

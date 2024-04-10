@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { Label, Modal } from 'flowbite-svelte';
+	import {
+		Label,
+		Modal,
+		Table,
+		TableBody,
+		TableBodyCell,
+		TableBodyRow,
+		TableHead,
+		TableHeadCell
+	} from 'flowbite-svelte';
 	import Avatar from '../../../../atoms/Avatar.svelte';
 	import Button from '../../../../atoms/Button.svelte';
 	import Input from '../../../../atoms/Input.svelte';
@@ -9,6 +18,7 @@
 		checkExist,
 		checkPasswords,
 		checkUserName,
+		convertToVND,
 		isImage,
 		showToast
 	} from '../../../../helpers/helpers';
@@ -22,6 +32,9 @@
 	import ResetPasswordModal from '../../../../components/modals/ResetPasswordModal.svelte';
 	import { trimUserData } from '../../../../helpers/helpers';
 	import { DateInput } from 'date-picker-svelte';
+	import { getPaymentByByUserId } from '$lib/services/PaymentService';
+	import LoadingPage from '../../../../pages/LoadingPage.svelte';
+	import { t } from '../../../../translations/i18n';
 
 	let showModal = false;
 	export let form: any;
@@ -40,6 +53,7 @@
 	let deactivePass = '';
 	let changeStatus = false;
 	let editStatus = false;
+	let payments = getPaymentByByUserId($currentUser.UserID);
 
 	let date: any;
 
@@ -212,6 +226,15 @@
 		</div>
 		<div class="w-full">
 			<button
+				class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 {section ==
+				'Payment History'
+					? 'bg-green-100 '
+					: ''}"
+				on:click={() => (section = 'Payment History')}>Payment History</button
+			>
+		</div>
+		<div class="w-full">
+			<button
 				class="hover:bg-gray-800 mt-10 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 bg-black text-white"
 				on:click={() => (showModal = true)}>Reset Password</button
 			>
@@ -223,7 +246,7 @@
 			>
 		</div>
 	</div>
-	<div class="m-auto h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5">
+	<div class="m-auto min-h-screen h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5">
 		{#if section == 'Infomation & Contact'}
 			<div class="flex justify-between">
 				<div class="flex justify-between items-center x-5">
@@ -435,6 +458,43 @@
 			>
 		{:else if section == 'Change Password'}
 			<ChangePassContainer />
+		{:else if section == 'Payment History'}
+			{#await payments}
+				<LoadingPage />
+			{:then pts}
+				{#if pts?.length > 0}
+					<div class="pt-20">
+						<div class="text-center text-3xl font-bold mb-10">{$t("Payment History")}</div>
+						<Table>
+							<TableHead>
+								<TableHeadCell># Payment</TableHeadCell>
+								<TableHeadCell>Course</TableHeadCell>
+								<TableHeadCell>Payid Date</TableHeadCell>
+								<TableHeadCell>Price</TableHeadCell>
+							</TableHead>
+							<TableBody tableBodyClass="divide-y">
+								{#each pts as p}
+									<TableBodyRow>
+										<TableBodyCell>{p.paymentId}</TableBodyCell>
+										<TableBodyCell
+											><div class="flex items-center">
+												<img class="mr-3" alt="courseimage" src={p.coursePicture} />
+												<div>{p.courseName ?? 'no information'}</div>
+											</div></TableBodyCell
+										>
+										<TableBodyCell>{p.transactionDate ?? 'no information'}</TableBodyCell>
+										<TableBodyCell>{convertToVND(p.money ?? 0)}</TableBodyCell>
+									</TableBodyRow>
+								{/each}
+							</TableBody>
+						</Table>
+					</div>
+				{:else}
+					<div class="pt-5 pb-10 text-center font-medium text-blue-500 text-xl">
+						You haven't buy any course
+					</div>
+				{/if}
+			{/await}
 		{/if}
 	</div>
 </div>

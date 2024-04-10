@@ -91,10 +91,11 @@ export const actions = {
     },
     changePassword:async({cookies, request}:any) => {
         const {newPassword} = await request.json()
+        console.log("newPassword", newPassword)
         await changePasswordWithEmail(newPassword)
-        cookies.delete('user',{
-            path: '/',
-        });
+        // cookies.delete('user',{
+        //     path: '/',
+        // });
     },
     
 }
