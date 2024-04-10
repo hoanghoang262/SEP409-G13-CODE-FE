@@ -53,7 +53,7 @@
 	let deactivePass = '';
 	let changeStatus = false;
 	let editStatus = false;
-	let payments = getPaymentByByUserId($currentUser?.UserID);
+	let payments: any;
 
 	let date: any;
 
