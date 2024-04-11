@@ -48,7 +48,7 @@
 	<div>
 		<p class="text-3xl">{post?.title}</p>
 		<div class="text-gray-700 text-xs mb-10">
-			<p class="ml-3">Create At: {getTimeDifference(post?.lastUpdate)}</p>
+			<p class="">Create At: {getTimeDifference(post?.lastUpdate)}</p>
 		</div>
 	</div>
 	<div class="py-5 flex border-2 border-gray-200">
@@ -59,10 +59,7 @@
 			</div>
 		</div>
 		<div class="bg-gray-100 w-full pl-10 mr-10 py-5">
-			<div class="text-2xl">{post?.title}</div>
-
 			<div>
-				<div class="text-xl my-5">{post?.description}</div>
 				<div class="mb-5">
 					{@html post?.postContent}
 				</div>
