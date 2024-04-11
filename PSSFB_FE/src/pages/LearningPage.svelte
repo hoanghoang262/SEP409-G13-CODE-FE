@@ -177,7 +177,7 @@
 			<!-- <a href="/" class="text-xl">{$t('See all')}</a> -->
 		</div>
 
-		<div class="border p-5 hover:shadow-lg hover:-translate-y-1 transition-all">
+		<div class="border p-5 hover:shadow-lg hover:-translate-y-1 transition-all bg-white">
 			<div class="flex">
 				<div class="w-1/3 pr-5">
 					<div class="p-3 border">

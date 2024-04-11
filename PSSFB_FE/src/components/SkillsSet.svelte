@@ -3,7 +3,7 @@
 	import { skills } from '../data/data';
 </script>
 
-<div class="border p-5 flex flex-wrap">
+<div class="border p-5 flex flex-wrap bg-white">
 	{#each skills as skill}
 		<div class="flex w-1/3 pr-10 justify-between items-center mb-5">
 			<div class="flex items-center">

@@ -113,7 +113,7 @@
 						<Button type="danger" onclick={() => DeleteCourse(course.id)} content={$t('Delete')} />
 					</div>
 				{:else}
-					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('join now')} />
+					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('Join now')} />
 				{/if}
 			</div>
 			{#if $page.url.pathname.includes('wishlist') && $currentUser?.Role == 'Student'}

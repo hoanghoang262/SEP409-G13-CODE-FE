@@ -22,7 +22,7 @@
 
 <div class="relative h-[450px]">
 	<div
-		class="absolute top-0 left-0 w-[90%] border rounded shadow-xl hover:-translate-y-5 transition group"
+		class="absolute top-0 left-0 w-[90%] border rounded shadow-xl hover:-translate-y-5 transition group bg-white"
 	>
 		{#if type == 'public'}
 			<div class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center">

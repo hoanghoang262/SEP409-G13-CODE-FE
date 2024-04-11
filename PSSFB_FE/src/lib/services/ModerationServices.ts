@@ -2,6 +2,14 @@ import axios from 'axios';
 import { checkExist } from '../../helpers/helpers';
 import { MorderationPostManager } from '../../Enum/Paginators';
 
+
+export const getAllPendingPostByUserId = async (userId:number|undefined = undefined, posttitle: string = '',
+page: number = 1,
+pageSize: number = 10) => {
+    const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostsByUserId?${userId?`userId=${userId}&`:``}page=${page}&pageSize=${pageSize}${checkExist(posttitle)?`&postTitle=${posttitle}`:``}`)
+    return result.data
+}
+
 export const addCourse = async (course: any) => {
 	try {
 		const result = await axios.post(
@@ -346,3 +354,13 @@ export const createPost = async (post: any) => {
 // 		return error
 // 	}
 // }
+
+export const updateModPost = async (post: any) => {
+	try {
+		const result = await axios.put(`https://moderationservice.azurewebsites.net/api/Post/UpdatePost?id=${post.id}`,post)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}

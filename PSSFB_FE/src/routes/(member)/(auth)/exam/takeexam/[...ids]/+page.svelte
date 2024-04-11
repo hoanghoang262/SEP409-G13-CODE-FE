@@ -6,6 +6,8 @@
 	import { submitExam } from '$lib/services/CourseServices';
 	import ExamAnswers from '../../../../../../atoms/ExamAnswers.svelte';
 	import { initMessage } from '$lib/type';
+	import { t } from '../../../../../../translations/i18n';
+	import { page } from '$app/stores';
 
 
 	export let data;
@@ -24,9 +26,14 @@
 	};
 
 	let intervalID = setInterval(() => {
+		if(!$page.url.pathname.includes('takeexam')){
+			clearInterval(intervalID)
+		}
+		
 		if (timeleft == 0) {
 			SubmitExam()
 		}
+		
 		timeleft = timeleft - 1;
 	}, 1000);
 
@@ -47,13 +54,13 @@
 	}
 </script>
 
-<div class="px-40 py-40">
-	<div class="p-20 border rounded-xl">
-		<div class="text-center font-bold text-4xl">{convertSecondsToMmSs(timeleft)}</div>
+<div class="px-40 py-40 ">
+	<div class="p-20 border rounded-xl bg-white">
+		<div class="text-center font-bold text-4xl text-blue-500">{convertSecondsToMmSs(timeleft)}</div>
 		<div class="text-4xl font-bold">{exam.name}</div>
 		<hr class="my-5" />
 		<div class="mb-5">
-			The due date for this exam is <span class="font-bold"
+			The due date for this exam is <span class="font-bold text-blue-500"
 				>{secondsToDateTime(Date.now() + time)}</span
 			>
 		</div>
@@ -64,6 +71,6 @@
 				<ExamAnswers bind:submitData questionExam={qe} />
 			</div>
 		{/each}
-		<div class="flex justify-end"><Button onclick={SubmitExam} content="Submit"/></div>
+		<div class="flex justify-end"><Button onclick={SubmitExam} content="{$t('Submit')}"/></div>
 	</div>
 </div>

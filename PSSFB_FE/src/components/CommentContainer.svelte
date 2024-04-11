@@ -216,7 +216,7 @@
 					<div class="flex justify-end"><Button onclick={updateComment} content="save" /></div>
 				</div>
 				<div class="flex items-center">
-					<Icon class="text-2xl mr-3" icon="iconamoon:like-thin" style="color: black" />
+					<!-- <Icon class="text-2xl mr-3" icon="iconamoon:like-thin" style="color: black" /> -->
 					{#if checkExist($currentUser)}
 						<button class="mr-3" on:click={() => replyClick(c.id)}>reply</button>
 					{/if}
