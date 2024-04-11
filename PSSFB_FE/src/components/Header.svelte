@@ -20,7 +20,7 @@
 
 	const changelang = (e: any) => locale.update(() => e.target.value);
 
-	onMount(async () => {
+	afterUpdate(async () => {
 		userInfo = await getUserInfo($currentUser.UserID);
 	});
 
@@ -72,7 +72,9 @@
 							? 'text-blue-500'
 							: ''}"
 						>{$t('WishList')}
-						<span class="text-xl ml-1"><Icon icon="pepicons-pop:bookmark-filled-circle-filled" /></span></a
+						<span class="text-xl ml-1"
+							><Icon icon="pepicons-pop:bookmark-filled-circle-filled" /></span
+						></a
 					>
 				{/if}
 			{/if}
