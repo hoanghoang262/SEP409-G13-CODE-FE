@@ -19,7 +19,7 @@
 	};
 
 	const notificationNavidation = (item: any) => {
-		if (item.courseId === 0) {
+		if (item.courseId === null) {
 			goto(`/mypendingposts/${item.postId}`);
 		} else {
 			goto(`/learning/${item.courseId}`);
