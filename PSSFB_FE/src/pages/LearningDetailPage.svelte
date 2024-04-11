@@ -6,6 +6,8 @@
 	import Logo from '../assets/Trắng final.png';
 	import CommentContainer from '../components/CommentContainer.svelte';
 	import { getCommentByCourse } from '$lib/services/CommentService';
+	import Momo from '../assets/Momo.jpg'
+	import VNPay from '../assets/VNPay.png'
 	import SkillsSet from '../components/SkillsSet.svelte';
 	import {
 		addWishList,
@@ -22,11 +24,13 @@
 	import { createPayment } from '$lib/services/PaymentService';
 	import PercentCircle from '../components/PercentCircle.svelte';
 	import axios from 'axios';
+	import { Modal } from 'flowbite-svelte';
 
 	export let data: any;
 	let course: any = data.course;
 	let comments = data.comments;
 	let evaluationState = true;
+	let paymentModal = false;
 	//let enrolled = false;
 	//let enrolled = false;
 	let rating: any = 0;
@@ -92,7 +96,8 @@
 		event?.target?.classList?.add('text-yellow-100');
 	};
 
-	const payment = async () => {
+	const payment = async (typePayment:string) => {
+		paymentModal = false
 		pageStatus.set('load');
 		try {
 			const result = await createPayment({
@@ -100,7 +105,8 @@
 				requiredAmount: course?.price ?? 0,
 				userCreateCourseId: course.createdBy,
 				courseId: course.id,
-				userBuyId: $currentUser?.UserID
+				userBuyId: $currentUser?.UserID,
+				typePayment
 			});
 			if (result?.paymentUrl) {
 				console.log(result);
@@ -174,7 +180,7 @@
 					{:else if course?.isEnrolled == false}
 						{#if course?.price > 0}
 							<Button2
-								onclick={payment}
+								onclick={() => paymentModal = true}
 								classes="py-3 px-16 bg-white text-black my-10 active:bg-slate-500"
 								content="{$t('Enroll for')} {convertToVND(course?.price)}"
 							/>
@@ -438,3 +444,13 @@
 		</div>
 	</div>
 </div>
+
+
+
+<Modal title="Payment" bind:open={paymentModal} on:close={() => {paymentModal = false}}>
+ <div class="flex justify-center">
+<button on:click={() => payment("MOMO")} class="w-2/5 hover:shadow-xl hover:-translate-y-5 transition-all mr-5"><img class="w-full border rounded-xl" alt="Momo" src="{Momo}" /></button>
+<button on:click={() => payment("VNPAY")} class="w-2/5 hover:shadow-xl hover:-translate-y-5 transition-all"><img class="w-full border rounded-xl" alt="VNPay" src="{VNPay}" /></button>
+ </div>
+  
+</Modal>

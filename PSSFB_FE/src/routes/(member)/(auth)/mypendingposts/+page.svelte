@@ -2,29 +2,36 @@
 	import { goto } from '$app/navigation';
 	import { deletePost, getAllPost, getAllPostByUserId } from '$lib/services/ForumsServices';
 	import { toasts } from 'svelte-toasts';
-	import Avatar from '../../../atoms/Avatar.svelte';
-	import Button from '../../../atoms/Button.svelte';
-	import Input from '../../../atoms/Input.svelte';
-	import Pagination from '../../../components/Pagination.svelte';
-	import { currentUser, pageStatus } from '../../../stores/store';
-	import { checkExist, showToast } from '../../../helpers/helpers';
-	import { t } from '../../../translations/i18n';
-	import { getTimeDifference } from '../../../helpers/datetime';
+	import Avatar from '../../../../atoms/Avatar.svelte';
+	import Input from '../../../../atoms/Input.svelte';
+	import Pagination from '../../../../components/Pagination.svelte';
+	import { currentUser, pageStatus } from '../../../../stores/store';
+	import { checkExist, showToast } from '../../../../helpers/helpers';
+	import { t } from '../../../../translations/i18n';
+	import { getTimeDifference } from '../../../../helpers/datetime';
+	import { onMount } from 'svelte';
+	import { deleteModPost, getAllPendingPostByUserId } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 
-	export let data: any;
-	let result = data.result;
-	$: posts = result?.items;
+	let result:any;
+	$: posts = result?.items??[];
 	let searchStr = '';
+
+    onMount(() => {
+        getAllPendingPostByUserId($currentUser?.UserID).then((rs:any) => {
+			console.log(rs)
+            result = rs
+        })
+    })
 	const pagiClick = async (page: number) => {
-		result = await getAllPost(searchStr, page);
+		result = await getAllPendingPostByUserId($currentUser?.UserID, searchStr, page);
 	};
 	const searchFunc = async (event: any) => {
 		pageStatus.set('load');
 		if (event.keyCode === 13) {
 			// Your code to handle Enter key press
 			try {
-				result = await getAllPost(searchStr);
+				result = await getAllPendingPostByUserId($currentUser?.UserID, searchStr);
 			} catch (err) {
 				console.log(err);
 			}
@@ -56,9 +63,7 @@
 					class="py-3 px-5 {$page.url.pathname.includes('forums')?'bg-white text-blue-500':'bg-blue-500 text-white hover:bg-blue-600'}  rounded-lg font-medium shadow-lg mr-5"
 					href="/forums">{$t('Forums')}</a
 				>
-				
 			</div>
-			
 		{/if}
 	</div>
 	{#if checkExist($currentUser)}
@@ -76,7 +81,7 @@
 					class="bg-white border-4 flex justify-between py-4 px-10 mb-5 rounded-sm shadow-md transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-[1.03] hover:border-green-300"
 				>
 					<div class="w-16 flex items-center">
-						<Avatar classes="rounded-full w-16 h-16" src={p?.picture} />
+						<Avatar classes="rounded-full w-16 h-16" src={p?.userPicture} />
 					</div>
 					<div class="w-10/12">
 						<div
@@ -105,7 +110,7 @@
 											if ($currentUser.Role.includes('Admin')) {
 												goto(`/manager/postmanager/editpost/${p.id}`);
 											} else {
-												goto(`/editpost/${p.id}`);
+												goto(`/editpendingpost/${p.id}`);
 											}
 										}}>{$t('Edit')}</button
 									></span
@@ -114,8 +119,8 @@
 									><button
 										on:click={async () => {
 											pageStatus.set('load');
-											await deletePost(p.id);
-											result = await getAllPost();
+											await deleteModPost(p.id);
+											result = await getAllPendingPostByUserId($currentUser.UserID);
 											showToast('Delete Post', 'Delete post successfully', 'success');
 											pageStatus.set('done');
 										}}>{$t('Delete')}</button

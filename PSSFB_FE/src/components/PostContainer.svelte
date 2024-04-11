@@ -8,7 +8,7 @@
 
 <button
 	on:click={() => goto('/forums/{post.id}')}
-	class="border hover:shadow-2xl hover:-translate-y-5 transition-all w-full"
+	class="border hover:shadow-2xl hover:-translate-y-5 transition-all w-full bg-white"
 >
 	<!-- <img src={post.image} alt="postimg" class="w-full" /> -->
 	<div class="px-3">

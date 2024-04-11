@@ -8,6 +8,14 @@ pageSize: number = 10) => {
     return result.data.value
 }
 
+export const getAllPostByUserId = async (userId:number|undefined = undefined, posttitle: string = '',
+page: number = 1,
+pageSize: number = 10) => {
+    const result = await axios.get(`https://forumservices.azurewebsites.net/api/Forum/GetAllPostsByUserId?${userId?`userId=${userId}&`:``}${checkExist(posttitle)?`Title=${posttitle}&`:``}page=${page}&pageSize=${pageSize}`)
+    
+	return result.data
+}
+
 export const getPostById = async (id:number) => {
     const result = await axios.get(`https://forumservices.azurewebsites.net/api/Forum/GetPostById?postId=${id}`)
     return result.data.value

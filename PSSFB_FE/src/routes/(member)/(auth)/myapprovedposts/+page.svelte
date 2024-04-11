@@ -2,29 +2,34 @@
 	import { goto } from '$app/navigation';
 	import { deletePost, getAllPost, getAllPostByUserId } from '$lib/services/ForumsServices';
 	import { toasts } from 'svelte-toasts';
-	import Avatar from '../../../atoms/Avatar.svelte';
-	import Button from '../../../atoms/Button.svelte';
-	import Input from '../../../atoms/Input.svelte';
-	import Pagination from '../../../components/Pagination.svelte';
-	import { currentUser, pageStatus } from '../../../stores/store';
-	import { checkExist, showToast } from '../../../helpers/helpers';
-	import { t } from '../../../translations/i18n';
-	import { getTimeDifference } from '../../../helpers/datetime';
+	import Avatar from '../../../../atoms/Avatar.svelte';
+	import Input from '../../../../atoms/Input.svelte';
+	import Pagination from '../../../../components/Pagination.svelte';
+	import { currentUser, pageStatus } from '../../../../stores/store';
+	import { checkExist, showToast } from '../../../../helpers/helpers';
+	import { t } from '../../../../translations/i18n';
+	import { getTimeDifference } from '../../../../helpers/datetime';
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 
-	export let data: any;
-	let result = data.result;
-	$: posts = result?.items;
+	let result:any;
+	$: posts = result?.items??[];
 	let searchStr = '';
+
+    onMount(() => {
+        getAllPostByUserId($currentUser?.UserID).then((rs:any) => {
+            result = rs
+        })
+    })
 	const pagiClick = async (page: number) => {
-		result = await getAllPost(searchStr, page);
+		result = await getAllPostByUserId($currentUser?.UserID, searchStr, page);
 	};
 	const searchFunc = async (event: any) => {
 		pageStatus.set('load');
 		if (event.keyCode === 13) {
 			// Your code to handle Enter key press
 			try {
-				result = await getAllPost(searchStr);
+				result = await getAllPostByUserId($currentUser?.UserID, searchStr);
 			} catch (err) {
 				console.log(err);
 			}
@@ -56,9 +61,7 @@
 					class="py-3 px-5 {$page.url.pathname.includes('forums')?'bg-white text-blue-500':'bg-blue-500 text-white hover:bg-blue-600'}  rounded-lg font-medium shadow-lg mr-5"
 					href="/forums">{$t('Forums')}</a
 				>
-				
 			</div>
-			
 		{/if}
 	</div>
 	{#if checkExist($currentUser)}

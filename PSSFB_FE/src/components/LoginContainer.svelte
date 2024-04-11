@@ -126,7 +126,7 @@
 </script>
 
 <div class="rounded-xl px-7 py-10 bg-white text-black">
-	<h3 class="font-bold text-5xl mb-8 text-center">{$t('Start Now')}</h3>
+	<h3 class="font-bold text-5xl mb-8 text-center">{$t('Welcome')}</h3>
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
 
 	<div class="mb-3">
@@ -151,7 +151,7 @@
 	<button
 		on:click={login}
 		class="bg-black rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"
-		>{$t('Start Coding Now')}</button
+		>{$t('Login')}</button
 	>
 
 	<div class="text-center mb-4">{$t('or use another account')}</div>

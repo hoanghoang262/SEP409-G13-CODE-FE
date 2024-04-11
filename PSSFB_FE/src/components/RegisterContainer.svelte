@@ -148,17 +148,17 @@
 		</div>
 		<button
 			class="bg-blue-600 rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:bg-blue-700 transition ease-in-out w-full mb-2"
-			>{$t('Start Coding Now')}</button
+			>{$t('Register')}</button
 		>
 	</form>
 
 	<div class="text-center mb-4">{$t('or use another account')}</div>
-	<div class="flex justify-center text-5xl">
+	<!-- <div class="flex justify-center text-5xl">
 		<div role="button" on:click={LWF} on:keydown={LWF} tabindex="0">
 			<Icon icon="logos:facebook" class="mr-3" />
 		</div>
 		<div role="button" on:click={LWG} on:keydown={LWG} tabindex="0">
 			<Icon icon="akar-icons:google-contained-fill" />
 		</div>
-	</div>
+	</div> -->
 </div>
