@@ -152,7 +152,6 @@
 		>
 	</form>
 
-	<div class="text-center mb-4">{$t('or use another account')}</div>
 	<!-- <div class="flex justify-center text-5xl">
 		<div role="button" on:click={LWF} on:keydown={LWF} tabindex="0">
 			<Icon icon="logos:facebook" class="mr-3" />
