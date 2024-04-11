@@ -1,8 +1,9 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import CourseSideBar from '../components/CourseSideBar.svelte';
-	import { convertSecondsToMmSs } from '../helpers/helpers';
+	import { checkExist, convertSecondsToMmSs } from '../helpers/helpers';
 	import { goto } from '$app/navigation';
+	import { t } from '../translations/i18n';
 
 	export let data;
 	const exam = data.exam;
@@ -21,10 +22,25 @@
 				{convertSecondsToMmSs(exam.time)}
 			</div>
 			<div class="flex justify-between mt-20">
-				<div class="font-light text-3xl">MIN GRADE: {exam.percentageCompleted ?? 0}%</div>
+				<div class="font-light text-3xl">
+					<div class="mb-3">MIN GRADE: {exam.percentageCompleted ?? 0}%</div>
+					{#if checkExist(exam?.examResultUser)}
+					{#if exam.examResultUser < exam?.percentageCompleted}
+						<div class="text-xl text-red-500">You have failed the exam with the score of {exam.examResultUser}%</div>
+						{:else if  exam.examResultUser >= exam?.percentageCompleted}
+						<div class="text-xl text-lime-500">You have passed the exam with the score of {exam.examResultUser}%</div>
+					{/if}
+						
+					{/if}
+				</div>
 				<button
 					on:click={() => goto(`/exam/takeexam/${course.id}/${chapter.id}/${exam.id}`)}
-					class="font-medium text-white text-lg bg-blue-500 px-10 py-5">Take Exam</button
+					class="font-medium text-white text-lg bg-blue-500 px-10 py-5"
+					>{#if exam?.examResultUser >= exam?.percentageCompleted}
+						<span>{$t('Retake Exam')}</span>
+					{:else}
+						<span>{$t('Take Exam')}</span>
+					{/if}</button
 				>
 			</div>
 		</div>

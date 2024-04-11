@@ -253,7 +253,7 @@
 				</button>
 			{/if}
 			<div class="h-full w-full">
-				<div class="overflow-scroll w-full h-full text-black border border-neutral-300 bg-white">
+				<div class="overflow-scroll w-full h-full text-black border border-neutral-300 bg-white p-10">
 					<slot />
 				</div>
 			</div>

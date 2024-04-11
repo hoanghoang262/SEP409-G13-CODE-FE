@@ -5,7 +5,7 @@
 	import { Modal } from "flowbite-svelte";
 	import Editor from "@tinymce/tinymce-svelte";
 	import Button from "../atoms/Button.svelte";
-	import { addNote, getNotes } from "$lib/services/CourseServices";
+	import { addNote, completeLession, getNotes } from "$lib/services/CourseServices";
 	import { currentUser, pageStatus } from "../stores/store";
 
 	export let lession: any;
@@ -14,12 +14,20 @@
 	let questions = lession.theoryQuestions;
     let question = questions[0];
     let showModal = false;
-    let firstTimePlay = true;
+    //let firstTimePlay = true;
+	let interval:any
     let showNoteModal = false;
+
+	$:{
+		const video:any = document.getElementById("video")
+		if(video?.duration - currentTime < 3000){
+			completeLession($currentUser?.UserID, lession?.id)
+		}
+	}
    
 	const openQuestion = () => {
         const video:any = document.getElementById("video")
-        const Q = questions.find((q:any) => q.time<currentTime&&currentTime-q.time<1)
+        const Q = questions.find((q:any) => q.time==Math.round(currentTime))
         if(checkExist(Q)){
             question = Q
             showModal = true;
@@ -28,9 +36,9 @@
     };
 
     const FirstPlay = () => {
-        if(firstTimePlay){
-            setInterval(openQuestion, 1000);
-        }
+        
+		interval = setInterval(openQuestion, 1000);
+        
     }
 	
     let note = ''
@@ -63,11 +71,10 @@
 
 <video
 	bind:currentTime
-	class="ml-10"
+	class="ml-10 w-11/12"
 	on:play={FirstPlay}
+	on:pause={() => clearInterval(interval)}
 	id="video"
-	width="960"
-	height="540"
 	controls
 >
 	<source src={lession.videoUrl} type="video/mp4" />
