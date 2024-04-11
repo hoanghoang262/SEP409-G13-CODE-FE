@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import {
 		CComplier,
 		CForm,
@@ -8,12 +9,20 @@
 		JavaComplier,
 		JavaForm
 	} from '$lib/services/CompilerService';
+	import { onMount } from 'svelte';
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import CodeEditor from '../../../../../components/CodeEditor.svelte';
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
+	import { getCourseById } from '$lib/services/CourseServices';
 	export let data;
-	const course = data?.course;
+	const ids = $page.params.ids.split('/');
+    const courseId:any = ids[0];
+	let course:any = [];
+
+	onMount(() => {
+		getCourseById(courseId, $currentUser?.UserID).then((rs:any) => course = rs)
+	})
 	const chapter = data?.chapter;
 	const lession = data?.practiceQuestion;
 	let result: any = [];
@@ -66,7 +75,7 @@
 		{course.name} > {chapter.name} > <div class="truncate max-w-60">{lession.description}</div>
 	</div>
 	<div class="flex bg-white text-black">
-		<div class="w-1/5"><CourseSideBar {course} /></div>
+		<div class="w-1/5"><CourseSideBar bind:course /></div>
 		<div class="w-2/5 p-3 overflow-y-scroll max-h-screen">
 			<div class="flex items-center"><Avatar classes="w-10 mr-3" /> {course.created_Name}</div>
 			<hr class="my-5" />

@@ -5,8 +5,8 @@
 
 	export let course: any;
 
-	const courseId = course?.id;
-	const chapters = course?.chapters ?? [];
+	$: courseId = course?.id;
+	$: chapters = course?.chapters ?? [];
 
 	const plus =
 		"<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...$$props}> <path fill='black' d='M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z' /> </svg>";
@@ -47,7 +47,7 @@
 
 	{#each chapters as s, index}
 		<div
-			class="text-lg font-medium px-3 py-5 mb-2 flex items-center {s?.isCompleted
+			class="text-lg font-medium px-3 py-5 border-b flex items-center {s?.isCompleted
 				? 'bg-lime-100 justify-between'
 				: ''} text-neutral-500"
 		>
@@ -75,7 +75,9 @@
 				<a
 					href="/lession/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class=" pl-10 mb-5 flex items-center flex-wrap"
+					class=" pl-10 py-2 border-b flex items-center flex-wrap {s?.isCompleted
+						? 'bg-lime-100'
+						: ''}"
 				>
 					<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
 
@@ -88,7 +90,9 @@
 				<a
 					href="/codelession/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class="pl-10 mb-5 flex items-center"
+					class="pl-10 py-3 border-b flex items-center {s?.isCompleted
+						? 'bg-lime-100'
+						: ''}"
 				>
 					<div>
 						<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
@@ -99,7 +103,9 @@
 			{/each}
 
 			{#each s.lastExam as l}
-				<div class="pl-10 mb-5 flex items-center">
+				<div class="pl-10 py-3 border-b flex items-center {s?.isCompleted
+					? 'bg-lime-100'
+					: ''}">
 					<Icon
 						class="mr-3 text-2xl"
 						icon="healthicons:i-exam-multiple-choice-outline"

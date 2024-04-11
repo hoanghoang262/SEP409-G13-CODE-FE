@@ -6,14 +6,21 @@
 	import LessionVideoContainer from '../../../../../components/LessionVideoContainer.svelte';
 	import { convertSecondsToMmSs } from '../../../../../helpers/helpers';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
-	import { delNotes, getNotes, putNote } from '$lib/services/CourseServices';
+	import { delNotes, getCourseById, getNotes, putNote } from '$lib/services/CourseServices';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
 	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
+	import { page } from '$app/stores';
 	export let data;
 
-	const course = data?.course;
+	const ids = $page.params.ids.split('/');
+    const courseId:any = ids[0];
+	let course:any = [];
+
+	onMount(() => {
+		getCourseById(courseId, $currentUser?.UserID).then((rs:any) => course = rs)
+	})
 	const chapter = data?.chapter;
 	const lession = data?.lession;
 	let comments = data?.comments ?? [];

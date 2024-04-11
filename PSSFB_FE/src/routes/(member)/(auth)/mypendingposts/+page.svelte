@@ -49,30 +49,35 @@
 			classes="mb-10 w-1/4 border-2 border-gray-300 focus:border-none"
 			placehoder={$t('search')}
 		/>
-		{#if $currentUser}
+		
+	</div>
+	{#if checkExist($currentUser)}
+		<div class="flex justify-between pr-5 items-center mb-5">
 			<div class="flex">
-				<a 
-					class="py-3 px-5 {$page.url.pathname.includes('myapprovedposts')?'bg-white text-blue-500':'bg-blue-500 text-white hover:bg-blue-600'} rounded-lg font-medium shadow-lg mr-5"
+				<a
+					class="py-3 px-5 {$page.url.pathname.includes('myapprovedposts')
+						? 'bg-white text-blue-500'
+						: 'bg-blue-500 text-white hover:bg-blue-600'} rounded-lg font-medium shadow-lg mr-5"
 					href="/myapprovedposts">{$t('My Approved Posts')}</a
 				>
 				<a
-					class="py-3 px-5 {$page.url.pathname.includes('mypendingposts')?'bg-white text-blue-500':'bg-blue-500 text-white hover:bg-blue-600'} rounded-lg font-medium shadow-lg mr-5"
+					class="py-3 px-5 {$page.url.pathname.includes('mypendingposts')
+						? 'bg-white text-blue-500'
+						: 'bg-blue-500 text-white hover:bg-blue-600'} rounded-lg font-medium shadow-lg mr-5"
 					href="/mypendingposts">{$t('My Pending Posts')}</a
 				>
 				<a
-					class="py-3 px-5 {$page.url.pathname.includes('forums')?'bg-white text-blue-500':'bg-blue-500 text-white hover:bg-blue-600'}  rounded-lg font-medium shadow-lg mr-5"
+					class="py-3 px-5 {$page.url.pathname.includes('forums')
+						? 'bg-white text-blue-500'
+						: 'bg-blue-500 text-white hover:bg-blue-600'}  rounded-lg font-medium shadow-lg mr-5"
 					href="/forums">{$t('Forums')}</a
 				>
 			</div>
-		{/if}
-	</div>
-	{#if checkExist($currentUser)}
-	<div class="flex justify-end pr-5">
-		<a
-			class="py-3 px-5 mb-5 bg-blue-500 hover:bg-blue-600 rounded-lg font-medium shadow-lg text-white"
-			href="/addpost">{$t('Add Post')}</a
-		>
-	</div>
+			<a
+				class="py-3 px-5 bg-blue-500 hover:bg-blue-600 rounded-lg font-medium shadow-lg text-white"
+				href="/addpost">{$t('Add Post')}</a
+			>
+		</div>
 	{/if}
 	<div>
 		{#if posts?.length > 0}
