@@ -57,7 +57,7 @@
 
 	onMount(async () => {
 		getProgressCourses($currentUser.UserID).then((result: any) => {
-			let pcourse = result?.enrolledCourses?.find((c: any) => (c.courseId = course.id));
+			let pcourse = result?.enrolledCourses?.find((c: any) => (c.id == course.id));
 			if (pcourse?.completionPercentage) {
 				completionPercentage = Math.round(pcourse.completionPercentage);
 				isDone = pcourse.isDone;
