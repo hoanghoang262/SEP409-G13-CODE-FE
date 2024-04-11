@@ -3,11 +3,17 @@
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
 	import Input from '../../../../../atoms/Input.svelte';
 
-	import { checkExist, checkNumber, convertVNDToNumber, isVND, showToast } from '../../../../../helpers/helpers';
+	import {
+		checkExist,
+		checkNumber,
+		convertVNDToNumber,
+		isVND,
+		showToast
+	} from '../../../../../helpers/helpers';
 	import { goto } from '$app/navigation';
 	import Button from '../../../../../atoms/Button.svelte';
 	import { language, payments } from '../../../../../data/data';
-	import {} from '../../../../../helpers/helpers'
+	import {} from '../../../../../helpers/helpers';
 
 	import Dropzone from 'svelte-file-dropzone';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
@@ -111,7 +117,7 @@
 		picture: undefined,
 		tag: 'C',
 		price: 0,
-		createdBy: $currentUser.UserID
+		createdBy: $currentUser?.UserID
 	};
 
 	// beforeUpdate(() => {
@@ -158,7 +164,7 @@
 	async function frmSubmit(event: any) {
 		event.preventDefault();
 
-		if(isVND(course.price)){
+		if (isVND(course.price)) {
 			course.price = convertVNDToNumber(course.price);
 		}
 
@@ -184,32 +190,29 @@
 		}
 	}
 
-	
+	function handleKeyPress(event: any) {
+		// Lấy mã phím từ sự kiện
+		var keyCode = event.keyCode || event.which;
 
-	function handleKeyPress(event:any) {
-    // Lấy mã phím từ sự kiện
-    var keyCode = event.keyCode || event.which;
+		// Kiểm tra xem mã phím có phải là mã của phím Backspace (mã 8) không
+		if (keyCode === 8) {
+			const priceE: any = document.getElementById('price');
+			let k = priceE.value;
+			console.log(isVND(priceE.value));
+			// Người dùng đã nhấn phím Backspace
+			if (isVND(priceE.value)) {
+				k = convertVNDToNumber(priceE.value);
+			}
 
-    // Kiểm tra xem mã phím có phải là mã của phím Backspace (mã 8) không
-    if (keyCode === 8) {
-		const priceE:any = document.getElementById('price');
-		let k = priceE.value
-		console.log(isVND(priceE.value))
-        // Người dùng đã nhấn phím Backspace
-        if(isVND(priceE.value)){
-			
-			k = convertVNDToNumber(priceE.value)
+			priceE.value = k + ''.slice(0, -1);
 		}
-
-		priceE.value = k+''.slice(0, -1);
-    }
-}
+	}
 </script>
 
 <div class="w-4/5 m-auto mt-8">
 	<form on:submit={frmSubmit} method="POST" action="?/addcourse">
 		<p class=" mb-1 font-medium text-3xl">Add Course</p>
-		<input name="createdBy" readonly class="hidden" value={$currentUser.UserID} />
+		<input name="createdBy" readonly class="hidden" value={$currentUser?.UserID} />
 		<hr class="my-1 mb-8" />
 		<div>
 			<p class=" mb-1">Course Name</p>
