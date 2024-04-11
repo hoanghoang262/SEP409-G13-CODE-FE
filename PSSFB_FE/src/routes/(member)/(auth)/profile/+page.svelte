@@ -237,13 +237,8 @@
 				>
 			</div>
 		{/if}
-		<div class="w-full">
-			<button
-				class="hover:bg-gray-800 mt-10 w-full py-2 rounded-lg font-medium text-base border-gray-100 border-2 bg-black text-white"
-				on:click={() => (showModal = true)}>{$t('Reset Password')}</button
-			>
-		</div>
-		<div class="w-full">
+
+		<div class="w-full mt-8">
 			<button
 				class=" hover:bg-red-600 w-full py-2 text-black rounded-lg font-medium text-base border-gray-100 border-2 bg-red-500"
 				on:click={() => (firstWM = true)}>{$t('De-active account')}</button

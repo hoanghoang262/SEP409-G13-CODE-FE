@@ -19,14 +19,12 @@ interface dev {
 
 export const headerData: section[] = [
 	{ display: 'Learning', link: '/learning' },
-	{ display: 'Leaderboard', link: '/leaderboard' },
 	{ display: 'Forums', link: '/forums' },
 	{ display: 'About Us', link: '/aboutus' }
 ];
 
 export const headerAdminData: section[] = [
 	{ display: 'Manager', link: '/manager' },
-	{ display: 'Leaderboard', link: '/leaderboard' },
 	{ display: 'Forums', link: '/forums' },
 	{ display: 'About Us', link: '/aboutus' }
 ];

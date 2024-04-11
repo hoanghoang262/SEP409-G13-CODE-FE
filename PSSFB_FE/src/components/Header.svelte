@@ -42,7 +42,7 @@
 				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
 			>
 		</div>
-		<div class="md:flex hidden font-medium text-xl items-center">
+		<div class="md:ml-20 md:flex hidden font-medium text-xl items-center">
 			{#if $currentUser?.Role?.includes('Admin')}
 				{#each headerAdminData as header}
 					<a
