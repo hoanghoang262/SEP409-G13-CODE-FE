@@ -6,8 +6,8 @@
 	import Logo from '../assets/Trắng final.png';
 	import CommentContainer from '../components/CommentContainer.svelte';
 	import { getCommentByCourse } from '$lib/services/CommentService';
-	import Momo from '../assets/Momo.jpg'
-	import VNPay from '../assets/VNPay.png'
+	import Momo from '../assets/Momo.jpg';
+	import VNPay from '../assets/VNPay.png';
 	import SkillsSet from '../components/SkillsSet.svelte';
 	import {
 		addWishList,
@@ -71,7 +71,7 @@
 			}
 		}
 		let result = await axios.get(
-			`https://coursesservices.azurewebsites.net/api/Enrollment/GetQuantityOfUserEnrollCourse/${course.id}`
+			`https://coursesservices.azurewebsites.net/api/Enrollment/GetQuantityOfUserEnrollCourse?courseId=${course.id}`
 		);
 		enrollNumber = result.data;
 	});
@@ -96,8 +96,8 @@
 		event?.target?.classList?.add('text-yellow-100');
 	};
 
-	const payment = async (typePayment:string) => {
-		paymentModal = false
+	const payment = async (typePayment: string) => {
+		paymentModal = false;
 		pageStatus.set('load');
 		try {
 			const result = await createPayment({
@@ -175,12 +175,12 @@
 								goto(`/overall/${course.id}`);
 							}}
 							classes="py-3 px-16 bg-white text-black my-10"
-							content={$t("Go to course")}
+							content={$t('Go to course')}
 						/>
 					{:else if course?.isEnrolled == false}
 						{#if course?.price > 0}
 							<Button2
-								onclick={() => paymentModal = true}
+								onclick={() => (paymentModal = true)}
 								classes="py-3 px-16 bg-white text-black my-10 active:bg-slate-500"
 								content="{$t('Enroll for')} {convertToVND(course?.price)}"
 							/>
@@ -191,7 +191,7 @@
 									goto(`/overall/${course.id}`);
 								}}
 								classes="py-3 px-16 bg-white text-black my-10"
-								content={$t("Enroll for free")}
+								content={$t('Enroll for free')}
 							/>
 						{/if}
 					{/if}
@@ -272,11 +272,15 @@
 					<div class="text-2xl mb-5">{course.name}</div>
 					<div class="flex items-center text-xl">
 						<Icon class="mr-3" icon="ph:book-open-fill" style="color: #008ee6" />
-						{quiz.length} {$t('Quizzes')}, {code.length} {$t('Codes')}, {exam.length} {$t('Exams')}
+						{quiz.length}
+						{$t('Quizzes')}, {code.length}
+						{$t('Codes')}, {exam.length}
+						{$t('Exams')}
 					</div>
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="majesticons:list-box" style="color: #008ee6" /> {$t('Quizzes')}
+						<Icon class="mr-3" icon="majesticons:list-box" style="color: #008ee6" />
+						{$t('Quizzes')}
 					</div>
 
 					<div>
@@ -292,7 +296,8 @@
 
 					<hr class="my-5" />
 					<div class="flex items-center font-medium">
-						<Icon class="mr-3" icon="material-symbols:code" style="color: #008ee6" /> {$t('Codes')}
+						<Icon class="mr-3" icon="material-symbols:code" style="color: #008ee6" />
+						{$t('Codes')}
 					</div>
 
 					<div>
@@ -312,7 +317,8 @@
 							class="mr-3"
 							icon="healthicons:i-exam-multiple-choice-outline"
 							style="color: #008ee6"
-						/> {$t('Exams')}
+						/>
+						{$t('Exams')}
 					</div>
 
 					<div>
@@ -445,12 +451,23 @@
 	</div>
 </div>
 
-
-
-<Modal title="Payment" bind:open={paymentModal} on:close={() => {paymentModal = false}}>
- <div class="flex justify-center">
-<button on:click={() => payment("MOMO")} class="w-2/5 hover:shadow-xl hover:-translate-y-5 transition-all mr-5"><img class="w-full border rounded-xl" alt="Momo" src="{Momo}" /></button>
-<button on:click={() => payment("VNPAY")} class="w-2/5 hover:shadow-xl hover:-translate-y-5 transition-all"><img class="w-full border rounded-xl" alt="VNPay" src="{VNPay}" /></button>
- </div>
-  
+<Modal
+	title="Payment"
+	bind:open={paymentModal}
+	on:close={() => {
+		paymentModal = false;
+	}}
+>
+	<div class="flex justify-center">
+		<button
+			on:click={() => payment('MOMO')}
+			class="w-2/5 hover:shadow-xl hover:-translate-y-5 transition-all mr-5"
+			><img class="w-full border rounded-xl" alt="Momo" src={Momo} /></button
+		>
+		<button
+			on:click={() => payment('VNPAY')}
+			class="w-2/5 hover:shadow-xl hover:-translate-y-5 transition-all"
+			><img class="w-full border rounded-xl" alt="VNPay" src={VNPay} /></button
+		>
+	</div>
 </Modal>

@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import PasswordInput from '../atoms/PasswordInput.svelte';
 	import ResetPasswordModal from './modals/ResetPasswordModal.svelte';
-	import { checkEmail, loginByGoogle } from '$lib/services/AuthenticationServices';
+	import { checkEmail, getUserInfo, loginByGoogle } from '$lib/services/AuthenticationServices';
 	import {
 		checkExist,
 		checkPasswords,
@@ -30,6 +30,12 @@
 			const decodeData: any = await decodeJWT(JWTFS);
 			console.log('decodeData', decodeData);
 			user.UserID = decodeData.UserID;
+			const result = await getUserInfo(user.UserID);
+			if (result.status == false) {
+				showToast('Login Error', 'Account have been baned', 'error');
+				pageStatus.set('done');
+				return;
+			}
 			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
@@ -55,6 +61,12 @@
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
 			const decodeData: any = await decodeJWT(JWTFS);
 			user.UserID = decodeData.UserID;
+			const result = await getUserInfo(user.UserID);
+			if (result.status == false) {
+				showToast('Login Error', 'Account have been baned', 'error');
+				pageStatus.set('done');
+				return;
+			}
 			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
@@ -80,19 +92,19 @@
 		// 	return;
 		// }
 
-		if(!isValidEmail(Email)){
+		if (!isValidEmail(Email)) {
 			showToast('Email warning', 'invalid email', 'warning');
-			return
+			return;
 		}
 
-		if(!checkExist(Email)){
+		if (!checkExist(Email)) {
 			showToast('Email warning', 'please input email', 'warning');
-			return
+			return;
 		}
 
-		if(!checkExist(Password)){
+		if (!checkExist(Password)) {
 			showToast('Password warning', 'please input password', 'warning');
-			return
+			return;
 		}
 
 		pageStatus.set('load');
@@ -102,6 +114,12 @@
 				const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
 				const decodeData: any = decodeJWT(JWTFS);
 				user.UserID = decodeData.UserID;
+				const result = await getUserInfo(user.UserID);
+				if (result.status == false) {
+					showToast('Login Error', 'Account have been baned', 'error');
+					pageStatus.set('done');
+					return;
+				}
 				user.Role = decodeData.Roles;
 				user.jwt = JWTFS;
 				user.displayName = decodeData.UserName;
