@@ -75,7 +75,7 @@
 	};
 
 	const registerFrmSubmit = (event: any) => {
-		if (!checkPasswords(Password)) {
+		if (checkPasswords(Password)) {
 			event.preventDefault();
 			showToast(
 				'Password warning',
