@@ -1,3 +1,4 @@
+export const ssr = false;
 import { getCommentByLession, postComment, postReplyComment } from "$lib/services/CommentService";
 import { getChapterById, getCourseById, getLessionById, getNotes } from "$lib/services/CourseServices";
 import { redirect } from "@sveltejs/kit";

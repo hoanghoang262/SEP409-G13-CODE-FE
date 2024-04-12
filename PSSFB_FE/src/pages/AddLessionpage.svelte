@@ -164,7 +164,7 @@
 						/>
 					</div>
 					<div class="w-1/5 flex items-end">
-						<Button
+						<Button type="danger"
 							onclick={() => {
 								DeleteQ(index);
 							}}
@@ -193,7 +193,7 @@
 				<Input classes="border w-2/3" bind:value={answer.optionsText} />
 				<input type="checkbox" bind:checked={answer.correctAnswer} />
 			</div>
-			<div><Button onclick={() => DeleteA(index)} content="Delete Answer" /></div>
+			<div><Button type="danger" onclick={() => DeleteA(index)} content="Delete Answer" /></div>
 		</div>
 	{/each}
 	<Button

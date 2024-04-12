@@ -341,7 +341,7 @@
 				/>
 			{:else if section == 'Evaluation'}
 				<div class="text-lg flex justify-center items-center">
-					<p>{$t('Help us improve course quality by contribute you feetback')}</p>
+					<p>{$t('Help us improve course quality by contribute you feedback')}</p>
 				</div>
 				<div>
 					<div

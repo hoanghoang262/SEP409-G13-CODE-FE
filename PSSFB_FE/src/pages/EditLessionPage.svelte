@@ -163,7 +163,7 @@
 							bind:value={q.time}
 						/>
 					</div>
-					<div class="w-1/5 flex items-end"><Button onclick={() => {DeleteQ(index)}} content="Delete" /></div>
+					<div class="w-1/5 flex items-end"><Button type="danger" onclick={() => {DeleteQ(index)}} content="Delete" /></div>
 				</div>
 			{/each}
 
@@ -187,7 +187,7 @@
 				<Input classes="border w-2/3" bind:value={answer.optionsText} />
 				<input type="checkbox" bind:checked={answer.correctAnswer} />
 			</div>
-			<div><Button onclick={() => DeleteA(index)} content="Delete Answer" /></div>
+			<div><Button type="danger" onclick={() => DeleteA(index)} content="Delete Answer" /></div>
 		</div>
 	{/each}
 	<Button onclick={() => lession.questions[SelectedQIndex].answerOptions = [...lession.questions[SelectedQIndex].answerOptions, initAnswer(false)]} content="Add Answer" />
