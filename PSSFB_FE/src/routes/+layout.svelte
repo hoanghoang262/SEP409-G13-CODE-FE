@@ -19,6 +19,11 @@
 		if (!$currentUser) {
 			const user = localStorage.getItem('user') ?? '';
 
+			if(!user?.includes("email")){
+				localStorage.clear();
+				return
+			}
+
 			if (checkExist(user)) {
 				currentUser.set(JSON.parse(user));
 				console.log('currentUser', $currentUser);

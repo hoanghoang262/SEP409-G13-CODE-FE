@@ -98,6 +98,7 @@ const loginWithFacebook = async () => {
 			const credential = FacebookAuthProvider.credentialFromResult(result);
 			const accessToken = credential?.accessToken;
 			user = result.user;
+			console.log(result.user)
 
 			// IdP data available using getAdditionalUserInfo(result)
 			// ...

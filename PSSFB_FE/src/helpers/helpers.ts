@@ -66,7 +66,8 @@ export function trimUserData(user: any) {
 		jwt: user.jwt,
 		//stsTokenManager: user.stsTokenManager,
 		uid: user.uid,
-		displayName: user.displayName
+		displayName: user.displayName,
+		photoURL: user.photoURL
 	};
 	return trimUser;
 }

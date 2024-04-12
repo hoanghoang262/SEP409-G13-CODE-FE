@@ -16,21 +16,21 @@
 	import { getUserInfo } from '$lib/services/AuthenticationServices';
 
 	let topbarStatus = false;
-	let userInfo: any;
+	// let userInfo: any;
 
 	const changelang = (e: any) => locale.update(() => e.target.value);
 
-	afterUpdate(async () => {
-		if (!userInfo && $currentUser?.UserId) {
-			userInfo = await getUserInfo($currentUser?.UserID);
-		}
-	});
+	// afterUpdate(async () => {
+	// 	if (!userInfo && $currentUser?.UserId) {
+	// 		userInfo = await getUserInfo($currentUser?.UserID);
+	// 	}
+	// });
 
-	$: if ($currentUser) {
-		if ($currentUser?.UserID) {
-			getUserInfo($currentUser?.UserID).then((result) => (userInfo = result));
-		}
-	}
+	// $: if ($currentUser) {
+	// 	if ($currentUser?.UserID) {
+	// 		getUserInfo($currentUser?.UserID).then((result) => (userInfo = result));
+	// 	}
+	// }
 </script>
 
 <main>
@@ -112,7 +112,7 @@
 					>
 						<Avatar
 							classes="w-8 h-8 lg:h-10 lg:w-10 rounded-full lg:mr-2 "
-							src={userInfo?.profilePict}
+							src={$currentUser?.photoURL}
 						/>
 						<p class="lg:mr-3 hidden lg:block truncate">{$currentUser.displayName}</p>
 					</a>

@@ -39,6 +39,7 @@
 			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
+			user.photoURL = result.profilePict;
 			currentUser.set(user);
 			localStorage.setItem('user', JSON.stringify(trimUserData(user)));
 			//await axios.post('/?/setuser', JSON.stringify(trimUserData(user)));
@@ -70,6 +71,7 @@
 			user.Role = decodeData.Roles;
 			user.jwt = JWTFS;
 			user.displayName = decodeData.UserName;
+			user.photoURL = result.profilePict;
 			localStorage.setItem('user', JSON.stringify(trimUserData(user)));
 			currentUser.set(user);
 
@@ -123,6 +125,7 @@
 				user.Role = decodeData.Roles;
 				user.jwt = JWTFS;
 				user.displayName = decodeData.UserName;
+				user.photoURL = result.profilePict;
 				console.log('decoded data', decodeData);
 				currentUser.set(user);
 				localStorage.setItem('user', JSON.stringify(trimUserData(user)));

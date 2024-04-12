@@ -31,13 +31,13 @@
 	$: studying = progress?.filter((c: any) => c.isDone == false);
 	$: courseDone = progress?.filter((c: any) => c.isDone == true);
 
-	let userInfo: any;
+	// let userInfo: any;
 
-	afterUpdate(async () => {
-		if (!userInfo) {
-			userInfo = await getUserInfo($currentUser.UserID);
-		}
-	});
+	// afterUpdate(async () => {
+	// 	if (!userInfo) {
+	// 		userInfo = await getUserInfo($currentUser.UserID);
+	// 	}
+	// });
 
 	onMount(async () => {
 		const response = await getProgressCourses($currentUser.UserID);
@@ -62,7 +62,7 @@
 					<div class="w-full md:w-1/3">
 						<div class="rounded-md flex items-center bg-white py-5 px-5">
 							<Avatar
-								src={userInfo?.profilePict}
+								src={$currentUser?.photoURL}
 								classes="rounded-full border-neutral-400 border-2 w-28 h-28 mr-8"
 							/>
 							<div class="overflow-hidden text-3xl font-medium">{$currentUser?.displayName}</div>
