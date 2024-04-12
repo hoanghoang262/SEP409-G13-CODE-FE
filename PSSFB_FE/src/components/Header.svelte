@@ -21,8 +21,8 @@
 	const changelang = (e: any) => locale.update(() => e.target.value);
 
 	afterUpdate(async () => {
-		if (!userInfo) {
-			userInfo = await getUserInfo($currentUser.UserID);
+		if (!userInfo && $currentUser?.UserId) {
+			userInfo = await getUserInfo($currentUser?.UserID);
 		}
 	});
 
