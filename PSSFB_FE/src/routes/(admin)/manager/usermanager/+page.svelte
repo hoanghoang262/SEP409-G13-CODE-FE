@@ -164,7 +164,7 @@
 			<thead class="text-xs text-white uppercase bg-green-700">
 				<tr>
 					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
-						><div class="flex items-center justify-center">Avata</div></th
+						><div class="flex items-center justify-center">Avatar</div></th
 					>
 					{#each tableHeader as item, i}
 						<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2">
@@ -172,7 +172,7 @@
 						</th>
 					{/each}
 					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
-						><div class="flex items-center justify-center">Seting</div></th
+						><div class="flex items-center justify-center">Setting</div></th
 					>
 				</tr>
 			</thead>

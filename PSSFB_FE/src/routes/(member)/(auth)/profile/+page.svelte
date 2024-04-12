@@ -381,7 +381,7 @@
 							type="date"
 							bind:value={date}
 							disabled={editStatus ? false : true}
-							placeholder="birth date"
+							placeholder="Birth date"
 						/>
 						<!-- <input
 							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -566,7 +566,7 @@
 	</div>
 	<Label>Password</Label>
 	<Input
-		placehoder="password"
+		placehoder="Password"
 		classes="border-2 border-gray-400 focus:border-none"
 		bind:value={deactivePass}
 	/>
