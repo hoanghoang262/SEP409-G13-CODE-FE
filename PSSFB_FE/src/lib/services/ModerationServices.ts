@@ -364,3 +364,13 @@ export const updateModPost = async (post: any) => {
 		return error
 	}
 }
+
+export const sendPostToModeration = async (postId: number) => {
+	try {
+		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/SendPostToModeration?PostId=${postId}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}

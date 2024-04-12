@@ -164,6 +164,7 @@
 		} catch (error) {
 			console.log(error);
 		}
+		content = ''
 		pageStatus.set('done');
 	}
 
@@ -181,6 +182,7 @@
 			console.log(error);
 		}
 		replyClick(commentId);
+		replyContent = ''
 		pageStatus.set('done');
 	}
 </script>

@@ -41,7 +41,12 @@ export const JavaComplier = async (data: any) => {
 };
 
 export const CForm = (codeForm: string, testCase: string) => {
-	const CForm = `#include <stdio.h> \n ${codeForm} \n ${testCase} \n int main() { \n TestCase(); \nreturn 0; \n}`;
+	const CForm = `#include <stdio.h>
+
+	#define assertEqual(expected, actual)  if((expected) == (actual)) { printf("All Test Pass\n"); } else { printf("Test Failed: Expected: %d, Actual: %d\n", expected, actual);} \n ${codeForm} \n ${testCase} \n int main() {
+		TestCase();
+		return 0;
+	}`;
 	return CForm;
 };
 
@@ -54,7 +59,7 @@ export const JavaForm = (codeForm: string, testCase: string) => {
                         s.TestCase();
                         
                     }
-					public static void assertEqual(Object expected, Object actual) {
+					public static void assertEqual(Object expected, Object actual, Object message) {
 						if (expected == null && actual == null) {
 								   return;
 						}
@@ -62,7 +67,7 @@ export const JavaForm = (codeForm: string, testCase: string) => {
 							return;
 				}
 						if (expected == null || !expected.equals(actual)) {
-										System.out.println("Test Failed:Expected: " + expected + ", but was: " + actual);
+										System.out.println("Test Failed At Input: "+ message+ " ,Expected: " + expected + ", but was: " + actual);
 						}
 					} \n ${codeForm} \n ${testCase} \n}`;
 	return JavaForm;
@@ -71,16 +76,25 @@ export const JavaForm = (codeForm: string, testCase: string) => {
 export const CPlusForm = (codeForm: string, testCase: string) => {
 	const CPlusForm = `#include <iostream>
     #include <vector>
+	#include <string> 
     using namespace std;
     
-    class Solution {
-    public: \n ${codeForm} \n ${testCase} \n };
+    template<typename T, typename U> 
+void assertEqual(T expected, T actual, U message) {
+    if (expected == actual) {
+         std::cout << "All Test Pass "  ;
+        return;
+    } else {
+        std::cout << "Test Failed At Input " << message << ": ";
+        std::cout << "Expected: " << expected << ", Actual: " << actual << std::endl;
+       exit(0);
+    }
+} \n ${codeForm} \n ${testCase} \n };
 
-    int main() {
-        Solution s;
-        s.TestCase();
-        return 0;
-    }`;
+	int main() {
+		TestCase();
+		return 0;
+	}`;
 	return CPlusForm;
 };
 
@@ -109,8 +123,8 @@ export const ExecuteResult = (result: any) => {
 			}
 		}
 	} catch (error) {
-		resultList = [{result: result.data}]
+		resultList = [{ result: result.data }];
 	}
-	console.log(resultList)
+	console.log(resultList);
 	return resultList;
 };

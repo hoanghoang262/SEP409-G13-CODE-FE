@@ -92,8 +92,8 @@
 						<div
 							role="button"
 							tabindex="0"
-							on:keydown={() => goto(`forums/${p.id}`)}
-							on:click={() => goto(`forums/${p.id}`)}
+							on:keydown={() => goto(`mypendingposts/${p.id}`)}
+							on:click={() => goto(`mypendingposts/${p.id}`)}
 							class="text-lg font-semibold hover:underline"
 						>
 							{p.title}

@@ -7,7 +7,7 @@
 	import Button from '../atoms/Button.svelte';
 	import { checkExist, showToast } from '../helpers/helpers';
 	import { createAdminPost, putPost } from '$lib/services/ForumsServices';
-	import { createPost, updateModPost } from '$lib/services/ModerationServices';
+	import { createPost, sendPostToModeration, updateModPost } from '$lib/services/ModerationServices';
 
 	export let post: any;
 	export let type = 'approved';
@@ -30,7 +30,7 @@
 					const response = await updateModPost(post);
 					showToast('Save Post', 'update post success', 'success');
 					console.log(response);
-
+					sendPostToModeration(post.id)
 					console.log(JSON.stringify(post));
 				}
 			} catch (error) {
