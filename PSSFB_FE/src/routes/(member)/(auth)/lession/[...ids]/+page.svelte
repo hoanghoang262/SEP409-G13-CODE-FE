@@ -18,9 +18,7 @@
     const courseId:any = ids[0];
 	let course:any = [];
 
-	onMount(() => {
-		getCourseById(courseId, $currentUser?.UserID).then((rs:any) => course = rs)
-	})
+	
 	const chapter = data?.chapter;
 	const lession = data?.lession;
 	let comments = data?.comments ?? [];
@@ -29,6 +27,7 @@
 	let section = 'Comments';
 
 	onMount(async () => {
+		getCourseById(courseId, $currentUser?.UserID).then((rs:any) => course = rs)
 		notes = await getNotes($currentUser.UserID, lession.id);
 	});
 
@@ -70,7 +69,7 @@
 <div class="bg-slate-200 text-black">
 	<div class="px-5 py-2 font-medium">{course.name} > {chapter.name} > {lession.title}</div>
 	<div class="flex bg-white text-black">
-		<div class="w-1/5"><CourseSideBar {course} /></div>
+		<div class="w-1/5"><CourseSideBar bind:course /></div>
 		<div class="w-3/5 p-3 overflow-y-scroll max-h-screen">
 			<div class="flex items-center">
 				<Avatar src={course.avatar} classes="w-10 mr-3 rounded-full" />

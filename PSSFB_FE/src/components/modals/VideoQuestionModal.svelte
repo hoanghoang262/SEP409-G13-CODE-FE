@@ -5,16 +5,23 @@
 	export let onClose = () => {};
     export let question:any
     const correctAnswer = question.answerOptions.filter((answer:any) => answer.correctAnswer == true)
+
+    let answering = true;
 </script>
-<Modal title="Question" bind:open={showModal} on:close={onClose} autoclose>
+<Modal title="Question" bind:open={showModal} on:close={() => {answering = true, onClose()}}>
 	<div>Choose {correctAnswer?.length??0} option(s)</div>
 	<div>{question.contentQuestion}</div>
-    <div>
+    <div class="{answering?"":"hidden"}">
         {#each question.answerOptions as answer}
-            <input type="checkbox"/> {answer.optionsText}
+            <div class="mb-2"><input type="checkbox"/> {answer.optionsText}</div>
+        {/each}
+    </div>
+    <div class="{answering?"hidden":""}">
+        {#each question.answerOptions as answer}
+            <div class="mb-2 {answer.correctAnswer?"text-lime-400":"text-red-500"}"> {answer.optionsText}</div>
         {/each}
     </div>
     <svelte:fragment slot="footer">
-		<Button color="alternative">Answer</Button>
+		<Button on:click={() => answering=false} color="alternative">Answer</Button>
 	</svelte:fragment>
 </Modal>
