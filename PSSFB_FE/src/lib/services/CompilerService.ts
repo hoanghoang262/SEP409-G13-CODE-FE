@@ -7,7 +7,7 @@ export const CComplier = async (data: any) => {
 			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCCodeQuestion`,
 			data
 		);
-		return result;
+		return result.data;
 	} catch (error) {
 		console.error(error);
 		return error;
@@ -20,7 +20,7 @@ export const CPlusComplier = async (data: any) => {
 			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusCodeQuestion`,
 			data
 		);
-		return result;
+		return result.data;
 	} catch (error) {
 		console.error(error);
 		return error;
@@ -31,6 +31,47 @@ export const JavaComplier = async (data: any) => {
 	try {
 		const result = await axios.post(
 			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaCodeQuestion`,
+			data
+		);
+		return result.data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+};
+
+
+export const CEditor = async (data: any) => {
+	try {
+		const result = await axios.post(
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCCodeEditor`,
+			data
+		);
+		return result.data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+};
+
+export const CPlusEditor = async (data: any) => {
+	try {
+		const result = await axios.post(
+			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusCodeEditor`,
+			data
+		);
+		return result.data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+};
+
+export const JavaEditor = async (data: any) => {
+	try {
+		console.log(JSON.stringify(data));
+		const result = await axios.post(
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaCodeEditor`,
 			data
 		);
 		return result.data;

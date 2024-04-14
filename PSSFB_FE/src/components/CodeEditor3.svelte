@@ -9,34 +9,62 @@
 	import { oneDark } from '@codemirror/theme-one-dark';
 	import { java } from '@codemirror/lang-java';
 	import { cpp } from '@codemirror/lang-cpp';
+	import { currentUser, pageStatus } from '../stores/store';
+	import { C, CPlus, Java } from '$lib/constant';
+	import { CEditor, CPlusEditor, JavaEditor } from '$lib/services/CompilerService';
 
 	export let value = '';
-	export let executeCode: any;
+
 	export let result: any = [];
-	let selectIndex = 0;
 
-	export let lang = "Java"
+	export let lang = 'Java';
 
-	const getLang = () => {
-		switch (lang){
-			case "Java":
+	export let lessonId: any;
+
+	$: getLang = () => {
+		switch (lang) {
+			case 'Java':
+				value = Java;
 				return java();
-			case "C":
+			case 'C':
+				value = C;
 				return cpp();
-			case "C++":
+			case 'C++':
+				value = CPlus;
 				return cpp();
 			default:
+				value = Java;
 				return java();
 		}
-	}
+	};
+
+	const executeCode = async () => {
+		pageStatus.set('load');
+		switch (lang) {
+			case 'Java':
+				result = await JavaEditor({ lessonId, userCode: value, userId: $currentUser?.UserID });
+				break;
+			case 'C':
+				result = await CEditor({ lessonId, userCode: value, userId: $currentUser?.UserID });
+				break;
+			case 'C++':
+				result = await CPlusEditor({ lessonId, userCode: value, userId: $currentUser?.UserID });
+				break;
+		}
+
+		console.log(result);
+		pageStatus.set('done');
+	};
 </script>
 
 <div class="text-slate-300">
 	<div class="flex justify-between items-center bg-slate-800 p-5">
 		<div class="flex items-center">
 			<Icon icon="" />
-			<select class="bg-slate-800">
-				<option>{lang}</option>
+			<select bind:value={lang} class="bg-slate-800">
+				<option>Java</option>
+				<option>C</option>
+				<option>C++</option>
 			</select>
 		</div>
 		<div>
@@ -67,7 +95,7 @@
 		<div class="border-b border-white inline-block mb-3">TEST CASE</div>
 		<div class="flex min-h-40">
 			<div class="w-1/6 border-r mr-10">
-				<div>Result: </div>
+				<div>Result:</div>
 				<!-- {#each result as tc, index}
 					<button on:click={() => selectIndex=index} class="w-full {selectIndex==index?"bg-blue-900":""}">Test case {index + 1}</button>
 				{/each} -->
@@ -86,8 +114,7 @@
 					</div>
 				{/if} -->
 				<div class="w-1/2">
-					
-					<div class="{result=='All Test Passed'?'text-lime-600':"text-red-600"}">{result}</div>
+					<div>{result}</div>
 				</div>
 			</div>
 		</div>

@@ -12,22 +12,26 @@
 	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
 	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import CodeEditor2 from '../../../../../components/CodeEditor2.svelte';
+	import CodeEditor from '../../../../../components/CodeEditor.svelte';
+	import CodeEditor3 from '../../../../../components/CodeEditor3.svelte';
 	export let data;
 
 	const ids = $page.params.ids.split('/');
-    const courseId:any = ids[0];
-	let course:any = [];
+	const courseId: any = ids[0];
+	let course: any = [];
 
-	
 	const chapter = data?.chapter;
 	const lession = data?.lession;
 	let comments = data?.comments ?? [];
 	let notes: any;
 	let currentTime = 0;
 	let section = 'Comments';
+	let RSB = 1;
+	let LSB = 1;
 
 	onMount(async () => {
-		getCourseById(courseId, $currentUser?.UserID).then((rs:any) => course = rs)
+		getCourseById(courseId, $currentUser?.UserID).then((rs: any) => (course = rs));
 		notes = await getNotes($currentUser.UserID, lession.id);
 	});
 
@@ -69,26 +73,73 @@
 <div class="bg-slate-200 text-black">
 	<div class="px-5 py-2 font-medium">{course.name} > {chapter.name} > {lession.title}</div>
 	<div class="flex bg-white text-black">
-		<div class="w-1/5"><CourseSideBar bind:course /></div>
-		<div class="w-3/5 p-3 overflow-y-scroll max-h-screen">
+		<div class={RSB == 2 ? `hidden` : `w-1/5`}>
+			<CourseSideBar bind:course />
+		</div>
+		<div class="w-{RSB==0?'4':'3'}/5 p-3 overflow-y-scroll max-h-screen">
 			<div class="flex items-center">
 				<Avatar src={course.avatar} classes="w-10 mr-3 rounded-full" />
 				{course.created_Name}
 			</div>
 			<hr class="my-5" />
+			<div class="flex justify-end">
+
+				<div>
+					{#if RSB == 0}
+						<button
+							on:click={() => {
+								switch (section) {
+									case 'Comments':
+										RSB = 1;
+										break;
+									case 'Notes':
+										RSB = 1;
+										break;
+									case 'CodeEditor':
+										RSB = 2;
+										break;
+								}
+							}}><Icon class="text-4xl" icon="ic:round-menu-open"  style="color: #a3a3a3" /></button
+						>
+					{/if}
+				</div>
+			</div>
 			<LessionVideoContainer {lession} bind:notes bind:currentTime />
 		</div>
-		<div class="w-1/5">
+		<div class={RSB == 0 ? `hidden` : `w-${RSB}/5`}>
+			<button
+				on:click={() => {
+					if (RSB != 0) {
+						RSB = 0;
+					}
+				}}><Icon class="text-4xl" icon="mdi:menu-close" style="color: #a3a3a3" /></button
+			>
 			<div class="flex p-5">
 				<button
-					on:click={() => (section = 'Comments')}
+					on:click={() => {
+						section = 'Comments';
+						RSB = 1;
+					}}
 					class="mr-3 {section == 'Comments' ? 'text-blue-500 underline underline-offset-8' : ''}"
 					>Comments</button
 				>
 				<button
-					on:click={() => (section = 'Notes')}
+					on:click={() => {
+						{
+							section = 'Notes';
+							RSB = 1;
+						}
+					}}
 					class="mr-3 {section == 'Notes' ? 'text-blue-500 underline underline-offset-8' : ''}"
 					>Notes</button
+				>
+				<button
+					on:click={() => {
+						section = 'CodeEditor';
+						RSB = 2;
+					}}
+					class="mr-3 {section == 'CodeEditor' ? 'text-blue-500 underline underline-offset-8' : ''}"
+					>CodeEditor</button
 				>
 			</div>
 			<div class="pl-5">
@@ -143,6 +194,8 @@
 							</div>
 						{/each}
 					</div>
+				{:else if section == 'CodeEditor'}
+					<CodeEditor3 lessonId={lession.id} />
 				{/if}
 			</div>
 		</div>
