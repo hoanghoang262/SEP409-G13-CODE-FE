@@ -64,3 +64,13 @@ export const SignUp = async (data: any) => {
 		return
 	}
 }
+
+export const AddAdmin = async (data: any) => {
+	try {
+		const result = await axios.post(`https://authenticateservice.azurewebsites.net/api/Authenticate/CreateAdminBussiness`,data)
+		return result.data
+	} catch (error) {
+		console.log(error);
+		return
+	}
+}

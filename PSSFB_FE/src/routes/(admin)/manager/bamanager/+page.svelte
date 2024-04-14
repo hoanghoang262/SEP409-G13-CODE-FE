@@ -5,6 +5,7 @@
 	import Avatar from '../../../../atoms/Avatar.svelte';
 	import { page } from '$app/stores';
 	import Loading from '../../../../components/Loading.svelte';
+	import AddAdminModal from '../../../../components/modals/AddAdminModal.svelte';
 
 	let data: any;
 	let user: any = [];
@@ -14,6 +15,8 @@
 
 	let searchName = '';
 	let selectStatus: string = '';
+
+	let adminModal =  false;
 
 	//Mount and set up data
 	onMount(async () => {
@@ -38,7 +41,7 @@
 	}
 
 	const tableHeader = [
-		{ label: 'Full Name', map: 'fullName' },
+		{ label: 'FullName', map: 'fullName' },
 		{ label: 'Email Account', map: 'email' },
 		{
 			label: 'Status',
@@ -48,6 +51,11 @@
 			}
 		}
 	];
+
+	const afterAdd = async () => {
+		const result = await GetAllBusinessAdmin(setParam(pageNumber));
+		data = result;
+	}
 
 	//Format data
 	const formatStatus = (data: boolean | null) => {
@@ -107,7 +115,7 @@
 <main class="mx-5">
 	<!-- Search input -->
 	<div class="relative w-full md:w-[90%] flex justify-between m-auto md:pt-5 pt-3">
-		<button class=" px-6 py-2 bg-blue-700 text-white rounded-lg border-gray-400 border-2"
+		<button on:click={() => adminModal = true} class=" px-6 py-2 bg-blue-700 text-white rounded-lg border-gray-400 border-2"
 			>Add</button
 		>
 
@@ -120,7 +128,7 @@
 					class="block w-full pl-2 md:pl-4 md:pt-3 md:pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
 				>
 					<option value="" selected>
-						<p>Status ?</p>
+						<p>All</p>
 					</option>
 					<option value="true">Active</option>
 					<option value="false">Deactive</option>
@@ -169,7 +177,7 @@
 			<thead class="text-xs text-white uppercase bg-green-700">
 				<tr>
 					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
-						><div class="flex items-center justify-center">Avata</div></th
+						><div class="flex items-center justify-center">Avatar</div></th
 					>
 					{#each tableHeader as item, i}
 						<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2">
@@ -177,7 +185,7 @@
 						</th>
 					{/each}
 					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
-						><div class="flex items-center justify-center">Seting</div></th
+						><div class="flex items-center justify-center">Setting</div></th
 					>
 				</tr>
 			</thead>
@@ -196,7 +204,7 @@
 										{#if head.formatData}
 											{@html head.formatData(row[head.map])}
 										{:else}
-											{row[head.map]}
+											{row[head.map]??''}
 										{/if}
 									</div>
 								</td>
@@ -306,3 +314,5 @@
 		</div>
 	</div>
 </main>
+
+<AddAdminModal {afterAdd} bind:showModal={adminModal} />
