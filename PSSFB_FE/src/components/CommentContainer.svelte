@@ -128,8 +128,8 @@
 
 	async function comment() {
 		pageStatus.set('load');
-		if(!checkExist(content.trim())){
-			showToast("Comment warning","Please enter content","warning")
+		if (!checkExist(content.trim())) {
+			showToast('Comment warning', 'Please enter content', 'warning');
 			pageStatus.set('done');
 			return;
 		}
@@ -164,7 +164,7 @@
 		} catch (error) {
 			console.log(error);
 		}
-		content = ''
+		content = '';
 		pageStatus.set('done');
 	}
 
@@ -182,7 +182,7 @@
 			console.log(error);
 		}
 		replyClick(commentId);
-		replyContent = ''
+		replyContent = '';
 		pageStatus.set('done');
 	}
 </script>
@@ -220,11 +220,13 @@
 				<div class="flex items-center">
 					<!-- <Icon class="text-2xl mr-3" icon="iconamoon:like-thin" style="color: black" /> -->
 					{#if checkExist($currentUser)}
-						<button class="mr-3" on:click={() => replyClick(c.id)}>reply</button>
+						<button class="mr-2 font-medium" on:click={() => replyClick(c.id)}>reply</button>
 					{/if}
 					{#if c?.userId == $currentUser?.UserID}
-						<button class="mr-3" on:click={() => editClick(c.id)}>edit</button>
-						<button class="mr-3 text-red-500" on:click={() => deleteClick(c.id)}>delete</button>
+						<button class="mr-2 font-medium" on:click={() => editClick(c.id)}>edit</button>
+						<button class="mr-2 font-medium text-red-500" on:click={() => deleteClick(c.id)}
+							>delete</button
+						>
 					{/if}
 				</div>
 				{#if checkExist($currentUser)}
@@ -251,7 +253,7 @@
 						<div>
 							<div class="flex">
 								<div class="text-blue-500 mr-3">{reply.userName}</div>
-								<div class="text-neutral-400">{reply?.createDate}</div>
+								<div class="text-neutral-400">{formatDateTime(reply?.createDate)}</div>
 							</div>
 							<div id="replycontent{reply.id}">{reply.replyContent}</div>
 							<div class="hidden" id="replyeditor{reply.id}">
@@ -259,12 +261,19 @@
 								<div class="flex justify-end"><Button onclick={updateReply} content="save" /></div>
 							</div>
 							<div class="flex items-center">
-								<Icon class="text-2xl mr-3" icon="iconamoon:like-thin" style="color: black" />
+								<Icon
+									class="text-2xl mr-2 font-medium"
+									icon="iconamoon:like-thin"
+									style="color: black"
+								/>
 
 								{#if reply?.userId == $currentUser?.UserID}
-									<button class="mr-3" on:click={() => replyeditClick(reply.id)}>edit</button>
-									<button class="mr-3 text-red-400" on:click={() => replydeleteClick(reply.id)}
-										>delete</button
+									<button class="mr-2 font-medium" on:click={() => replyeditClick(reply.id)}
+										>edit</button
+									>
+									<button
+										class="mr-2 font-medium text-red-400"
+										on:click={() => replydeleteClick(reply.id)}>delete</button
 									>
 								{/if}
 							</div>

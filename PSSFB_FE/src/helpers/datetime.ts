@@ -43,8 +43,22 @@ export function formatDateTime(inputDate: string) {
 
     const year = date.getFullYear()
 
-    const hour = date.getHours()
-    const minute = date.getMinutes()
+    const pre_hour = date.getHours()
+    let hour
+
+    if (pre_hour <= 9) {
+        hour = "0" + pre_hour
+    } else {
+        hour = pre_hour
+    }
+
+    const pre_minute = date.getMinutes()
+    let minute
+    if (pre_minute <= 9) {
+        minute = "0" + pre_hour
+    } else {
+        minute = pre_minute
+    }
 
 
     return `${day}/${month}/${year}-${hour}:${minute}`;
