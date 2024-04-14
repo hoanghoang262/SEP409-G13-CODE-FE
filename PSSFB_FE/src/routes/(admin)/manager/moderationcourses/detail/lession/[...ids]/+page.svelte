@@ -47,7 +47,7 @@
 			<Label defaultClass=" mb-3 block">Duration: {lession.duration}</Label>
 			<Label defaultClass=" mb-3 block">Video</Label>
 			<div class="w-3/4">
-			<video src={lession.videoUrl}>
+			<video src={lession.videoUrl} id="vid" class=" mb-5" width="400" height="300" controls>
 				<track kind="captions">
 			</video>
 			</div>

@@ -125,14 +125,20 @@
 				</div>
 			{/if}
 		{:else if type == 'admin'}
-			<button on:click={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)}
-				><img alt="courseimg" src={course.coursePicture} class="w-full" /></button
-			>
+			<button on:click={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)} class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center">
+					<!-- svelte-ignore a11y-img-redundant-alt -->
+					<img
+						alt="Course Image"
+						src={course.coursePicture}
+						class="w-full h-full text-center object-cover"
+					/>
+				</button>
+			
 
 			<div class="p-4">
-				<h3 class="font-medium text-xl mb-2">{course.courseName}</h3>
+				<h3 class="font-medium truncate text-xl mb-2">{course.courseName}</h3>
 
-				<p class="text-sm text-neutral-500 mb-3">{course.userName}</p>
+				<p class="text-sm text-neutral-500 mb-3">Create By: {course.userName}</p>
 				<p class="truncate text-sm">{course.courseDescription}</p>
 				<p>
 					{#if course?.status}
