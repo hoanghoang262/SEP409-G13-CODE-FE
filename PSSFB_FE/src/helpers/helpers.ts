@@ -186,17 +186,19 @@ export function convertToVND(number: number) {
 	return formattedNumber;
 }
 
-export function convertVNDToNumber(vnd: string) {
-	// Xóa các ký tự không phải số khỏi chuỗi VNĐ
-	var cleanNumber = vnd.replace(/[₫.]/g, '');
+export function convertVNDToNumber(vnd: any) {
+	if (vnd != 0) {
+		// Xóa các ký tự không phải số khỏi chuỗi VNĐ
+		var cleanNumber = vnd.replace(/[₫.]/g, '');
 
-	// Chuyển đổi chuỗi số thành một số nguyên
-	var number = parseInt(cleanNumber.trim());
+		// Chuyển đổi chuỗi số thành một số nguyên
+		var number = parseInt(cleanNumber.trim());
 
-	// Hiển thị số nguyên đã chuyển đổi
-	return number;
+		// Hiển thị số nguyên đã chuyển đổi
+		return number;
+	}
 }
 
 export function isVND(string: string) {
-	return string.includes('₫');
+	return string + '₫';
 }
