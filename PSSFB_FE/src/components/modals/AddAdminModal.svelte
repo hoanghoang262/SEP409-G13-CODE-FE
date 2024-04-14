@@ -60,7 +60,7 @@
             showToast('Add Admin', 'Invalid email', 'warning');
             return;
         }
-
+        showModal = false;
 		pageStatus.set('load');
 		await uploadImage(image);
 		const url = await getURL(image?.path);
@@ -79,7 +79,7 @@
 				showToast('Add Admin', error.message, 'error');
 			}
 		}
-        showModal = false;
+        showToast('Add Admin', 'Add Admin success full', 'success');
 		pageStatus.set('done');
 	};
 </script>
