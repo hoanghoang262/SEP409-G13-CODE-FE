@@ -152,12 +152,13 @@
 				displayName: userInfo.userName,
 				photoURL: userInfo.profilePict
 			});
-			localStorage.setItem('user',JSON.stringify($currentUser))
+			localStorage.setItem('user', JSON.stringify($currentUser));
 		} catch (error: any) {
 			console.error(error);
 		}
 
 		pageStatus.set('done');
+		editStatus = false;
 	}
 
 	const editHandle = () => {
@@ -265,7 +266,9 @@
 					<div class="flex justify-between items-end w-full">
 						<img
 							class="w-16 h-16 md:h-20 md:w-20 my-4 object-cover rounded-full"
-							src={checkExist(info.profilePict)?info.profilePict:'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg'}
+							src={checkExist(info.profilePict)
+								? info.profilePict
+								: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg'}
 							id="img"
 							alt="Current profile photo"
 						/>
@@ -301,12 +304,12 @@
 							<Dropzone containerClasses="" on:drop={handleFilesSelect} />
 						</div>
 
-						<input
+						<!-- <input
 							class="border w-2/3 hidden"
 							required={true}
 							name="photoURL"
 							value={info?.profilePict}
-						/>
+						/> -->
 					</label>
 				</div>
 				<div class="md:mx-5 md:my-5 my-3">
