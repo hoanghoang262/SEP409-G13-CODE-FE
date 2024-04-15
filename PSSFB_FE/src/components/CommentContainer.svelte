@@ -215,17 +215,17 @@
 				<di id="commentcontent{c.id}">{c.commentContent}</di>
 				<div class="hidden" id="commenteditor{c.id}">
 					<Textarea bind:value={editcomment.commentContent} />
-					<div class="flex justify-end"><Button onclick={updateComment} content="save" /></div>
+					<div class="flex justify-end"><Button onclick={updateComment} content="Save" /></div>
 				</div>
 				<div class="flex items-center">
 					<!-- <Icon class="text-2xl mr-3" icon="iconamoon:like-thin" style="color: black" /> -->
 					{#if checkExist($currentUser)}
-						<button class="mr-2 font-medium" on:click={() => replyClick(c.id)}>reply</button>
+						<button class="mr-2 font-medium" on:click={() => replyClick(c.id)}>Reply</button>
 					{/if}
 					{#if c?.userId == $currentUser?.UserID}
-						<button class="mr-2 font-medium" on:click={() => editClick(c.id)}>edit</button>
+						<button class="mr-2 font-medium" on:click={() => editClick(c.id)}>Edit</button>
 						<button class="mr-2 font-medium text-red-500" on:click={() => deleteClick(c.id)}
-							>delete</button
+							>Delete</button
 						>
 					{/if}
 				</div>
@@ -258,22 +258,18 @@
 							<div id="replycontent{reply.id}">{reply.replyContent}</div>
 							<div class="hidden" id="replyeditor{reply.id}">
 								<Textarea bind:value={editreply.replyContent} />
-								<div class="flex justify-end"><Button onclick={updateReply} content="save" /></div>
+								<div class="flex justify-end"><Button onclick={updateReply} content="Save" /></div>
 							</div>
 							<div class="flex items-center">
-								<Icon
-									class="text-2xl mr-2 font-medium"
-									icon="iconamoon:like-thin"
-									style="color: black"
-								/>
+								
 
 								{#if reply?.userId == $currentUser?.UserID}
 									<button class="mr-2 font-medium" on:click={() => replyeditClick(reply.id)}
-										>edit</button
+										>Edit</button
 									>
 									<button
 										class="mr-2 font-medium text-red-400"
-										on:click={() => replydeleteClick(reply.id)}>delete</button
+										on:click={() => replydeleteClick(reply.id)}>Delete</button
 									>
 								{/if}
 							</div>

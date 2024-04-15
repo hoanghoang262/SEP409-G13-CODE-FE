@@ -79,7 +79,7 @@
 	const evaludatioHandle = async () => {
 		if (rating == 0) {
 			showToast('Evaluation Error', 'Missing evaluation', 'error');
-		} else if (completionPercentage <= 100 || isDone == false) {
+		} else if (completionPercentage < 100 || isDone == false) {
 			showToast('Evaluation', 'You need to complete course first', 'error');
 		} else if (evaluationState == false) {
 			showToast('Evaluation', 'You can already take feedback', 'error');

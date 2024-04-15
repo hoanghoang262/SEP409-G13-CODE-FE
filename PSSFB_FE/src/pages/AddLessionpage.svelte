@@ -6,14 +6,15 @@
 	import { initQuestion, type Lession, initLessions, initAnswer } from '$lib/type';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
-	import { checkExist, showToast } from '../helpers/helpers';
+	import { checkExist, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import { addLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import Dropzone from 'svelte-file-dropzone';
 	import { getURL, getVideoURL, uploadVid } from '../firebase';
 	import { pageStatus } from '../stores/store';
+	import Icon from '@iconify/svelte';
 
-	export let course:any;
+	export let course: any;
 	let lession: Lession = initLessions();
 	$: questions = lession.questions;
 	const ids = $page.params.ids.split('/');
@@ -111,6 +112,8 @@
 			</div>
 			<Label defaultClass=" mb-3 block">Duration</Label>
 			<input
+				min="1"
+				on:blur={handlePosetiveInput}
 				type="number"
 				class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
 				required
@@ -126,7 +129,7 @@
 				placehoder="Video URL"
 				bind:value={lession.videoUrl}
 			/> -->
-			
+
 			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
 			<video id="vid" class="hidden mb-5" width="400" height="300" controls>
 				<track kind="captions" />
@@ -142,36 +145,43 @@
 			<Label defaultClass=" mb-3 block">Question</Label>
 
 			{#each questions as q, index}
-				<div class="flex justify-between">
-					<div class="w-4/5">
+				<div>
+					<div class="flex justify-between">
 						<button
-							class="mb-5"
+							class="mb-5 flex text-blue-500 items-center"
 							on:click={() => {
 								SelectedQIndex = index;
 								defaultModal = true;
-							}}>question #{index + 1}</button
-						>
-						<Label defaultClass=" mb-3 block">Question Content</Label>
-						<Textarea bind:value={q.contentQuestion} />
-						<Label defaultClass=" mb-3 block">Popup Second</Label>
-						<input
-							type="number"
-							class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
-							required
-							name="duration"
-							placeholder="duration"
-							bind:value={q.time}
-						/>
-					</div>
-					<div class="w-1/5 flex items-end">
-						<Button type="danger"
-							onclick={() => {
-								DeleteQ(index);
 							}}
-							content="Delete"
-						/>
+							>Question #{index + 1}
+							<Icon class="ml-1" icon="material-symbols:edit" style="color: #5c61ff" /></button
+						>
+						<div class="w-1/5 flex items-end">
+							<Button
+								type="danger"
+								onclick={() => {
+									DeleteQ(index);
+								}}
+								content="Delete"
+							/>
+						</div>
 					</div>
+					<Label defaultClass=" mb-3 block">Question Content</Label>
+					<Textarea class="w-4/5 ml-5" bind:value={q.contentQuestion} />
+					<Label defaultClass=" mb-3 block">Popup Second</Label>
+					<input
+						min="1"
+						on:blur={handlePosetiveInput}
+						type="number"
+						class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
+						required
+						name="duration"
+						placeholder="duration"
+						bind:value={q.time}
+					/>
 				</div>
+
+				<hr class="my-5" />
 			{/each}
 
 			<Button onclick={addQues} content="Add Question" />
@@ -193,7 +203,7 @@
 				<Input classes="border w-2/3" bind:value={answer.optionsText} />
 				<input type="checkbox" bind:checked={answer.correctAnswer} />
 			</div>
-			<div><Button type="danger" onclick={() => DeleteA(index)} content="Delete Answer" /></div>
+			<div><Button type="danger" onclick={() => DeleteA(index)} content="" /></div>
 		</div>
 	{/each}
 	<Button

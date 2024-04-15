@@ -466,7 +466,7 @@
 						<Table>
 							<TableHead>
 								<TableHeadCell>Course</TableHeadCell>
-								<TableHeadCell>Payid Date</TableHeadCell>
+								<TableHeadCell>Paid Date</TableHeadCell>
 								<TableHeadCell>Price</TableHeadCell>
 							</TableHead>
 							<TableBody tableBodyClass="divide-y">
@@ -478,7 +478,7 @@
 												<div>{p.courseName ?? 'no information'}</div>
 											</div></TableBodyCell
 										>
-										<TableBodyCell>{p.transactionDate ?? 'no information'}</TableBodyCell>
+										<TableBodyCell>{formatDate(p.transactionDate) ?? 'no information'}</TableBodyCell>
 										<TableBodyCell>{convertToVND(p.money ?? 0)}</TableBodyCell>
 									</TableBodyRow>
 								{/each}

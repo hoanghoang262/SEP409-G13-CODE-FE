@@ -8,6 +8,7 @@
 	import { checkExist, showToast } from '../helpers/helpers';
 	import { createAdminPost, putPost } from '$lib/services/ForumsServices';
 	import { createPost, sendPostToModeration, updateModPost } from '$lib/services/ModerationServices';
+	import { goto } from '$app/navigation';
 
 	export let post: any;
 	export let type = 'approved';
@@ -36,6 +37,7 @@
 			} catch (error) {
 				console.log(error);
 			}
+			goto('/forums')
 			pageStatus.set('done');
 		}
 	};

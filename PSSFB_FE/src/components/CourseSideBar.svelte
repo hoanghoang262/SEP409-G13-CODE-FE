@@ -53,18 +53,18 @@
 		>
 			<div class="flex items-center">
 				<div
-				class="mr-5"
-				tabindex="0"
-				role="button"
-				on:keydown={() => {
-					() => hidden2(index);
-				}}
-				on:click={() => hidden2(index)}
-				id="si{index}"
-			>
-				{@html minus}
-			</div>
-			{s?.name}
+					class="mr-5"
+					tabindex="0"
+					role="button"
+					on:keydown={() => {
+						() => hidden2(index);
+					}}
+					on:click={() => hidden2(index)}
+					id="si{index}"
+				>
+					{@html minus}
+				</div>
+				{s?.name}
 			</div>
 			{#if s?.isCompleted}
 				<Icon icon="el:ok" style="color: #06c403" />
@@ -75,14 +75,23 @@
 				<a
 					href="/lession/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class=" pl-10 py-2 border-b flex items-center flex-wrap {s?.isCompleted
-						? 'bg-lime-100'
-						: ''}"
+					class=" pl-10 border-b flex items-center flex-wrap {s?.isCompleted ? 'bg-lime-100' : ''}"
 				>
 					<Icon class="mr-3" icon="ion:book-sharp" style="color: gray" />
 
 					{l.title}
-					<div class="truncate w-full pl-7 pr-10 text-sm text-neutral-500">{l.description}</div>
+					<div class="flex w-full {l?.isCompleted ? 'justify-between pr-3' : ''}">
+						<div
+							class="truncate {l?.isCompleted
+								? 'w-3/4'
+								: 'w-full'} pl-7 pr-5 text-sm text-neutral-500"
+						>
+							{l.description}
+						</div>
+						{#if l?.isCompleted}
+							<Icon icon="el:ok" style="color: #06c403" />
+						{/if}
+					</div>
 				</a>
 			{/each}
 
@@ -90,32 +99,37 @@
 				<a
 					href="/codelession/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class="pl-10 py-3 border-b flex items-center {s?.isCompleted
-						? 'bg-lime-100'
-						: ''}"
+					class="pl-10 py-3 border-b flex items-center {l?.isCompleted ? 'bg-lime-100' : ''}"
 				>
-					<div>
+					<div class="">
 						<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
 					</div>
 
-					<div class="truncate pr-10">{l.description}</div>
+					<div class="truncate w-2/3 mr-11">{l.description}</div>
+
+					{#if l?.isCompleted}
+						<Icon icon="el:ok" style="color: #06c403" />
+					{/if}
 				</a>
 			{/each}
 
 			{#each s.lastExam as l}
-				<div class="pl-10 py-3 border-b flex items-center {s?.isCompleted
-					? 'bg-lime-100'
-					: ''}">
+				<a
+					href="/exam/{courseId}/{s.id}/{l.id}"
+					target="_blank"
+					class="pl-10 py-3 border-b flex items-center {l?.isCompleted ? 'bg-lime-100' : ''}"
+				>
 					<Icon
 						class="mr-3 text-2xl"
 						icon="healthicons:i-exam-multiple-choice-outline"
 						style="color: gray"
 					/>
 
-					<a href="/exam/{courseId}/{s.id}/{l.id}" target="_blank" class="truncate pr-10"
-						>{l.name}</a
-					>
-				</div>
+					<div class="truncate pr-20">{l.name}</div>
+					{#if l?.isCompleted}
+						<Icon icon="el:ok" style="color: #06c403" />
+					{/if}
+				</a>
 			{/each}
 		</div>
 	{/each}

@@ -84,7 +84,7 @@
 					</button>
 					<button
 						class="hover:underline"
-						on:click={() => goto(`/manager/coursesmanager/editcourse/${courseId}`)}
+						on:click={() => goto(`/manager/moderationcourses/detail/${courseId}`)}
 						><p class="overflow-hidden">{course.name}</p></button
 					>
 				</div>
