@@ -30,9 +30,9 @@
 	});
 </script>
 
-<div class="overflow-hidden md:h-[calc(100vh-64px)] h-[calc(100vh-64px)] bg-blue-950 text-white">
-	<div class="h-full flex items-center justify-center md:justify-between">
-		<img alt="blb" class="md:block hidden w-3/6" src={bigLogBlack} />
-		<div class="md:w-2/6 md:mr-24"><LoginContainer /></div>
+<div class="overflow-hidden md:h-[calc(100vh-96px)] h-[calc(100vh-64px)] bg-blue-950 text-white">
+	<div class="h-full flex items-center justify-center md:justify-between overflow-hidden">
+		<img alt="blb" class="md:block hidden w-3/6 overflow-hidden" src={bigLogBlack} />
+		<div class="md:w-2/6 md:mr-24 overflow-hidden"><LoginContainer /></div>
 	</div>
 </div>
