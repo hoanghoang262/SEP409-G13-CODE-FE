@@ -84,13 +84,16 @@
 	onMount(async () => {
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
-			console.log(userInfo.birthDate);
 			date = formatDateForInput(new Date(userInfo.birthDate).toJSON().slice(0, 10));
 			info = userInfoTrim();
 		}
 
 		payments = getPaymentByByUserId($currentUser?.UserID);
 	});
+
+	$: if (editStatus == false) {
+		info = userInfoTrim();
+	}
 
 	let image: any;
 	let info = {
@@ -123,8 +126,6 @@
 	// 	const editfrm: any = document.getElementById('editfrm');
 	// 	editfrm.submit();
 	// };
-
-	$: console.log(date);
 
 	async function frmSubmit() {
 		info.birthDate = date;
@@ -378,7 +379,7 @@
 							autocomplete="off"
 							id="username"
 							type="text"
-							placeholder="Your user name"
+							placeholder="Null"
 							bind:value={info.username}
 							disabled={editStatus ? false : true}
 						/>
@@ -398,7 +399,7 @@
 						autocomplete="off"
 						id="fullname"
 						type="text"
-						placeholder="Your fullname"
+						placeholder="null"
 						bind:value={info.fullname}
 						disabled={editStatus ? false : true}
 					/>
@@ -419,7 +420,7 @@
 							autocomplete="off"
 							id="phone"
 							type="text"
-							placeholder="Your phone"
+							placeholder="null"
 							bind:value={info.phone}
 							disabled={editStatus ? false : true}
 						/>
@@ -438,7 +439,7 @@
 							type="date"
 							bind:value={date}
 							disabled={editStatus ? false : true}
-							placeholder="Birth date"
+							placeholder="null"
 						/>
 						<!-- <input
 							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -465,7 +466,7 @@
 						autocomplete="off"
 						id="email"
 						type="text"
-						placeholder="Your email"
+						placeholder="null"
 						bind:value={info.email}
 						disabled={editStatus ? false : true}
 					/>
@@ -485,7 +486,7 @@
 						autocomplete="off"
 						id="address"
 						type="text"
-						placeholder="Your address"
+						placeholder="null"
 						bind:value={info.address}
 						disabled={editStatus ? false : true}
 					/>
@@ -504,7 +505,7 @@
 						autocomplete="off"
 						id="fblink"
 						type="text"
-						placeholder="Your facebook link"
+						placeholder="null"
 						bind:value={info.facebookLink}
 						disabled={editStatus ? false : true}
 					/>
@@ -534,7 +535,9 @@
 												<div>{p.courseName ?? 'no information'}</div>
 											</div></TableBodyCell
 										>
-										<TableBodyCell>{formatDate(p.transactionDate) ?? 'no information'}</TableBodyCell>
+										<TableBodyCell
+											>{formatDate(p.transactionDate) ?? 'no information'}</TableBodyCell
+										>
 										<TableBodyCell>{convertToVND(p.money ?? 0)}</TableBodyCell>
 									</TableBodyRow>
 								{/each}
