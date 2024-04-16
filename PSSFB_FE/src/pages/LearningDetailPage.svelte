@@ -83,10 +83,11 @@
 		} else if (completionPercentage < 100 || isDone == false) {
 			showToast('Evaluation', 'You need to complete course first', 'error');
 		} else if (evaluationState == false) {
-			showToast('Evaluation', 'You can already take feedback', 'error');
+			showToast('Evaluation', 'You are already take feedback', 'error');
 		} else {
 			const response = await createUserEvaluation($currentUser.UserID, course.id, rating);
 			showToast('Evaluation', 'Add evaluation success', 'success');
+			evaluationState = false;
 		}
 	};
 
