@@ -1,5 +1,8 @@
 <script lang="ts">
 	export let rating = 0;
+	export let size = 16;
+	let width: number = size;
+	let height: number = size;
 	const fullStar =
 		'M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z';
 	('M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z');
@@ -19,7 +22,7 @@
 					fill={rating >= 1 ? 'currentColor' : 'none'}
 					stroke="currentColor"
 					stroke-width="1.5"
-					class="w-4 h-4 {rating >= 1 ? 'text-yellow-300' : ''} cursor-pointer"
+					class="w-[{width}px] h-[{height}px] {rating >= 1 ? 'text-yellow-300' : ''} cursor-pointer"
 				>
 					<path fill-rule="evenodd" d={rating >= 1 ? fullStar : emptyStar} clip-rule="evenodd"
 					></path>
@@ -31,7 +34,7 @@
 					fill={rating >= 2 ? 'currentColor' : 'none'}
 					stroke="currentColor"
 					stroke-width="1.5"
-					class="w-4 h-4 {rating >= 2 ? 'text-yellow-300' : ''} cursor-pointer"
+					class="w-[{width}px] h-[{height}px] {rating >= 2 ? 'text-yellow-300' : ''} cursor-pointer"
 				>
 					<path fill-rule="evenodd" d={rating >= 2 ? fullStar : emptyStar} clip-rule="evenodd"
 					></path>
@@ -43,7 +46,7 @@
 					fill={rating >= 3 ? 'currentColor' : 'none'}
 					stroke="currentColor"
 					stroke-width="1.5"
-					class="w-4 h-4 {rating >= 3 ? 'text-yellow-300' : ''} cursor-pointer"
+					class="w-[{width}px] h-[{height}px] {rating >= 3 ? 'text-yellow-300' : ''} cursor-pointer"
 				>
 					<path fill-rule="evenodd" d={rating >= 3 ? fullStar : emptyStar} clip-rule="evenodd"
 					></path>
@@ -55,7 +58,7 @@
 					fill={rating >= 4 ? 'currentColor' : 'none'}
 					stroke="currentColor"
 					stroke-width="1.5"
-					class="w-4 h-4 {rating >= 4 ? 'text-yellow-300' : ''} cursor-pointer"
+					class="w-[{width}px] h-[{height}px] {rating >= 4 ? 'text-yellow-300' : ''} cursor-pointer"
 				>
 					<path fill-rule="evenodd" d={rating >= 4 ? fullStar : emptyStar} clip-rule="evenodd"
 					></path>
@@ -67,7 +70,7 @@
 					stroke="currentColor"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
-					class="w-4 h-4 {rating >= 5 ? 'text-yellow-300' : ''} cursor-pointer"
+					class="w-[{width}px] h-[{height}px] {rating >= 5 ? 'text-yellow-300' : ''} cursor-pointer"
 				>
 					<path
 						stroke-linecap="round"

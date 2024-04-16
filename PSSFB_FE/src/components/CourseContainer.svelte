@@ -19,12 +19,6 @@
 	export let DeleteCourse: any = () => {};
 
 	export let RemoveFromWishList: any = () => {};
-	let rating: number;
-
-	onMount(async () => {
-		const response = await getUserEvaluation($currentUser.UserID, course.id);
-		rating = response.value;
-	});
 </script>
 
 <div class="relative h-[450px]">
@@ -50,7 +44,7 @@
 					{:else}
 						<div class="flex-col w-full">
 							<div class="float-start">
-								<RatingStar {rating} />
+								<RatingStar rating={course.averageEvaluate.toFixed()} />
 							</div>
 							<button
 								on:click={() => goto(`/learning/${course.id}`)}

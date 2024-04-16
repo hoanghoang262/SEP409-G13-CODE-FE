@@ -25,6 +25,7 @@
 	import PercentCircle from '../components/PercentCircle.svelte';
 	import axios from 'axios';
 	import { Modal } from 'flowbite-svelte';
+	import RatingStar from '../atoms/RatingStar.svelte';
 
 	export let data: any;
 	let course: any = data.course;
@@ -57,7 +58,7 @@
 
 	onMount(async () => {
 		getProgressCourses($currentUser.UserID).then((result: any) => {
-			let pcourse = result?.enrolledCourses?.find((c: any) => (c.id == course.id));
+			let pcourse = result?.enrolledCourses?.find((c: any) => c.id == course.id);
 			if (pcourse?.completionPercentage) {
 				completionPercentage = Math.round(pcourse.completionPercentage);
 				isDone = pcourse.isDone;
@@ -156,14 +157,10 @@
 		<div class="w-2/3">
 			<div class="text-6xl my-5">{course?.name}</div>
 			<div class="flex text-4xl my-5">
-				<Icon icon="material-symbols:star" style="color: #ffd500" />
-				<Icon icon="material-symbols:star" style="color: #ffd500" />
-				<Icon icon="material-symbols:star" style="color: #ffd500" />
-				<Icon icon="material-symbols:star" style="color: #ffd500" />
-				<Icon icon="material-symbols:star" style="color: #ffd500" />
+				<RatingStar size={24} {rating} />
 			</div>
 			<div class="flex items-center">
-				<Avatar src={course?.avatar} classes="w-10 rounded-full mr-3" />
+				<Avatar src={course?.avatar} classes="w-10 h-10 rounded-full mr-3" />
 				<div class="text-xl">{course?.created_Name}</div>
 			</div>
 			<div class="flex items-center">
