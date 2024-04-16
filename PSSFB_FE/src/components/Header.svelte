@@ -116,7 +116,7 @@
 						/>
 						<p class="lg:mr-3 hidden lg:block truncate">{$currentUser.displayName}</p>
 					</a>
-					<div class="mr-5"><Notification /></div>
+					<div class="mr-1 md:mr-5"><Notification /></div>
 					<LogoutBtn />
 				{/if}
 			</div>

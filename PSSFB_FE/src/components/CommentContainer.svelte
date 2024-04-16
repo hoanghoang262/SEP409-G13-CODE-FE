@@ -220,11 +220,17 @@
 				<div class="flex items-center">
 					<!-- <Icon class="text-2xl mr-3" icon="iconamoon:like-thin" style="color: black" /> -->
 					{#if checkExist($currentUser)}
-						<button class="mr-2 font-medium" on:click={() => replyClick(c.id)}>Reply</button>
+						<button
+							class="mr-2 text-xs text-gray-600 hover:text-blue-600"
+							on:click={() => replyClick(c.id)}>Reply</button
+						>
 					{/if}
 					{#if c?.userId == $currentUser?.UserID}
-						<button class="mr-2 font-medium" on:click={() => editClick(c.id)}>Edit</button>
-						<button class="mr-2 font-medium text-red-500" on:click={() => deleteClick(c.id)}
+						<button
+							class="mr-2 text-xs text-gray-600 hover:text-blue-600"
+							on:click={() => editClick(c.id)}>Edit</button
+						>
+						<button class="mr-2 text-xs text-red-500" on:click={() => deleteClick(c.id)}
 							>Delete</button
 						>
 					{/if}
@@ -261,14 +267,13 @@
 								<div class="flex justify-end"><Button onclick={updateReply} content="Save" /></div>
 							</div>
 							<div class="flex items-center">
-								
-
 								{#if reply?.userId == $currentUser?.UserID}
-									<button class="mr-2 font-medium" on:click={() => replyeditClick(reply.id)}
-										>Edit</button
+									<button
+										class="mr-2 text-xs text-gray-600 hover:text-blue-600"
+										on:click={() => replyeditClick(reply.id)}>Edit</button
 									>
 									<button
-										class="mr-2 font-medium text-red-400"
+										class="mr-2 text-xs text-red-400 hover:text-red-500"
 										on:click={() => replydeleteClick(reply.id)}>Delete</button
 									>
 								{/if}
