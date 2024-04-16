@@ -57,7 +57,7 @@
 <div class="px-40 py-20 ">
 	<div class="p-20 border rounded-xl bg-white">
 		<div class="text-center font-bold text-4xl text-blue-500">{convertSecondsToMmSs(timeleft)}</div>
-		<div class="text-4xl font-bold">{exam.name}</div>
+		<div class="text-3xl font-bold">{exam.name}</div>
 		<hr class="my-5" />
 		<div class="mb-5">
 			The due date for this exam is <span class="font-bold text-blue-500"

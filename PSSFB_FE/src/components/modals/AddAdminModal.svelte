@@ -74,12 +74,13 @@
 				const response = await AddAdmin(admin);
 				console.log(response);
 				await afterAdd();
+				showToast('Add Admin', 'Add Admin success full', 'success');
 			} catch (error: any) {
 				console.error(error);
 				showToast('Add Admin', error.message, 'error');
 			}
 		}
-        showToast('Add Admin', 'Add Admin success full', 'success');
+       
 		pageStatus.set('done');
 	};
 </script>

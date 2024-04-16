@@ -44,7 +44,7 @@
 					{:else}
 						<div class="flex-col w-full">
 							<div class="float-start">
-								<RatingStar rating={course.averageEvaluate.toFixed()} />
+								<RatingStar rating={course?.averageEvaluate?.toFixed()} />
 							</div>
 							<button
 								on:click={() => goto(`/learning/${course.id}`)}
