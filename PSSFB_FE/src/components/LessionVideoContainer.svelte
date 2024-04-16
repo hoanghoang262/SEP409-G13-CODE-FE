@@ -20,7 +20,7 @@
 
 	$:{
 		const video:any = document.getElementById("video")
-		if(video?.duration - currentTime < 3000){
+		if(video?.duration == currentTime){
 			completeLession($currentUser?.UserID, lession?.id)
 		}
 	}
