@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 	import { pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
+	import Editor from '@tinymce/tinymce-svelte/dist/ts/component/Editor.svelte';
 
 	export let course:any;
 	const ids = $page.params.ids.split('/');
@@ -40,7 +41,10 @@
 			<Label defaultClass=" mb-3 block">Add Pratice Question</Label>
 			<hr class="my-5" />
 			<Label>Description</Label>
-			<Textarea bind:value={codeQuestion.description}/>
+			<Editor
+				bind:value={codeQuestion.description}
+				apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
+			/>
 			<Label>CodeForm</Label>
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
 			<Label>TestCases</Label>

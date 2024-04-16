@@ -50,6 +50,7 @@
 			showToast('Add Exam', 'something went wrong', 'error');
 		}
 		pageStatus.set('done');
+		goto('/manager/creattingcourses')
 	};
 </script>
 

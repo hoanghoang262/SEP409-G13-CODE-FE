@@ -21,7 +21,7 @@
             <div class="mb-2 {answer.correctAnswer?"text-lime-400":"text-red-500"}"> {answer.optionsText}</div>
         {/each}
     </div>
-    <svelte:fragment slot="footer">
+    <div class="{answering?"":"hidden"}" slot="footer">
 		<Button on:click={() => answering=false} color="alternative">Answer</Button>
-	</svelte:fragment>
+	</div>
 </Modal>

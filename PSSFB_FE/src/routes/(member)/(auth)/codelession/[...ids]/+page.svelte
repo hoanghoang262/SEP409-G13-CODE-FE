@@ -25,7 +25,7 @@
 	})
 	const chapter = data?.chapter;
 	const lession = data?.practiceQuestion;
-	let result: any = [];
+	let result: any = '';
 
 	const executeCode = async () => {
 		pageStatus.set('load');
@@ -43,29 +43,29 @@
 				break;
 			case 'C':
 				const cf: string = CForm(lession.codeForm, lession.testCaseC);
+				console.log(lession)
 				console.log({ practiceQuestionId: lession.id, userCode: cf, userId: $currentUser.UserID });
-				result = ExecuteResult(
+				result = 
 					await CComplier({
 						practiceQuestionId: lession.id,
 						userCode: cf,
 						userId: $currentUser.UserID
-					})
+					}
 				);
 				break;
 			case 'C++':
 				const cpf: string = CPlusForm(lession.codeForm, lession.testCaseCplus);
 				console.log({ practiceQuestionId: lession.id, userCode: cpf, userId: $currentUser.UserID });
-				result = ExecuteResult(
+				result = 
 					await CPlusComplier({
 						practiceQuestionId: lession.id,
 						userCode: cpf,
 						userId: $currentUser.UserID
-					})
+					}
 				);
 				break;
 		}
 
-		console.log(result);
 		pageStatus.set('done');
 	};
 </script>

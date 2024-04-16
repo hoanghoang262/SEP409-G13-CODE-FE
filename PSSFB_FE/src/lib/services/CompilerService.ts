@@ -83,11 +83,19 @@ export const JavaEditor = async (data: any) => {
 
 export const CForm = (codeForm: string, testCase: string) => {
 	const CForm = `#include <stdio.h>
-
-	#define assertEqual(expected, actual)  if((expected) == (actual)) { printf("All Test Pass\n"); } else { printf("Test Failed: Expected: %d, Actual: %d\n", expected, actual);} \n ${codeForm} \n ${testCase} \n int main() {
-		TestCase();
-		return 0;
-	}`;
+	#include <stdlib.h>
+	
+	#define assertEqual(expected, actual, message)  \
+		if ((expected) == (actual)) {               \
+					  \
+		} else {                                    \
+			printf("Test Failed At Input: %s. Expected: %d, Actual: %d", message, expected, actual); \
+			exit(0);                                \
+		} \n ${codeForm} \n ${testCase} \n 
+		int main() {
+			TestCase();
+			return 0;
+		}`
 	return CForm;
 };
 
