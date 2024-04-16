@@ -38,16 +38,14 @@
 			<div class="overflow-hidden p-4 transition delay-50 duration-300 ease-in-out">
 				<div class="flex justify-between items-center">
 					{#if $currentUser?.Role == 'AdminBussiness'}
-						<div class="float-start">
-							<RatingStar size={18} rating={course.averageEvaluate.toFixed()} />
-						</div>
+						
 						<button class="w-full text-left font-medium text-xl mb-2 group-hover:underline truncate"
 							>{course.name}</button
 						>
 					{:else}
 						<div class="flex-col w-full">
 							<div class="float-start">
-								<RatingStar rating={course?.averageEvaluate?.toFixed()} />
+								<RatingStar size={18} rating={course?.averageEvaluate?.toFixed()} />
 							</div>
 							<button
 								on:click={() => goto(`/learning/${course.id}`)}
