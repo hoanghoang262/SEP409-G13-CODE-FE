@@ -109,6 +109,8 @@ export const JavaForm = (codeForm: string, testCase: string) => {
 				}
 						if (expected == null || !expected.equals(actual)) {
 										System.out.println("Test Failed At Input: "+ message+ " ,Expected: " + expected + ", but was: " + actual);
+										System.exit(0);
+
 						}
 					} \n ${codeForm} \n ${testCase} \n}`;
 	return JavaForm;

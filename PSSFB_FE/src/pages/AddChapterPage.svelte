@@ -3,7 +3,7 @@
 	import Input from '../atoms/Input.svelte';
 	import Button from '../atoms/Button.svelte';
 	import { goto } from '$app/navigation';
-	import { showToast } from '../helpers/helpers';
+	import { handlePosetiveInput, showToast } from '../helpers/helpers';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { afterUpdate } from 'svelte';
 
@@ -36,6 +36,8 @@
 			<div class="mt-5">
 				<p class=" mb-1">Part</p>
 				<input
+					min=1
+					on:blur={handlePosetiveInput}
 					type="number"
 					name="part"
 					class="block w-full border mb-5 py-3 px-5 font-light text-black rounded-md"

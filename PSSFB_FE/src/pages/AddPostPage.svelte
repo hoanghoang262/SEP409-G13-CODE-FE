@@ -8,6 +8,7 @@
 	import { checkExist, showToast } from '../helpers/helpers';
 	import { createAdminPost } from '$lib/services/ForumsServices';
 	import { createPost } from '$lib/services/ModerationServices';
+	import { goto } from '$app/navigation';
 
 	let post = {
 		title: '',
@@ -37,6 +38,7 @@
 			} catch (error) {
 				console.log(error);
 			}
+			goto('/forums')
 			pageStatus.set('done');
 		}
 	};

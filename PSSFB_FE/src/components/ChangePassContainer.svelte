@@ -34,6 +34,16 @@
 			return
 		}
 
+		if(newP != verify){
+			showToast(
+				'Password warning',
+				'password and re-password are unmatch',
+				'warning'
+			);
+			return
+		}
+
+
 		pageStatus.set('load');
 		if (checkExist(old) && checkExist(newP)) {
 			const user: any = await get(currentUser);

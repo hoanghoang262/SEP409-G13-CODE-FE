@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { convertSecondsToMmSs, secondsToDateTime, showToast } from '../../../../../../helpers/helpers';
+	import { convertSecondsToMmSs, secondsToDateTime, showToast, formatLongToDate } from '../../../../../../helpers/helpers';
 	import { goto } from '$app/navigation';
 	import { currentUser, pageStatus } from '../../../../../../stores/store';
 	import Button from '../../../../../../atoms/Button.svelte';
@@ -19,7 +19,7 @@
 	let time = exam.time;
 	let submitData = {
 		lastExamId: exam.id,
-		userId: $currentUser.UserID,
+		userId: $currentUser?.UserID,
 		questionExam: questionExams.map((qe: any) => {
 			return { id: qe.id, selectedAnswerIds: [] };
 		})
@@ -54,14 +54,14 @@
 	}
 </script>
 
-<div class="px-40 py-40 ">
+<div class="px-40 py-20 ">
 	<div class="p-20 border rounded-xl bg-white">
 		<div class="text-center font-bold text-4xl text-blue-500">{convertSecondsToMmSs(timeleft)}</div>
 		<div class="text-4xl font-bold">{exam.name}</div>
 		<hr class="my-5" />
 		<div class="mb-5">
 			The due date for this exam is <span class="font-bold text-blue-500"
-				>{secondsToDateTime(Date.now() + time)}</span
+				>{formatLongToDate(Date.now() + time*1000)}</span
 			>
 		</div>
 		{#each questionExams as qe, index}

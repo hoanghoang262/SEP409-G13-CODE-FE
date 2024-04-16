@@ -55,7 +55,7 @@ export const translations: any = {
     "Last Update": "Cập nhập",
     "Edit": "Chỉnh sửa",
     "Delete": "Xóa",
-    "Reject": "Gỡ",
+    "Reject": "Từ chối",
     "Approve": "Duyệt",
     "Language": "Ngôn ngữ",
     "Add note at": "Thêm note vào",
