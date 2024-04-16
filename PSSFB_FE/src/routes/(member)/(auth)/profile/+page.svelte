@@ -54,8 +54,18 @@
 	let changeStatus = false;
 	let editStatus = false;
 	let payments: any;
+	let siteBarShow = false;
 
 	let date: any;
+
+	const onLogout = async () => {
+		localStorage.removeItem('user');
+		currentUser.set(undefined);
+		logout();
+		//await axios.post('/?/logout', JSON.stringify({}));
+
+		goto('/');
+	};
 
 	function formatDateForInput(dateString: any) {
 		const date = new Date(dateString);
@@ -184,6 +194,7 @@
 				showToast('De-active', 'something went wrong', 'error');
 			}
 			secondWM = false;
+			onLogout();
 		} else {
 			showToast('De-active', 'incorrect password', 'warning');
 		}
@@ -207,9 +218,51 @@
 	}
 </script>
 
-<div class="min-h-[calc(100vh-96px)] flex bg-gray-100 mb-2">
+<div class="relative min-h-[calc(100vh-96px)] flex bg-gray-100 mb-2">
 	<ResetPasswordModal bind:showModal />
-	<div class="w-1/6 p-5 rounded-xl bg-white border-gray-200 border-2 pt-10">
+	<button
+		on:click={() => (siteBarShow = true)}
+		class="absolute top-1 right-2 md:hidden block hover:text-green-500 p-1 hover:border-gray-100 hover:border-2 rounded-md"
+	>
+		<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" {...$$props}>
+			<g fill="none" fill-rule="evenodd">
+				<path
+					d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
+				/>
+				<path
+					fill="currentColor"
+					d="M12.707 15.707a1 1 0 0 1-1.414 0L5.636 10.05A1 1 0 1 1 7.05 8.636l4.95 4.95l4.95-4.95a1 1 0 0 1 1.414 1.414z"
+				/>
+			</g>
+		</svg>
+	</button>
+	<div
+		class="z-1 w-full md:w-1/6 p-5 md:rounded-xl bg-gray-100 md:bg-white border-gray-200 border-2 pt-10 md:relative fixed {siteBarShow
+			? 'block'
+			: 'hidden'} md:block"
+	>
+		<button
+			on:click={() => (siteBarShow = false)}
+			class="hover:text-green-500 absolute top-1 right-2 mb-2"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="28"
+				height="28"
+				viewBox="0 0 24 24"
+				{...$$props}
+			>
+				<g fill="none" fill-rule="evenodd">
+					<path
+						d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"
+					/>
+					<path
+						fill="currentColor"
+						d="M11.293 8.293a1 1 0 0 1 1.414 0l5.657 5.657a1 1 0 0 1-1.414 1.414L12 10.414l-4.95 4.95a1 1 0 0 1-1.414-1.414z"
+					/>
+				</g>
+			</svg>
+		</button>
 		<div class="w-full">
 			<button
 				class="hover:bg-blue-200 w-full py-2 rounded-lg font-medium text-base border-gray-100 border {section ==
@@ -248,7 +301,7 @@
 		</div>
 	</div>
 	<div
-		class="m-auto min-h-screen h-full w-4/6 px-5 rounded-xl bg-white border-gray-200 border-2 pt-5"
+		class="m-auto min-h-screen h-full md:w-4/6 px-5 md:rounded-xl bg-white border-gray-200 border-2 pt-5"
 	>
 		{#if section == 'Infomation & Contact'}
 			<div class="flex justify-between">
@@ -265,7 +318,7 @@
 					<!-- svelte-ignore a11y-img-redundant-alt -->
 					<div class="flex justify-between items-end w-full">
 						<img
-							class="w-16 h-16 md:h-20 md:w-20 my-4 object-cover rounded-full"
+							class="w-14 h-14 md:h-20 md:w-20 md:my-4 object-cover rounded-full"
 							src={checkExist(info.profilePict)
 								? info.profilePict
 								: 'https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg'}
@@ -289,9 +342,9 @@
 								</div>
 							</div>
 						{:else}
-							<div class="w-fit mb-4">
+							<div class="w-fit md:mb-4">
 								<button
-									class=" px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+									class=" px-4 py-1 md:py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
 									on:click={() => editHandle()}>Edit</button
 								>
 							</div>
@@ -314,7 +367,7 @@
 				</div>
 				<div class="md:mx-5 md:my-5 my-3">
 					<label
-						class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						class=" block md:p-3 px-2 py-2 border-2 {editStatus
 							? 'border-blue-500'
 							: 'border-black'} rounded"
 						for="username"
@@ -334,7 +387,7 @@
 			</div>
 			<div class="md:mx-5 md:my-5 my-3">
 				<label
-					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+					class=" block md:p-3 px-2 py-2 border-2 {editStatus
 						? 'border-blue-500'
 						: 'border-black'} rounded"
 					for="fullname"
@@ -355,7 +408,7 @@
 			<div class="flex">
 				<div class="w-1/2 md:mx-5 mr-2">
 					<label
-						class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+						class=" block md:p-3 px-2 py-2 border-2 {editStatus
 							? 'border-blue-500'
 							: 'border-black'} rounded"
 						for="phone"
@@ -374,14 +427,14 @@
 				</div>
 				<div class="w-1/2 md:mx-5 ml-2">
 					<label
-						class="relative block md:px-3 md:py-2 px-2 py-2 border-2 {editStatus
+						class=" block md:px-3 md:py-2 px-2 py-[3px] border-2 {editStatus
 							? 'border-blue-500'
 							: 'border-black'} rounded"
 						for="birthDate"
 					>
 						<span class="text-sm md:text-md font-semibold text-zinc-900">BirthDate</span>
 						<input
-							class=" bg-transparent p-4 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
+							class=" bg-transparent md:p-4 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
 							type="date"
 							bind:value={date}
 							disabled={editStatus ? false : true}
@@ -401,7 +454,7 @@
 			</div>
 			<div class="  md:mx-5 md:my-5 my-3">
 				<label
-					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+					class=" block md:p-3 px-2 py-2 border-2 {editStatus
 						? 'border-blue-500'
 						: 'border-black'} rounded"
 					for="email"
@@ -421,7 +474,7 @@
 
 			<div class=" md:mx-5 md:my-5 my-3">
 				<label
-					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+					class=" block md:p-3 px-2 py-2 border-2 {editStatus
 						? 'border-blue-500'
 						: 'border-black'} rounded"
 					for="address"
@@ -440,7 +493,7 @@
 			</div>
 			<div class=" md:mx-5 md:my-5 my-3">
 				<label
-					class="relative block md:p-3 px-2 py-2 border-2 {editStatus
+					class=" block md:p-3 px-2 py-2 border-2 {editStatus
 						? 'border-blue-500'
 						: 'border-black'} rounded"
 					for="fblink"

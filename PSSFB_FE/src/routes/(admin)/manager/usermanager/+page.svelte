@@ -6,6 +6,7 @@
 	import { goto } from '$app/navigation';
 	import Avatar from '../../../../atoms/Avatar.svelte';
 	import { page } from '$app/stores';
+	import { formatDate, formatDateTime } from '../../../../helpers/datetime';
 
 	let data: any;
 	let user: any = [];
@@ -40,7 +41,13 @@
 	const tableHeader = [
 		{ label: 'Full Name', map: 'fullName' },
 		{ label: 'Email', map: 'email' },
-		{ label: 'Birthdate', map: 'birthDate' },
+		{
+			label: 'Birthdate',
+			map: 'birthDate',
+			formatData: (data: any) => {
+				return formatDate(data);
+			}
+		},
 		{
 			label: 'Status',
 			map: 'status',
@@ -116,7 +123,7 @@
 				class="block w-full pl-2 md:pl-4 md:pt-3 md:pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
 			>
 				<option value="" selected>
-					<p>Status</p>
+					<p>All</p>
 				</option>
 				<option value="true">Active</option>
 				<option value="false">Deactive</option>
@@ -147,7 +154,7 @@
 					bind:value={searchName}
 					id="default-search"
 					class="block w-full px-4 pt-2 pb-3 md:py-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-					placeholder="Search user by gmail..."
+					placeholder="Search by gmail"
 					autocomplete="off"
 				/>
 			</div>
@@ -172,7 +179,7 @@
 						</th>
 					{/each}
 					<th class="px-3 py-3 md:px-6 md:py-5 border-gray-400 border-r-2 border-l-2"
-						><div class="flex items-center justify-center">Setting</div></th
+						><div class="flex items-center justify-center">Action</div></th
 					>
 				</tr>
 			</thead>

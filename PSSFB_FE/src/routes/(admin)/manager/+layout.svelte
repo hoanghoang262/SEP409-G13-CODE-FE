@@ -23,9 +23,18 @@
 	<div class="h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)]">
 		<div class="relative flex h-full">
 			<!--side bar-->
+			<div class="h-full w-full">
+				<div
+					class="overflow-scroll w-full h-full text-black border border-neutral-300 bg-white p-10"
+				>
+					<div class={showStatus ? 'ml-72' : ''}>
+						<slot />
+					</div>
+				</div>
+			</div>
 			{#if showStatus}
 				<aside
-					class=" relative flex-col min-w-60 w-72 h-full px-5 pt-8 overflow-y-auto bg-white border-r-2 border-gray-400"
+					class="fixed flex-col w-full md:w-72 h-full px-5 pt-8 overflow-y-auto bg-white border-r-2 border-gray-400"
 				>
 					<button
 						on:click={() => (showStatus = false)}
@@ -252,11 +261,6 @@
 					</svg>
 				</button>
 			{/if}
-			<div class="h-full w-full">
-				<div class="overflow-scroll w-full h-full text-black border border-neutral-300 bg-white p-10">
-					<slot />
-				</div>
-			</div>
 		</div>
 	</div>
 </main>

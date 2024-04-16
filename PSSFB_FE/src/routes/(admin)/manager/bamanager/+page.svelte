@@ -16,7 +16,7 @@
 	let searchName = '';
 	let selectStatus: string = '';
 
-	let adminModal =  false;
+	let adminModal = false;
 
 	//Mount and set up data
 	onMount(async () => {
@@ -55,7 +55,7 @@
 	const afterAdd = async () => {
 		const result = await GetAllBusinessAdmin(setParam(pageNumber));
 		data = result;
-	}
+	};
 
 	//Format data
 	const formatStatus = (data: boolean | null) => {
@@ -115,8 +115,9 @@
 <main class="mx-5">
 	<!-- Search input -->
 	<div class="relative w-full md:w-[90%] flex justify-between m-auto md:pt-5 pt-3">
-		<button on:click={() => adminModal = true} class=" px-6 py-2 bg-blue-700 text-white rounded-lg border-gray-400 border-2"
-			>Add</button
+		<button
+			on:click={() => (adminModal = true)}
+			class=" px-6 py-2 bg-blue-700 text-white rounded-lg border-gray-400 border-2">Add</button
 		>
 
 		<div class="flex flex-grow justify-end">
@@ -159,7 +160,7 @@
 						bind:value={searchName}
 						id="default-search"
 						class="block w-full px-4 pt-2 pb-3 md:py-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-						placeholder="Search business admin by gmail..."
+						placeholder="Search by gmail"
 						autocomplete="off"
 					/>
 				</div>
@@ -204,7 +205,7 @@
 										{#if head.formatData}
 											{@html head.formatData(row[head.map])}
 										{:else}
-											{row[head.map]??''}
+											{row[head.map] ?? ''}
 										{/if}
 									</div>
 								</td>

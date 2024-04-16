@@ -38,7 +38,7 @@
 		class=" fixed flex w-full bg-white text-black items-center font-medium border-b-2 z-10 justify-between lg:h-24 h-16"
 	>
 		<div class="flex items-center justify-center">
-			<a href="/" class="lg:w-28 w-24"
+			<a href="/" class="lg:w-28 w-16"
 				><img alt="logo" class="overflow-hidden" width="" src={logoWhite} /></a
 			>
 		</div>

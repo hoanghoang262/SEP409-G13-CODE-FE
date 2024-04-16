@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="bg-white text-black flex justify-center md:justify-between pt-10 border-t-2 border-gray-300 m-auto mt-2"
+	class="bg-white text-black flex justify-center md:justify-between md:pt-10 pt-5 border-t-2 border-gray-300 m-auto mt-2 md:text-lg text-xs"
 >
 	<div class="md:flex hidden mr-10 justify-center">
 		<img alt="blb" class="" width="250px" src={BigLogBlack} />

@@ -125,15 +125,17 @@
 				</div>
 			{/if}
 		{:else if type == 'admin'}
-			<button on:click={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)} class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center">
-					<!-- svelte-ignore a11y-img-redundant-alt -->
-					<img
-						alt="Course Image"
-						src={course.coursePicture}
-						class="w-full h-full text-center object-cover"
-					/>
-				</button>
-			
+			<button
+				on:click={() => goto(`/manager/moderationcourses/detail/${course?.courseId}`)}
+				class="overflow-hidden w-full h-[200px] shadow-md flex justify-center items-center"
+			>
+				<!-- svelte-ignore a11y-img-redundant-alt -->
+				<img
+					alt="Course Image"
+					src={course.coursePicture}
+					class="w-full h-full text-center object-cover"
+				/>
+			</button>
 
 			<div class="p-4">
 				<h3 class="font-medium truncate text-xl mb-2">{course.courseName}</h3>
