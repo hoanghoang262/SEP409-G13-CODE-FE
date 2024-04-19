@@ -146,6 +146,7 @@ const loginWithGoogle = async () => {
 	return user;
 };
 
+
 const registerWithEmailAndPsr = async (email: string, password: string, username: string) => {
 	let user;
 	try {

@@ -35,6 +35,7 @@
     <div class="w-4/5">
         <div>
             <Label defaultClass=" mb-3 block">Edit Pratice Question</Label>
+            <a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodeLession">tutorial how to create a pratice lession</a>
             <hr class="my-5"/>
             <Label defaultClass=" mb-3 block">Description</Label>
 			<div class="mb-5 ml-4">

@@ -39,6 +39,7 @@
 	<div class="w-4/5">
 		<div>
 			<Label defaultClass=" mb-3 block">Add Pratice Question</Label>
+			<a href="/manager/tutorial/createCodeLession">tutorial how to create a pratice lession</a>
 			<hr class="my-5" />
 			<Label>Description</Label>
 			<Editor

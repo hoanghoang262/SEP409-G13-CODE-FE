@@ -3,6 +3,7 @@ import { checkExist } from '../../helpers/helpers';
 
 export const CComplier = async (data: any) => {
 	try {
+		console.log(JSON.stringify(data));
 		const result = await axios.post(
 			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCCodeQuestion`,
 			data
