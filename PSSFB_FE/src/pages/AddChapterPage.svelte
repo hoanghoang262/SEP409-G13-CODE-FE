@@ -22,11 +22,19 @@
 			goto(`/manager/coursesmanager/addcourse/addlession/${course.id}/${chapter.id}`);
 		}
 	});
+
+	const onsubmit = (event:any) => {
+		const part:any = document.getElementById('partinput')
+		if(part.value<1){
+			showToast("Part input","Part must be greater than or equal 1","warning")
+			event.preventDefault();
+		}
+	}
 </script>
 
 <div class="flex">
 	<div class="w-3/5 m-auto mt-8">
-		<form method="POST" action="?/addchapter">
+		<form method="POST" on:submit={onsubmit} action="?/addchapter">
 			<p class=" mb-1 font-medium text-3xl">Add Chapter</p>
 			<hr class="my-1 mb-8" />
 			<div>
@@ -38,6 +46,7 @@
 				<input
 					min=1
 					on:blur={handlePosetiveInput}
+					id="partinput"
 					type="number"
 					name="part"
 					class="block w-full border mb-5 py-3 px-5 font-light text-black rounded-md"

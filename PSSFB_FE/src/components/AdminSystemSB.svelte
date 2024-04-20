@@ -132,7 +132,7 @@
 									</div>
 
 									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
-										>{l.description}</button
+										>{l.title??""}</button
 									>
 									
 								</div>

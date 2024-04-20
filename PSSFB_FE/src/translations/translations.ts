@@ -83,7 +83,7 @@ export const translations: any = {
     "Change Password":"Thay đổi mật khẩu",
     "Payment History":"Lịch sử giao dịch",
     "Reset Password":"Quên mật khẩu",
-    "De-active account":"Ngưng hoạt động",
+    "De-active account":"Vô hiệu hóa",
     "Syllabus - What you will learn from this learn":"Giáo trình chi tiết",
     "Quizzes":"Bài học",
     "Codes":"Bài code",

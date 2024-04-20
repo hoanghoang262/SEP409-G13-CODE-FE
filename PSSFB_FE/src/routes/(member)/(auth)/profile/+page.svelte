@@ -625,11 +625,7 @@
 		Confirm again to delete
 	</div>
 	<Label>Password</Label>
-	<Input
-		placehoder="Password"
-		classes="border-2 border-gray-400 focus:border-none"
-		bind:value={deactivePass}
-	/>
+	<input type="password" bind:value={deactivePass} placeholder="Password" class="py-3 px-5 font-light text-black rounded-md border-2 border-gray-400 focus:border-none" />
 	<svelte:fragment slot="footer">
 		<div class="flex justify-center">
 			<button

@@ -20,12 +20,18 @@
 		showToast('Edit Chapter', form.message, form.type);
 	}
 
-	
+	const onsubmit = (event:any) => {
+		const part:any = document.getElementById('partinput')
+		if(part.value<1){
+			showToast("Part input","Part must be greater than or equal 1","warning")
+			event.preventDefault();
+		}
+	}
 </script>
 
 <div class="flex">
 	<div class="w-4/5">
-		<form method="POST" action="?/editchapter">
+		<form method="POST" on:submit={onsubmit} action="?/editchapter">
 			<input hidden name="id" readonly value={chapter?.id}/>
 			<Label defaultClass=" mb-3 block">Edit Chapter</Label>
 			<hr class="my-3"/>
