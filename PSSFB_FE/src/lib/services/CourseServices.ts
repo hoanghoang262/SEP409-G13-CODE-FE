@@ -103,9 +103,9 @@ export const delNotes = async (id: number) => {
 	}
 };
 
-export const getExam = async (id: number, userId:number|undefined=undefined) => {
+export const getExam = async (id: number, userId: number | undefined = undefined) => {
 	try {
-		const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetExamQuestionDetail?lastExamId=${id}${userId?`&userId=${userId}`:``}`)
+		const result = await axios.get(`https://coursesservices.azurewebsites.net/api/Course/GetExamQuestionDetail?lastExamId=${id}${userId ? `&userId=${userId}` : ``}`)
 		return result.data
 	} catch (error) {
 		console.log(error);
@@ -190,6 +190,13 @@ export const getUserEvaluation = async (userId: number, courseId: number) => {
 	return response.data;
 }
 
+export const getCourseAverageEvaluation = async (courseId: number) => {
+	const response = await axios.get(
+		`https://coursesservices.azurewebsites.net/api/EvaluateCourse/GetCourseAverageRating?courseId=${courseId}`
+	);
+	return response.data;
+}
+
 export const createUserEvaluation = async (userId: number, courseId: number, star: Number) => {
 	const response = await axios.post(
 		`https://coursesservices.azurewebsites.net/api/EvaluateCourse/AddCourseEvaluation`, {
@@ -201,7 +208,7 @@ export const createUserEvaluation = async (userId: number, courseId: number, sta
 	return response.data;
 }
 
-export const completeLession = async(userId:number, lessonId:number) => {
+export const completeLession = async (userId: number, lessonId: number) => {
 	try {
 		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/Course/CompletedLesson?userId=${userId}&lessonId=${lessonId}`)
 		return result.data;

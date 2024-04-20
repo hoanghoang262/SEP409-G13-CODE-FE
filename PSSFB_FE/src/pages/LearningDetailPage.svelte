@@ -13,6 +13,7 @@
 		addWishList,
 		createUserEvaluation,
 		enroll,
+		getCourseAverageEvaluation,
 		getCourseById,
 		getProgressCourses,
 		getUserEvaluation
@@ -35,6 +36,7 @@
 	//let enrolled = false;
 	//let enrolled = false;
 	let rating: any = 0;
+	let averageRate: any = 0;
 	const fullStar =
 		'M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z';
 	('M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z');
@@ -75,6 +77,9 @@
 			`https://coursesservices.azurewebsites.net/api/Enrollment/GetQuantityOfUserEnrollCourse?courseId=${course.id}`
 		);
 		enrollNumber = result.data;
+
+		let courseAverate = await getCourseAverageEvaluation(course.id);
+		averageRate = courseAverate.value;
 	});
 
 	const evaludatioHandle = async () => {
@@ -158,7 +163,7 @@
 		<div class="w-2/3">
 			<div class="text-6xl my-5">{course?.name}</div>
 			<div class="flex text-4xl my-5">
-				<RatingStar size={24} {rating} />
+				<RatingStar size={24} rating={averageRate} />
 			</div>
 			<div class="flex items-center">
 				<Avatar src={course?.avatar} classes="w-10 h-10 rounded-full mr-3" />
