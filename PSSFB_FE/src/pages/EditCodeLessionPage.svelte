@@ -4,7 +4,7 @@
 	import CodeEditor2 from '../components/CodeEditor2.svelte';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { getModCourseById, updateCodeQuestion } from '$lib/services/ModerationServices';
-	import { showToast } from '../helpers/helpers';
+	import { checkTitle, showToast } from '../helpers/helpers';
 	import { pageStatus } from '../stores/store';
     import Editor from '@tinymce/tinymce-svelte';
 
@@ -14,6 +14,11 @@
 	let codeQuestion = data.codeLession;
 
 	const saveCQ = async () => {
+		if(!checkTitle(codeQuestion.title)){
+			showToast('Save Pratice Lession',"Enter title shorter than 256 char")
+			return
+		}
+		
 		pageStatus.set('load');
 		console.log(
 			JSON.stringify({ practiceQuestionId: codeQuestion.id, practiceQuestion: codeQuestion })
@@ -36,9 +41,9 @@
 <div class="flex">
 	<div class="w-4/5">
 		<div>
-			<Label defaultClass=" mb-3 block">Edit Pratice Question</Label>
+			<Label defaultClass="text-xl mb-3 block">Edit Pratice Question</Label>
 			<a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodeLession"
-				>tutorial how to create a pratice lession</a
+				>Tutorial how to create a pratice lession</a
 			>
 			<hr class="my-5" />
 			<Label>Title</Label>

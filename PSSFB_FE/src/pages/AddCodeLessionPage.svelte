@@ -6,7 +6,7 @@
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { addCodeQuestion, getModCourseById } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
-	import { showToast } from '../helpers/helpers';
+	import { checkTitle, showToast } from '../helpers/helpers';
 	import { onMount } from 'svelte';
 	import { pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
@@ -20,6 +20,11 @@
     const courseId:any = ids[0];
 
 	const saveCQ = async () => {
+		if(!checkTitle(codeQuestion.title)){
+			showToast('Save Pratice Lession',"Enter title shorter than 256 char")
+			return
+		}
+
 		pageStatus.set('load')
 		console.log(JSON.stringify({ chapterId, practiceQuestion: codeQuestion }));
 		try {
@@ -38,8 +43,8 @@
 <div class="flex">
 	<div class="w-4/5">
 		<div>
-			<Label defaultClass=" mb-3 block">Add Pratice Question</Label>
-			<a href="/manager/tutorial/createCodeLession">tutorial how to create a pratice lession</a>
+			<Label defaultClass="text-xl mb-3 block">Add Pratice Question</Label>
+			<a href="/manager/tutorial/createCodeLession">Tutorial how to create a pratice lession</a>
 			<hr class="my-5" />
 			<Label>Title</Label>
 			<Textarea bind:value={codeQuestion.title}/>

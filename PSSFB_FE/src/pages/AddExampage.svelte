@@ -38,6 +38,15 @@
 	};
 
 	const AddExam = async () => {
+		if(Exam.time<60){
+			showToast("Save Exam","Exam duration muse be greater or equal one minute")
+			return
+		}
+
+		if(Exam.percentageCompleted<1){
+			showToast("Save Exam","Exam Percentage Completed muse be greater or equal 1%")
+			return
+		}
 		pageStatus.set('load');
 		try {
 			console.log(JSON.stringify({ chapterId, lastExam: Exam }));
@@ -70,7 +79,7 @@
 			class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
 			required
 		/>
-		<Label defaultClass=" mb-3 block">Percentage Complted (%)</Label>
+		<Label defaultClass=" mb-3 block">Percentage Completed (%)</Label>
 		<input
 			min="1"
 			on:blur={handlePosetiveInput}

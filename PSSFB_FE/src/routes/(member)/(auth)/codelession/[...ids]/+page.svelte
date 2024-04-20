@@ -72,7 +72,7 @@
 
 <div class="min-h-[calc(100vh-64px)] md:min-h[calc(100vh-96px)] bg-slate-200 text-black">
 	<div class="px-5 py-2 font-medium flex">
-		{course.name} > {chapter.name} > <div class="truncate max-w-60">{lession.description}</div>
+		{course.name} > {chapter.name} > <div class="truncate max-w-60">{lession.title??""}</div>
 	</div>
 	<div class="flex bg-white text-black">
 		<div class="w-1/5"><CourseSideBar bind:course /></div>
