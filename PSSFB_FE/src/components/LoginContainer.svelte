@@ -24,6 +24,10 @@
 
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
+		if(user?.type=='error'){
+			showToast("Login failed",user.errorMessage,'error')
+			return
+		}
 		pageStatus.set('load');
 		try {
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
@@ -57,6 +61,10 @@
 
 	const LWG = async () => {
 		const user: any = await loginWithGoogle();
+		if(user?.type=='error'){
+			showToast("Login failed",user.errorMessage,'error')
+			return
+		}
 		pageStatus.set('load');
 		try {
 			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
