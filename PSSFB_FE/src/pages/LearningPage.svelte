@@ -88,12 +88,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="w-full text-lg mb-10 md:mb-0">
-					<span
-						class="bg-white rounded-md p-3 font-medium mt-10 text-black items-center inline-flex"
-						>{$t('Your badges')} <Icon icon="ooui:next-ltr" /></span
-					>
-				</div>
 			{/if}
 		</div>
 	</div>
@@ -101,7 +95,7 @@
 	<div class="pt-10 px-32">
 		<div class="flex justify-between items-center">
 			<span class="text-3xl font-medium">{$t('Courses')}</span>
-			<a href="/courses" class="text-xl">{$t('See all')}</a>
+			<a href="/courses" class="text-xl"><p class="hover:underline">{$t('See all')}</p></a>
 		</div>
 
 		<div class="text-xl font-medium flex my-5">
@@ -158,7 +152,7 @@
 
 		<div class="flex justify-between items-center my-10">
 			<span class="text-3xl font-medium">{$t('Forums')}</span>
-			<a href="/forums" class="text-xl">{$t('See all')}</a>
+			<a href="/forums" class="text-xl"><p class="hover:underline">{$t('See all')}</p></a>
 		</div>
 		<div class="flex flex-wrap my-10">
 			{#if posts?.length > 0}

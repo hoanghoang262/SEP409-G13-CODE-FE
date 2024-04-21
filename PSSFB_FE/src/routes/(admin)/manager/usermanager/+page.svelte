@@ -189,7 +189,7 @@
 						<tr class="border-b {rowIndex % 2 == 1 ? 'bg-green-200' : 'bg-write'}">
 							<td class=" border-gray-200 border-r-2">
 								<div class="flex justify-center items-center">
-									<Avatar classes=" w-10" src={row?.profilePict} />
+									<Avatar classes=" w-10 h-10" src={row?.profilePict} />
 								</div>
 							</td>
 							{#each tableHeader as head, colIndex}

@@ -92,7 +92,7 @@
 						<div class="overflow-hidden whitespace-normal mb-2">
 							<p class="line-clamp-2">{p.description}</p>
 						</div>
-						<div class="text-sm mb-3">
+						<div class="text-xs mb-3 text-gray-700">
 							<span class="mr-5">By: {p.userName}</span><span
 								>{$t('Last Update')}: {getTimeDifference(p.lastUpdate)}</span
 							>
