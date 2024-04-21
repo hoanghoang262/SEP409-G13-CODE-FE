@@ -1,62 +1,74 @@
 <script lang="ts">
+	import { Label, Modal, Select, Textarea } from 'flowbite-svelte';
+	import Button from '../atoms/Button.svelte';
+	import CodeEditor2 from '../components/CodeEditor2.svelte';
+	import AdminCourseSb from '../components/AdminCourseSB.svelte';
+	import { getModCourseById, updateCodeQuestion } from '$lib/services/ModerationServices';
+	import { checkTitle, showToast } from '../helpers/helpers';
+	import { pageStatus } from '../stores/store';
+    import Editor from '@tinymce/tinymce-svelte';
 
-	import { Label, Modal, Select, Textarea } from "flowbite-svelte";
-	import Button from "../atoms/Button.svelte";
-	import CodeEditor2 from "../components/CodeEditor2.svelte";
-	import AdminCourseSb from "../components/AdminCourseSB.svelte";
-	import { getModCourseById, updateCodeQuestion } from "$lib/services/ModerationServices";
-	import { showToast } from "../helpers/helpers";
-	import { pageStatus } from "../stores/store";
+	export let data;
 
-    export let data;
+	let course = data.course;
+	let codeQuestion = data.codeLession;
 
-    let course = data.course;
-    let codeQuestion = data.codeLession;
-    
-
-    const saveCQ = async () => {
-        pageStatus.set('load')
-        console.log(JSON.stringify({practiceQuestionId:codeQuestion.id,practiceQuestion: codeQuestion}))
-        try{
-            await updateCodeQuestion({practiceQuestionId:codeQuestion.id,practiceQuestion: codeQuestion})
-            showToast("Edit Practice Question","Edit practice Question Success","success")
-            course = await getModCourseById(course.id)
-        }catch(e){
-            console.log(e)
-            showToast("Edit Practice Question","Something went wrong","error")
-        }
-        pageStatus.set('done')
-    }
+	const saveCQ = async () => {
+		if(!checkTitle(codeQuestion.title)){
+			showToast('Save Pratice Lession',"Enter title shorter than 256 char")
+			return
+		}
+		
+		pageStatus.set('load');
+		console.log(
+			JSON.stringify({ practiceQuestionId: codeQuestion.id, practiceQuestion: codeQuestion })
+		);
+		try {
+			await updateCodeQuestion({
+				practiceQuestionId: codeQuestion.id,
+				practiceQuestion: codeQuestion
+			});
+			showToast('Edit Practice Question', 'Edit practice Question Success', 'success');
+			course = await getModCourseById(course.id);
+		} catch (e) {
+			console.log(e);
+			showToast('Edit Practice Question', 'Something went wrong', 'error');
+		}
+		pageStatus.set('done');
+	};
 </script>
 
-
 <div class="flex">
-
-    <div class="w-4/5">
-        <div>
-            <Label defaultClass=" mb-3 block">Edit Pratice Question</Label>
-            <a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodeLession">tutorial how to create a pratice lession</a>
-            <hr class="my-5"/>
-            <Label defaultClass=" mb-3 block">Description</Label>
+	<div class="w-4/5">
+		<div>
+			<Label defaultClass="text-xl mb-3 block">Edit Pratice Question</Label>
+			<a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodeLession"
+				>Tutorial how to create a pratice lession</a
+			>
+			<hr class="my-5" />
+			<Label>Title</Label>
+			<Textarea bind:value={codeQuestion.title} />
+			<Label defaultClass=" mb-3 block">Description</Label>
 			<div class="mb-5 ml-4">
-				<Textarea bind:value={codeQuestion.description} name="description" placeholder="Description" />
+				<Editor
+					bind:value={codeQuestion.description}
+					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
+				/>
 			</div>
-            <Label>CodeForm</Label>
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
-            <Label>TestCases</Label>
-            {#if course?.tag == "Java"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava}/>
-            {:else if course?.tag == "C"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC}/>
-            {:else if course?.tag == "C++"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus}/>
-            {/if}
-           <div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
-    
-           
-        </div>
-    </div>
-    <div class="w-1/5 ml-10">
-        <AdminCourseSb bind:course />
-    </div>
+			<Label>CodeForm</Label>
+			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
+			<Label>TestCases</Label>
+			{#if course?.tag == 'Java'}
+				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+			{:else if course?.tag == 'C'}
+				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+			{:else if course?.tag == 'C++'}
+				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+			{/if}
+			<div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
+		</div>
+	</div>
+	<div class="w-1/5 ml-10">
+		<AdminCourseSb bind:course />
+	</div>
 </div>

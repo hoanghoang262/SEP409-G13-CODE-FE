@@ -115,7 +115,7 @@
 								<Icon class="mr-3 text-xl" icon="material-symbols:code" style="color: gray" />
 							</div>
 
-							<div class="truncate w-4/5">{l.description}</div>
+							<div class="truncate w-4/5">{l.title??""}</div>
 						</div>
 					</div>
 

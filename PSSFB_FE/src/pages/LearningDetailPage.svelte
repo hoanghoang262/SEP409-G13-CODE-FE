@@ -308,7 +308,7 @@
 							{#each code as q}
 								<li class="pl-5 my-3 flex items-center">
 									<Icon class="mr-1 text-3xl" icon="mdi:dot" style="color: black" />
-									{q.description}
+									{q.title}
 								</li>
 							{/each}
 						</ul>

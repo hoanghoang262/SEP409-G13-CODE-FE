@@ -1,3 +1,4 @@
+const ssr = false;
 import { getExam } from "$lib/services/CourseServices";
 
 export async function load({params}:any){

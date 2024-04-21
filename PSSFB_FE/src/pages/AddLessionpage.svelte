@@ -6,7 +6,7 @@
 	import { initQuestion, type Lession, initLessions, initAnswer } from '$lib/type';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
-	import { checkExist, handlePosetiveInput, showToast } from '../helpers/helpers';
+	import { checkExist, checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import { addLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import Dropzone from 'svelte-file-dropzone';
@@ -40,6 +40,12 @@
 	};
 
 	const AddLession = async () => {
+
+		if(!checkTitle(lession.title)){
+			showToast('Save Lession',"Enter title shorter than 256 char")
+			return
+		}
+
 		if (!checkExist(video)) {
 			showToast('Add lession', 'Please upload video', 'warning');
 			return;

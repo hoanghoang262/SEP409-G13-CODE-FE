@@ -141,7 +141,7 @@ void assertEqual(T expected, T actual, U message) {
         std::cout << "Expected: " << expected << ", Actual: " << actual << std::endl;
        exit(0);
     }
-} \n ${codeForm} \n ${testCase} \n };
+} \n ${codeForm} \n ${testCase} \n 
 
 	int main() {
 		TestCase();

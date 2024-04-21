@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { checkExist, convertSecondsToMmSs } from "../helpers/helpers";
+	import { checkExist, convertSecondsToMmSs, showToast } from "../helpers/helpers";
 	import VideoQuestionModal from "./modals/VideoQuestionModal.svelte";
 	import { Modal } from "flowbite-svelte";
 	import Editor from "@tinymce/tinymce-svelte";
@@ -48,6 +48,9 @@
         video.pause()
         pageStatus.set("load")
 		
+		if(!checkExist(note.trim())){
+			showToast("Add note","Invalid note content","warning")
+		}
 		const response = await addNote(
 			{
 				lessonId: lession.id,
@@ -57,6 +60,7 @@
 			},
 		);
         console.log("response",response)
+		showModal = false;
         notes = await getNotes($currentUser.UserID, lession.id)
         pageStatus.set("done")
 	};
@@ -98,11 +102,11 @@
 	title="Add Note"
 	bind:open={showNoteModal}
 	on:close={() => (showNoteModal = false)}
-	autoclose
+	
 >
 	<Editor bind:value={note} apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83" />
 	<svelte:fragment slot="footer">
 		<Button onclick={AddNote} content={'Add Note'} />
-		<Button content={'Close'} />
+		<Button onclick={() => showModal = false} content={'Close'} />
 	</svelte:fragment>
 </Modal>

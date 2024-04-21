@@ -204,7 +204,7 @@
 									</div>
 
 									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
-										>{l.description}</button
+										>{l.title??""}</button
 									>
 									<button
 										class="bg-gray-600 p-2 rounded-r-md"

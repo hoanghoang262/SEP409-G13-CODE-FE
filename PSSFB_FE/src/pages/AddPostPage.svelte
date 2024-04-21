@@ -5,7 +5,7 @@
 	import Avatar from '../atoms/Avatar.svelte';
 	import { currentUser, pageStatus } from '../stores/store';
 	import Button from '../atoms/Button.svelte';
-	import { checkExist, showToast } from '../helpers/helpers';
+	import { checkExist, checkTitle, showToast } from '../helpers/helpers';
 	import { createAdminPost } from '$lib/services/ForumsServices';
 	import { createPost } from '$lib/services/ModerationServices';
 	import { goto } from '$app/navigation';
@@ -19,6 +19,12 @@
 	};
 
 	const savePost = async () => {
+
+		if(!checkTitle(post.title)){
+			showToast('Save Post',"Enter title shorter than 256 char")
+			return
+		}
+		
 		if (!checkExist(post.title) || !checkExist(post.description) || !checkExist(post.postContent)) {
 			showToast('Save Post', 'Enter all required fields', 'warning');
 		} else {

@@ -5,7 +5,7 @@
 	import Button from '../atoms/Button.svelte';
 	import { initQuestion, initAnswer } from '$lib/type';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
-	import { checkExist, handlePosetiveInput, showToast } from '../helpers/helpers';
+	import { checkExist, checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import { addLession, getModCourseById, updateLession } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import { pageStatus } from '../stores/store';
@@ -40,6 +40,11 @@
 	};
 
 	const EditLession = async () => {
+		if(!checkTitle(lession.title)){
+			showToast('Save Lession',"Enter title shorter than 256 char")
+			return
+		}
+		
 		pageStatus.set('load');
 		if (checkExist(video)) {
 			await frmSubmit();

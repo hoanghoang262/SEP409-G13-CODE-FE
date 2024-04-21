@@ -6,11 +6,11 @@
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { addCodeQuestion, getModCourseById } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
-	import { showToast } from '../helpers/helpers';
+	import { checkTitle, showToast } from '../helpers/helpers';
 	import { onMount } from 'svelte';
 	import { pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
-	import Editor from '@tinymce/tinymce-svelte/dist/ts/component/Editor.svelte';
+	import Editor from '@tinymce/tinymce-svelte';
 
 	export let course:any;
 	const ids = $page.params.ids.split('/');
@@ -20,6 +20,11 @@
     const courseId:any = ids[0];
 
 	const saveCQ = async () => {
+		if(!checkTitle(codeQuestion.title)){
+			showToast('Save Pratice Lession',"Enter title shorter than 256 char")
+			return
+		}
+
 		pageStatus.set('load')
 		console.log(JSON.stringify({ chapterId, practiceQuestion: codeQuestion }));
 		try {
@@ -38,14 +43,18 @@
 <div class="flex">
 	<div class="w-4/5">
 		<div>
-			<Label defaultClass=" mb-3 block">Add Pratice Question</Label>
-			<a href="/manager/tutorial/createCodeLession">tutorial how to create a pratice lession</a>
+			<Label defaultClass="text-xl mb-3 block">Add Pratice Question</Label>
+			<a href="/manager/tutorial/createCodeLession">Tutorial how to create a pratice lession</a>
 			<hr class="my-5" />
-			<Label>Description</Label>
-			<Editor
-				bind:value={codeQuestion.description}
-				apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
-			/>
+			<Label>Title</Label>
+			<Textarea bind:value={codeQuestion.title}/>
+			<Label defaultClass=" mb-3 block">Description</Label>
+			<div class="mb-5 ml-4">
+				<Editor
+					bind:value={codeQuestion.description}
+					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
+				/>
+			</div>
 			<Label>CodeForm</Label>
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
 			<Label>TestCases</Label>

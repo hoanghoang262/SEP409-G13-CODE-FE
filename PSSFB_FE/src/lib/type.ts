@@ -146,6 +146,7 @@ export interface codeQuestion {
 	testCaseJava: string | undefined;
 	testCaseC: string | undefined;
 	testCaseCplus: string | undefined;
+	title: string;
 	//	testCases: TestCase[];
 }
 
@@ -155,7 +156,8 @@ export function intitCodeQuestion(): codeQuestion {
 		codeForm: '',
 		testCaseJava: undefined,
 		testCaseC: undefined,
-		testCaseCplus: undefined
+		testCaseCplus: undefined,
+		title: 'title'
 		//		testCases: [initTestCase('int')]
 	};
 }

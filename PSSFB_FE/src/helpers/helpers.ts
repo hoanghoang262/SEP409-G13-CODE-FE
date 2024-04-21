@@ -124,6 +124,13 @@ export function checkUserName(userName: string): boolean {
 	return true
 }
 
+export function checkTitle(title: string): boolean {
+	if (!checkTitle(title) || title.length < 256) {
+		return false;
+	}
+	return true
+}
+
 export function secondsToDateTime(seconds: number) {
 	var date = new Date(seconds * 1000); // Convert seconds to milliseconds
 	var day = ("0" + date.getDate()).slice(-2);
