@@ -35,6 +35,7 @@
 	import { getPaymentByByUserId } from '$lib/services/PaymentService';
 	import LoadingPage from '../../../../pages/LoadingPage.svelte';
 	import { t } from '../../../../translations/i18n';
+	import { changeStatus } from '$lib/services/ModerationServices';
 
 	let today = new Date().toISOString().split('T')[0];
 	let showModal = false;
@@ -52,7 +53,6 @@
 	let firstWM = false;
 	let secondWM = false;
 	let deactivePass = '';
-	let changeStatus = false;
 	let editStatus = false;
 	let payments: any;
 	let siteBarShow = false;
@@ -195,11 +195,11 @@
 
 		const user: any = await loginWithEmailAndPsr($currentUser?.email, deactivePass);
 		if (checkExist(user) && user?.email == $currentUser?.email) {
+			pageStatus.set('load')
 			try {
-				await user.delete();
+				await changeStatus($currentUser.UserID, $currentUser.uid)
 				currentUser.set(undefined);
-				await logout();
-				await axios.post('/?/logout', JSON.stringify({}));
+				logout();
 				goto('/');
 				showToast('De-active', 'your account had been de-active', 'info');
 			} catch (error) {
@@ -207,6 +207,7 @@
 			}
 			secondWM = false;
 			onLogout();
+			pageStatus.set('done')
 		} else {
 			showToast('De-active', 'incorrect password', 'warning');
 		}
@@ -610,18 +611,18 @@
 
 <Modal on:close={() => (firstWM = false)} title="Warning" bind:open={firstWM} autoclose>
 	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-		Do you sure you want to delete this.
+		{$t('Do you sure you want to deactive your account ?')}
 	</p>
 	<svelte:fragment slot="footer">
 		<div class="flex justify-center">
 			<button
 				on:click={() => (secondWM = true)}
 				class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
-				>Yes</button
+				>{$t('Yes')}</button
 			>
 			<button
 				class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
-				>No</button
+				>{$t('No')}</button
 			>
 		</div>
 	</svelte:fragment>
@@ -629,9 +630,9 @@
 
 <Modal on:close={() => (secondWM = false)} title="Warning" bind:open={secondWM}>
 	<div class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-		Confirm again to delete
+		{$t('Confirm again to deactive')}
 	</div>
-	<Label>Password</Label>
+	<Label>{$t('Password')}</Label>
 	<input
 		type="password"
 		bind:value={deactivePass}
@@ -643,11 +644,11 @@
 			<button
 				on:click={deleteFunc}
 				class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
-				>Delete</button
+				>{$t('Delete')}</button
 			>
 			<button
 				class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
-				>Back</button
+				>{$t('Back')}</button
 			>
 		</div>
 	</svelte:fragment>

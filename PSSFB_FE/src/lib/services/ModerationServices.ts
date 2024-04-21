@@ -374,3 +374,14 @@ export const sendPostToModeration = async (postId: number) => {
 		return error
 	}
 }
+
+
+export const changeStatus = async (userId:number, uid:string) => {
+	try {
+		const result = await axios.put(`https://authenticateservice.azurewebsites.net/api/Authenticate/ChangeStatus?userId=${userId}&UIdFireBase=${uid}`)
+		return result.data
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}

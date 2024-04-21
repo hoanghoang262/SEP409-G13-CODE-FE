@@ -164,9 +164,14 @@
 	async function frmSubmit(event: any) {
 		event.preventDefault();
 
-		if (isVND(course.price)&&payment == 'With Fee') {
-			course.price = convertVNDToNumber(course.price);
-		}else if(payment == "Free"){
+		if (payment == 'With Fee') {
+			if (isVND(course.price + '')) course.price = convertVNDToNumber(course.price);
+
+			if (course.price < 1) {
+				showToast('Add Course', 'Course price must be greater than zero', 'warning');
+				return;
+			}
+		} else if (payment == 'Free') {
 			course.price = 0;
 		}
 

@@ -114,6 +114,10 @@ const loginWithFacebook = async () => {
 			console.log('error', errorMessage);
 			console.log('credential', credential);
 			// ...
+			user = {
+				errorMessage,
+				type: 'error'
+			};
 		});
 
 	return user;
@@ -138,7 +142,7 @@ const loginWithGoogle = async () => {
 			const credential = GoogleAuthProvider.credentialFromError(error);
 			// ...
 			console.log('error', errorMessage);
-			return {
+			user = {
 				errorMessage,
 				type: 'error'
 			};
