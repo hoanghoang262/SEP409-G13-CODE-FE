@@ -59,7 +59,7 @@
 	async function frmSubmit(event: any) {
 		event.preventDefault();
 		
-		if(isVND(course.price)){
+		if(isVND(course.price+"")){
 			course.price = convertVNDToNumber(course.price);
 		}
 		

@@ -207,7 +207,7 @@ export function convertVNDToNumber(vnd: any) {
 }
 
 export function isVND(string: string) {
-	return string + '₫';
+	return string.includes('₫');
 }
 
 export function formatLongToDate(long: number) {
