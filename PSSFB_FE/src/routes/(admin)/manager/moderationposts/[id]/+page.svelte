@@ -46,21 +46,22 @@
 
 <div class="pt-10 w-[90%] m-auto">
 	<div>
-		<p class="text-3xl">{post?.title}</p>
+		<p class="text-3xl break-words">{post?.title}</p>
 		<div class="text-gray-700 text-xs mb-10">
 			<p class="">Create At: {getTimeDifference(post?.lastUpdate)}</p>
 		</div>
 	</div>
 	<div class="py-5 flex border-2 border-gray-200">
 		<div class="flex flex-col items-center px-10">
-			<p class=" text-lg text-center pb-1">{post?.userName}</p>
-			<div class="">
-				<Avatar classes="rounded-full w-24 h-24" src={post?.userPicture} />
+			<p class="text-md text-center pb-1 truncate max-w-40">{post?.userName}</p>
+			<div class=" w-20 h-20">
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<img class="rounded-full w-full h-full" src={post?.userPicture} />
 			</div>
 		</div>
-		<div class="bg-gray-100 w-full pl-10 mr-10 py-5">
+		<div class="bg-gray-100 flex-grow px-10 mr-10 py-5 overflow-hidden">
 			<div>
-				<div class="mb-5">
+				<div class="mx-5 break-words">
 					{@html post?.postContent}
 				</div>
 			</div>

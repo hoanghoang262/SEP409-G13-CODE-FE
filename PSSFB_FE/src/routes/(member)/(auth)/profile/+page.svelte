@@ -36,6 +36,7 @@
 	import LoadingPage from '../../../../pages/LoadingPage.svelte';
 	import { t } from '../../../../translations/i18n';
 
+	let today = new Date().toISOString().split('T')[0];
 	let showModal = false;
 	export let form: any;
 	if (form?.type == 'success') {
@@ -78,6 +79,7 @@
 		//   - Consider moment.js or date-fns for more flexibility and accuracy
 
 		const formattedDate = date.toISOString().slice(0, 10);
+		console.log(date);
 		return formattedDate;
 	}
 
@@ -399,7 +401,7 @@
 						autocomplete="off"
 						id="fullname"
 						type="text"
-						placeholder="null"
+						placeholder=""
 						bind:value={info.fullname}
 						disabled={editStatus ? false : true}
 					/>
@@ -420,7 +422,7 @@
 							autocomplete="off"
 							id="phone"
 							type="text"
-							placeholder="null"
+							placeholder=""
 							bind:value={info.phone}
 							disabled={editStatus ? false : true}
 						/>
@@ -439,7 +441,8 @@
 							type="date"
 							bind:value={date}
 							disabled={editStatus ? false : true}
-							placeholder="null"
+							placeholder=""
+							max={today}
 						/>
 						<!-- <input
 							class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -466,7 +469,7 @@
 						autocomplete="off"
 						id="email"
 						type="text"
-						placeholder="null"
+						placeholder=""
 						bind:value={info.email}
 						disabled={editStatus ? false : true}
 					/>
@@ -486,7 +489,7 @@
 						autocomplete="off"
 						id="address"
 						type="text"
-						placeholder="null"
+						placeholder=""
 						bind:value={info.address}
 						disabled={editStatus ? false : true}
 					/>
@@ -505,7 +508,7 @@
 						autocomplete="off"
 						id="fblink"
 						type="text"
-						placeholder="null"
+						placeholder=""
 						bind:value={info.facebookLink}
 						disabled={editStatus ? false : true}
 					/>

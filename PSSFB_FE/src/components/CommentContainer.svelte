@@ -192,8 +192,8 @@
 	{#if checkExist($currentUser)}
 		<!-- <form method="POST" action="?/postcomment"> -->
 		<div class="flex mb-3">
-			<div class="w-10 mr-3">
-				<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
+			<div class="w-10 h-10 mr-3">
+				<Avatar classes="rounded-full h-full w-full" src={$currentUser?.photoURL} />
 			</div>
 
 			<Textarea bind:value={content} name="content" rows="5" />
@@ -204,13 +204,13 @@
 	<hr class="my-5" />
 	{#each comments as c}
 		<div class="flex">
-			<div class="w-10 mr-3">
-				<Avatar classes="rounded-full" src={c.picture} />
+			<div class="mr-3 w-12 h-12">
+				<Avatar classes="rounded-full w-full h-full" src={c.picture} />
 			</div>
 			<div>
-				<div class="flex">
+				<div class="flex items-center">
 					<div class="text-blue-500 mr-3">{c.userName}</div>
-					<div class="text-neutral-400">{formatDateTime(c.date)}</div>
+					<div class="text-neutral-400 text-xs">{formatDateTime(c.date)}</div>
 				</div>
 				<di id="commentcontent{c.id}">{c.commentContent}</di>
 				<div class="hidden" id="commenteditor{c.id}">
@@ -239,8 +239,8 @@
 					<div id="replyFrm#{c.id}" class="mt-5 hidden">
 						<!-- <form id="rfrm{c.id}" method="POST" action="?/postreply"> -->
 						<div class="flex mb-3">
-							<div class="w-10 mr-3">
-								<Avatar classes="rounded-full" src={$currentUser?.photoURL} />
+							<div class="w-10 h-10 mr-3">
+								<Avatar classes="rounded-full h-full w-full" src={$currentUser?.photoURL} />
 							</div>
 							<input type="hidden" name="commentId" readonly value={c.id} />
 							<Textarea bind:value={replyContent} rows="3" />
@@ -253,13 +253,13 @@
 				{/if}
 				{#each c.replies as reply}
 					<div class="flex my-3">
-						<div class="w-10 mr-3">
-							<Avatar classes="rounded-full" src={reply.userPicture} />
+						<div class="w-10 h-10 mr-3">
+							<Avatar classes="rounded-full w-full h-full" src={reply.userPicture} />
 						</div>
 						<div>
 							<div class="flex">
 								<div class="text-blue-500 mr-3">{reply.userName}</div>
-								<div class="text-neutral-400">{formatDateTime(reply?.createDate)}</div>
+								<div class="text-neutral-400 text-xs">{formatDateTime(reply?.createDate)}</div>
 							</div>
 							<div id="replycontent{reply.id}">{reply.replyContent}</div>
 							<div class="hidden" id="replyeditor{reply.id}">

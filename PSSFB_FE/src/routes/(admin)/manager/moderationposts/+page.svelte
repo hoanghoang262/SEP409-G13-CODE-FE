@@ -285,20 +285,7 @@
 	<!-- Search input -->
 	<div class="relative w-full md:w-[90%] flex justify-between m-auto md:pt-5 pt-3">
 		<div class="flex flex-grow justify-end">
-			<div class="mr-4 md:mr-6">
-				<select
-					id="status"
-					bind:value={selectTag}
-					on:change={(e) => handleStatusChange(e)}
-					class="block w-full pl-2 md:pl-4 md:pt-3 md:pb-4 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-				>
-					<option value="" selected>
-						<p>Tag</p>
-					</option>
-					<option value="true">Active</option>
-					<option value="false">Deactive</option>
-				</select>
-			</div>
+			<div class="mr-4 md:mr-6"></div>
 
 			<div class="md:w-[25%] w-[40%] min-w-[150px]">
 				<div class="relative">
