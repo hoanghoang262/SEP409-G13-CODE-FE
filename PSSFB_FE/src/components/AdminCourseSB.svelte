@@ -17,7 +17,7 @@
 
 	export let course: any;
 
-	let showStatus = false;
+	let showStatus = true;
 	let firstWM = false;
 	let secondWM = false;
 	let deleteObject: any = undefined;
@@ -111,10 +111,10 @@
 	{#if showStatus}
 		<div class="">
 			<div class="w-72 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] shadow-xl border bg-white pr-3">
-				<div class="text-2xl font-medium pt-4 px-4 mb-3 flex justify-between items-center">
+				<div class="text-xl font-medium pt-4 px-4 mb-3 flex justify-between items-center truncate">
 					<button
 						on:click={() => (showStatus = false)}
-						class="hover:bg-gray-200 p-1 cursor-pointer mr-3"
+						class="hover:bg-gray-200 p-1 cursor-pointer mr-1"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +144,7 @@
 				<div class="mx-4">
 					{#each chapters as s, index}
 						<div
-							class="justify-between text-lg font-medium my-2 rounded-md flex items-center text-neutral-500 bg-gray-200 hover:bg-gray-300"
+							class="justify-between text-md font-medium my-2 rounded-md flex items-center text-neutral-500 bg-gray-200 hover:bg-gray-300"
 						>
 							<div
 								class="mr-2 bg-blue-500 p-2 rounded-l-md"
@@ -159,7 +159,7 @@
 								{@html minus}
 							</div>
 							<button on:click={() => chapterClick(s.id)} class="w-full truncate"
-								><p class="font-normal text-black truncate">{s?.name}</p></button
+								><p class="font-normal text-black truncate hover:underline">{s?.name}</p></button
 							>
 							<button
 								class="p-2 bg-gray-600 rounded-r-md"
@@ -171,12 +171,17 @@
 						</div>
 						<div id="schedule{index}">
 							{#each s.lessons as l}
-								<div class="pl-10 mb-5 flex items-center justify-between">
-									<div>
-										<Icon class="mr-3 text-2xl" icon="ion:book-sharp" style="color: gray" />
+								<div
+									class="ml-8 flex items-center justify-between bg-gray-200 hover:bg-green-200 group"
+								>
+									<div class="bg-green-300 rounded-l-lg">
+										<Icon class="m-1 p-[2px] text-2xl text-gray-600 " icon="ion:book-sharp" />
 									</div>
 
-									<button class="truncate pr-10" on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
+									<button
+										class="truncate group-hover:underline"
+										on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button
+									>
 									<button
 										class="bg-gray-600 p-2 rounded-r-md"
 										on:click={() => {
@@ -188,9 +193,9 @@
 									</button>
 								</div>
 							{/each}
-							<div class="flex justify-end my-5">
+							<div class="flex justify-end mt-1 mb-3">
 								<button
-									class="text-blue-500"
+									class=" text-blue-500 py-1 px-2 rounded-md text-md"
 									on:click={() =>
 										goto(`/manager/coursesmanager/addcourse/addlession/${courseId}/${s.id}`)}
 									>Add Lession</button
@@ -198,13 +203,14 @@
 							</div>
 
 							{#each s.codeQuestions as l}
-								<div class="pl-10 mb-5 flex items-center justify-between">
-									<div>
-										<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
+								<div class="ml-8 mb-5 flex items-center justify-between bg-gray-200">
+									<div class="bg-green-300 rounded-l-lg">
+										<Icon class="m-1 p-[2px] text-2xl text-gray-600" icon="material-symbols:code" />
 									</div>
 
-									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
-										>{l.title??""}</button
+									<button
+										on:click={() => codelessionClick(l, s.id, l.id)}
+										class="truncate px-2 hover:underline">{l.title ?? ''}</button
 									>
 									<button
 										class="bg-gray-600 p-2 rounded-r-md"
@@ -226,17 +232,17 @@
 							</div>
 
 							{#each s.lastExam as l}
-								<div class="pl-10 mb-5 flex items-center justify-between">
-									<div>
+								<div class="ml-8 mb-5 flex items-center justify-between bg-gray-200">
+									<div class="bg-green-300 rounded-l-lg">
 										<Icon
-											class="mr-3 text-2xl"
+											class="m-1 p-[2px] text-2xl text-gray-600"
 											icon="healthicons:i-exam-multiple-choice-outline"
-											style="color: gray"
 										/>
 									</div>
 
-									<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
-										>{l.name}</button
+									<button
+										on:click={() => examclick(l, s.id, l.id)}
+										class="truncate px-2 hover:underline">{l.name}</button
 									>
 									<button
 										class="bg-gray-600 p-2 rounded-r-md"
