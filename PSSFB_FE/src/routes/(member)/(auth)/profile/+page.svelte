@@ -57,6 +57,7 @@
 	let payments: any;
 	let siteBarShow = false;
 
+	let defaultDate: any;
 	let date: any;
 
 	const onLogout = async () => {
@@ -79,7 +80,6 @@
 		//   - Consider moment.js or date-fns for more flexibility and accuracy
 
 		const formattedDate = date.toISOString().slice(0, 10);
-		console.log(date);
 		return formattedDate;
 	}
 
@@ -87,6 +87,7 @@
 		if (!userInfo) {
 			userInfo = await getUserInfo($currentUser.UserID);
 			date = formatDateForInput(new Date(userInfo.birthDate).toJSON().slice(0, 10));
+			defaultDate = formatDateForInput(new Date(userInfo.birthDate).toJSON().slice(0, 10));
 			info = userInfoTrim();
 		}
 
@@ -94,6 +95,7 @@
 	});
 
 	$: if (editStatus == false) {
+		date = defaultDate;
 		info = userInfoTrim();
 	}
 
@@ -132,6 +134,12 @@
 	async function frmSubmit() {
 		info.birthDate = date;
 		pageStatus.set('load');
+		let temDate = new Date(date);
+		if (temDate.getTime() > Date.now()) {
+			showToast('Edit Profile', 'Date invalid', 'error');
+			pageStatus.set('done');
+			return;
+		}
 		if (!checkUserName(info.username)) {
 			showToast('Edit Profile', 'username must be 8-32 characters long', 'warning');
 			pageStatus.set('done');
@@ -171,6 +179,7 @@
 		}
 
 		pageStatus.set('done');
+		defaultDate = formatDateForInput(new Date(userInfo.birthDate).toJSON().slice(0, 10));
 		editStatus = false;
 	}
 
@@ -457,12 +466,7 @@
 				</div>
 			</div>
 			<div class="  md:mx-5 md:my-5 my-3">
-				<label
-					class=" block md:p-3 px-2 py-2 border-2 {editStatus
-						? 'border-blue-500'
-						: 'border-black'} rounded"
-					for="email"
-				>
+				<label class=" block md:p-3 px-2 py-2 border-2 border-black" for="email">
 					<span class="text-sm md:text-md font-semibold text-zinc-900">Email</span>
 					<input
 						class="w-full bg-transparent p-0 text-xs md:text-sm text-gray-500 border-none focus:shadow-none focus:ring-0"
@@ -471,7 +475,7 @@
 						type="text"
 						placeholder=""
 						bind:value={info.email}
-						disabled={editStatus ? false : true}
+						disabled
 					/>
 				</label>
 			</div>
@@ -628,7 +632,12 @@
 		Confirm again to delete
 	</div>
 	<Label>Password</Label>
-	<input type="password" bind:value={deactivePass} placeholder="Password" class="py-3 px-5 font-light text-black rounded-md border-2 border-gray-400 focus:border-none" />
+	<input
+		type="password"
+		bind:value={deactivePass}
+		placeholder="Password"
+		class="py-3 px-5 font-light text-black rounded-md border-2 border-gray-400 focus:border-none"
+	/>
 	<svelte:fragment slot="footer">
 		<div class="flex justify-center">
 			<button

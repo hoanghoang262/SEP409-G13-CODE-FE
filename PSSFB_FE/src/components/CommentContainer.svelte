@@ -142,6 +142,7 @@
 						date: new Date().toISOString,
 						userId: $currentUser.UserID
 					});
+
 					break;
 				case 'post':
 					await postComment({
@@ -160,6 +161,7 @@
 					});
 					break;
 			}
+			showToast('Comment', 'Your comment was created successfully', 'success');
 			comments = await getComment();
 		} catch (error) {
 			console.log(error);
