@@ -11,32 +11,53 @@
 	import { pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
 	import Editor from '@tinymce/tinymce-svelte';
+	import {
+		CComplieToCheck,
+		CPlusComplieCodeToCheck,
+		JavaComplieCodeToCheck
+	} from '$lib/services/CompilerService';
+	import CodeEditor4 from '../components/CodeEditor4.svelte';
 
-	export let course:any;
+	export let course: any;
 	const ids = $page.params.ids.split('/');
 
 	let codeQuestion: codeQuestion = intitCodeQuestion();
 	const chapterId = ids[1];
-    const courseId:any = ids[0];
+	const courseId: any = ids[0];
 
 	const saveCQ = async () => {
-		if(!checkTitle(codeQuestion.title)){
-			showToast('Save Pratice Lession',"Enter title shorter than 256 char")
-			return
+		if (!checkTitle(codeQuestion.title)) {
+			showToast('Save Pratice Lession', 'Enter title shorter than 256 char');
+			return;
 		}
 
-		pageStatus.set('load')
+		pageStatus.set('load');
 		console.log(JSON.stringify({ chapterId, practiceQuestion: codeQuestion }));
 		try {
 			const response = await addCodeQuestion({ chapterId, practiceQuestion: codeQuestion });
-            console.log(response)
+			console.log(response);
 			showToast('Add Practice Question', 'Add practice Question Success', 'success');
-            goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${chapterId}`);
+			goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${chapterId}`);
 		} catch (e) {
 			console.log(e);
 			showToast('Add Practice Question', 'Something went wrong', 'error');
 		}
-		pageStatus.set('done')
+		pageStatus.set('done');
+	};
+
+	const executeCode = async () => {
+		pageStatus.set('load');
+		switch (course.tag) {
+			case 'Java':
+				return await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
+
+			case 'C':
+				return await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+			case 'C++':
+				return await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+		}
+
+		pageStatus.set('done');
 	};
 </script>
 
@@ -47,7 +68,7 @@
 			<a href="/manager/tutorial/createCodeLession">Tutorial how to create a pratice lession</a>
 			<hr class="my-5" />
 			<Label>Title</Label>
-			<Textarea bind:value={codeQuestion.title}/>
+			<Textarea bind:value={codeQuestion.title} />
 			<Label defaultClass=" mb-3 block">Description</Label>
 			<div class="mb-5 ml-4">
 				<Editor
@@ -56,23 +77,21 @@
 				/>
 			</div>
 			<Label>CodeForm</Label>
-			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm}/>
+			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
 			<Label>TestCases</Label>
-            {#if course?.tag == "Java"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava}/>
-            {:else if course?.tag == "C"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC}/>
-            {:else if course?.tag == "C++"}
-            <CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus}/>
-            {/if}
+			{#if course?.tag == 'Java'}
+				<CodeEditor4 {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+			{:else if course?.tag == 'C'}
+				<CodeEditor4 {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+			{:else if course?.tag == 'C++'}
+				<CodeEditor4 {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+			{/if}
 			<hr class="my-5" />
-			
-			<div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
 
-			
+			<div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
 		</div>
 	</div>
 	<div class="w-1/5 ml-10">
-		<AdminCourseSb bind:course={course} />
+		<AdminCourseSb bind:course />
 	</div>
 </div>

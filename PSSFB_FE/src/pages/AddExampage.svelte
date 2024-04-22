@@ -72,7 +72,7 @@
 		<Label defaultClass=" mb-3 block">Time (Second)</Label>
 		<input
 			min="1"
-			on:blur={handlePosetiveInput}
+			
 			type="number"
 			name="time"
 			bind:value={Exam.time}
@@ -82,7 +82,7 @@
 		<Label defaultClass=" mb-3 block">Percentage Completed (%)</Label>
 		<input
 			min="1"
-			on:blur={handlePosetiveInput}
+			
 			type="number"
 			name="time"
 			bind:value={Exam.percentageCompleted}

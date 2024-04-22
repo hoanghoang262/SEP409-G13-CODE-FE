@@ -7,6 +7,8 @@
 	import { checkTitle, showToast } from '../helpers/helpers';
 	import { pageStatus } from '../stores/store';
     import Editor from '@tinymce/tinymce-svelte';
+	import { CComplieToCheck, CPlusComplieCodeToCheck, JavaComplieCodeToCheck } from '$lib/services/CompilerService';
+	import CodeEditor4 from '../components/CodeEditor4.svelte';
 
 	export let data;
 
@@ -36,6 +38,21 @@
 		}
 		pageStatus.set('done');
 	};
+
+	const executeCode = async () => {
+		pageStatus.set('load');
+		switch (course.tag) {
+			case 'Java':
+				return await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
+
+			case 'C':
+				return await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+			case 'C++':
+				return await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+		}
+
+		pageStatus.set('done');
+	};
 </script>
 
 <div class="flex">
@@ -59,11 +76,11 @@
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
 			<Label>TestCases</Label>
 			{#if course?.tag == 'Java'}
-				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+				<CodeEditor4 executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
 			{:else if course?.tag == 'C'}
-				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+				<CodeEditor4 executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
 			{:else if course?.tag == 'C++'}
-				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+				<CodeEditor4 executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
 			{/if}
 			<div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
 		</div>
