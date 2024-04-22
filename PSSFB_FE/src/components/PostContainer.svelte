@@ -6,8 +6,10 @@
 	import { currentUser, pageStatus } from '../stores/store';
 	import { deletePost, getAllPost } from '$lib/services/ForumsServices';
 	import { showToast } from '../helpers/helpers';
+	import PopUpConfirm from './modals/PopUpConfirm.svelte';
 
 	export let post: any;
+	let popUpConfirmInstance: any;
 </script>
 
 <button on:click={() => goto(`/forums/${post.id}`)} class="w-full">
@@ -52,6 +54,18 @@
 					<span class="mr-5 text-red-500"
 						><button
 							on:click={async () => {
+								if (!popUpConfirmInstance) {
+									popUpConfirmInstance = new PopUpConfirm({
+										target: document.body,
+										props: {
+											content: 'Do you want to delete this post?'
+										}
+									});
+								}
+								const confirmed = await popUpConfirmInstance.show();
+								if (!confirmed) {
+									return;
+								}
 								pageStatus.set('load');
 								await deletePost(post.id);
 								showToast('Delete Post', 'Delete post successfully', 'success');

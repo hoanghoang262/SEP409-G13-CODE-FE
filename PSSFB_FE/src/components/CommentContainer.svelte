@@ -16,6 +16,7 @@
 	} from '$lib/services/CommentService';
 	import Editor from '@tinymce/tinymce-svelte';
 	import { formatDateTime } from '../helpers/datetime';
+	import PopUpConfirm from './modals/PopUpConfirm.svelte';
 	export let comments: any[];
 	export let editcomment: any = {};
 	export let editreply: any = {};
@@ -28,6 +29,7 @@
 	//export let type = 'post';
 	let content = '';
 	let replyContent = '';
+	let popUpConfirmInstance: any;
 
 	const replyClick = (id: number) => {
 		const replyFrm = document.getElementById(`replyFrm#${id}`);
@@ -111,6 +113,18 @@
 	// }
 
 	async function deleteClick(id: number) {
+		if (!popUpConfirmInstance) {
+			popUpConfirmInstance = new PopUpConfirm({
+				target: document.body,
+				props: {
+					content: 'Do you want to delete this post?'
+				}
+			});
+		}
+		const confirmed = await popUpConfirmInstance.show();
+		if (!confirmed) {
+			return;
+		}
 		pageStatus.set('load');
 		await delComment(id);
 		showToast('Delete Comment', 'Delete Comment Success', 'success');
@@ -119,6 +133,18 @@
 	}
 
 	async function replydeleteClick(id: number) {
+		if (!popUpConfirmInstance) {
+			popUpConfirmInstance = new PopUpConfirm({
+				target: document.body,
+				props: {
+					content: 'Do you want to delete this reply?'
+				}
+			});
+		}
+		const confirmed = await popUpConfirmInstance.show();
+		if (!confirmed) {
+			return;
+		}
 		pageStatus.set('load');
 		await delReplyComment(id);
 		showToast('Delete Comment', 'Delete Comment Success', 'success');
