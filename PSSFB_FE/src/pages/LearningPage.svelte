@@ -72,12 +72,15 @@
 						<div class="flex w-full">
 							<div class="flex-1 text-white p-5 bg-blue-900 mr-3 rounded-lg">
 								<div class="text-xl">{$t('Courses')}</div>
-								<div class="text-3xl mb-5 font-medium">0</div>
-								<Progressbar color="indigo" progress="0" />
+								<div class="text-3xl mb-5 font-medium">{studying?.length ?? 0}</div>
+								<Progressbar
+									color="indigo"
+									progress={(courseDone?.length / (courseDone?.length + studying?.length)) * 100}
+								/>
 							</div>
 							<div class="flex-1 text-white p-5 bg-blue-900 mr-3 rounded-lg">
 								<div class="text-xl">{$t('Posts')}</div>
-								<div class="text-3xl mb-5 font-medium">0</div>
+								<div class="text-3xl mb-5 font-medium">{posts?.length}</div>
 								<Progressbar color="indigo" progress="0" />
 							</div>
 							<div class="flex-1 text-white p-5 bg-blue-900 rounded-lg">
