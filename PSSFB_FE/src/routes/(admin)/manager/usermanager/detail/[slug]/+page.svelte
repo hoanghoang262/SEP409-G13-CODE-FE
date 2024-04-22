@@ -23,11 +23,6 @@
 
 <main>
 	<div class="w-5/6 md:w-3/4 m-auto">
-		<h1
-			class="md:flex hidden font-thinner text-2xl md:text-3xl mt-5 px-5 py-2 rounded-md bg-gray-200 w-fit"
-		>
-			Your Profile
-		</h1>
 		<div class="md:mx-5 md:mt-3 mt-2">
 			<!-- svelte-ignore a11y-img-redundant-alt -->
 			<img
