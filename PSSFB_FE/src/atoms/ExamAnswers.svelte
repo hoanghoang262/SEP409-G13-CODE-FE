@@ -9,9 +9,9 @@
 		if (isChecked) {
 			const q = submitData.questionExam.find((qe: any) => qe.id == questionExam.id);
 			q.selectedAnswerIds = [aid];
-		}else{
+		} else {
 			const q = submitData.questionExam.find((qe: any) => qe.id == questionExam.id);
-			q.selectedAnswerIds = q.selectedAnswerIds.filter((id:number) => id!=aid)
+			q.selectedAnswerIds = q.selectedAnswerIds.filter((id: number) => id != aid);
 		}
 	}
 
@@ -20,9 +20,9 @@
 		if (isChecked) {
 			const q = submitData.questionExam.find((qe: any) => qe.id == questionExam.id);
 			q.selectedAnswerIds = [...q.selectedAnswerIds, aid];
-		}else{
+		} else {
 			const q = submitData.questionExam.find((qe: any) => qe.id == questionExam.id);
-			q.selectedAnswerIds = q.selectedAnswerIds.filter((id:number) => id!=aid)
+			q.selectedAnswerIds = q.selectedAnswerIds.filter((id: number) => id != aid);
 		}
 	}
 </script>
@@ -42,7 +42,12 @@
 {:else}
 	{#each answerExams as ae}
 		<div class="mb-3 flex items-center">
-			<input on:change={(event) => handleCheckboxChange(event, ae.id)} class="mr-2" type="radio" name="answerQ{questionExam.id}" />{ae.optionsText}
+			<input
+				on:change={(event) => handleCheckboxChange(event, ae.id)}
+				class="mr-2"
+				type="radio"
+				name="answerQ{questionExam.id}"
+			/>{ae.optionsText}
 		</div>
 	{/each}
 	<div class="text-sm text-neutral-700 mt-3">Choose one correct answer</div>

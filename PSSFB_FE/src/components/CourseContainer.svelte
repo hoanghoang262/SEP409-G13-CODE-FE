@@ -11,6 +11,7 @@
 	import { page } from '$app/stores';
 	import RatingStar from '../atoms/RatingStar.svelte';
 	import { onMount } from 'svelte';
+	import PopUpConfirm from './modals/PopUpConfirm.svelte';
 
 	export let course: any;
 	export let type = 'public';
@@ -19,6 +20,8 @@
 	export let DeleteCourse: any = () => {};
 
 	export let RemoveFromWishList: any = () => {};
+
+	let popUpConfirmInstance: any;
 </script>
 
 <div class="relative h-[450px]">
@@ -38,7 +41,6 @@
 			<div class="overflow-hidden p-4 transition delay-50 duration-300 ease-in-out">
 				<div class="flex justify-between items-center">
 					{#if $currentUser?.Role == 'AdminBussiness'}
-						
 						<button class="w-full text-left font-medium text-xl mb-2 group-hover:underline truncate"
 							>{course.name}</button
 						>
@@ -105,7 +107,25 @@
 							onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
 							content={$t('Edit')}
 						/>
-						<Button type="danger" onclick={() => DeleteCourse(course.id)} content={$t('Delete')} />
+						<Button
+							type="danger"
+							onclick={async () => {
+								if (!popUpConfirmInstance) {
+									popUpConfirmInstance = new PopUpConfirm({
+										target: document.body,
+										props: {
+											content: 'Do you want to delete this course?'
+										}
+									});
+								}
+								const confirmed = await popUpConfirmInstance.show();
+								if (!confirmed) {
+									return;
+								}
+								DeleteCourse(course.id);
+							}}
+							content={$t('Delete')}
+						/>
 					</div>
 				{:else}
 					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('Join now')} />
@@ -176,7 +196,25 @@
 							onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
 							content={$t('Edit')}
 						/>
-						<Button type="danger" onclick={() => DeleteCourse(course.id)} content={$t('Delete')} />
+						<Button
+							type="danger"
+							onclick={async () => {
+								if (!popUpConfirmInstance) {
+									popUpConfirmInstance = new PopUpConfirm({
+										target: document.body,
+										props: {
+											content: 'Do you want to delete this course?'
+										}
+									});
+								}
+								const confirmed = await popUpConfirmInstance.show();
+								if (!confirmed) {
+									return;
+								}
+								DeleteCourse(course.id);
+							}}
+							content={$t('Delete')}
+						/>
 					</div>
 				{:else}
 					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('join now')} />

@@ -69,7 +69,7 @@
 		const response = await getUserEvaluation($currentUser.UserID, course.id);
 		if (response.value) {
 			rating = response.value;
-			if (rating?.mgsCode === 'MSG43') {
+			if (rating && rating > 0) {
 				evaluationState = false;
 			}
 		}
@@ -176,6 +176,7 @@
 							onclick={async () => {
 								enroll($currentUser.UserID, course.id);
 								goto(`/overall/${course.id}`);
+								showToast('Enroll', 'Enroll success', 'success');
 							}}
 							classes="py-3 px-16 bg-white text-black my-10"
 							content={$t('Go to course')}
@@ -251,21 +252,7 @@
 		<div class="my-20">
 			{#if section == 'Introduction'}
 				<div>
-					When it comes to object-oriented programming, you might immediately think of the four
-					characteristics of encapsulation, inheritance, polymorphism, and abstraction. In reality,
-					these four characteristics are just like ingredients for building a program using the
-					object-oriented approach. The most important thing is still how you use these ingredients
-					to build the program. So what is object-oriented programming? Object-oriented programming
-					is simply a method for solving programming problems that, when applied, makes code easier
-					to develop and maintain. This method breaks down the program into objects and
-					relationships, with each object having attributes (data) and behaviors (methods). To be
-					able to program and design a program using this method, you definitely need to have a
-					clear understanding of the four characteristics of encapsulation, inheritance,
-					polymorphism, and abstraction. WHAT YOU WILL LEARN Object-Oriented Programming (OOP) is a
-					programming method that is based on objects to identify the essence of a problem. The C++
-					OOP course helps programmers learn programming techniques where all logic and practical
-					requirements are built around objects. Understanding how C++ OOP works simplifies
-					maintenance and makes it easier to expand software design.
+					{course.description}
 				</div>
 			{:else if section == 'Sysllabus'}
 				<div class="bg-neutral-100 border px-40 pb-20">

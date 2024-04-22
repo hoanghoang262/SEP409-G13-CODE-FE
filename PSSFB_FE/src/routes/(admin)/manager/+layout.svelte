@@ -179,30 +179,32 @@
 							</div>
 							<!--User Manager-->
 							<div class="space-y-3">
-								<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">User Manager</p>
-								<a
-									class="{$page.url.pathname.includes('/manager/usermanager')
-										? 'bg-green-200 hover:bg-green-400'
-										: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
-									href="/manager/usermanager"
-								>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="1em"
-										height="1em"
-										viewBox="0 0 24 24"
-										{...$$props}
-									>
-										<path
-											fill="none"
-											stroke="currentColor"
-											d="M18.5 20.247V16S16 14.5 12 14.5S5.5 16 5.5 16v4.247M1.5 12C1.5 6.201 6.201 1.5 12 1.5S22.5 6.201 22.5 12S17.799 22.5 12 22.5S1.5 17.799 1.5 12Zm10.426.5S8.5 10.68 8.5 8c0-1.933 1.569-3.5 3.504-3.5A3.495 3.495 0 0 1 15.5 8c0 2.68-3.426 4.5-3.426 4.5z"
-										/>
-									</svg>
-
-									<span class="mx-2 text-sm font-medium">{$t('Student Manager')}</span>
-								</a>
 								{#if $currentUser?.Role == 'AdminSystem'}
+									<p class="px-3 text-xs text-gray-500 uppercase dark:text-gray-400">
+										User Manager
+									</p>
+									<a
+										class="{$page.url.pathname.includes('/manager/usermanager')
+											? 'bg-green-200 hover:bg-green-400'
+											: 'hover:bg-gray-200'} flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700"
+										href="/manager/usermanager"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											width="1em"
+											height="1em"
+											viewBox="0 0 24 24"
+											{...$$props}
+										>
+											<path
+												fill="none"
+												stroke="currentColor"
+												d="M18.5 20.247V16S16 14.5 12 14.5S5.5 16 5.5 16v4.247M1.5 12C1.5 6.201 6.201 1.5 12 1.5S22.5 6.201 22.5 12S17.799 22.5 12 22.5S1.5 17.799 1.5 12Zm10.426.5S8.5 10.68 8.5 8c0-1.933 1.569-3.5 3.504-3.5A3.495 3.495 0 0 1 15.5 8c0 2.68-3.426 4.5-3.426 4.5z"
+											/>
+										</svg>
+
+										<span class="mx-2 text-sm font-medium">{$t('Student Manager')}</span>
+									</a>
 									<a
 										class="{$page.url.pathname.includes('/manager/bamanager')
 											? 'bg-green-200 hover:bg-green-400'
