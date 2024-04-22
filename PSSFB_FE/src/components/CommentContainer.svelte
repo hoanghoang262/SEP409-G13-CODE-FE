@@ -286,7 +286,7 @@
 							<Avatar classes="rounded-full w-full h-full" src={reply.userPicture} />
 						</div>
 						<div>
-							<div class="flex">
+							<div class="flex items-center">
 								<div class="text-blue-500 mr-3">{reply.userName}</div>
 								<div class="text-neutral-400 text-xs">{formatDateTime(reply?.createDate)}</div>
 							</div>

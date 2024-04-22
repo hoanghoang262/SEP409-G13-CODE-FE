@@ -57,7 +57,6 @@
 					autocomplete="off"
 					id="username"
 					type="text"
-					placeholder="Your user name"
 					value={data?.userName}
 					readonly
 				/>
@@ -71,7 +70,6 @@
 					autocomplete="off"
 					id="fullname"
 					type="text"
-					placeholder="Your fullname"
 					value={data?.fullName}
 					readonly
 				/>
@@ -87,7 +85,6 @@
 						autocomplete="off"
 						id="phone"
 						type="text"
-						placeholder="Your phone"
 						value={data?.phone}
 						readonly
 					/>
@@ -104,7 +101,6 @@
 						autocomplete="off"
 						id="birthDate"
 						type="text"
-						placeholder="Your birth date"
 						value={formatDate(data?.birthDate)}
 						readonly
 					/>
@@ -119,7 +115,6 @@
 					autocomplete="off"
 					id="email"
 					type="text"
-					placeholder="Your email"
 					value={data?.email}
 					readonly
 				/>
@@ -134,7 +129,6 @@
 					autocomplete="off"
 					id="address"
 					type="text"
-					placeholder="Your address"
 					value={data?.address}
 					readonly
 				/>
@@ -148,7 +142,6 @@
 					autocomplete="off"
 					id="fblink"
 					type="text"
-					placeholder="Your facebook link"
 					value={data?.facebookLink}
 					readonly
 				/>
