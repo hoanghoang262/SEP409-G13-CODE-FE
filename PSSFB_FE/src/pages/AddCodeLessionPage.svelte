@@ -11,6 +11,12 @@
 	import { pageStatus } from '../stores/store';
 	import { goto } from '$app/navigation';
 	import Editor from '@tinymce/tinymce-svelte';
+	import {
+		CComplieToCheck,
+		CPlusComplieCodeToCheck,
+		JavaComplieCodeToCheck
+	} from '$lib/services/CompilerService';
+	import CodeEditor4 from '../components/CodeEditor4.svelte';
 
 	export let course: any;
 	const ids = $page.params.ids.split('/');
@@ -21,20 +27,36 @@
 
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice Lession', 'Enter title shorter than 256 char', 'warning');
-			pageStatus.set('done');
+			showToast('Save Pratice Lession', 'Enter title shorter than 256 char');
 			return;
 		}
 
 		pageStatus.set('load');
+		console.log(JSON.stringify({ chapterId, practiceQuestion: codeQuestion }));
 		try {
 			const response = await addCodeQuestion({ chapterId, practiceQuestion: codeQuestion });
+			console.log(response);
 			showToast('Add Practice Question', 'Add practice Question Success', 'success');
 			goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${chapterId}`);
 		} catch (e) {
 			console.log(e);
 			showToast('Add Practice Question', 'Something went wrong', 'error');
 		}
+		pageStatus.set('done');
+	};
+
+	const executeCode = async () => {
+		pageStatus.set('load');
+		switch (course.tag) {
+			case 'Java':
+				return await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
+
+			case 'C':
+				return await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+			case 'C++':
+				return await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+		}
+
 		pageStatus.set('done');
 	};
 </script>
@@ -58,11 +80,11 @@
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
 			<Label>TestCases</Label>
 			{#if course?.tag == 'Java'}
-				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+				<CodeEditor4 {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
 			{:else if course?.tag == 'C'}
-				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+				<CodeEditor4 {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
 			{:else if course?.tag == 'C++'}
-				<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+				<CodeEditor4 {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
 			{/if}
 			<hr class="my-5" />
 

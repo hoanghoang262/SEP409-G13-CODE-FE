@@ -150,6 +150,46 @@ void assertEqual(T expected, T actual, U message) {
 	return CPlusForm;
 };
 
+
+export const CComplieToCheck = async (codeForm:string, testCase:any) => {
+	try {
+		const result = await axios.post(
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCToCheck`,
+			{userCode: CForm(codeForm, testCase)}
+		);
+		return result.data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+};
+
+export const CPlusComplieCodeToCheck = async (codeForm:string, testCase:any) => {
+	try {
+		const result = await axios.post(
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCPlusToCheck`,
+			{userCode: CPlusForm(codeForm, testCase)}
+		);
+		return result.data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+};
+
+export const JavaComplieCodeToCheck = async (codeForm:string, testCase:any) => {
+	try {
+		const result = await axios.post(
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaToCheck`,
+			{userCode: JavaForm(codeForm, testCase)}
+		);
+		return result.data;
+	} catch (error) {
+		console.error(error);
+		return error;
+	}
+};
+
 export const ExecuteResult = (result: any) => {
 	let resultList = [];
 

@@ -45,7 +45,6 @@
 				<p class=" mb-1">Part</p>
 				<input
 					min=1
-					on:blur={handlePosetiveInput}
 					id="partinput"
 					type="number"
 					name="part"
