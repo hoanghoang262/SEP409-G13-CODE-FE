@@ -19,6 +19,7 @@
 	import { currentUser, pageStatus } from '../../../../../stores/store';
 	import { getURL, uploadImage } from '../../../../../firebase';
 	import { addCourse } from '$lib/services/ModerationServices';
+	import Editor from '@tinymce/tinymce-svelte';
 
 	// let inputType = 'int';
 
@@ -235,10 +236,9 @@
 		<div>
 			<p class="mb-1">Description</p>
 			<div class="mb-5">
-				<Textarea
-					style="height:100px"
-					name="description"
+				<Editor
 					bind:value={course.description}
+					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
 					placeholder="Description"
 				/>
 			</div>

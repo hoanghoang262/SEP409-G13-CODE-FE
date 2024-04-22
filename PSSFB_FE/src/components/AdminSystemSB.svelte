@@ -107,7 +107,7 @@
 							>
 								{@html minus}
 							</div>
-							<button on:click={() => chapterClick(s.id)} class="w-full truncate"
+							<button  class="w-full truncate"
 								><p class="font-normal text-black truncate">{s?.name}</p></button
 							>
 							
