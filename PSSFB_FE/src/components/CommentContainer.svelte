@@ -38,7 +38,6 @@
 		} else {
 			replyFrm?.classList.add('hidden');
 		}
-		showToast('Reply', 'Create reply success', 'success');
 	};
 
 	const editClick = (id: number) => {
@@ -213,6 +212,7 @@
 		replyClick(commentId);
 		replyContent = '';
 		pageStatus.set('done');
+		showToast('Reply', 'Create reply success', 'success');
 	}
 </script>
 
@@ -268,7 +268,7 @@
 					<div id="replyFrm#{c.id}" class="mt-5 hidden">
 						<!-- <form id="rfrm{c.id}" method="POST" action="?/postreply"> -->
 						<div class="flex mb-3">
-							<div class="w-10 h-10 mr-3">
+							<div class="h-10 w-[52px] mr-3">
 								<Avatar classes="rounded-full h-full w-full" src={$currentUser?.photoURL} />
 							</div>
 							<input type="hidden" name="commentId" readonly value={c.id} />
