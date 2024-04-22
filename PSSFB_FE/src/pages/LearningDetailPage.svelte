@@ -69,7 +69,7 @@
 		const response = await getUserEvaluation($currentUser.UserID, course.id);
 		if (response.value) {
 			rating = response.value;
-			if (rating?.mgsCode === 'MSG43') {
+			if (rating && rating > 0) {
 				evaluationState = false;
 			}
 		}
