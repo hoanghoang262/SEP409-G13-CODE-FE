@@ -38,6 +38,7 @@
 		} else {
 			replyFrm?.classList.add('hidden');
 		}
+		showToast('Reply', 'Create reply success', 'success');
 	};
 
 	const editClick = (id: number) => {
