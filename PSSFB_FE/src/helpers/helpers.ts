@@ -22,6 +22,10 @@ export function checkExist(v: any) {
 	return v != undefined && v != null && v != '';
 }
 
+export function checkNote(v: any) {
+	return v.replace("&nbsp;","").trim() == "<p></p>";
+}
+
 export function showToast(title: string, description: string, type: ToastType = 'info') {
 	const toast = toasts.add({
 		title,

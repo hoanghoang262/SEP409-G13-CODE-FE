@@ -38,14 +38,14 @@
 	};
 
 	const AddExam = async () => {
-		if(Exam.time<60){
-			showToast("Save Exam","Exam duration muse be greater or equal one minute")
-			return
+		if (Exam.time < 60) {
+			showToast('Save Exam', 'Exam duration muse be greater or equal one minute');
+			return;
 		}
 
-		if(Exam.percentageCompleted<1){
-			showToast("Save Exam","Exam Percentage Completed muse be greater or equal 1%")
-			return
+		if (Exam.percentageCompleted < 1) {
+			showToast('Save Exam', 'Exam Percentage Completed muse be greater or equal 1%');
+			return;
 		}
 		pageStatus.set('load');
 		try {
@@ -59,7 +59,7 @@
 			showToast('Add Exam', 'something went wrong', 'error');
 		}
 		pageStatus.set('done');
-		goto('/manager/creattingcourses')
+		goto('/manager/creattingcourses');
 	};
 </script>
 
@@ -72,7 +72,6 @@
 		<Label defaultClass=" mb-3 block">Time (Second)</Label>
 		<input
 			min="1"
-			
 			type="number"
 			name="time"
 			bind:value={Exam.time}
@@ -82,7 +81,6 @@
 		<Label defaultClass=" mb-3 block">Percentage Completed (%)</Label>
 		<input
 			min="1"
-			
 			type="number"
 			name="time"
 			bind:value={Exam.percentageCompleted}
@@ -151,7 +149,20 @@
 	<svelte:fragment slot="footer">
 		<Button
 			onclick={() => {
-				defaultModal = false;
+				if (Exam.questionExams[SelectedQIndex].answerExams?.length < 2) {
+					showToast('Save Exam', 'Create more answers', 'warning');
+					return;
+				}
+
+				const haveCorrectAnswer = Exam.questionExams[SelectedQIndex].answerExams.filter(
+					(a) => a.correctAnswer == true
+				);
+				if (haveCorrectAnswer.length > 0) {
+					console.log(Exam);
+					defaultModal = false;
+				} else {
+					showToast('Save Exam', 'Choose a correct answer', 'warning');
+				}
 			}}
 			content="Save"
 		/>

@@ -40,16 +40,16 @@
 	};
 
 	const AddLession = async () => {
-
-		if(!checkTitle(lession.title)){
-			showToast('Save Lession',"Enter title shorter than 256 char")
-			return
+		if (!checkTitle(lession.title)) {
+			showToast('Save Lession', 'Enter title shorter than 256 char');
+			return;
 		}
 
 		if (!checkExist(video)) {
 			showToast('Add lession', 'Please upload video', 'warning');
 			return;
 		}
+
 		pageStatus.set('load');
 		await frmSubmit();
 		try {
@@ -119,7 +119,6 @@
 			<Label defaultClass=" mb-3 block">Duration</Label>
 			<input
 				min="1"
-				on:blur={handlePosetiveInput}
 				type="number"
 				class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
 				required
@@ -177,7 +176,6 @@
 					<Label defaultClass=" mb-3 block">Popup Second</Label>
 					<input
 						min="1"
-						on:blur={handlePosetiveInput}
 						type="number"
 						class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
 						required
@@ -223,8 +221,19 @@
 	<svelte:fragment slot="footer">
 		<Button
 			onclick={() => {
-				console.log(lession);
-				defaultModal = false;
+				if (lession.questions[SelectedQIndex].answerOptions?.length < 2) {
+					showToast('Save Question', 'Create more answers', 'warning');
+					return;
+				}
+				const haveCorrectAnswer = lession.questions[SelectedQIndex].answerOptions.filter(
+					(a) => a.correctAnswer == true
+				);
+				if (haveCorrectAnswer.length > 0) {
+					console.log(lession);
+					defaultModal = false;
+				} else {
+					showToast('Save Question', 'Choose a correct answer', 'warning');
+				}
 			}}
 			content="Save"
 		/>

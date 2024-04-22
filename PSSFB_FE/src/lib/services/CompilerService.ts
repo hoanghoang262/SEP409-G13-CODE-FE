@@ -167,7 +167,7 @@ export const CComplieToCheck = async (codeForm:string, testCase:any) => {
 export const CPlusComplieCodeToCheck = async (codeForm:string, testCase:any) => {
 	try {
 		const result = await axios.post(
-			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCPlusToCheck`,
+			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusTest`,
 			{userCode: CPlusForm(codeForm, testCase)}
 		);
 		return result.data;
@@ -179,8 +179,9 @@ export const CPlusComplieCodeToCheck = async (codeForm:string, testCase:any) => 
 
 export const JavaComplieCodeToCheck = async (codeForm:string, testCase:any) => {
 	try {
+		console.log(JSON.stringify({userCode: JavaForm(codeForm, testCase)}))
 		const result = await axios.post(
-			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaToCheck`,
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaTest`,
 			{userCode: JavaForm(codeForm, testCase)}
 		);
 		return result.data;

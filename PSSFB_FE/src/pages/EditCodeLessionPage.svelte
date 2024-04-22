@@ -11,7 +11,7 @@
 	import CodeEditor4 from '../components/CodeEditor4.svelte';
 
 	export let data;
-
+	let result = ""
 	let course = data.course;
 	let codeQuestion = data.codeLession;
 
@@ -43,13 +43,14 @@
 		pageStatus.set('load');
 		switch (course.tag) {
 			case 'Java':
-				return await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
+			result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
 
 			case 'C':
-				return await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+			result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
 			case 'C++':
-				return await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+			result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
 		}
+
 
 		pageStatus.set('done');
 	};
@@ -76,11 +77,11 @@
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
 			<Label>TestCases</Label>
 			{#if course?.tag == 'Java'}
-				<CodeEditor4 executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+				<CodeEditor4 bind:result executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
 			{:else if course?.tag == 'C'}
-				<CodeEditor4 executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+				<CodeEditor4 bind:result executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
 			{:else if course?.tag == 'C++'}
-				<CodeEditor4 executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+				<CodeEditor4 bind:result executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
 			{/if}
 			<div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
 		</div>

@@ -3,7 +3,7 @@
 	import Input from '../atoms/Input.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../atoms/Button.svelte';
-	import { initQuestion, initAnswer } from '$lib/type';
+	import { initQuestion, initAnswer, type Lession } from '$lib/type';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { checkExist, checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import { addLession, getModCourseById, updateLession } from '$lib/services/ModerationServices';
@@ -15,7 +15,7 @@
 
 	export let data;
 	let course = data.course;
-	let lession = data.lession;
+	let lession:Lession = data.lession;
 	$: questions = lession.questions ?? [];
 	const ids = $page.params.ids.split('/');
 	const lessionId = ids[1];
@@ -219,8 +219,18 @@
 	<svelte:fragment slot="footer">
 		<Button
 			onclick={() => {
-				console.log(lession);
-				defaultModal = false;
+				if (lession.questions[SelectedQIndex].answerOptions?.length < 2) {
+					showToast('Save Question', 'Create more answers', 'warning');
+					return;
+				}
+				
+				const haveCorrectAnswer = lession.questions[SelectedQIndex].answerOptions.filter((a) => a.correctAnswer == true);
+				if (haveCorrectAnswer.length>0) {
+					console.log(lession);
+					defaultModal = false;
+				} else {
+					showToast('Save Question', 'Choose a correct answer', 'warning');
+				}
 			}}
 			content="Save"
 		/>
