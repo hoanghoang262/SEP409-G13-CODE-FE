@@ -20,6 +20,7 @@
 	import { showToast } from '../helpers/helpers';
 	import { getUserInfo } from '$lib/services/AuthenticationServices';
 	import axios from 'axios';
+	import { getAllPostByUserId } from '$lib/services/ForumsServices';
 
 	const courseTableTitle = ['Free Courses', 'Pro Courses', 'Studying', 'Complete'];
 	let session = 'Free Courses';
@@ -44,14 +45,9 @@
 
 	onMount(async () => {
 		const response = await getProgressCourses($currentUser.UserID);
-		axios
-			.get(
-				`https://forumservices.azurewebsites.net/api/Forum/GetAllPostsByUserId?userId=${$currentUser.UserID}`
-			)
-			.then((result) => {
-				totalPostByUser = result.data.totalCount;
-			});
 		progress = response.enrolledCourses;
+		let result = await getAllPostByUserId($currentUser?.UserID);
+		totalPostByUser = result.totalCount;
 	});
 </script>
 
