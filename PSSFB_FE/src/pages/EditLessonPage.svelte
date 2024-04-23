@@ -146,10 +146,10 @@
 
 			<hr class="my-5" />
 
-			<Label defaultClass=" mb-3 block text-2lg font-medium">Question</Label>
+			<Label defaultClass="mb-3 block text-2xl font-medium">Question</Label>
 
 			{#each questions as q, index}
-				<div>
+				<div class="bg-gray-100 px-8 py-6">
 					<div class="flex justify-between">
 						<button
 							class="mb-5 flex text-blue-500 items-center"
@@ -160,7 +160,7 @@
 							>Question #{index + 1}
 							<Icon class="ml-1" icon="material-symbols:edit" style="color: #5c61ff" /></button
 						>
-						<div class="w-1/5 flex items-end">
+						<div class="flex items-end">
 							<Button
 								type="danger"
 								onclick={() => {
@@ -170,9 +170,9 @@
 							/>
 						</div>
 					</div>
-					<Label defaultClass=" mb-3 block">Question Content</Label>
-					<Textarea class="w-4/5 ml-5" bind:value={q.contentQuestion} />
-					<Label defaultClass=" mb-3 block">Popup Second</Label>
+					<Label defaultClass=" mb-1 block">Question Content</Label>
+					<Textarea class="" bind:value={q.contentQuestion} />
+					<Label defaultClass="mt-3 mb-1 block">Popup Second</Label>
 					<input
 						on:blur={handlePosetiveInput}
 						min="1"
