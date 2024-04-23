@@ -41,19 +41,17 @@
 		goto(`/manager/moderationcourses/detail/chapter/${courseId}/${id}`);
 	};
 
-	const lessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/manager/moderationcourses/detail/lession/${courseId}/${lindex}`);
+	const lessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/manager/moderationcourses/detail/lesson/${courseId}/${lindex}`);
 	};
 
-	const codelessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/manager/moderationcourses/detail/codelession/${courseId}/${lindex}`);
+	const codelessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/manager/moderationcourses/detail/codelesson/${courseId}/${lindex}`);
 	};
 
 	const examclick = (l: any, index: number, lindex: number) => {
 		goto(`/manager/moderationcourses/detail/exam/${courseId}/${lindex}`);
 	};
-
-	
 </script>
 
 <main class="fixed top-16 md:top-24 right-0">
@@ -107,10 +105,9 @@
 							>
 								{@html minus}
 							</div>
-							<button  class="w-full truncate"
+							<button class="w-full truncate"
 								><p class="font-normal text-black truncate">{s?.name}</p></button
 							>
-							
 						</div>
 						<div id="schedule{index}">
 							{#each s.lessons as l}
@@ -119,11 +116,11 @@
 										<Icon class="mr-3 text-2xl" icon="ion:book-sharp" style="color: gray" />
 									</div>
 
-									<button class="truncate pr-10" on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button>
-									
+									<button class="truncate pr-10" on:click={() => lessonClick(l, s.id, l.id)}
+										>{l.title}</button
+									>
 								</div>
 							{/each}
-							
 
 							{#each s.codeQuestions as l}
 								<div class="pl-10 mb-5 flex items-center">
@@ -131,14 +128,11 @@
 										<Icon class="mr-3 text-2xl" icon="material-symbols:code" style="color: gray" />
 									</div>
 
-									<button on:click={() => codelessionClick(l, s.id, l.id)} class="truncate pr-10"
-										>{l.title??""}</button
+									<button on:click={() => codelessonClick(l, s.id, l.id)} class="truncate pr-10"
+										>{l.title ?? ''}</button
 									>
-									
 								</div>
 							{/each}
-
-							
 
 							{#each s.lastExam as l}
 								<div class="pl-10 mb-5 flex items-center">
@@ -153,15 +147,11 @@
 									<button on:click={() => examclick(l, s.id, l.id)} class="truncate pr-10"
 										>{l.name}</button
 									>
-									
 								</div>
 							{/each}
-							
 						</div>
 					{/each}
 				</div>
-				
-				
 			</div>
 		</div>
 	{:else}
@@ -187,6 +177,4 @@
 			</svg>
 		</button>
 	{/if}
-
-	
 </main>

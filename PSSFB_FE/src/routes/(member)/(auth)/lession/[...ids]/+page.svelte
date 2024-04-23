@@ -3,13 +3,13 @@
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import CommentContainer from '../../../../../components/CommentContainer.svelte';
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
-	import LessionVideoContainer from '../../../../../components/LessionVideoContainer.svelte';
+	import lessonVideoContainer from '../../../../../components/lessonVideoContainer.svelte';
 	import { convertSecondsToMmSs } from '../../../../../helpers/helpers';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
 	import { delNotes, getCourseById, getNotes, putNote } from '$lib/services/CourseServices';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
-	import { delComment, delReplyComment, getCommentByLession } from '$lib/services/CommentService';
+	import { delComment, delReplyComment, getCommentBylesson } from '$lib/services/CommentService';
 	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import CodeEditor2 from '../../../../../components/CodeEditor2.svelte';
@@ -22,7 +22,7 @@
 	let course: any = [];
 
 	const chapter = data?.chapter;
-	const lession = data?.lession;
+	const lesson = data?.lesson;
 	let comments = data?.comments ?? [];
 	let notes: any;
 	let currentTime = 0;
@@ -32,13 +32,13 @@
 
 	onMount(async () => {
 		getCourseById(courseId, $currentUser?.UserID).then((rs: any) => (course = rs));
-		notes = await getNotes($currentUser.UserID, lession.id);
+		notes = await getNotes($currentUser.UserID, lesson.id);
 	});
 
 	async function DelNote(id: number) {
 		pageStatus.set('load');
 		await delNotes(id);
-		notes = await getNotes($currentUser.UserID, lession.id);
+		notes = await getNotes($currentUser.UserID, lesson.id);
 		pageStatus.set('done');
 	}
 
@@ -61,7 +61,7 @@
 	async function EditNote(note: any) {
 		pageStatus.set('load');
 		await putNote(note.id, note);
-		notes = await getNotes($currentUser.UserID, lession.id);
+		notes = await getNotes($currentUser.UserID, lesson.id);
 		const noteEditor = document.getElementById(`editornote${note.id}`);
 		const noteContent = document.getElementById(`notecontent${note.id}`);
 		noteEditor?.classList.add('hidden');
@@ -71,19 +71,18 @@
 </script>
 
 <div class="bg-slate-200 text-black">
-	<div class="px-5 py-2 font-medium">{course.name} > {chapter.name} > {lession.title}</div>
+	<div class="px-5 py-2 font-medium">{course.name} > {chapter.name} > {lesson.title}</div>
 	<div class="flex bg-white text-black">
 		<div class={RSB == 2 ? `hidden` : `w-1/5`}>
 			<CourseSideBar bind:course />
 		</div>
-		<div class="w-{RSB==0?'4':'3'}/5 p-3 overflow-y-scroll max-h-screen">
+		<div class="w-{RSB == 0 ? '4' : '3'}/5 p-3 overflow-y-scroll max-h-screen">
 			<div class="flex items-center">
 				<Avatar src={course.avatar} classes="w-10 mr-3 rounded-full" />
 				{course.created_Name}
 			</div>
 			<hr class="my-5" />
 			<div class="flex justify-end">
-
 				<div>
 					{#if RSB == 0}
 						<button
@@ -99,12 +98,12 @@
 										RSB = 2;
 										break;
 								}
-							}}><Icon class="text-4xl" icon="ic:round-menu-open"  style="color: #a3a3a3" /></button
+							}}><Icon class="text-4xl" icon="ic:round-menu-open" style="color: #a3a3a3" /></button
 						>
 					{/if}
 				</div>
 			</div>
-			<LessionVideoContainer {lession} bind:notes bind:currentTime />
+			<lessonVideoContainer {lesson} bind:notes bind:currentTime />
 		</div>
 		<div class={RSB == 0 ? `hidden` : `w-${RSB}/5`}>
 			<button
@@ -145,10 +144,10 @@
 			<div class="pl-5">
 				{#if section == 'Comments'}
 					<CommentContainer
-						type="lession"
-						lessionId={lession.id}
+						type="lesson"
+						lessonId={lesson.id}
 						bind:comments
-						getComment={() => getCommentByLession(lession.id)}
+						getComment={() => getCommentBylesson(lesson.id)}
 					/>
 				{:else if section == 'Notes'}
 					<div class="w-full">
@@ -195,7 +194,7 @@
 						{/each}
 					</div>
 				{:else if section == 'CodeEditor'}
-					<CodeEditor3 lessonId={lession.id} />
+					<CodeEditor3 lessonId={lesson.id} />
 				{/if}
 			</div>
 		</div>

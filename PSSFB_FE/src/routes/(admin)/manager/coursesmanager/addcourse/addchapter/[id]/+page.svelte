@@ -1,6 +1,6 @@
 <script>
 	import AddChapterPage from '../../../../../../../pages/AddChapterPage.svelte';
-	import AddCodeLessionPage from '../../../../../../../pages/AddCodeLessionPage.svelte';
+	import AddCodelessonPage from '../../../../../../../pages/AddCodeLessonPage.svelte';
 	import LoadingPage from '../../../../../../../pages/LoadingPage.svelte';
 
 	export let data;

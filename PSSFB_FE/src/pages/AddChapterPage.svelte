@@ -19,7 +19,7 @@
 
 	afterUpdate(() => {
 		if (form?.response && form?.type == 'success') {
-			goto(`/manager/coursesmanager/addcourse/addlession/${course.id}/${chapter.id}`);
+			goto(`/manager/coursesmanager/addcourse/addlesson/${course.id}/${chapter.id}`);
 		}
 	});
 
@@ -57,7 +57,7 @@
 			</div>
 		</form>
 	</div>
-	<div>
+	<div class="md:w-72">
 		<AdminCourseSb bind:course />
 	</div>
 </div>

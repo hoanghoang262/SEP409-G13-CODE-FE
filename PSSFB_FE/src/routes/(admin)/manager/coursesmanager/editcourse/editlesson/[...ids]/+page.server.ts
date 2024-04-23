@@ -1,15 +1,15 @@
-import { getModCourseById, getModLessionById } from '$lib/services/ModerationServices';
+import { getModCourseById, getModlessonById } from '$lib/services/ModerationServices';
 
 export async function load({ params }: any) {
 	const ids = params.ids.split('/');
 	const courseId = ids[0];
-	const lessionId = ids[1];
+	const lessonId = ids[1];
 	const promise = async () => {
 		const course = await getModCourseById(courseId);
-		const lession = await getModLessionById(lessionId);
+		const lesson = await getModlessonById(lessonId);
 		return {
 			course,
-			lession
+			lesson
 		};
 	};
 	return {

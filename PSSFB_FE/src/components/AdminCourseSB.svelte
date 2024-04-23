@@ -7,7 +7,7 @@
 		approveCourse,
 		deleteChapter,
 		deleteCodeQuestion,
-		deleteLession,
+		deletelesson,
 		deleteModExam,
 		getModCourseById,
 		sendCourseToApprove
@@ -48,12 +48,12 @@
 		goto(`/manager/coursesmanager/editcourse/editchapter/${courseId}/${id}`);
 	};
 
-	const lessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/manager/coursesmanager/editcourse/editlession/${courseId}/${lindex}`);
+	const lessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/manager/coursesmanager/editcourse/editlesson/${courseId}/${lindex}`);
 	};
 
-	const codelessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/manager/coursesmanager/editcourse/editcodelession/${courseId}/${lindex}`);
+	const codelessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/manager/coursesmanager/editcourse/editcodelesson/${courseId}/${lindex}`);
 	};
 
 	const examclick = (l: any, index: number, lindex: number) => {
@@ -73,13 +73,13 @@
 						showToast('Deleted chapter ', 'Something went wrong', 'error');
 					}
 					break;
-				case 'lession':
+				case 'lesson':
 					try {
-						await deleteLession(deleteObject.id);
-						showToast('Deleted lession ', 'Delete lession success', 'success');
+						await deletelesson(deleteObject.id);
+						showToast('Deleted lesson ', 'Delete lesson success', 'success');
 					} catch (error) {
 						console.log(error);
-						showToast('Deleted lession ', 'Something went wrong', 'error');
+						showToast('Deleted lesson ', 'Something went wrong', 'error');
 					}
 					break;
 				case 'practice question':
@@ -185,12 +185,12 @@
 
 										<button
 											class="truncate group-hover:underline"
-											on:click={() => lessionClick(l, s.id, l.id)}>{l.title}</button
+											on:click={() => lessonClick(l, s.id, l.id)}>{l.title}</button
 										>
 										<button
 											class="bg-gray-600 p-2 rounded-r-md"
 											on:click={() => {
-												deleteObject = { id: l.id, type: 'lession' };
+												deleteObject = { id: l.id, type: 'lesson' };
 												firstWM = true;
 											}}
 										>
@@ -202,8 +202,8 @@
 									<button
 										class=" text-blue-500 py-1 px-2 rounded-md text-md"
 										on:click={() =>
-											goto(`/manager/coursesmanager/addcourse/addlession/${courseId}/${s.id}`)}
-										>Add Lession</button
+											goto(`/manager/coursesmanager/addcourse/addlesson/${courseId}/${s.id}`)}
+										>Add lesson</button
 									>
 								</div>
 
@@ -217,7 +217,7 @@
 										</div>
 
 										<button
-											on:click={() => codelessionClick(l, s.id, l.id)}
+											on:click={() => codelessonClick(l, s.id, l.id)}
 											class="truncate px-2 hover:underline">{l.title ?? ''}</button
 										>
 										<button
@@ -234,7 +234,7 @@
 									<button
 										class="text-blue-500"
 										on:click={() =>
-											goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${s.id}`)}
+											goto(`/manager/coursesmanager/addcourse/addcodelesson/${courseId}/${s.id}`)}
 										>Add Practice Question</button
 									>
 								</div>

@@ -3,11 +3,11 @@ import { checkExist } from '../../helpers/helpers';
 import { MorderationPostManager } from '../../Enum/Paginators';
 
 
-export const getAllPendingPostByUserId = async (userId:number|undefined = undefined, posttitle: string = '',
-page: number = 1,
-pageSize: number = 10) => {
-    const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostsByUserId?${userId?`userId=${userId}&`:``}page=${page}&pageSize=${pageSize}${checkExist(posttitle)?`&postTitle=${posttitle}`:``}`)
-    return result.data
+export const getAllPendingPostByUserId = async (userId: number | undefined = undefined, posttitle: string = '',
+	page: number = 1,
+	pageSize: number = 10) => {
+	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostsByUserId?${userId ? `userId=${userId}&` : ``}page=${page}&pageSize=${pageSize}${checkExist(posttitle) ? `&postTitle=${posttitle}` : ``}`)
+	return result.data
 }
 
 export const addCourse = async (course: any) => {
@@ -36,11 +36,11 @@ export const addChapter = async (chapter: any) => {
 	}
 };
 
-export const addLession = async (lession: any) => {
+export const addlesson = async (lesson: any) => {
 	try {
 		const result = await axios.post(
 			`https://moderationservice.azurewebsites.net/api/LessonModeration/CreateLesson`,
-			lession
+			lesson
 		);
 		return result.data.value;
 	} catch (err) {
@@ -101,11 +101,11 @@ export const updateChapter = async (chapter: any) => {
 	}
 };
 
-export const updateLession = async (lession: any) => {
+export const updatelesson = async (lesson: any) => {
 	try {
 		const result = await axios.put(
-			`https://moderationservice.azurewebsites.net/api/LessonModeration/UpdateLesson?id=${lession.lessonId}`,
-			lession
+			`https://moderationservice.azurewebsites.net/api/LessonModeration/UpdateLesson?id=${lesson.lessonId}`,
+			lesson
 		);
 		return result.data.value;
 	} catch (err) {
@@ -164,7 +164,7 @@ export const deleteChapter = async (id: number) => {
 	}
 };
 
-export const deleteLession = async (id: number) => {
+export const deletelesson = async (id: number) => {
 	try {
 		const result = await axios.delete(
 			`https://moderationservice.azurewebsites.net/api/LessonModeration/DeleteLesson?id=${id}`
@@ -242,7 +242,7 @@ export const getModChapterById = async (id: number) => {
 	return result.data.value
 }
 
-export const getModLessionById = async (id: number) => {
+export const getModlessonById = async (id: number) => {
 	const result = await axios.get(
 		`https://moderationservice.azurewebsites.net/api/LessonModeration/GetLessonById?id=${id}`,
 	);
@@ -357,7 +357,7 @@ export const createPost = async (post: any) => {
 
 export const updateModPost = async (post: any) => {
 	try {
-		const result = await axios.put(`https://moderationservice.azurewebsites.net/api/Post/UpdatePost?id=${post.id}`,post)
+		const result = await axios.put(`https://moderationservice.azurewebsites.net/api/Post/UpdatePost?id=${post.id}`, post)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -376,7 +376,7 @@ export const sendPostToModeration = async (postId: number) => {
 }
 
 
-export const changeStatus = async (userId:number, uid:string) => {
+export const changeStatus = async (userId: number, uid: string) => {
 	try {
 		const result = await axios.put(`https://authenticateservice.azurewebsites.net/api/Authenticate/ChangeStatus?userId=${userId}&UIdFireBase=${uid}`)
 		return result.data

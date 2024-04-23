@@ -19,7 +19,7 @@
 	import CodeEditor4 from '../components/CodeEditor4.svelte';
 
 	export let course: any;
-	export let result = ""
+	export let result = '';
 	const ids = $page.params.ids.split('/');
 
 	let codeQuestion: codeQuestion = intitCodeQuestion();
@@ -28,7 +28,7 @@
 
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice Lession', 'Enter title shorter than 256 char');
+			showToast('Save Pratice lesson', 'Enter title shorter than 256 char');
 			return;
 		}
 
@@ -50,14 +50,13 @@
 		pageStatus.set('load');
 		switch (course.tag) {
 			case 'Java':
-			result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
+				result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
 
 			case 'C':
-			result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+				result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
 			case 'C++':
-			result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+				result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
 		}
-
 
 		pageStatus.set('done');
 	};
@@ -66,27 +65,52 @@
 <div class="flex">
 	<div class="w-4/5">
 		<div>
-			<Label defaultClass="text-xl mb-3 block">Add Pratice Question</Label>
-			<a href="/manager/tutorial/createCodeLession">Tutorial how to create a pratice lession</a>
+			<Label defaultClass="text-2xl font-medium mb-3 block">Add Pratice Question</Label>
+			<a href="/manager/tutorial/createCodelesson " class="text-blue-500 underline"
+				>Tutorial how to create a pratice lesson</a
+			>
 			<hr class="my-5" />
-			<Label>Title</Label>
-			<Textarea bind:value={codeQuestion.title} />
-			<Label defaultClass=" mb-3 block">Description</Label>
-			<div class="mb-5 ml-4">
+			<div class="mb-3">
+				<div class="mb-2">
+					<Label>Title</Label>
+				</div>
+				<Textarea bind:value={codeQuestion.title} />
+			</div>
+			<Label defaultClass=" mb-1 block">Description</Label>
+			<div class="mb-5">
 				<Editor
 					bind:value={codeQuestion.description}
 					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
 				/>
 			</div>
-			<Label>CodeForm</Label>
+			<div class="my-1">
+				<Label>CodeForm</Label>
+			</div>
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
-			<Label>TestCases</Label>
+			<div class="mt-4">
+				<Label>TestCases</Label>
+			</div>
 			{#if course?.tag == 'Java'}
-				<CodeEditor4 bind:result {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+				<CodeEditor4
+					bind:result
+					{executeCode}
+					bind:lang={course.tag}
+					bind:value={codeQuestion.testCaseJava}
+				/>
 			{:else if course?.tag == 'C'}
-				<CodeEditor4 bind:result {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+				<CodeEditor4
+					bind:result
+					{executeCode}
+					bind:lang={course.tag}
+					bind:value={codeQuestion.testCaseC}
+				/>
 			{:else if course?.tag == 'C++'}
-				<CodeEditor4 bind:result {executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+				<CodeEditor4
+					bind:result
+					{executeCode}
+					bind:lang={course.tag}
+					bind:value={codeQuestion.testCaseCplus}
+				/>
 			{/if}
 			<hr class="my-5" />
 

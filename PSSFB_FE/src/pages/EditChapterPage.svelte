@@ -12,7 +12,6 @@
 	let course = data.course;
 	let chapter = data.chapter;
 	console.log('data', data);
-	
 
 	if (form?.type == 'success') {
 		showToast('Edit Chapter', form.message, form.type);
@@ -20,41 +19,46 @@
 		showToast('Edit Chapter', form.message, form.type);
 	}
 
-	const onsubmit = (event:any) => {
-		const part:any = document.getElementById('partinput')
-		if(part.value<1){
-			showToast("Part input","Part must be greater than or equal 1","warning")
+	const onsubmit = (event: any) => {
+		const part: any = document.getElementById('partinput');
+		if (part.value < 1) {
+			showToast('Part input', 'Part must be greater than or equal 1', 'warning');
 			event.preventDefault();
 		}
-	}
+	};
 </script>
 
 <div class="flex">
-	<div class="w-4/5">
+	<div class="w-3/5 mx-auto">
 		<form method="POST" on:submit={onsubmit} action="?/editchapter">
-			<input hidden name="id" readonly value={chapter?.id}/>
-			<Label defaultClass=" mb-3 block">Edit Chapter</Label>
-			<hr class="my-3"/>
-			<Label defaultClass=" mb-3 block">Chapter Name</Label>
-			<Input classes="ml-4 border w-2/3" name="name" placehoder="chapter name" bind:value={chapter.name}/>
-			<Label defaultClass=" mb-3 block">Part</Label>
+			<input hidden name="id" readonly value={chapter?.id} />
+			<Label defaultClass=" mb-3 block text-2xl font-medium">Edit Chapter</Label>
+			<hr class="my-3" />
+			<Label defaultClass=" mb-1 block">Chapter Name</Label>
+			<Input
+				classes=" border w-2/3"
+				name="name"
+				placehoder="chapter name"
+				bind:value={chapter.name}
+			/>
+			<Label defaultClass=" mb-1 mt-3 block">Part</Label>
 			<input
-			bind:value={chapter.part}
-			min=1
+				bind:value={chapter.part}
+				min="1"
 				type="number"
 				name="part"
-				class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
+				class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md"
 				required
 			/>
 			<div class="flex justify-end">
 				<Button
-					onclick={() => goto('/manager/coursesmanager/addcourse/addlession/0')}
+					onclick={() => goto('/manager/coursesmanager/addcourse/addlesson/0')}
 					content="Save"
 				/>
 			</div>
 		</form>
 	</div>
 	<div class="w-1/5 min-h-screen ml-20">
-		<AdminCourseSb bind:course={course} />
+		<AdminCourseSb bind:course />
 	</div>
 </div>

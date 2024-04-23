@@ -38,7 +38,7 @@ export const getCompleteCourseByUserId = async (id: number) => {
 	return result.data.value;
 };
 
-export const getLessionById = async (id: number) => {
+export const getlessonById = async (id: number) => {
 	const result = await axios.get(
 		`https://coursesservices.azurewebsites.net/api/Course/GetLessonById?lessonId=${id}`
 	);
@@ -59,9 +59,9 @@ export const getChapterById = async (id: number) => {
 	return result.data.value;
 };
 
-export const getNotes = async (userId: number, lessionId: number) => {
+export const getNotes = async (userId: number, lessonId: number) => {
 	const result = await axios.get(
-		`https://coursesservices.azurewebsites.net/api/Note/GetAllNoteOfUser?userId=${userId}&lessonId=${lessionId}`
+		`https://coursesservices.azurewebsites.net/api/Note/GetAllNoteOfUser?userId=${userId}&lessonId=${lessonId}`
 	);
 	return result.data.value;
 };
@@ -208,7 +208,7 @@ export const createUserEvaluation = async (userId: number, courseId: number, sta
 	return response.data;
 }
 
-export const completeLession = async (userId: number, lessonId: number) => {
+export const completelesson = async (userId: number, lessonId: number) => {
 	try {
 		const result = await axios.post(`https://coursesservices.azurewebsites.net/api/Course/CompletedLesson?userId=${userId}&lessonId=${lessonId}`)
 		return result.data;

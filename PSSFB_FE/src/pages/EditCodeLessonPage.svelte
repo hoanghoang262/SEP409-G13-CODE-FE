@@ -6,21 +6,25 @@
 	import { getModCourseById, updateCodeQuestion } from '$lib/services/ModerationServices';
 	import { checkTitle, showToast } from '../helpers/helpers';
 	import { pageStatus } from '../stores/store';
-    import Editor from '@tinymce/tinymce-svelte';
-	import { CComplieToCheck, CPlusComplieCodeToCheck, JavaComplieCodeToCheck } from '$lib/services/CompilerService';
+	import Editor from '@tinymce/tinymce-svelte';
+	import {
+		CComplieToCheck,
+		CPlusComplieCodeToCheck,
+		JavaComplieCodeToCheck
+	} from '$lib/services/CompilerService';
 	import CodeEditor4 from '../components/CodeEditor4.svelte';
 
 	export let data;
-	let result = ""
+	let result = '';
 	let course = data.course;
-	let codeQuestion = data.codeLession;
+	let codeQuestion = data.codelesson;
 
 	const saveCQ = async () => {
-		if(!checkTitle(codeQuestion.title)){
-			showToast('Save Pratice Lession',"Enter title shorter than 256 char")
-			return
+		if (!checkTitle(codeQuestion.title)) {
+			showToast('Save Pratice lesson', 'Enter title shorter than 256 char');
+			return;
 		}
-		
+
 		pageStatus.set('load');
 		console.log(
 			JSON.stringify({ practiceQuestionId: codeQuestion.id, practiceQuestion: codeQuestion })
@@ -43,25 +47,24 @@
 		pageStatus.set('load');
 		switch (course.tag) {
 			case 'Java':
-			result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
+				result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
 
 			case 'C':
-			result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+				result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
 			case 'C++':
-			result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+				result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
 		}
-
 
 		pageStatus.set('done');
 	};
 </script>
 
 <div class="flex">
-	<div class="w-4/5">
+	<div class="w-3/5 mx-auto">
 		<div>
 			<Label defaultClass="text-xl mb-3 block">Edit Pratice Question</Label>
-			<a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodeLession"
-				>Tutorial how to create a pratice lession</a
+			<a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodelesson"
+				>Tutorial how to create a pratice lesson</a
 			>
 			<hr class="my-5" />
 			<Label>Title</Label>
@@ -77,11 +80,26 @@
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
 			<Label>TestCases</Label>
 			{#if course?.tag == 'Java'}
-				<CodeEditor4 bind:result executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseJava} />
+				<CodeEditor4
+					bind:result
+					{executeCode}
+					bind:lang={course.tag}
+					bind:value={codeQuestion.testCaseJava}
+				/>
 			{:else if course?.tag == 'C'}
-				<CodeEditor4 bind:result executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseC} />
+				<CodeEditor4
+					bind:result
+					{executeCode}
+					bind:lang={course.tag}
+					bind:value={codeQuestion.testCaseC}
+				/>
 			{:else if course?.tag == 'C++'}
-				<CodeEditor4 bind:result executeCode={executeCode} bind:lang={course.tag} bind:value={codeQuestion.testCaseCplus} />
+				<CodeEditor4
+					bind:result
+					{executeCode}
+					bind:lang={course.tag}
+					bind:value={codeQuestion.testCaseCplus}
+				/>
 			{/if}
 			<div class="flex justify-end"><Button onclick={saveCQ} content="Save" /></div>
 		</div>

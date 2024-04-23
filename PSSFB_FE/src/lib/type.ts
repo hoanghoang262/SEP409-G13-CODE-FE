@@ -114,13 +114,13 @@ export interface Question {
 
 export function initQuestion(): Question {
 	return {
-		contentQuestion: 'Question',
+		contentQuestion: '',
 		time: 3,
 		answerOptions: [initAnswer(true), initAnswer(false)]
 	};
 }
 
-export interface Lession {
+export interface lesson {
 	title: string;
 	videoUrl: string;
 	description: string;
@@ -129,13 +129,13 @@ export interface Lession {
 	questions: Question[];
 }
 
-export function initLessions(): Lession {
+export function initlessons(): lesson {
 	return {
-		title: 'LessionsName',
-		videoUrl: 'url',
-		description: 'description',
+		title: '',
+		videoUrl: '',
+		description: '',
 		duration: 60 * 10,
-		contentLesson: 'content',
+		contentLesson: '',
 		questions: [initQuestion()]
 	};
 }
@@ -152,12 +152,12 @@ export interface codeQuestion {
 
 export function intitCodeQuestion(): codeQuestion {
 	return {
-		description: 'description',
+		description: '',
 		codeForm: '',
 		testCaseJava: undefined,
 		testCaseC: undefined,
 		testCaseCplus: undefined,
-		title: 'title'
+		title: ''
 		//		testCases: [initTestCase('int')]
 	};
 }
@@ -167,7 +167,7 @@ export interface Chapter {
 	Description: string;
 	Part: Number;
 	codeQuestions: codeQuestion[];
-	lessons: Lession[];
+	lessons: lesson[];
 }
 
 export function initChapter(): Chapter {
@@ -175,7 +175,7 @@ export function initChapter(): Chapter {
 		Name: 'ChapterName',
 		Description: 'Description',
 		Part: 1,
-		lessons: [initLessions()],
+		lessons: [initlessons()],
 		codeQuestions: [intitCodeQuestion()]
 	};
 }
@@ -187,7 +187,7 @@ export interface questionExam {
 
 export function initQuestionExam(): questionExam {
 	return {
-		contentQuestion: 'contentQuestion',
+		contentQuestion: '',
 		answerExams: [initAnswer(true), initAnswer(false)]
 	};
 }
