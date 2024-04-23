@@ -8,13 +8,16 @@
 	import { currentUser, pageStatus } from '../stores/store';
 	import { tags } from '../data/data';
 	import WishListContainer from '../components/WishListContainer.svelte';
+	import PopUpConfirm from '../components/modals/PopUpConfirm.svelte';
+
+	let popUpConfirmInstance: any;
 
 	export let result: any;
 	$: courses = result.items;
 	let searchStr = '';
 	let tag = 'All';
 	const pagiClick = async (page: number) => {
-		result = await getWishList($currentUser.UserID,tag, searchStr, page);
+		result = await getWishList($currentUser.UserID, tag, searchStr, page);
 		console.log(result);
 	};
 
@@ -43,16 +46,28 @@
 		pageStatus.set('done');
 	};
 
-	const RemoveFromWishList = async (wishListId:number) => {
-		pageStatus.set('load')
+	const RemoveFromWishList = async (wishListId: number) => {
+		if (!popUpConfirmInstance) {
+			popUpConfirmInstance = new PopUpConfirm({
+				target: document.body,
+				props: {
+					content: 'Do you want to remove this course from WishList?'
+				}
+			});
+		}
+		const confirmed = await popUpConfirmInstance.show();
+		if (!confirmed) {
+			return;
+		}
+		pageStatus.set('load');
 		try {
-			await removeWishList(wishListId)
-			result = await getWishList($currentUser.UserID,tag, searchStr)
+			await removeWishList(wishListId);
+			result = await getWishList($currentUser.UserID, tag, searchStr);
 		} catch (error) {
 			console.log(error);
 		}
-		pageStatus.set('done')
-	}
+		pageStatus.set('done');
+	};
 </script>
 
 <div>
