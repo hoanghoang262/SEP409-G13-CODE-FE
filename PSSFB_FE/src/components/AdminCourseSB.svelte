@@ -177,7 +177,7 @@
 							<div id="schedule{index}">
 								{#each s.lessons as l}
 									<div
-										class="ml-8 flex items-center justify-between bg-gray-200 hover:bg-green-200 group"
+										class="ml-8 mb-2 flex items-center justify-between bg-gray-200 hover:bg-green-200 group"
 									>
 										<div class="bg-green-300 rounded-l-lg">
 											<Icon class="m-1 p-[2px] text-2xl text-gray-600 " icon="ion:book-sharp" />

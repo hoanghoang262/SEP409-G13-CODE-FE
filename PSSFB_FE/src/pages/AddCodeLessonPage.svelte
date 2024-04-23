@@ -73,7 +73,7 @@
 			<Label>Title</Label>
 			<Textarea bind:value={codeQuestion.title} />
 			<Label defaultClass=" mb-3 block">Description</Label>
-			<div class="mb-5 ml-4">
+			<div class="mb-5">
 				<Editor
 					bind:value={codeQuestion.description}
 					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
