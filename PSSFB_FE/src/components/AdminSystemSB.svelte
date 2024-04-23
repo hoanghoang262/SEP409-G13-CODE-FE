@@ -111,7 +111,7 @@
 						</div>
 						<div id="schedule{index}">
 							{#each s.lessons as l}
-								<div class="pl-10 mb-5 flex items-center">
+								<div class=" pl-10 mb-5 flex items-center">
 									<div>
 										<Icon class="mr-3 text-2xl" icon="ion:book-sharp" style="color: gray" />
 									</div>
