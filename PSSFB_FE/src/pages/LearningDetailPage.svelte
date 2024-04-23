@@ -174,9 +174,7 @@
 					{#if course?.isEnrolled == true}
 						<Button2
 							onclick={async () => {
-								enroll($currentUser.UserID, course.id);
 								goto(`/overall/${course.id}`);
-								showToast('Enroll', 'Enroll success', 'success');
 							}}
 							classes="py-3 px-16 bg-white text-black my-10"
 							content={$t('Go to course')}

@@ -6,43 +6,37 @@
 	import { convertSecondsToMmSs } from '../../../../../../../helpers/helpers';
 	import AdminSystemSb from '../../../../../../../components/AdminSystemSB.svelte';
 	import Button from '../../../../../../../atoms/Button.svelte';
+	import ExamAnswers from '../../../../../../../atoms/ExamAnswers.svelte';
 
     export let data:any;
 	$: course = data.course
-	let Exam = data.exam
+	let exam = data.exam
 	let SelectedQIndex = 0
 	let defaultModal = false
-	$: selectedQ = Exam.questionExams[SelectedQIndex]
+	$: selectedQ = exam.questionExams[SelectedQIndex]
 
-	
+	const questionExams = exam.questionExams;
 
 	
 </script>
 
 <div class="flex">
 	<div class="w-4/5">
-			<Label defaultClass=" mb-3 block">Detail Exam</Label>
-			<hr class="my-3"/>
-			<Label defaultClass=" mb-3 block">{Exam.name}</Label>
-			<Label defaultClass=" mb-3 block">Time: {convertSecondsToMmSs(Exam.time)}</Label>
-			<Label defaultClass=" mb-3 block">Question</Label>
-
-			{#each Exam.questionExams as q, index}
-				<div class="flex justify-between">
-					<div class="w-4/5">
-						<button
-							class="mb-5"
-							on:click={() => {
-								SelectedQIndex = index;
-								defaultModal = true;
-							}}>question #{index + 1}</button
-						>
-						<Label defaultClass=" mb-3 block">{q.contentQuestion}</Label>
-						
+		<div>
+			<div class="p-20 border rounded-xl bg-white">
+				<div class="text-3xl font-bold">{exam.name}</div>
+				<hr class="my-5" />
+				
+				{#each questionExams as qe, index}
+					<div class="border mb-3 rounded py-10 px-5">
+						<div class="text-xl font-extrabold mb-5">Question {index + 1}</div>
+						<div class="mb-3">{qe.contentQuestion}</div>
+						<ExamAnswers submitData={{}}  questionExam={qe} />
 					</div>
-					
-				</div>
-			{/each}
+				{/each}
+				
+			</div>
+		</div>
 			
 	</div>
 	<div class="w-1/5 min-h-screen ml-20">

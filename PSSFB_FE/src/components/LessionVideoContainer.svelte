@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { checkExist, convertSecondsToMmSs, showToast } from "../helpers/helpers";
+	import { checkExist, checkNote, convertSecondsToMmSs, showToast } from "../helpers/helpers";
 	import VideoQuestionModal from "./modals/VideoQuestionModal.svelte";
 	import { Modal } from "flowbite-svelte";
 	import Editor from "@tinymce/tinymce-svelte";
@@ -46,11 +46,14 @@
         console.log("Add note")
         const video:any = document.getElementById("video")
         video.pause()
+		console.log("Add note", note)
+		if(!checkExist(note.trim())||!checkNote(note)){
+			showToast("Add note","Invalid note content","warning")
+			return
+		}
         pageStatus.set("load")
 		
-		if(!checkExist(note.trim())){
-			showToast("Add note","Invalid note content","warning")
-		}
+		
 		const response = await addNote(
 			{
 				lessonId: lession.id,

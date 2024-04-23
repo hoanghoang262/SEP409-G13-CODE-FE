@@ -55,7 +55,22 @@
 		pageStatus.set('done');
 	};
 
-	
+	const SaveQuestion = () => {
+		if(Exam.questionExams[SelectedQIndex].answerExams?.length < 2){
+			showToast('Save Exam', 'Create more answers', 'warning');
+			return;
+		}
+
+		const haveCorrectAnswer = Exam.questionExams[SelectedQIndex].answerExams.filter(
+			(a: any) => a.correctAnswer == true
+		);
+		if (haveCorrectAnswer.length > 0) {
+			console.log(Exam);
+			defaultModal = false;
+		} else {
+			showToast('Save Exam', 'Choose a correct answer', 'warning');
+		}
+	};
 </script>
 
 <div class="flex">
@@ -145,9 +160,7 @@
 	/>
 	<svelte:fragment slot="footer">
 		<Button
-			onclick={() => {
-				defaultModal = false;
-			}}
+			onclick={SaveQuestion}
 			content="Save"
 		/>
 		<Button onclick={() => (defaultModal = false)} content="Cancel" />
