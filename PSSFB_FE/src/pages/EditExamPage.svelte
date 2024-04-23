@@ -42,7 +42,18 @@
 
 	const UpdateExam = async () => {
 		if(!checkTitle(Exam.name)){
-			showToast('Edit Course', 'Exam name must shorter than 256 characters', 'warning');
+			showToast('Edit Exam', 'Exam name must shorter than 256 characters', 'warning');
+			return;
+		}
+
+		
+		if (Exam.time < 60) {
+			showToast('Edit Exam', 'Exam duration muse be greater or equal one minute', 'warning');
+			return;
+		}
+
+		if (Exam.percentageCompleted < 1) {
+			showToast('Edit Exam', 'Exam Percentage Completed muse be greater or equal 1%', 'warning');
 			return;
 		}
 		pageStatus.set('load');

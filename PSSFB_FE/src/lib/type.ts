@@ -108,7 +108,7 @@ export function initAnswerExam(correctAnswer: boolean, examId: number): answerEx
 
 export interface Question {
 	contentQuestion: string;
-	time: Number;
+	time: number;
 	answerOptions: answerOption[];
 }
 
@@ -124,7 +124,7 @@ export interface lesson {
 	title: string;
 	videoUrl: string;
 	description: string;
-	duration: Number;
+	duration: number;
 	contentLesson: string;
 	questions: Question[];
 }
@@ -165,7 +165,7 @@ export function intitCodeQuestion(): codeQuestion {
 export interface Chapter {
 	Name: string;
 	Description: string;
-	Part: Number;
+	Part: number;
 	codeQuestions: codeQuestion[];
 	lessons: lesson[];
 }

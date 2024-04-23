@@ -41,7 +41,7 @@
 						class="font-medium text-xl mb-2 group-hover:underline line-clamp-1"
 						><p class="line-clamp-1">{course.name}</p></button
 					>
-					<p class="text-sm"><span class="font-semibold">Create By:</span> {course.userName}</p>
+					<p class="text-sm"><span class="font-semibold">{$t('Create By')}:</span> {course.userName}</p>
 				{:else if $currentUser?.Role == 'AdminBussiness'}
 					<button class="font-medium text-xl mb-2 group-hover:underline line-clamp-1"
 						><p class="line-clamp-1">{course.name}</p></button
@@ -64,7 +64,7 @@
 					{/if}
 				</p>
 				<p class="text-sm line-clamp-1 group-hover:line-clamp-3">
-					<span class="font-semibold">Description</span>: {course.description}
+					<span class="font-semibold">{$t('Description')}</span>: {course.description}
 				</p>
 			</div>
 			<hr />
@@ -72,7 +72,7 @@
 				<div class="flex items-center text-sm"></div>
 
 				{#if $currentUser?.Role == 'Student'}
-					<Button onclick={() => goto(`/learning/${course.courseId}`)} content={$t('join now')} />
+					<Button onclick={() => goto(`/learning/${course.courseId}`)} content={$t('Join now')} />
 				{/if}
 			</div>
 			{#if $page.url.pathname.includes('wishlist') && $currentUser?.Role == 'Student'}

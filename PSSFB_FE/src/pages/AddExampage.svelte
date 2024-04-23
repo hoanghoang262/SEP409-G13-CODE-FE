@@ -44,17 +44,18 @@
 		}
 		
 		if (Exam.time < 60) {
-			showToast('Save Exam', 'Exam duration muse be greater or equal one minute');
+			showToast('Save Exam', 'Exam duration muse be greater or equal one minute','warning');
 			return;
 		}
 
 		if (Exam.percentageCompleted < 1) {
-			showToast('Save Exam', 'Exam Percentage Completed muse be greater or equal 1%');
+			showToast('Save Exam', 'Exam Percentage Completed muse be greater or equal 1%','warning');
 			return;
 		}
+
+		
 		pageStatus.set('load');
 		try {
-			console.log(JSON.stringify({ chapterId, lastExam: Exam }));
 			const response = await addExam({ chapterId, lastExam: Exam });
 			if(response?.msgCode){
 				showToast(response?.msgCode, response?.msgTextEN, 'error');

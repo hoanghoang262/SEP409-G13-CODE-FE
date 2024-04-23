@@ -197,7 +197,7 @@
 		if (checkExist(user) && user?.email == $currentUser?.email) {
 			pageStatus.set('load')
 			try {
-				await changeStatus($currentUser.UserID, $currentUser.uid)
+				await changeStatus($currentUser.UserID)
 				currentUser.set(undefined);
 				logout();
 				goto('/');

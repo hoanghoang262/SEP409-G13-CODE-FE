@@ -30,7 +30,13 @@
 		}
 		pageStatus.set('load');
 		try {
-			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			const ggResult:any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			if(ggResult?.msgCode){
+				showToast(ggResult?.msgCode,ggResult?.msgTextVN,'error')
+				pageStatus.set('done');
+				return
+			}
+			const JWTFS = ggResult.token
 			const decodeData: any = await decodeJWT(JWTFS);
 			console.log('decodeData', decodeData);
 			user.UserID = decodeData.UserID;
@@ -67,7 +73,13 @@
 		}
 		pageStatus.set('load');
 		try {
-			const JWTFS = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			const ggResult:any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			if(ggResult?.msgCode){
+				showToast(ggResult?.msgCode,ggResult?.msgTextVN,'error')
+				pageStatus.set('done');
+				return
+			}
+			const JWTFS = ggResult.token
 			const decodeData: any = await decodeJWT(JWTFS);
 			user.UserID = decodeData.UserID;
 			const result = await getUserInfo(user.UserID);
@@ -121,7 +133,13 @@
 		try {
 			const user: any = await loginWithEmailAndPsr(Email, Password);
 			if (checkExist(user)) {
-				const JWTFS = await loginByGoogle(user?.email, user?.photoURL ?? '', user?.displayName);
+				const ggResult:any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			if(ggResult?.msgCode){
+				showToast(ggResult?.msgCode,ggResult?.msgTextVN,'error')
+				pageStatus.set('done');
+				return
+			}
+			const JWTFS = ggResult.token
 				const decodeData: any = decodeJWT(JWTFS);
 				user.UserID = decodeData.UserID;
 				const result = await getUserInfo(user.UserID);
@@ -179,7 +197,7 @@
 	<div class="my-10"></div>
 	<button
 		on:click={login}
-		class="bg-black rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"
+		class="bg-blue-500 rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"
 		>{$t('Login')}</button
 	>
 

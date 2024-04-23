@@ -41,12 +41,23 @@
 
 	const Addlesson = async () => {
 		if (!checkTitle(lesson.title)) {
-			showToast('Save lesson', 'Enter title shorter than 256 char');
+			showToast('Add lesson', 'Enter title shorter than 256 char', "warning");
+			return;
+		}
+
+		if(lesson.duration < 1){
+			showToast('Add lesson', 'Duration không hợp lệ','warning');
 			return;
 		}
 
 		if (!checkExist(video)) {
 			showToast('Add lesson', 'Please upload video', 'warning');
+			return;
+		}
+
+		const isNegatve = questions.filter((q:any) => q.time < 0)
+		if (isNegatve.length>0) {
+			showToast('Add lesson', 'Giây pop up của question không hợp lệ', 'warning');
 			return;
 		}
 
