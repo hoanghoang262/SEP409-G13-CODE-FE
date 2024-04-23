@@ -256,20 +256,20 @@
 			</div>
 			<img class="w-1/3 ml-4 mb-5 hidden" id="img" alt="img" />
 		</div>
-		<div>
+		<div class="w-1/2">
 			<Label>
 				Language
 				<Select name="tag" class="mt-2 " items={language} bind:value={course.tag} />
 			</Label>
 		</div>
-		<div class="mt-5">
+		<div class="mt-5 w-1/2">
 			<Label>
 				Payment
-				<Select class="mt-2 " items={payments} bind:value={payment} />
+				<Select class="mt-2" items={payments} bind:value={payment} />
 			</Label>
 		</div>
 		<div class="{payment == 'Free' ? 'hidden' : ''} mt-5">
-			<p class=" mb-1">Price</p>
+			<p class="mb-1">Price</p>
 			<input
 				on:keydown={handleKeyPress}
 				on:input={(event) => checkNumber(event.target)}
@@ -277,7 +277,7 @@
 				bind:value={course.price}
 				id="price"
 				name="price"
-				class="block w-full md:w-1/3 p-2 rounded-lg border mb-5"
+				class="block w-full md:w-1/2 p-2 rounded-lg border mb-5"
 				placeholder="Price"
 			/>
 		</div>
