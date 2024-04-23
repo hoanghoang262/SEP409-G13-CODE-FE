@@ -2,7 +2,7 @@
 	import AddCodelessonPage from '../../../../../../../pages/AddCodeLessonPage.svelte';
 	import LoadingPage from '../../../../../../../pages/LoadingPage.svelte';
 
-	export let data../../addcodelession/[...ids]/$types.js;
+	export let data;
 	const promise = data.promise;
 </script>
 

@@ -13,7 +13,7 @@
 	import Dropzone from 'svelte-file-dropzone';
 	import { getURL, getVideoURL, uploadVid } from '../../../../../../../firebase';
 	import LoadingPage from '../../../../../../../pages/LoadingPage.svelte';
-	import Addlessonpage from '../../../../../../../pages/Addlessonpage.svelte';
+	import Addlessonpage from '../../../../../../../pages/AddLessonpage.svelte';
 
 	export let data;
 	let promise = data.promise;
