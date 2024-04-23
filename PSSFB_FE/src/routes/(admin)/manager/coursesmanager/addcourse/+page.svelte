@@ -166,7 +166,7 @@
 	async function frmSubmit(event: any) {
 		event.preventDefault();
 
-		if(checkTitle(course.name)){
+		if(!checkTitle(course.name)){
 			showToast('Add Course', 'Course name shorter than 256 characters', 'warning');
 			return;
 		}
