@@ -19,6 +19,8 @@
 	} from '$lib/services/CourseServices';
 	import { showToast } from '../helpers/helpers';
 	import { getUserInfo } from '$lib/services/AuthenticationServices';
+	import axios from 'axios';
+	import { getAllPostByUserId } from '$lib/services/ForumsServices';
 
 	const courseTableTitle = ['Free Courses', 'Pro Courses', 'Studying', 'Complete'];
 	let session = 'Free Courses';
@@ -31,6 +33,8 @@
 	$: studying = progress?.filter((c: any) => c.isDone == false);
 	$: courseDone = progress?.filter((c: any) => c.isDone == true);
 
+	let totalPostByUser = 0;
+
 	// let userInfo: any;
 
 	// afterUpdate(async () => {
@@ -42,6 +46,8 @@
 	onMount(async () => {
 		const response = await getProgressCourses($currentUser.UserID);
 		progress = response.enrolledCourses;
+		let result = await getAllPostByUserId($currentUser?.UserID);
+		totalPostByUser = result.totalCount;
 	});
 </script>
 
@@ -79,7 +85,7 @@
 							</div>
 							<div class="flex-1 text-white p-5 bg-blue-900 mr-3 rounded-lg">
 								<div class="text-xl">{$t('Posts')}</div>
-								<div class="text-3xl mb-5 font-medium">{posts?.length}</div>
+								<div class="text-3xl mb-5 font-medium">{totalPostByUser ?? 0}</div>
 								<Progressbar color="indigo" progress="0" />
 							</div>
 							<div class="flex-1 text-white p-5 bg-blue-900 rounded-lg">

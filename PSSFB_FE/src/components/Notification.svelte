@@ -5,6 +5,7 @@
 	import Avatar from '../atoms/Avatar.svelte';
 	import { formatDateTime, getTimeDifference } from '../helpers/datetime';
 	import { goto } from '$app/navigation';
+	import logoWhite from '../assets/Xanh final.png';
 
 	let notificationShow = false;
 	let data: any;
@@ -62,7 +63,7 @@
 							<div class="mx-2 w-10 h-10">
 								<Avatar
 									classes="w-full h-full rounded-full border-2 border-blue-300"
-									src="/src/assets/Xanh final.png"
+									src={logoWhite}
 								/>
 							</div>
 							<div class="flex flex-col flex-1">
