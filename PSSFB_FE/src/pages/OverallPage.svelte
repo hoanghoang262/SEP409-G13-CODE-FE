@@ -53,7 +53,7 @@
 <div class="bg-neutral-100 h-[calc(100vh-64px)] md:h-[calc(100vh-96px)] flex">
 	<div class="w-1/4 mr-5"><CourseSideBar {course} /></div>
 
-	<div class="w-3/4 shadow-xl rounded-2xl border bg-white">
+	<div class="w-3/4 shadow-xl rounded-2xl border bg-white overflow-auto">
 		<div class="pl-5 pt-3 text-xl text-blue-500">{course?.name}</div>
 		<div class="flex pl-10 mt-20">
 			<div class="flex items-center mr-20">
@@ -122,7 +122,7 @@
 								class="pl-10 mb-5"
 								transition:fade
 							>
-								<div class="truncate w-3/4">{@html l.description}</div>
+								<div class="truncate w-3/4">{@html l.title}</div>
 							</div>
 						{/each}
 

@@ -58,6 +58,7 @@
 			videoLink: Math.floor(currentTime)
 		});
 		console.log('response', response);
+		showToast('Add note', 'Add note successfully', 'success');
 		showModal = false;
 		notes = await getNotes($currentUser.UserID, lesson.id);
 		pageStatus.set('done');
