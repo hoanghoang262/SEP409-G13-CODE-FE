@@ -59,7 +59,7 @@
 			showToast('Add Exam', 'something went wrong', 'error');
 		}
 		pageStatus.set('done');
-		goto('/manager/creattingcourses');
+		goto(`/manager/addcourse/addchapter/${course.id}`);
 	};
 </script>
 

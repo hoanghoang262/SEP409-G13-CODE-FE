@@ -23,7 +23,8 @@ export function checkExist(v: any) {
 }
 
 export function checkNote(v: any) {
-	return v.replace("&nbsp;","").trim() == "<p></p>";
+	const a = v.replaceAll("&nbsp;","").trim();
+	return a != "<p> </p>";
 }
 
 export function showToast(title: string, description: string, type: ToastType = 'info') {
