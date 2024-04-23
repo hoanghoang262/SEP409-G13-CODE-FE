@@ -1,5 +1,5 @@
 export const ssr = false;
-import { getCommentBylesson, postComment, postReplyComment } from "$lib/services/CommentService";
+import { getCommentByLesson, postComment, postReplyComment } from "$lib/services/CommentService";
 import { getChapterById, getCourseById, getlessonById, getNotes } from "$lib/services/CourseServices";
 import { redirect } from "@sveltejs/kit";
 import { courses, schedules } from "../../../../../data/data";
@@ -18,7 +18,7 @@ export async function load({ cookies, params }: any) {
     const lessonId = ids[2]
     const chapter = await getChapterById(chapterId);
     const lesson = await getlessonById(lessonId);
-    const comments = await getCommentBylesson(lessonId)
+    const comments = await getCommentByLesson(lessonId)
     //const notes = await getNotes(user.UserID, lessonId)
     return {
         chapter,

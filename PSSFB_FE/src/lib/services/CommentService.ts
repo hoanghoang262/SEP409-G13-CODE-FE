@@ -10,7 +10,7 @@ export const getCommentByCourse = async(id:number) => {
     return result.data.value
 }
 
-export const getCommentByLession = async(id:number) => {
+export const getCommentByLesson = async(id:number) => {
     const result = await axios.get(`https://ocelotapigateway.azurewebsites.net/apigateway-comment/Comment/GetAllCommentInLesson?lessonId=${id}`)
     return result.data.value
 }
