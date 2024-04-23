@@ -72,7 +72,7 @@
 			<hr class="my-5" />
 			<Label>Title</Label>
 			<Textarea bind:value={codeQuestion.title} />
-			<Label defaultClass=" mb-3 block">Description</Label>
+			<Label defaultClass=" mb-1 mt-5 block">Description</Label>
 			<div class="mb-5">
 				<Editor
 					bind:value={codeQuestion.description}
