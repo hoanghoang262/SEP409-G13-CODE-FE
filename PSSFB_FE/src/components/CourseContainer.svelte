@@ -59,12 +59,12 @@
 				</div>
 				{#if $currentUser?.Role == 'AdminBussiness'}
 					<p class="text-sm truncate">
-						<span class="font-semibold">Create By:</span>
+						<span class="font-semibold">{$t('Create By')}:</span>
 						{$currentUser?.displayName}
 					</p>
 				{:else}
 					<p class="text-sm truncate">
-						<span class="font-semibold">Create By:</span>
+						<span class="font-semibold">{$t('Create By')}:</span>
 						{course.userName}
 					</p>
 				{/if}
@@ -72,7 +72,7 @@
 					<span><span class="font-semibold">{$t('Language')}</span>: {course.tag}</span>
 				</p>
 				<p class="text-sm line-clamp-1 group-hover:line-clamp-3">
-					<span class="font-semibold">Description</span>: {course.description}
+					<span class="font-semibold">{$t('Description')}</span>: {@html course.description}
 				</p>
 			</div>
 			<hr />
@@ -107,25 +107,29 @@
 							onclick={() => goto(`/manager/coursesmanager/editcourse/${course.id}`)}
 							content={$t('Edit')}
 						/>
-						<Button
-							type="danger"
-							onclick={async () => {
-								if (!popUpConfirmInstance) {
-									popUpConfirmInstance = new PopUpConfirm({
-										target: document.body,
-										props: {
-											content: 'Do you want to delete this course?'
-										}
-									});
-								}
-								const confirmed = await popUpConfirmInstance.show();
-								if (!confirmed) {
-									return;
-								}
-								DeleteCourse(course.id);
-							}}
-							content={$t('Delete')}
-						/>
+						{#if course?.canDelete}
+							<Button
+								type="danger"
+								onclick={async () => {
+									if (!popUpConfirmInstance) {
+										popUpConfirmInstance = new PopUpConfirm({
+											target: document.body,
+											props: {
+												content: 'Do you want to delete this course?'
+											}
+										});
+									}
+									const confirmed = await popUpConfirmInstance.show();
+									if (!confirmed) {
+										return;
+									}
+									DeleteCourse(course.id);
+								}}
+								content={$t('Delete')}
+							/>
+						{:else}
+							<Button type="disable" content={$t('Approved')} />
+						{/if}
 					</div>
 				{:else}
 					<Button onclick={() => goto(`/learning/${course.id}`)} content={$t('Join now')} />
@@ -155,8 +159,8 @@
 			<div class="p-4">
 				<h3 class="font-medium truncate text-xl mb-2">{course.courseName}</h3>
 
-				<p class="text-sm text-neutral-500 mb-3">Create By: {course.userName}</p>
-				<p class="truncate text-sm">{course.courseDescription}</p>
+				<p class="text-sm text-neutral-500 mb-3">{$t('Create By')}: {course.userName}</p>
+				<p class="truncate text-sm">{@html course.courseDescription}</p>
 				<p>
 					{#if course?.status}
 						<Status status={course?.status} />

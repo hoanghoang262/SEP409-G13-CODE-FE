@@ -6,6 +6,7 @@
 	import {
 		checkExist,
 		checkNumber,
+		checkTitle,
 		convertVNDToNumber,
 		isVND,
 		showToast
@@ -165,6 +166,10 @@
 	async function frmSubmit(event: any) {
 		event.preventDefault();
 
+		if(checkTitle(course.name)){
+			showToast('Add Course', 'Course name shorter than 256 characters', 'warning');
+			return;
+		}
 		if (payment == 'With Fee') {
 			if (isVND(course.price + '')) course.price = convertVNDToNumber(course.price);
 
@@ -239,7 +244,7 @@
 				<Editor
 					bind:value={course.description}
 					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
-					placeholder="Description"
+					
 				/>
 			</div>
 		</div>

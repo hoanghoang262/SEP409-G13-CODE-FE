@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon from "@iconify/svelte";
+	import Icon from '@iconify/svelte';
 
 	export let content = '';
 	export let classes = '';
@@ -29,6 +29,12 @@
 	<button
 		on:click={onclick}
 		class="{classes} bg-white rounded-md p-3 font-medium text-red-500 items-center inline-flex border-2 hover:-translate-x-2 hover:bg-black transition ease-in-out"
+		>{content}</button
+	>
+{:else if type == 'disable'}
+	<button
+		on:click={onclick}
+		class="{classes} bg-neutral-400 rounded-md p-3 font-medium text-neutral-800 items-center inline-flex border-2 "
 		>{content}</button
 	>
 {/if}

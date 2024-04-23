@@ -44,11 +44,13 @@
 		switch (course.tag) {
 			case 'Java':
 			result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
-
+			break;
 			case 'C':
 			result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+			break;
 			case 'C++':
 			result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+			break;
 		}
 
 
