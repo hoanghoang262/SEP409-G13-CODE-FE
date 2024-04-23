@@ -41,7 +41,18 @@
 
 	const Editlesson = async () => {
 		if (!checkTitle(lesson.title)) {
-			showToast('Save lesson', 'Enter title shorter than 256 char');
+			showToast('Edit lesson', 'Enter title shorter than 256 char');
+			return;
+		}
+
+		if(lesson.duration < 1){
+			showToast('Edit lesson', 'Duration không hợp lệ','warning');
+			return;
+		}
+
+		const isNegatve = questions.filter((q:any) => q.time < 0)
+		if (isNegatve.length>0) {
+			showToast('Edit lesson', 'Giây pop up của question không hợp lệ', 'warning');
 			return;
 		}
 

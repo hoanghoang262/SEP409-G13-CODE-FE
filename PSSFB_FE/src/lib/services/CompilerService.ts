@@ -134,10 +134,10 @@ export const CPlusForm = (codeForm: string, testCase: string) => {
     template<typename T, typename U> 
 void assertEqual(T expected, T actual, U message) {
     if (expected == actual) {
-         std::cout << "All Test Pass "  ;
+         
         return;
     } else {
-        std::cout << "Test Failed At Input " << message << ": ";
+        std::cout << "Test Failed at input: " << message << "; ";
         std::cout << "Expected: " << expected << ", Actual: " << actual << std::endl;
        exit(0);
     }

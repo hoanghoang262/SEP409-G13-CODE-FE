@@ -9,7 +9,7 @@ export const loginByGoogle = async (email: string, photoURL: string, userName: s
 			data
 		);
 		console.log(result);
-		return result.data.value.token;
+		return result.data.value;
 	} catch (err) {
 		console.log(err);
 		return err;

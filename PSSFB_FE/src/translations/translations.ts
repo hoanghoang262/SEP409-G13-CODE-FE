@@ -84,6 +84,7 @@ export const translations: any = {
     "Payment History": "Lịch sử giao dịch",
     "Reset Password": "Quên mật khẩu",
     "De-active account": "Vô hiệu hóa",
+    "De-active": "Vô hiệu hóa",
     "Syllabus - What you will learn from this learn": "Giáo trình chi tiết",
     "Quizzes": "Bài học",
     "Codes": "Bài code",
