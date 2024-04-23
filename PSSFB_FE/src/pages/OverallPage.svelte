@@ -105,7 +105,7 @@
 								transition:fade
 							>
 								<div>{l.title}</div>
-								<div class="text-sm text-neutral-500">{l.description}</div>
+								<div class="text-sm text-neutral-500">{@html l.description}</div>
 							</div>
 						{/each}
 
@@ -122,7 +122,7 @@
 								class="pl-10 mb-5"
 								transition:fade
 							>
-								<div class="truncate w-3/4">{l.description}</div>
+								<div class="truncate w-3/4">{@html l.description}</div>
 							</div>
 						{/each}
 

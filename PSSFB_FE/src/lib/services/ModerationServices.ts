@@ -6,14 +6,14 @@ import { MorderationPostManager } from '../../Enum/Paginators';
 export const getAllPendingPostByUserId = async (userId: number | undefined = undefined, posttitle: string = '',
 	page: number = 1,
 	pageSize: number = 10) => {
-	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostsByUserId?${userId ? `userId=${userId}&` : ``}page=${page}&pageSize=${pageSize}${checkExist(posttitle) ? `&postTitle=${posttitle}` : ``}`)
+	const result = await axios.get(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Post/GetPostsByUserId?${userId ? `userId=${userId}&` : ``}page=${page}&pageSize=${pageSize}${checkExist(posttitle) ? `&postTitle=${posttitle}` : ``}`)
 	return result.data
 }
 
 export const addCourse = async (course: any) => {
 	try {
 		const result = await axios.post(
-			`https://moderationservice.azurewebsites.net/api/CourseModeration/AddCourse`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/CourseModeration/AddCourse`,
 			course
 		);
 		return result.data.value;
@@ -26,7 +26,7 @@ export const addCourse = async (course: any) => {
 export const addChapter = async (chapter: any) => {
 	try {
 		const result = await axios.post(
-			`https://moderationservice.azurewebsites.net/api/ChapterModeration/AddChapter`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/ChapterModeration/AddChapter`,
 			chapter
 		);
 		return result.data.value;
@@ -39,7 +39,7 @@ export const addChapter = async (chapter: any) => {
 export const addlesson = async (lesson: any) => {
 	try {
 		const result = await axios.post(
-			`https://moderationservice.azurewebsites.net/api/LessonModeration/CreateLesson`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LessonModeration/CreateLesson`,
 			lesson
 		);
 		return result.data.value;
@@ -52,7 +52,7 @@ export const addlesson = async (lesson: any) => {
 export const addCodeQuestion = async (codeques: any) => {
 	try {
 		const result = await axios.post(
-			`https://moderationservice.azurewebsites.net/api/PracticeQuestion/CreatePracticeQuestion`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/PracticeQuestion/CreatePracticeQuestion`,
 			codeques
 		);
 		return result.data.value;
@@ -65,7 +65,7 @@ export const addCodeQuestion = async (codeques: any) => {
 export const addExam = async (exam: any) => {
 	try {
 		const result = await axios.post(
-			`https://moderationservice.azurewebsites.net/api/LastExam/CreateLastExam`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LastExam/CreateLastExam`,
 			exam
 		);
 		return result.data.value;
@@ -78,7 +78,7 @@ export const addExam = async (exam: any) => {
 export const updateCourse = async (course: any) => {
 	try {
 		const result = await axios.put(
-			`https://moderationservice.azurewebsites.net/api/CourseModeration/UpdateCourse`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/CourseModeration/UpdateCourse`,
 			course
 		);
 		return result.data.value;
@@ -91,7 +91,7 @@ export const updateCourse = async (course: any) => {
 export const updateChapter = async (chapter: any) => {
 	try {
 		const result = await axios.put(
-			`https://moderationservice.azurewebsites.net/api/ChapterModeration/UpdateChapter?id=${chapter.id}`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/ChapterModeration/UpdateChapter?id=${chapter.id}`,
 			chapter
 		);
 		return result.data.value;
@@ -104,7 +104,7 @@ export const updateChapter = async (chapter: any) => {
 export const updatelesson = async (lesson: any) => {
 	try {
 		const result = await axios.put(
-			`https://moderationservice.azurewebsites.net/api/LessonModeration/UpdateLesson?id=${lesson.lessonId}`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LessonModeration/UpdateLesson?id=${lesson.lessonId}`,
 			lesson
 		);
 		return result.data.value;
@@ -117,7 +117,7 @@ export const updatelesson = async (lesson: any) => {
 export const updateCodeQuestion = async (codeques: any) => {
 	try {
 		const result = await axios.put(
-			`https://moderationservice.azurewebsites.net/api/PracticeQuestion/UpdatePracticeQuestion?id=${codeques.practiceQuestionId}`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/PracticeQuestion/UpdatePracticeQuestion?id=${codeques.practiceQuestionId}`,
 			codeques
 		);
 		return result.data.value;
@@ -130,7 +130,7 @@ export const updateCodeQuestion = async (codeques: any) => {
 export const updateExam = async (exam: any) => {
 	try {
 		const result = await axios.put(
-			`https://moderationservice.azurewebsites.net/api/LastExam/UpdateLastExam?id=${exam.lastExamId}`,
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LastExam/UpdateLastExam?id=${exam.lastExamId}`,
 			exam
 		);
 		return result.data.value;
@@ -143,7 +143,7 @@ export const updateExam = async (exam: any) => {
 export const deleteCourse = async (id: number) => {
 	try {
 		const result = await axios.delete(
-			`https://moderationservice.azurewebsites.net/api/CourseModeration/DeleteCourse?courseId=${id}`
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/CourseModeration/DeleteCourse?courseId=${id}`
 		);
 		return result.data;
 	} catch (err) {
@@ -155,7 +155,7 @@ export const deleteCourse = async (id: number) => {
 export const deleteChapter = async (id: number) => {
 	try {
 		const result = await axios.delete(
-			`https://moderationservice.azurewebsites.net/api/ChapterModeration/DeleteChapter?id=${id}`
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/ChapterModeration/DeleteChapter?id=${id}`
 		);
 		return result.data;
 	} catch (err) {
@@ -167,7 +167,7 @@ export const deleteChapter = async (id: number) => {
 export const deletelesson = async (id: number) => {
 	try {
 		const result = await axios.delete(
-			`https://moderationservice.azurewebsites.net/api/LessonModeration/DeleteLesson?id=${id}`
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LessonModeration/DeleteLesson?id=${id}`
 		);
 		return result.data;
 	} catch (err) {
@@ -179,7 +179,7 @@ export const deletelesson = async (id: number) => {
 export const deleteCodeQuestion = async (id: number) => {
 	try {
 		const result = await axios.delete(
-			`https://moderationservice.azurewebsites.net/api/PracticeQuestion/DeletePracticeQuestion?id=${id}`
+			`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/PracticeQuestion/DeletePracticeQuestion?id=${id}`
 		);
 		return result.data;
 	} catch (err) {
@@ -190,44 +190,44 @@ export const deleteCodeQuestion = async (id: number) => {
 
 export const getCreatingCourseByUser = async (id: number) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/CourseModeration/GetCourseByUserId?userId=${id}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/CourseModeration/GetCourseByUserId?userId=${id}`
 	);
 	return result.data.value;
 };
 
 export const getAllModCourse = async (tag: string = "All", courseName: string = "", page: number = 1, pageSize: number = 6) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsCourse?${checkExist(courseName) ? `courseName=${courseName}&` : ``}${tag == "All" ? `` : `Tag=${tag}&`}page=${page}&pageSize=${pageSize}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/GetModerationsCourse?${checkExist(courseName) ? `courseName=${courseName}&` : ``}${tag == "All" ? `` : `Tag=${tag}&`}page=${page}&pageSize=${pageSize}`
 	);
 	return result.data.value;
 };
 
 export const getModCourseById = async (id: number) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationCourseById?courseId=${id}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/GetModerationCourseById?courseId=${id}`
 	);
 	return result.data;
 };
 
 export const getAllModPosts = async (param: any) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/Moderation/GetModerationsPost${(param.postTitle !== '' ? "?postTitle=" + param.postTitle + "&" : "?")}page=${(param.pageNumber ? param.pageNumber : "1")}&pageSize=${(param.pageSize ? param.pageSize : MorderationPostManager.PageSize)}${param.tag !== '' ? "&Tag=" + param.tag : ""}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/GetModerationsPost${(param.postTitle !== '' ? "?postTitle=" + param.postTitle + "&" : "?")}page=${(param.pageNumber ? param.pageNumber : "1")}&pageSize=${(param.pageSize ? param.pageSize : MorderationPostManager.PageSize)}${param.tag !== '' ? "&Tag=" + param.tag : ""}`
 	);
 	return result.data.value;
 };
 
 export const getModPostById = async (id: number) => {
-	const result = await axios.get(`https://moderationservice.azurewebsites.net/api/Post/GetPostById?postId=${id}`)
+	const result = await axios.get(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Post/GetPostById?postId=${id}`)
 	return result.data.value
 }
 
 export const approvedPost = async (id: number) => {
-	const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationPost?postId=${id}`)
+	const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/ModerationPost?postId=${id}`)
 	return result.data.value
 }
 
 export const rejectPost = async (postId: number, reasonWhyReject: string) => {
-	const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/RejectPost`, {
+	const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/RejectPost`, {
 		postId: postId,
 		reasonWhyReject: reasonWhyReject
 	})
@@ -236,7 +236,7 @@ export const rejectPost = async (postId: number, reasonWhyReject: string) => {
 
 export const getModChapterById = async (id: number) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/ChapterModeration/GetChapterById?id=${id}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/ChapterModeration/GetChapterById?id=${id}`
 	);
 
 	return result.data.value
@@ -244,7 +244,7 @@ export const getModChapterById = async (id: number) => {
 
 export const getModlessonById = async (id: number) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/LessonModeration/GetLessonById?id=${id}`,
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LessonModeration/GetLessonById?id=${id}`,
 	);
 
 	return result.data.value
@@ -252,21 +252,21 @@ export const getModlessonById = async (id: number) => {
 
 export const getModPraticeQuestionById = async (id: number) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/PracticeQuestion/GetPracticeQuestionById?id=${id}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/PracticeQuestion/GetPracticeQuestionById?id=${id}`
 	);
 	return result.data.value
 }
 
 export const getModExamById = async (id: number) => {
 	const result = await axios.get(
-		`https://moderationservice.azurewebsites.net/api/LastExam/GetLastExamById?id=${id}`
+		`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LastExam/GetLastExamById?id=${id}`
 	);
 	return result.data.value
 }
 
 export const approvePost = async (postId: number) => {
 	try {
-		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationPost?postId=${postId}`)
+		const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/ModerationPost?postId=${postId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -276,7 +276,7 @@ export const approvePost = async (postId: number) => {
 
 export const deleteModPost = async (postId: number) => {
 	try {
-		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/Post/DeletePost?postId=${postId}`)
+		const result = await axios.delete(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Post/DeletePost?postId=${postId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -286,7 +286,7 @@ export const deleteModPost = async (postId: number) => {
 
 export const deleteModCourse = async (courseId: number) => {
 	try {
-		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/CourseModeration/DeleteCourse?courseId=${courseId}`)
+		const result = await axios.delete(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/CourseModeration/DeleteCourse?courseId=${courseId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -296,7 +296,7 @@ export const deleteModCourse = async (courseId: number) => {
 
 export const deleteModExam = async (examId: number) => {
 	try {
-		const result = await axios.delete(`https://moderationservice.azurewebsites.net/api/LastExam/DeleteLastExam?id=${examId}`)
+		const result = await axios.delete(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/LastExam/DeleteLastExam?id=${examId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -307,7 +307,7 @@ export const deleteModExam = async (examId: number) => {
 export const approveCourse = async (courseId: number) => {
 	try {
 		console.log(courseId)
-		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/ModerationCourse?courseId=${courseId}`)
+		const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/ModerationCourse?courseId=${courseId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -317,7 +317,7 @@ export const approveCourse = async (courseId: number) => {
 
 export const reject = async (data: any) => {
 	try {
-		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/Reject`, data)
+		const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/Reject`, data)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -327,7 +327,7 @@ export const reject = async (data: any) => {
 
 export const sendCourseToApprove = async (courseId: number) => {
 	try {
-		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/SendToModeration?CourseId=${courseId}`)
+		const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/SendToModeration?CourseId=${courseId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -337,7 +337,7 @@ export const sendCourseToApprove = async (courseId: number) => {
 
 export const createPost = async (post: any) => {
 	try {
-		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Post/CreatePost', post)
+		const result = await axios.post('https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Post/CreatePost', post)
 		return result.data.value
 	} catch (error) {
 		console.log(error);
@@ -347,7 +347,7 @@ export const createPost = async (post: any) => {
 
 // export const deleteModPost = async (postId:number) => {
 // 	try {
-// 		const result = await axios.post('https://moderationservice.azurewebsites.net/api/Moderation/CreatePost',post)
+// 		const result = await axios.post('https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/CreatePost',post)
 // 		return result.data
 // 	} catch (error) {
 // 		console.log(error);
@@ -357,7 +357,7 @@ export const createPost = async (post: any) => {
 
 export const updateModPost = async (post: any) => {
 	try {
-		const result = await axios.put(`https://moderationservice.azurewebsites.net/api/Post/UpdatePost?id=${post.id}`, post)
+		const result = await axios.put(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Post/UpdatePost?id=${post.id}`, post)
 		return result.data
 	} catch (error) {
 		console.log(error)
@@ -367,7 +367,7 @@ export const updateModPost = async (post: any) => {
 
 export const sendPostToModeration = async (postId: number) => {
 	try {
-		const result = await axios.post(`https://moderationservice.azurewebsites.net/api/Moderation/SendPostToModeration?PostId=${postId}`)
+		const result = await axios.post(`https://ocelotapigateway.azurewebsites.net/apigateway-moderation/Moderation/SendPostToModeration?PostId=${postId}`)
 		return result.data
 	} catch (error) {
 		console.log(error)

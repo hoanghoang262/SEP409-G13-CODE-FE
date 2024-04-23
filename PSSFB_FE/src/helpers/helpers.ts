@@ -129,7 +129,7 @@ export function checkUserName(userName: string): boolean {
 }
 
 export function checkTitle(title: string): boolean {
-	if (title.length < 256) {
+	if (title?.length < 256) {
 		return true;
 	}
 	return false

@@ -3,18 +3,18 @@
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import CommentContainer from '../../../../../components/CommentContainer.svelte';
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
-	import lessonVideoContainer from '../../../../../components/lessonVideoContainer.svelte';
 	import { convertSecondsToMmSs } from '../../../../../helpers/helpers';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
 	import { delNotes, getCourseById, getNotes, putNote } from '$lib/services/CourseServices';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../../../../../atoms/Button.svelte';
-	import { delComment, delReplyComment, getCommentBylesson } from '$lib/services/CommentService';
+	import { delComment, delReplyComment, getCommentByLesson } from '$lib/services/CommentService';
 	import { afterUpdate, beforeUpdate, onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import CodeEditor2 from '../../../../../components/CodeEditor2.svelte';
 	import CodeEditor from '../../../../../components/CodeEditor.svelte';
 	import CodeEditor3 from '../../../../../components/CodeEditor3.svelte';
+	import LessionVideoContainer from '../../../../../components/LessionVideoContainer.svelte';
 	export let data;
 
 	const ids = $page.params.ids.split('/');
@@ -103,7 +103,7 @@
 					{/if}
 				</div>
 			</div>
-			<lessonVideoContainer {lesson} bind:notes bind:currentTime />
+			<LessionVideoContainer {lesson} bind:notes bind:currentTime />
 		</div>
 		<div class={RSB == 0 ? `hidden` : `w-${RSB}/5`}>
 			<button
@@ -147,7 +147,7 @@
 						type="lesson"
 						lessonId={lesson.id}
 						bind:comments
-						getComment={() => getCommentBylesson(lesson.id)}
+						getComment={() => getCommentByLesson(lesson.id)}
 					/>
 				{:else if section == 'Notes'}
 					<div class="w-full">

@@ -28,7 +28,7 @@
 
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice lesson', 'Enter title shorter than 256 char');
+			showToast('Save Pratice Lession', 'Enter title shorter than 256 char');
 			return;
 		}
 
@@ -51,11 +51,13 @@
 		switch (course.tag) {
 			case 'Java':
 				result = await JavaComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseJava);
-
+				break;
 			case 'C':
 				result = await CComplieToCheck(codeQuestion.codeForm, codeQuestion.testCaseC);
+				break;
 			case 'C++':
 				result = await CPlusComplieCodeToCheck(codeQuestion.codeForm, codeQuestion.testCaseCplus);
+				break;
 		}
 
 		pageStatus.set('done');
@@ -65,31 +67,21 @@
 <div class="flex">
 	<div class="w-4/5">
 		<div>
-			<Label defaultClass="text-2xl font-medium mb-3 block">Add Pratice Question</Label>
-			<a href="/manager/tutorial/createCodelesson " class="text-blue-500 underline"
-				>Tutorial how to create a pratice lesson</a
-			>
+			<Label defaultClass="text-xl mb-3 block">Add Pratice Question</Label>
+			<a href="/manager/tutorial/createCodeLession">Tutorial how to create a pratice lession</a>
 			<hr class="my-5" />
-			<div class="mb-3">
-				<div class="mb-2">
-					<Label>Title</Label>
-				</div>
-				<Textarea bind:value={codeQuestion.title} />
-			</div>
-			<Label defaultClass=" mb-1 block">Description</Label>
-			<div class="mb-5">
+			<Label>Title</Label>
+			<Textarea bind:value={codeQuestion.title} />
+			<Label defaultClass=" mb-3 block">Description</Label>
+			<div class="mb-5 ml-4">
 				<Editor
 					bind:value={codeQuestion.description}
 					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
 				/>
 			</div>
-			<div class="my-1">
-				<Label>CodeForm</Label>
-			</div>
+			<Label>CodeForm</Label>
 			<CodeEditor2 bind:lang={course.tag} bind:value={codeQuestion.codeForm} />
-			<div class="mt-4">
-				<Label>TestCases</Label>
-			</div>
+			<Label>TestCases</Label>
 			{#if course?.tag == 'Java'}
 				<CodeEditor4
 					bind:result
