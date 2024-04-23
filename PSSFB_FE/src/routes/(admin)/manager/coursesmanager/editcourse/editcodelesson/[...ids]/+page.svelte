@@ -1,5 +1,5 @@
 <script>
-	import EditCodelessonPage from '../../../../../../../pages/EditCodelessonPage.svelte';
+	import EditCodelessonPage from '../../../../../../../pages/EditCodeLessonPage.svelte';
 	import LoadingPage from '../../../../../../../pages/LoadingPage.svelte';
 
 	export let data;
