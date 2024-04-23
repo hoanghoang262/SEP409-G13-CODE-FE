@@ -5,7 +5,7 @@
 	import Button from '../../../../../atoms/Button.svelte';
 	import WarningPopUp from '../../../../../components/modals/WarningPopUp.svelte';
 	import { getTimeDifference } from '../../../../../helpers/datetime';
-	import { showToast } from '../../../../../helpers/helpers';
+	import { checkExist, showToast } from '../../../../../helpers/helpers';
 	import { pageStatus, currentUser } from '../../../../../stores/store';
 	import { goto } from '$app/navigation';
 
@@ -30,6 +30,10 @@
 	};
 
 	const RejectPost = async () => {
+		if(!checkExist(rejectReazon)){
+			showToast('Reject post', 'Không được để trống', 'warning');
+			return;
+		}
 		try {
 			pageStatus.set('load');
 			console.log(post);

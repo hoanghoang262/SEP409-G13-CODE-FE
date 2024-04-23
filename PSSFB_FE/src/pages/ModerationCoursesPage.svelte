@@ -6,7 +6,7 @@
 	import { approveCourse, getAllModCourse, reject } from '$lib/services/ModerationServices';
 	import Input from '..//atoms/Input.svelte';
 	import { pageStatus } from '../stores/store';
-	import { showToast } from '../helpers/helpers';
+	import { checkExist, showToast } from '../helpers/helpers';
 	import { tags } from '../data/data';
 
 	export let result: any;
@@ -93,6 +93,10 @@
 		<Button
 			onclick={async () => {
 				try {
+					if(!checkExist(reasonWhyReject)){
+						showToast('Reject course', 'Enter reject reason', 'warning');
+						return
+					}
 					pageStatus.set('load');
 					const response = await reject({ moderationId, reasonWhyReject });
 					console.log(response);

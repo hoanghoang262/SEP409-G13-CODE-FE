@@ -7,6 +7,7 @@
 	import {
 		checkExist,
 		checkNumber,
+		checkTitle,
 		convertVNDToNumber,
 		isVND,
 		showToast
@@ -20,6 +21,7 @@
 	import { currentUser, pageStatus } from '../stores/store';
 	import { getURL, uploadImage } from '../firebase';
 	import { updateCourse } from '$lib/services/ModerationServices';
+	import Editor from '@tinymce/tinymce-svelte';
 
 	export let course: any;
 
@@ -64,6 +66,10 @@
 
 	async function frmSubmit(event: any) {
 		event.preventDefault();
+		if(!checkTitle(course.name)){
+			showToast('Edit Course', 'Course name must shorter than 256 characters', 'warning');
+			return;
+		}
 
 		if (isVND(course.price + '')) {
 			course.price = convertVNDToNumber(course.price);
@@ -126,7 +132,10 @@
 
 			<Label defaultClass=" mb-3 block">Description</Label>
 			<div class="mb-5">
-				<Textarea name="description" bind:value={course.description} placeholder="Description" />
+				<Editor
+					bind:value={course.description}
+					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
+				/>
 			</div>
 			<Label defaultClass=" mb-3 block">Picture</Label>
 			<!-- <Input

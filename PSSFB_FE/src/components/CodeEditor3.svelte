@@ -69,7 +69,7 @@
 		</div>
 		<div>
 			<Button2 onclick={executeCode} classes="bg-blue-800" content="run code" />
-			<Button2 classes="bg-slate-500" content="submit" />
+			
 		</div>
 	</div>
 	<!-- <iframe id="editor" class="w-full h-[400px] overflow-visible" src="https://www.programiz.com/java-programming/online-compiler/?hideMenu=1&hideTabs=1"

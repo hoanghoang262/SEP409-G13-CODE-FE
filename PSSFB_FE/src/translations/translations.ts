@@ -58,7 +58,7 @@ export const translations: any = {
     "Reject": "Từ chối",
     "Approve": "Duyệt",
     "Language": "Ngôn ngữ",
-    "Add note at": "Thêm note vào",
+    "Add note at": "Thêm note tại",
     "Courses Manager": "Quản lý khóa học",
     "Moderation Courses": "Khóa học chờ được duyệt",
     "Created Courses": "Khóa học đã tạo",

@@ -92,7 +92,7 @@
 			console.log(JSON.stringify(editreply));
 			await putReplyComment(editreply);
 			comments = await getComment();
-			showToast('Update Comment', 'Update Comment Success', 'success');
+			showToast('Update Comment', 'Update Reply Comment Success', 'success');
 			const editor = document.getElementById(`replyeditor${editreply.replyId}`);
 			const content = document.getElementById(`replycontent${editreply.replyId}`);
 			if (content?.classList.contains('hidden')) {

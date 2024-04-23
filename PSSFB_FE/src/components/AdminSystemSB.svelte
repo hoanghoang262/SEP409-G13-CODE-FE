@@ -57,7 +57,7 @@
 <main class="fixed top-16 md:top-24 right-0">
 	{#if showStatus}
 		<div class="">
-			<div class="w-72 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] shadow-xl border bg-white pr-3">
+			<div class="w-72 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] shadow-xl border bg-white pr-3 overflow-auto">
 				<div class="text-2xl font-medium pt-4 px-4 mb-3 flex justify-between items-center">
 					<button
 						on:click={() => (showStatus = false)}
