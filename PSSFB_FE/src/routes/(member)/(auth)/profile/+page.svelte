@@ -644,7 +644,7 @@
 			<button
 				on:click={deleteFunc}
 				class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
-				>{$t('Delete')}</button
+				>{$t('De-active')}</button
 			>
 			<button
 				class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
