@@ -5,7 +5,7 @@ export const CComplier = async (data: any) => {
 	try {
 		console.log(JSON.stringify(data));
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/C_Compiler/CompileCodeCCodeQuestion`,
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCCodeQuestion`,
 			data
 		);
 		return result.data;
@@ -18,7 +18,7 @@ export const CComplier = async (data: any) => {
 export const CPlusComplier = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/CPlus_Compiler/CompileCodeCPlusCodeQuestion`,
+			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusCodeQuestion`,
 			data
 		);
 		return result.data;
@@ -31,7 +31,7 @@ export const CPlusComplier = async (data: any) => {
 export const JavaComplier = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/JavaCompile/CompileCodeJavaCodeQuestion`,
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaCodeQuestion`,
 			data
 		);
 		return result.data;
@@ -45,7 +45,7 @@ export const JavaComplier = async (data: any) => {
 export const CEditor = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/C_Compiler/CompileCodeCCodeEditor`,
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCCodeEditor`,
 			data
 		);
 		return result.data;
@@ -58,7 +58,7 @@ export const CEditor = async (data: any) => {
 export const CPlusEditor = async (data: any) => {
 	try {
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/CPlus_Compiler/CompileCodeCPlusCodeEditor`,
+			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusCodeEditor`,
 			data
 		);
 		return result.data;
@@ -72,7 +72,7 @@ export const JavaEditor = async (data: any) => {
 	try {
 		console.log(JSON.stringify(data));
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/JavaCompile/CompileCodeJavaCodeEditor`,
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaCodeEditor`,
 			data
 		);
 		return result.data;
@@ -154,7 +154,7 @@ void assertEqual(T expected, T actual, U message) {
 export const CComplieToCheck = async (codeForm:string, testCase:any) => {
 	try {
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/C_Compiler/CompileCodeCToCheck`,
+			`https://compilerservice.azurewebsites.net/api/C_Compiler/CompileCodeCToCheck`,
 			{userCode: CForm(codeForm, testCase)}
 		);
 		return result.data;
@@ -167,7 +167,7 @@ export const CComplieToCheck = async (codeForm:string, testCase:any) => {
 export const CPlusComplieCodeToCheck = async (codeForm:string, testCase:any) => {
 	try {
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/CPlus_Compiler/CompileCodeCPlusTest`,
+			`https://compilerservice.azurewebsites.net/api/CPlus_Compiler/CompileCodeCPlusTest`,
 			{userCode: CPlusForm(codeForm, testCase)}
 		);
 		return result.data;
@@ -181,7 +181,7 @@ export const JavaComplieCodeToCheck = async (codeForm:string, testCase:any) => {
 	try {
 		console.log(JSON.stringify({userCode: JavaForm(codeForm, testCase)}))
 		const result = await axios.post(
-			`https://ocelotapigateway.azurewebsites.net/apigateway-compiler/JavaCompile/CompileCodeJavaTest`,
+			`https://compilerservice.azurewebsites.net/api/JavaCompile/CompileCodeJavaTest`,
 			{userCode: JavaForm(codeForm, testCase)}
 		);
 		return result.data;
