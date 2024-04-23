@@ -15,7 +15,9 @@
 	import CodeEditor from '../../../../../components/CodeEditor.svelte';
 	import CodeEditor3 from '../../../../../components/CodeEditor3.svelte';
 	import LessionVideoContainer from '../../../../../components/LessionVideoContainer.svelte';
+	import PopUpConfirm from '../../../../../components/modals/PopUpConfirm.svelte';
 	export let data;
+	let popUpConfirmInstance: any;
 
 	const ids = $page.params.ids.split('/');
 	const courseId: any = ids[0];
@@ -36,6 +38,18 @@
 	});
 
 	async function DelNote(id: number) {
+		if (!popUpConfirmInstance) {
+			popUpConfirmInstance = new PopUpConfirm({
+				target: document.body,
+				props: {
+					content: 'Do you want to delete this note?'
+				}
+			});
+		}
+		const confirmed = await popUpConfirmInstance.show();
+		if (!confirmed) {
+			return;
+		}
 		pageStatus.set('load');
 		await delNotes(id);
 		notes = await getNotes($currentUser.UserID, lesson.id);
