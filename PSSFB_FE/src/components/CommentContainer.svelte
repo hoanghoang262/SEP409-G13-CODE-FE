@@ -117,7 +117,7 @@
 			popUpConfirmInstance = new PopUpConfirm({
 				target: document.body,
 				props: {
-					content: 'Do you want to delete this post?'
+					content: 'Do you want to delete this comment?'
 				}
 			});
 		}

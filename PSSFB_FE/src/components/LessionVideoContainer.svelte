@@ -7,11 +7,12 @@
 	import Button from '../atoms/Button.svelte';
 	import { addNote, completelesson, getNotes } from '$lib/services/CourseServices';
 	import { currentUser, pageStatus } from '../stores/store';
+	import { t } from '../translations/i18n';
 
 	export let lesson: any;
 	export let notes: any;
 	export let currentTime = 0;
-	let questions = lesson.theoryQuestions;
+	let questions = lesson.theoryQuestions ?? lesson.questions;
 	let question = questions[0];
 	let showModal = false;
 	//let firstTimePlay = true;
@@ -85,14 +86,17 @@
 	Your browser does not support the video tag.
 </video>
 
-<div class="flex justify-end pr-16 mt-3">
-	<button
-		class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center"
-		on:click={() => (showNoteModal = true)}
-		><Icon class="mr-2 text-xl" icon="ic:baseline-plus" style="color: black" /> Add note at
-		<span class="font-normal ml-2">{convertSecondsToMmSs(currentTime)}</span></button
-	>
-</div>
+{#if $currentUser.Role == 'Student'}
+	<div class="flex justify-end pr-16 mt-3">
+		<button
+			class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center"
+			on:click={() => (showNoteModal = true)}
+			><Icon class="mr-2 text-xl" icon="ic:baseline-plus" style="color: black" />
+			{$t('Add note at')}
+			<span class="font-normal ml-2">{convertSecondsToMmSs(currentTime)}</span></button
+		>
+	</div>
+{/if}
 
 <div class="mt-20">{@html lesson.contentLesson}</div>
 

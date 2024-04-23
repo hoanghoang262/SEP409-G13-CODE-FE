@@ -51,7 +51,11 @@
 		try {
 			console.log(JSON.stringify({ chapterId, lastExam: Exam }));
 			const response = await addExam({ chapterId, lastExam: Exam });
-			console.log(response);
+			if(response?.msgCode){
+				showToast(response?.msgCode, response?.msgTextEN, 'error');
+				pageStatus.set('done');
+				return
+			}
 			course = await getModCourseById(course.id);
 			showToast('Add Exam', 'Add Exam success', 'success');
 		} catch (e) {

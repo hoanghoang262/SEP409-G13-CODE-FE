@@ -11,6 +11,7 @@
 	import { page } from '$app/stores';
 	import { getCourseById } from '$lib/services/CourseServices';
 	import AdminSystemSb from '../../../../../../../components/AdminSystemSB.svelte';
+	import LessionVideoContainer from '../../../../../../../components/LessionVideoContainer.svelte';
 
 	export let data;
 	console.log(data);
@@ -26,46 +27,10 @@
 
 <div class="flex">
 	<div class="w-4/5">
-		<div>
-			<Label defaultClass=" mb-3 block">Detail lesson</Label>
-			<hr class="my-3" />
-			<Label defaultClass=" mb-3 block">lesson Title</Label>
-			<div>{lesson.title}</div>
-
-			<Label defaultClass=" mb-3 block">Description</Label>
-			<div class="mb-5 ml-4">
-				{@html lesson.description}
-			</div>
-			<Label defaultClass=" mb-3 block">Duration: {lesson.duration}</Label>
-			<Label defaultClass=" mb-3 block">Video</Label>
-			<div class="w-3/4">
-				<video src={lesson.videoUrl} id="vid" class=" mb-5" width="400" height="300" controls>
-					<track kind="captions" />
-				</video>
-			</div>
-			<Label defaultClass=" mb-3 block">lesson Content</Label>
-			{@html lesson.contentLesson}
-
-			<hr class="my-5" />
-
-			<Label defaultClass=" mb-3 block">Question</Label>
-
-			{#each questions as q, index}
-				<div class="flex justify-between">
-					<div class="w-4/5">
-						<button
-							class="mb-5"
-							on:click={() => {
-								SelectedQIndex = index;
-								defaultModal = true;
-							}}>question #{index + 1}</button
-						>
-						<Label defaultClass=" mb-3 block">Question Content</Label>
-						<div>{q.contentQuestion}</div>
-						<Label defaultClass=" mb-3 block">Popup Second: {q.time}</Label>
-					</div>
-				</div>
-			{/each}
+		<div class=" p-3 overflow-y-scroll max-h-screen">
+			
+			
+			<LessionVideoContainer {lesson} notes={{}} />
 		</div>
 	</div>
 	<div class="w-1/5 ml-10">

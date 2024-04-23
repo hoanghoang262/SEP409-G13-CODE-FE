@@ -51,7 +51,11 @@
 		}
 		try {
 			const response = await updatelesson({ lessonId: lessonId, lesson: lesson });
-			console.log(response);
+			if(response?.msgCode){
+				showToast(response?.msgCode, response?.msgTextEN, 'error');
+				pageStatus.set('done');
+				return
+			}
 			showToast('Edit lesson', 'Edit lesson success', 'success');
 			console.log(JSON.stringify({ lessonId: lessonId, lesson: lesson }));
 			course = await getModCourseById(courseId);

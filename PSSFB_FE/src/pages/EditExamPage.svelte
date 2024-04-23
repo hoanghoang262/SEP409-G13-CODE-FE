@@ -45,7 +45,11 @@
 		try {
 			console.log(JSON.stringify({ lastExamId: Exam.id, lastExam: Exam }));
 			const response = await updateExam({ lastExamId: Exam.id, lastExam: Exam });
-			console.log(response);
+			if(response?.msgCode){
+				showToast(response?.msgCode, response?.msgTextEN, 'error');
+				pageStatus.set('done');
+				return
+			}
 			course = await getModCourseById(course.id);
 			showToast('Update Exam', 'Update Exam success', 'success');
 		} catch (e) {

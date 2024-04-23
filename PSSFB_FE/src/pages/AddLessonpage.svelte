@@ -54,7 +54,11 @@
 		await frmSubmit();
 		try {
 			const response = await addlesson({ chapterId, lesson: lesson });
-			console.log(response);
+			if(response?.msgCode){
+				showToast(response?.msgCode, response?.msgTextEN, 'error');
+				pageStatus.set('done');
+				return
+			}
 			showToast('Add lesson', 'Add lesson success', 'success');
 			console.log(JSON.stringify({ chapterId, lesson }));
 			goto(`/manager/coursesmanager/addcourse/addcodelesson/${courseId}/${chapterId}`);

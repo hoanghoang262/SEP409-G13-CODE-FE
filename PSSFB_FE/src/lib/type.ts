@@ -230,3 +230,9 @@ export function initMessage(): Message {
 		msgTextVN: ''
 	};
 }
+
+export interface MessageError {
+	msgCode: string;
+	msgTextVN: string;
+	msgTextEN: string;
+}
