@@ -26,9 +26,23 @@
 	const chapterId = ids[1];
 	const courseId: any = ids[0];
 
+	$: {
+		switch (course?.tag) {
+			case 'Java':
+				codeQuestion.testCaseJava = 'public void TestCase() {\n}';
+				break;
+			case 'C':
+				codeQuestion.testCaseC = 'void TestCase() {\n}';
+				break;
+			case 'C++':
+				codeQuestion.testCaseCplus = 'void TestCase() {\n}';
+				break;
+		}
+	}
+
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice Lession', 'Enter title shorter than 256 char', "warning");
+			showToast('Save Pratice Lession', 'Enter title shorter than 256 char', 'warning');
 			return;
 		}
 
