@@ -23,13 +23,13 @@
 		}
 	});
 
-	const onsubmit = (event:any) => {
-		const part:any = document.getElementById('partinput')
-		if(part.value<1){
-			showToast("Part input","Part must be greater than or equal 1","warning")
+	const onsubmit = (event: any) => {
+		const part: any = document.getElementById('partinput');
+		if (part.value < 1) {
+			showToast('Part input', 'Part must be greater than or equal 1', 'warning');
 			event.preventDefault();
 		}
-	}
+	};
 </script>
 
 <div class="flex">
@@ -44,7 +44,7 @@
 			<div class="mt-5">
 				<p class=" mb-1">Part</p>
 				<input
-					min=1
+					min="1"
 					id="partinput"
 					type="number"
 					name="part"
