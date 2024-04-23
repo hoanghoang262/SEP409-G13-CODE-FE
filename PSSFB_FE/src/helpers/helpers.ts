@@ -23,9 +23,17 @@ export function checkExist(v: any) {
 }
 
 export function checkNote(v: any) {
-	const a = v.replaceAll("&nbsp;","").trim();
-	return a != "<p> </p>";
+	const a = v.replaceAll("&nbsp;","").replaceAll(/\s/g, "").replaceAll("\n", "").replaceAll("<p>", "").replaceAll("</p>", "").trim();
+	return checkExist(a);
 }
+
+export function containsOnlySpaces(inputString:any) {
+	// Regular expression pattern to match whitespace characters
+	const spacePattern = /^[\s]+$/;
+  
+	// Test the input string against the pattern
+	return spacePattern.test(inputString);
+  }
 
 export function showToast(title: string, description: string, type: ToastType = 'info') {
 	const toast = toasts.add({

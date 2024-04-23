@@ -13,7 +13,7 @@
 	} from '$lib/type';
 	import { pageStatus } from '../stores/store';
 	import { getModCourseById, updateExam } from '$lib/services/ModerationServices';
-	import { handlePosetiveInput, showToast } from '../helpers/helpers';
+	import { checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import Icon from '@iconify/svelte';
 
 	export let data: any;
@@ -41,6 +41,10 @@
 	};
 
 	const UpdateExam = async () => {
+		if(!checkTitle(Exam.name)){
+			showToast('Edit Course', 'Exam name must shorter than 256 characters', 'warning');
+			return;
+		}
 		pageStatus.set('load');
 		try {
 			console.log(JSON.stringify({ lastExamId: Exam.id, lastExam: Exam }));

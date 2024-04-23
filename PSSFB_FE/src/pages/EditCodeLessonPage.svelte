@@ -21,7 +21,7 @@
 
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice Lession', 'Enter title shorter than 256 char');
+			showToast('Save Pratice Lession', 'Enter title shorter than 256 char', "warning");
 			return;
 		}
 

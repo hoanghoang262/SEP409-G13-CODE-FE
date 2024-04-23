@@ -7,7 +7,7 @@
 	import { initAnswer, initExam, initQuestionExam } from '$lib/type';
 	import { addExam, getModCourseById } from '$lib/services/ModerationServices';
 	import { pageStatus } from '../stores/store';
-	import { handlePosetiveInput, showToast } from '../helpers/helpers';
+	import { checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import { page } from '$app/stores';
 	import Icon from '@iconify/svelte';
 
@@ -38,6 +38,11 @@
 	};
 
 	const AddExam = async () => {
+		if(!checkTitle(Exam.name)){
+			showToast('Add Exam', 'Exam name must shorter than 256 characters', 'warning');
+			return;
+		}
+		
 		if (Exam.time < 60) {
 			showToast('Save Exam', 'Exam duration muse be greater or equal one minute');
 			return;
@@ -63,7 +68,7 @@
 			showToast('Add Exam', 'something went wrong', 'error');
 		}
 		pageStatus.set('done');
-		goto(`/manager/addcourse/addchapter/${course.id}`);
+		goto(`/manager/coursesmanager/addcourse/addchapter/${course.id}`);
 	};
 </script>
 

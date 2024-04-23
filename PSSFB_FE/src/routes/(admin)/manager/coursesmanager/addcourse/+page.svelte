@@ -167,7 +167,7 @@
 		event.preventDefault();
 
 		if(!checkTitle(course.name)){
-			showToast('Add Course', 'Course name shorter than 256 characters', 'warning');
+			showToast('Add Course', 'Course name must shorter than 256 characters', 'warning');
 			return;
 		}
 		if (payment == 'With Fee') {

@@ -60,7 +60,7 @@
 		});
 		console.log('response', response);
 		showToast('Add note', 'Add note successfully', 'success');
-		showModal = false;
+		showNoteModal = false;
 		notes = await getNotes($currentUser.UserID, lesson.id);
 		pageStatus.set('done');
 	};
@@ -69,6 +69,12 @@
 		const video: any = document.getElementById('video');
 		video.play();
 	};
+
+	const NoteTrigger = () => {
+		showNoteModal = true; 
+		const video: any = document.getElementById('video');
+		video.pause();
+	}
 </script>
 
 <div class="text-xl font-medium mb-10">{lesson.description}</div>
@@ -90,7 +96,7 @@
 	<div class="flex justify-end pr-16 mt-3">
 		<button
 			class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center"
-			on:click={() => (showNoteModal = true)}
+			on:click={NoteTrigger}
 			><Icon class="mr-2 text-xl" icon="ic:baseline-plus" style="color: black" />
 			{$t('Add note at')}
 			<span class="font-normal ml-2">{convertSecondsToMmSs(currentTime)}</span></button
@@ -105,6 +111,6 @@
 	<Editor bind:value={note} apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83" />
 	<svelte:fragment slot="footer">
 		<Button onclick={AddNote} content={'Add Note'} />
-		<Button onclick={() => (showModal = false)} content={'Close'} />
+		<Button onclick={() => (showNoteModal = false)} content={'Close'} />
 	</svelte:fragment>
 </Modal>
