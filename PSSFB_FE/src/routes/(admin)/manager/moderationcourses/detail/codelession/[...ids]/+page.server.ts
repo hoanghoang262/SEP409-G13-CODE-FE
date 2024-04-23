@@ -1,13 +1,13 @@
 import { getModCourseById, getModPraticeQuestionById } from "$lib/services/ModerationServices";
 
-export async function load({params}:any){
+export async function load({ params }: any) {
     const ids = params.ids.split('/');
     const courseId = ids[0]
-    const codeLessionId = ids[1]
-    const codeLession = await getModPraticeQuestionById(codeLessionId)
+    const codelessonId = ids[1]
+    const codelesson = await getModPraticeQuestionById(codelessonId)
     const course = await getModCourseById(courseId)
     return {
         course,
-        codeLession
+        codelesson
     }
 }

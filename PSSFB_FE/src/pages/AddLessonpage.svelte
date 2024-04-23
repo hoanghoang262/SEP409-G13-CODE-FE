@@ -3,11 +3,11 @@
 	import Input from '../atoms/Input.svelte';
 	import Editor from '@tinymce/tinymce-svelte';
 	import Button from '../atoms/Button.svelte';
-	import { initQuestion, type Lession, initLessions, initAnswer } from '$lib/type';
+	import { initQuestion, type lesson, initlessons, initAnswer } from '$lib/type';
 	import { goto } from '$app/navigation';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { checkExist, checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
-	import { addLession } from '$lib/services/ModerationServices';
+	import { addlesson } from '$lib/services/ModerationServices';
 	import { page } from '$app/stores';
 	import Dropzone from 'svelte-file-dropzone';
 	import { getURL, getVideoURL, uploadVid } from '../firebase';
@@ -15,52 +15,52 @@
 	import Icon from '@iconify/svelte';
 
 	export let course: any;
-	let lession: Lession = initLessions();
-	$: questions = lession.questions;
+	let lesson: lesson = initlessons();
+	$: questions = lesson.questions;
 	const ids = $page.params.ids.split('/');
 	const courseId = ids[0];
 	const chapterId = ids[1];
 	let defaultModal = false;
 	let SelectedQIndex = 0;
 	const addQues = () => {
-		lession.questions = [...questions, initQuestion()];
+		lesson.questions = [...questions, initQuestion()];
 	};
 
 	const DeleteQ = (index: number) => {
-		const copy = [...lession.questions];
-		lession.questions = [...copy.slice(0, index), ...copy.slice(index + 1, copy.length + 1)];
+		const copy = [...lesson.questions];
+		lesson.questions = [...copy.slice(0, index), ...copy.slice(index + 1, copy.length + 1)];
 	};
 
 	const DeleteA = (index: number) => {
-		const copy = [...lession.questions[SelectedQIndex].answerOptions];
-		lession.questions[SelectedQIndex].answerOptions = [
+		const copy = [...lesson.questions[SelectedQIndex].answerOptions];
+		lesson.questions[SelectedQIndex].answerOptions = [
 			...copy.slice(0, index),
 			...copy.slice(index + 1, copy.length + 1)
 		];
 	};
 
-	const AddLession = async () => {
-		if (!checkTitle(lession.title)) {
-			showToast('Save Lession', 'Enter title shorter than 256 char');
+	const Addlesson = async () => {
+		if (!checkTitle(lesson.title)) {
+			showToast('Save lesson', 'Enter title shorter than 256 char');
 			return;
 		}
 
 		if (!checkExist(video)) {
-			showToast('Add lession', 'Please upload video', 'warning');
+			showToast('Add lesson', 'Please upload video', 'warning');
 			return;
 		}
 
 		pageStatus.set('load');
 		await frmSubmit();
 		try {
-			const response = await addLession({ chapterId, lesson: lession });
+			const response = await addlesson({ chapterId, lesson: lesson });
 			console.log(response);
-			showToast('Add Lession', 'Add lession success', 'success');
-			console.log(JSON.stringify({ chapterId, lession }));
-			goto(`/manager/coursesmanager/addcourse/addcodelession/${courseId}/${chapterId}`);
+			showToast('Add lesson', 'Add lesson success', 'success');
+			console.log(JSON.stringify({ chapterId, lesson }));
+			goto(`/manager/coursesmanager/addcourse/addcodelesson/${courseId}/${chapterId}`);
 		} catch (e) {
 			console.error(e);
-			showToast('Add Lession', 'Something went wrong', 'error');
+			showToast('Add lesson', 'Something went wrong', 'error');
 		}
 		pageStatus.set('done');
 	};
@@ -91,40 +91,40 @@
 		await uploadVid(video);
 		const url: any = await getVideoURL(video?.path);
 		if (!checkExist(url)) {
-			showToast('Add lession', 'something went wrong', 'error');
+			showToast('Add lesson', 'something went wrong', 'error');
 		} else {
-			lession.videoUrl = url;
+			lesson.videoUrl = url;
 		}
 	}
 </script>
 
 <div class="flex">
-	<div class="w-4/5">
+	<div class="w-3/5 m-auto">
 		<div>
-			<Label defaultClass=" mb-3 block">Add Lession</Label>
+			<Label defaultClass=" mb-3 block text-2xl font-medium">Add Lesson</Label>
 			<hr class="my-3" />
-			<Label defaultClass=" mb-3 block">Lession Title</Label>
+			<Label defaultClass=" mb-3 block">lesson Title</Label>
 			<Input
-				bind:value={lession.title}
+				bind:value={lesson.title}
 				required={true}
 				name="title"
-				classes="block w-1/3 ml-4 border mb-5"
-				placehoder="Lession Title"
+				classes="block w-1/3  border mb-5"
+				placehoder="lesson Title"
 			/>
 
 			<Label defaultClass=" mb-3 block">Description</Label>
-			<div class="mb-5 ml-4">
-				<Textarea bind:value={lession.description} name="description" placeholder="Description" />
+			<div class="mb-5">
+				<Textarea bind:value={lesson.description} name="description" placeholder="Description" />
 			</div>
 			<Label defaultClass=" mb-3 block">Duration</Label>
 			<input
 				min="1"
 				type="number"
-				class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
+				class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md"
 				required
 				name="duration"
 				placeholder="duration"
-				bind:value={lession.duration}
+				bind:value={lesson.duration}
 			/>
 			<Label defaultClass=" mb-3 block">Video</Label>
 			<!-- <Input
@@ -132,25 +132,29 @@
 				name="videoUrl"
 				classes="block w-1/3 ml-4 border mb-5"
 				placehoder="Video URL"
-				bind:value={lession.videoUrl}
+				bind:value={lesson.videoUrl}
 			/> -->
 
-			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+			<div class="mb-5 border-gray-400 border-2">
+				<Dropzone containerClasses=" " on:drop={handleFilesSelect} />
+			</div>
 			<video id="vid" class="hidden mb-5" width="400" height="300" controls>
 				<track kind="captions" />
 			</video>
-			<Label defaultClass=" mb-3 block">Lession Content</Label>
-			<Editor
-				bind:value={lession.contentLesson}
-				apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
-			/>
+			<Label defaultClass=" mb-3 block">lesson Content</Label>
+			<div class=" border-gray-400 border-2">
+				<Editor
+					bind:value={lesson.contentLesson}
+					apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
+				/>
+			</div>
 
-			<hr class="my-5" />
+			<hr class="my-5 border-black" />
 
-			<Label defaultClass=" mb-3 block">Question</Label>
+			<Label defaultClass=" mb-3 block text-2xl font-medium">Question</Label>
 
 			{#each questions as q, index}
-				<div>
+				<div class="bg-gray-100 px-6 py-4">
 					<div class="flex justify-between">
 						<button
 							class="mb-5 flex text-blue-500 items-center"
@@ -161,7 +165,7 @@
 							>Question #{index + 1}
 							<Icon class="ml-1" icon="material-symbols:edit" style="color: #5c61ff" /></button
 						>
-						<div class="w-1/5 flex items-end">
+						<div class=" flex items-end">
 							<Button
 								type="danger"
 								onclick={() => {
@@ -172,12 +176,12 @@
 						</div>
 					</div>
 					<Label defaultClass=" mb-3 block">Question Content</Label>
-					<Textarea class="w-4/5 ml-5" bind:value={q.contentQuestion} />
+					<Textarea class=" mb-5" bind:value={q.contentQuestion} />
 					<Label defaultClass=" mb-3 block">Popup Second</Label>
 					<input
 						min="1"
 						type="number"
-						class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
+						class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md"
 						required
 						name="duration"
 						placeholder="duration"
@@ -190,7 +194,7 @@
 
 			<Button onclick={addQues} content="Add Question" />
 			<div class="flex justify-end">
-				<Button onclick={AddLession} content="Save" />
+				<Button onclick={Addlesson} content="Save" />
 			</div>
 		</div>
 	</div>
@@ -212,8 +216,8 @@
 	{/each}
 	<Button
 		onclick={() =>
-			(lession.questions[SelectedQIndex].answerOptions = [
-				...lession.questions[SelectedQIndex].answerOptions,
+			(lesson.questions[SelectedQIndex].answerOptions = [
+				...lesson.questions[SelectedQIndex].answerOptions,
 				initAnswer(false)
 			])}
 		content="Add Answer"
@@ -221,15 +225,15 @@
 	<svelte:fragment slot="footer">
 		<Button
 			onclick={() => {
-				if (lession.questions[SelectedQIndex].answerOptions?.length < 2) {
+				if (lesson.questions[SelectedQIndex].answerOptions?.length < 2) {
 					showToast('Save Question', 'Create more answers', 'warning');
 					return;
 				}
-				const haveCorrectAnswer = lession.questions[SelectedQIndex].answerOptions.filter(
+				const haveCorrectAnswer = lesson.questions[SelectedQIndex].answerOptions.filter(
 					(a) => a.correctAnswer == true
 				);
 				if (haveCorrectAnswer.length > 0) {
-					console.log(lession);
+					console.log(lesson);
 					defaultModal = false;
 				} else {
 					showToast('Save Question', 'Choose a correct answer', 'warning');

@@ -24,7 +24,7 @@
 	export let type: string;
 	export let courseId: any = undefined;
 	export let postId: any = undefined;
-	export let lessionId: any = undefined;
+	export let lessonId: any = undefined;
 	$: replies = comments.flatMap((item) => item?.replies);
 	//export let type = 'post';
 	let content = '';
@@ -178,9 +178,9 @@
 						userId: $currentUser.UserID
 					});
 					break;
-				case 'lession':
+				case 'lesson':
 					await postComment({
-						lessonId: lessionId,
+						lessonId: lessonId,
 						commentContent: content,
 						date: new Date().toISOString,
 						userId: $currentUser.UserID

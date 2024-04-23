@@ -64,33 +64,33 @@
 </script>
 
 <div class="flex">
-	<div class="w-4/5">
-		<Label defaultClass=" mb-3 block">Add Exam</Label>
+	<div class="w-3/5 mx-auto">
+		<Label defaultClass=" mb-3 block text-2xl font-medium">Add Exam</Label>
 		<hr class="my-3" />
 		<Label defaultClass=" mb-3 block">Add Exam Name</Label>
-		<Input bind:value={Exam.name} classes="ml-4 border w-2/3" name="name" placehoder="Exam name" />
-		<Label defaultClass=" mb-3 block">Time (Second)</Label>
+		<Input bind:value={Exam.name} classes="border w-2/3" name="name" placehoder="Exam name" />
+		<Label defaultClass=" mb-1 mt-3 block">Time (Second)</Label>
 		<input
 			min="1"
 			type="number"
 			name="time"
 			bind:value={Exam.time}
-			class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
+			class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md"
 			required
 		/>
-		<Label defaultClass=" mb-3 block">Percentage Completed (%)</Label>
+		<Label defaultClass=" mb-1 block">Percentage Completed (%)</Label>
 		<input
 			min="1"
 			type="number"
 			name="time"
 			bind:value={Exam.percentageCompleted}
-			class="block w-1/3 ml-4 border mb-5 py-3 px-5 font-light text-black rounded-md"
+			class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md"
 			required
 		/>
 		<Label defaultClass=" mb-3 block">Question</Label>
 
 		{#each Exam.questionExams as q, index}
-			<div>
+			<div class="bg-gray-100 px-6 py-4">
 				<div class="flex justify-between">
 					<button
 						class="mb-5 flex text-blue-500 items-center"
@@ -101,7 +101,7 @@
 						>Question #{index + 1}
 						<Icon class="ml-1" icon="material-symbols:edit" style="color: #5c61ff" /></button
 					>
-					<div class="w-1/5 flex items-end">
+					<div class=" flex items-end">
 						<Button
 							type="danger"
 							onclick={() => {
@@ -111,8 +111,8 @@
 						/>
 					</div>
 				</div>
-				<Label defaultClass=" mb-3 block">Question Content</Label>
-				<Textarea class="w-4/5 ml-5" bind:value={q.contentQuestion} />
+				<Label defaultClass=" mb-1 mt-3 block">Question Content</Label>
+				<Textarea class="" bind:value={q.contentQuestion} />
 			</div>
 
 			<hr class="my-5" />

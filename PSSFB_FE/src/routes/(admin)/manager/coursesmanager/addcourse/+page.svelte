@@ -43,8 +43,8 @@
 	// 	}
 	// };
 
-	// const hiddenLession = (indexc: number, index: number) => {
-	// 	const element: any = document.getElementById(`lession${index + 1}ofc${indexc + 1}div`);
+	// const hiddenlesson = (indexc: number, index: number) => {
+	// 	const element: any = document.getElementById(`lesson${index + 1}ofc${indexc + 1}div`);
 	// 	if (element.classList.contains('h-1')) {
 	// 		element.classList.remove('h-1');
 	// 		element.classList.add('h-full');
@@ -69,8 +69,8 @@
 	// 	Chapters = [...Chapters, initChapter()];
 	// };
 
-	// const AddLession = (index: number) => {
-	// 	Chapters[index].lessons = [...Chapters[index].lessons, initLessions()];
+	// const Addlesson = (index: number) => {
+	// 	Chapters[index].lessons = [...Chapters[index].lessons, initlessons()];
 	// };
 
 	// const AddCodeQuestion = (index: number) => {

@@ -29,12 +29,12 @@
 		}
 	};
 
-	const lessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/lession/${courseId}/${index}/${lindex}`);
+	const lessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/lesson/${courseId}/${index}/${lindex}`);
 	};
 
-	const codelessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/codelession/${courseId}/${index}/${lindex}`);
+	const codelessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/codelesson/${courseId}/${index}/${lindex}`);
 	};
 
 	const examclick = (l: any, index: number, lindex: number) => {
@@ -75,11 +75,11 @@
 		<div id="schedule{index}">
 			{#each s?.lessons ?? [] as l}
 				<a
-					href="/lession/{courseId}/{s.id}/{l.id}"
+					href="/lesson/{courseId}/{s.id}/{l.id}"
 					target="_blank"
 					class="px-10 py-2 flex items-center border-b {l?.isCompleted
 						? 'justify-between'
-						: ''} {$page.url.pathname.includes('lession') && ids[2] == l.id ? 'bg-blue-100' : ''}"
+						: ''} {$page.url.pathname.includes('lesson') && ids[2] == l.id ? 'bg-blue-100' : ''}"
 				>
 					<div class="w-4/5 truncate">
 						<div class="flex items-center flex-wrap">
@@ -101,11 +101,11 @@
 
 			{#each s?.codeQuestions ?? [] as l}
 				<a
-					href="/codelession/{courseId}/{s.id}/{l.id}"
+					href="/codelesson/{courseId}/{s.id}/{l.id}"
 					target="_blank"
 					class="px-10 py-2 flex items-center flex-wrap border-b {l?.isCompleted
 						? 'justify-between'
-						: ''} {$page.url.pathname.includes('codelession') && ids[2] == l.id
+						: ''} {$page.url.pathname.includes('codelesson') && ids[2] == l.id
 						? 'bg-blue-100'
 						: ''}"
 				>
@@ -115,7 +115,7 @@
 								<Icon class="mr-3 text-xl" icon="material-symbols:code" style="color: gray" />
 							</div>
 
-							<div class="truncate w-4/5">{l.title??""}</div>
+							<div class="truncate w-4/5">{l.title ?? ''}</div>
 						</div>
 					</div>
 

@@ -4,7 +4,13 @@
 	// import { PaperClipOutline, MapPinAltSolid, ImageOutline, CodeOutline, FaceGrinOutline, PapperPlaneOutline } from 'flowbite-svelte-icons';
 
 	import { afterUpdate, beforeUpdate } from 'svelte';
-	import { checkExist, checkNumber, convertVNDToNumber, isVND, showToast } from '../helpers/helpers';
+	import {
+		checkExist,
+		checkNumber,
+		convertVNDToNumber,
+		isVND,
+		showToast
+	} from '../helpers/helpers';
 	import { goto } from '$app/navigation';
 	import Input from '../atoms/Input.svelte';
 	import Button from '../atoms/Button.svelte';
@@ -58,11 +64,11 @@
 
 	async function frmSubmit(event: any) {
 		event.preventDefault();
-		
-		if(isVND(course.price+"")){
+
+		if (isVND(course.price + '')) {
 			course.price = convertVNDToNumber(course.price);
 		}
-		
+
 		pageStatus.set('load');
 		if (checkExist(image)) {
 			await uploadImage(image);
@@ -81,28 +87,27 @@
 		pageStatus.set('done');
 	}
 
-	function handleKeyPress(event:any) {
-    // Lấy mã phím từ sự kiện
-    var keyCode = event.keyCode || event.which;
+	function handleKeyPress(event: any) {
+		// Lấy mã phím từ sự kiện
+		var keyCode = event.keyCode || event.which;
 
-    // Kiểm tra xem mã phím có phải là mã của phím Backspace (mã 8) không
-    if (keyCode === 8) {
-		const priceE:any = document.getElementById('price');
-		let k = priceE.value
-		console.log(isVND(priceE.value))
-        // Người dùng đã nhấn phím Backspace
-        if(isVND(priceE.value)){
-			
-			k = convertVNDToNumber(priceE.value)
+		// Kiểm tra xem mã phím có phải là mã của phím Backspace (mã 8) không
+		if (keyCode === 8) {
+			const priceE: any = document.getElementById('price');
+			let k = priceE.value;
+			console.log(isVND(priceE.value));
+			// Người dùng đã nhấn phím Backspace
+			if (isVND(priceE.value)) {
+				k = convertVNDToNumber(priceE.value);
+			}
+
+			priceE.value = k + ''.slice(0, -1);
 		}
-
-		priceE.value = k+''.slice(0, -1);
-    }
-}
+	}
 </script>
 
 <div class="flex">
-	<div class="w-3/5 m-auto mt-8">
+	<div class="w-3/5 m-auto">
 		<form on:submit={frmSubmit} method="POST" action="?/editcourse">
 			<input hidden name="id" value={course.id} />
 			<input readonly hidden name="createdBy" value={$currentUser?.UserID} />
@@ -120,7 +125,7 @@
 			</div>
 
 			<Label defaultClass=" mb-3 block">Description</Label>
-			<div class="mb-5 ml-4">
+			<div class="mb-5">
 				<Textarea name="description" bind:value={course.description} placeholder="Description" />
 			</div>
 			<Label defaultClass=" mb-3 block">Picture</Label>
@@ -128,10 +133,10 @@
 				required={true}
 				name="picture"
 				value={course?.picture}
-				classes="block w-1/3 ml-4 border mb-5"
+				classes="block w-1/3  border mb-5"
 				placehoder="url link"
 			/> -->
-			<Dropzone containerClasses="w-1/3 ml-4 mb-5" on:drop={handleFilesSelect} />
+			<Dropzone containerClasses="  mb-5" on:drop={handleFilesSelect} />
 			<div class="flex mb-5">
 				<div class="w-1/3 mr-5">
 					Old picture
@@ -144,7 +149,7 @@
 			</div>
 			<Label>
 				Language
-				<Select name="tag" class="mt-2 ml-4" items={language} bind:value={course.tag} />
+				<Select name="tag" class="mt-2 " items={language} bind:value={course.tag} />
 			</Label>
 
 			<div class="mt-5">
@@ -164,7 +169,7 @@
 			<div class="flex justify-end mt-5"><Button content="Save" /></div>
 		</form>
 	</div>
-	<div class="">
+	<div class="w-72">
 		<AdminCourseSb bind:course />
 	</div>
 </div>

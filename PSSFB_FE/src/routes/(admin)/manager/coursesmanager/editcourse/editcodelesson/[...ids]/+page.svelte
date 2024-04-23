@@ -1,5 +1,5 @@
 <script>
-	import EditLessionPage from '../../../../../../../pages/EditLessionPage.svelte';
+	import EditCodelessonPage from '../../../../../../../pages/EditCodeLessonPage.svelte';
 	import LoadingPage from '../../../../../../../pages/LoadingPage.svelte';
 
 	export let data;
@@ -9,7 +9,7 @@
 {#await promise}
 	<LoadingPage />
 {:then data}
-	<EditLessionPage {data} />
+	<EditCodelessonPage {data} />
 {:catch error}
 	<div>{error.message}</div>
 {/await}

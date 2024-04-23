@@ -24,25 +24,25 @@
 	const minus =
 		"<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' {...$$props}> <path fill='black' d='M19 12.998H5v-2h14z' /> </svg>";
 	const hidden = (event: any, index: number) => {
-		const lession = document.getElementById(`lession${index}`);
+		const lesson = document.getElementById(`lesson${index}`);
 		const div = document.getElementById(`divarrow${index}`);
-		if (lession) {
-			if (lession.classList.contains('hidden')) {
-				lession.classList.remove('hidden');
+		if (lesson) {
+			if (lesson.classList.contains('hidden')) {
+				lesson.classList.remove('hidden');
 				div!.innerHTML = arrowD;
 			} else {
-				lession.classList.add('hidden');
+				lesson.classList.add('hidden');
 				div!.innerHTML = arrowR;
 			}
 		}
 	};
 
-	const lessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/lession/${courseId}/${index}/${lindex}`);
+	const lessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/lesson/${courseId}/${index}/${lindex}`);
 	};
 
-	const codelessionClick = (l: any, index: number, lindex: number) => {
-		goto(`/codelession/${courseId}/${index}/${lindex}`);
+	const codelessonClick = (l: any, index: number, lindex: number) => {
+		goto(`/codelesson/${courseId}/${index}/${lindex}`);
 	};
 
 	const exanclick = (l: any, index: number, lindex: number) => {
@@ -65,7 +65,11 @@
 				<div class="ml-5">{quizs?.length ?? 0} {$t('Quiz(s)')}</div>
 			</div>
 			<div class="flex items-center mr-20">
-				<Icon class="text-3xl" icon="healthicons:i-exam-multiple-choice-outline" style="color: 0054c2" />
+				<Icon
+					class="text-3xl"
+					icon="healthicons:i-exam-multiple-choice-outline"
+					style="color: 0054c2"
+				/>
 				<div class="ml-5">{exam?.length ?? 0} {$t('Exams')}</div>
 			</div>
 		</div>
@@ -88,15 +92,15 @@
 						</div>
 						{s?.name}
 					</div>
-					<div id="lession{index}" class="transition-all" transition:fade>
+					<div id="lesson{index}" class="transition-all" transition:fade>
 						{#each s?.lessons ?? [] as l}
 							<div
 								tabindex="0"
 								role="button"
 								on:keydown={() => {
-									lessionClick(l, s.id, l.id);
+									lessonClick(l, s.id, l.id);
 								}}
-								on:click={() => lessionClick(l, s.id, l.id)}
+								on:click={() => lessonClick(l, s.id, l.id)}
 								class="pl-10 mb-5"
 								transition:fade
 							>
@@ -105,16 +109,16 @@
 							</div>
 						{/each}
 
-						<hr class="my-5"/>
+						<hr class="my-5" />
 
 						{#each s?.codeQuestions ?? [] as l}
 							<div
 								tabindex="0"
 								role="button"
 								on:keydown={() => {
-									codelessionClick(l, s.id, l.id);
+									codelessonClick(l, s.id, l.id);
 								}}
-								on:click={() => codelessionClick(l, s.id, l.id)}
+								on:click={() => codelessonClick(l, s.id, l.id)}
 								class="pl-10 mb-5"
 								transition:fade
 							>
@@ -122,7 +126,7 @@
 							</div>
 						{/each}
 
-						<hr class="my-5"/>
+						<hr class="my-5" />
 
 						{#each s?.lastExam ?? [] as l}
 							<div
@@ -139,7 +143,7 @@
 							</div>
 						{/each}
 
-						<hr class="my-5"/>
+						<hr class="my-5" />
 					</div>
 				</div>
 			{/each}

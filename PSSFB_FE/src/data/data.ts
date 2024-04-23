@@ -273,7 +273,7 @@ export const schedules = [
 	[
 		{
 			name: 'First C Program',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In C'
@@ -294,7 +294,7 @@ export const schedules = [
 		},
 		{
 			name: 'Basic C',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In C'
@@ -315,7 +315,7 @@ export const schedules = [
 		},
 		{
 			name: 'Advance C',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In C'
@@ -338,7 +338,7 @@ export const schedules = [
 	[
 		{
 			name: 'First JavaScript Program',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In JavaScript'
@@ -359,7 +359,7 @@ export const schedules = [
 		},
 		{
 			name: 'Basic C',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In JavaScript'
@@ -380,7 +380,7 @@ export const schedules = [
 		},
 		{
 			name: 'Advance JavaScript',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In JavaScript'
@@ -403,7 +403,7 @@ export const schedules = [
 	[
 		{
 			name: 'First C++ Program',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In C++'
@@ -424,7 +424,7 @@ export const schedules = [
 		},
 		{
 			name: 'Basic C++',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In C++'
@@ -445,7 +445,7 @@ export const schedules = [
 		},
 		{
 			name: 'Advance C++',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In C++'
@@ -468,7 +468,7 @@ export const schedules = [
 	[
 		{
 			name: 'First Python Program',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In Python'
@@ -489,7 +489,7 @@ export const schedules = [
 		},
 		{
 			name: 'Basic Python',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In Python'
@@ -510,7 +510,7 @@ export const schedules = [
 		},
 		{
 			name: 'Advance Python',
-			lessions: [
+			lessons: [
 				{
 					type: 'quiz',
 					name: 'Data Type In Python'
