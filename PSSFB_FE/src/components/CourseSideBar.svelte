@@ -79,7 +79,7 @@
 					target="_blank"
 					class="px-10 py-2 flex items-center {l?.isCompleted
 						? 'justify-between'
-						: ''} {$page.url.pathname.includes('lesson') && ids[2] == l.id ? 'bg-blue-100' : ''}"
+						: ''} {$page.url.pathname.includes('lesson') && !$page.url.pathname.includes('codelesson') && ids[2] == l.id ? 'bg-blue-100' : ''}"
 				>
 					<div class="w-4/5 truncate">
 						<div class="flex items-center flex-wrap">
