@@ -53,6 +53,7 @@
 		pageStatus.set('load');
 		await delNotes(id);
 		notes = await getNotes($currentUser.UserID, lesson.id);
+		showToast('Delete note', 'Note delete successfully', 'success');
 		pageStatus.set('done');
 	}
 
