@@ -137,7 +137,15 @@ export const translations: any = {
     'Add lesson success':'Thêm bài học thành công',
     'There are no course avaiable':'Không có khóa học nào hiện tại',
     'There is no course':'Không có khóa học',
-    'Edit practice Question Success':'Edit bài thực hành thành công'
+    'Edit practice Question Success':'Edit bài thực hành thành công',
+    'Approved post success':'Duyệt bài đăng thành công',
+    "it's empty":'Không được để trống',
+    'Reject post success':'Từ chối bài đăng thành công',
+    'Create At':'Tạo vào',
+    "Do you realy want to approve this post":"Bạn có muốn duyệt bài đăng này không",
+    'Why you want reject this post':"Lý do từ chối"
+
+
   },
   en: {
 

@@ -8,6 +8,7 @@
 	import { checkExist, showToast } from '../../../../../helpers/helpers';
 	import { pageStatus, currentUser } from '../../../../../stores/store';
 	import { goto } from '$app/navigation';
+	import { t } from '../../../../../translations/i18n';
 
 	export let data;
 	const post: any = data.post;
@@ -21,30 +22,31 @@
 			pageStatus.set('load');
 			const response = await approvedPost(post.id);
 			pageStatus.set('done');
-			showToast('Approved post', 'Approved post success', 'success');
+			showToast('Approved post', $t('Approved post success'), 'success');
 			goto('/manager/moderationposts');
 		} catch (error) {
 			console.error(error);
-			showToast('Approved post', 'Something went wrong', 'error');
+			showToast('Approved post', $t('Something went wrong'), 'error');
 		}
 	};
 
 	const RejectPost = async () => {
 		if(!checkExist(rejectReazon)){
-			showToast('Reject post', 'Không được để trống', 'warning');
+			showToast('Reject post', $t("it's empty"), 'warning');
 			return;
 		}
 		try {
 			pageStatus.set('load');
 			console.log(post);
 			const response = await rejectPost(post.id, rejectReazon);
-			pageStatus.set('done');
-			showToast('Reject post', 'Reject post success', 'success');
+			
+			showToast('Reject post', $t('Reject post success'), 'success');
 			goto('/manager/moderationposts');
 		} catch (error) {
 			console.error(error);
-			showToast('Reject post', 'Something went wrong', 'error');
+			showToast('Reject post', $t('Something went wrong'), 'error');
 		}
+		pageStatus.set('done');
 	};
 </script>
 
@@ -52,7 +54,7 @@
 	<div>
 		<p class="text-3xl break-words">{post?.title}</p>
 		<div class="text-gray-700 text-xs mb-10">
-			<p class="">Create At: {getTimeDifference(post?.lastUpdate)}</p>
+			<p class="">{$t('Create At')}: {getTimeDifference(post?.lastUpdate)}</p>
 		</div>
 	</div>
 	<div class="py-5 flex border-2 border-gray-200">
@@ -74,18 +76,18 @@
 	<button
 		on:click={() => (showApproveWarning = true)}
 		class="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md float-end mt-5 ml-3"
-		>Approve</button
+		>{$t('Approve')}</button
 	>
 	<button
 		on:click={() => (showRejectWarning = true)}
-		class="p-2 bg-red-500 hover:bg-red-600 text-white rounded-md float-end mt-5">Reject</button
+		class="p-2 bg-red-500 hover:bg-red-600 text-white rounded-md float-end mt-5">{$t('Reject')}</button
 	>
 </div>
 
 <WarningPopUp
 	bind:showStatus={showApproveWarning}
 	yesHandle={ApprovePost}
-	content="Do you realy want to approve this post"
+	content={$t("Do you realy want to approve this post")}
 />
 
 <Modal
@@ -95,7 +97,7 @@
 	autoclose
 >
 	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-		Why you want reject this post
+		{$t('Why you want reject this post')}
 	</p>
 	<input bind:value={rejectReazon} class="border-2 border-gray-400 py-2 px-4 rounded-md w-full" />
 	<svelte:fragment slot="footer">
@@ -103,11 +105,11 @@
 			<button
 				on:click={RejectPost}
 				class=" bg-red-500 rounded-md p-3 font-medium text-white items-center inline-flex border-2"
-				>Yes</button
+				>{$t('Yes')}</button
 			>
 			<button
 				class=" bg-white rounded-md p-3 font-medium text-black items-center inline-flex border-2"
-				>No</button
+				>{$t('No')}</button
 			>
 		</div>
 	</svelte:fragment>
