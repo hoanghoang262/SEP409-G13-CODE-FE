@@ -3,7 +3,7 @@
 	import Avatar from '../../../../../atoms/Avatar.svelte';
 	import CommentContainer from '../../../../../components/CommentContainer.svelte';
 	import CourseSideBar from '../../../../../components/CourseSideBar.svelte';
-	import { convertSecondsToMmSs } from '../../../../../helpers/helpers';
+	import { checkExist, checkNote, convertSecondsToMmSs, showToast } from '../../../../../helpers/helpers';
 	import { currentUser, pageStatus } from '../../../../../stores/store';
 	import { delNotes, getCourseById, getNotes, putNote } from '$lib/services/CourseServices';
 	import Editor from '@tinymce/tinymce-svelte';
@@ -73,9 +73,14 @@
 	};
 
 	async function EditNote(note: any) {
+		if (!checkExist(note.contentNote.trim()) || !checkNote(note.contentNote)) {
+			showToast('Edit note', 'Invalid note content', 'warning');
+			return;
+		}
 		pageStatus.set('load');
 		await putNote(note.id, note);
 		notes = await getNotes($currentUser.UserID, lesson.id);
+		showToast('Edit note', 'Edit note successfully', 'success');
 		const noteEditor = document.getElementById(`editornote${note.id}`);
 		const noteContent = document.getElementById(`notecontent${note.id}`);
 		noteEditor?.classList.add('hidden');

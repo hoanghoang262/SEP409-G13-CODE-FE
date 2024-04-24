@@ -24,19 +24,19 @@
 
 	const LWF = async () => {
 		const user: any = await loginWithFacebook();
-		if(user?.type=='error'){
-			showToast("Login failed",user.errorMessage,'error')
-			return
+		if (user?.type == 'error') {
+			showToast('Login failed', user.errorMessage, 'error');
+			return;
 		}
 		pageStatus.set('load');
 		try {
-			const ggResult:any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-			if(ggResult?.msgCode){
-				showToast(ggResult?.msgCode,ggResult?.msgTextVN,'error')
+			const ggResult: any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			if (ggResult?.msgCode) {
+				showToast(ggResult?.msgCode, ggResult?.msgTextVN, 'error');
 				pageStatus.set('done');
-				return
+				return;
 			}
-			const JWTFS = ggResult.token
+			const JWTFS = ggResult.token;
 			const decodeData: any = await decodeJWT(JWTFS);
 			console.log('decodeData', decodeData);
 			user.UserID = decodeData.UserID;
@@ -67,19 +67,19 @@
 
 	const LWG = async () => {
 		const user: any = await loginWithGoogle();
-		if(user?.type=='error'){
-			showToast("Login failed",user.errorMessage,'error')
-			return
+		if (user?.type == 'error') {
+			showToast('Login failed', user.errorMessage, 'error');
+			return;
 		}
 		pageStatus.set('load');
 		try {
-			const ggResult:any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-			if(ggResult?.msgCode){
-				showToast(ggResult?.msgCode,ggResult?.msgTextVN,'error')
+			const ggResult: any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+			if (ggResult?.msgCode) {
+				showToast(ggResult?.msgCode, ggResult?.msgTextVN, 'error');
 				pageStatus.set('done');
-				return
+				return;
 			}
-			const JWTFS = ggResult.token
+			const JWTFS = ggResult.token;
 			const decodeData: any = await decodeJWT(JWTFS);
 			user.UserID = decodeData.UserID;
 			const result = await getUserInfo(user.UserID);
@@ -133,13 +133,13 @@
 		try {
 			const user: any = await loginWithEmailAndPsr(Email, Password);
 			if (checkExist(user)) {
-				const ggResult:any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
-			if(ggResult?.msgCode){
-				showToast(ggResult?.msgCode,ggResult?.msgTextVN,'error')
-				pageStatus.set('done');
-				return
-			}
-			const JWTFS = ggResult.token
+				const ggResult: any = await loginByGoogle(user?.email, user?.photoURL, user?.displayName);
+				if (ggResult?.msgCode) {
+					showToast(ggResult?.msgCode, ggResult?.msgTextVN, 'error');
+					pageStatus.set('done');
+					return;
+				}
+				const JWTFS = ggResult.token;
 				const decodeData: any = decodeJWT(JWTFS);
 				user.UserID = decodeData.UserID;
 				const result = await getUserInfo(user.UserID);
@@ -170,9 +170,16 @@
 		}
 		pageStatus.set('done');
 	};
+
+	const EnterKeyDown = (event: any) => {
+		if (event.key === 'Enter') {
+			// Your code to handle Enter press
+			login();
+		}
+	};
 </script>
 
-<div class="rounded-xl px-7 py-10 bg-white text-black">
+<div role="button" tabindex="0" on:keydown={EnterKeyDown} class="rounded-xl px-7 py-10 bg-white text-black">
 	<h3 class="font-bold text-5xl mb-8 text-center">{$t('Welcome')}</h3>
 	<!-- <div class="mb-3"><Input placehoder="Username" /></div> -->
 
