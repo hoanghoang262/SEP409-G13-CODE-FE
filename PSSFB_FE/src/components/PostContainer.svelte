@@ -7,6 +7,7 @@
 	import { deletePost, getAllPost } from '$lib/services/ForumsServices';
 	import { showToast } from '../helpers/helpers';
 	import PopUpConfirm from './modals/PopUpConfirm.svelte';
+	import { page } from '$app/stores';
 
 	export let post: any;
 	let popUpConfirmInstance: any;
@@ -39,7 +40,7 @@
 				>
 			</div>
 			<div>
-				{#if $currentUser?.UserID == post.createdBy}
+				{#if $currentUser?.UserID == post.createdBy && !$page.url.pathname.includes('learning')}
 					<span class="mr-5 text-blue-500"
 						><button
 							on:click={() => {
