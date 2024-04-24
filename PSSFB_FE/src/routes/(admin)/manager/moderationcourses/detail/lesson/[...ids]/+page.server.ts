@@ -1,3 +1,4 @@
+export let ssr = false;
 import { getModCourseById, getModlessonById } from "$lib/services/ModerationServices";
 
 export async function load({ params }: any) {

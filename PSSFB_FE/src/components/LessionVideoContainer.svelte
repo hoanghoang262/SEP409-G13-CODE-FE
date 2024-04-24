@@ -92,7 +92,7 @@
 	Your browser does not support the video tag.
 </video>
 
-{#if $currentUser.Role == 'Student'}
+{#if $currentUser?.Role == 'Student'}
 	<div class="flex justify-end pr-16 mt-3">
 		<button
 			class="py-2 px-5 font-light bg-neutral-200 rounded-xl flex items-center"

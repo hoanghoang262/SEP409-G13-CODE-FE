@@ -4,7 +4,7 @@
     export let showModal = false;
 	export let onClose = () => {};
     export let question:any
-    const correctAnswer = question.answerOptions.filter((answer:any) => answer.correctAnswer == true)
+    const correctAnswer = question?.answerOptions.filter((answer:any) => answer.correctAnswer == true)
 
     let answering = true;
 </script>
