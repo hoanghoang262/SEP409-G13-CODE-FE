@@ -45,6 +45,7 @@
 			<input
 				bind:value={chapter.part}
 				min="1"
+				id="partinput"
 				type="number"
 				name="part"
 				class="block w-1/3 border mb-5 py-3 px-5 font-light text-black rounded-md"
@@ -52,7 +53,6 @@
 			/>
 			<div class="flex justify-end">
 				<Button
-					onclick={() => goto('/manager/coursesmanager/addcourse/addlesson/0')}
 					content="Save"
 				/>
 			</div>

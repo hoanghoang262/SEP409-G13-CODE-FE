@@ -9,6 +9,7 @@
 	import { createAdminPost } from '$lib/services/ForumsServices';
 	import { createPost } from '$lib/services/ModerationServices';
 	import { goto } from '$app/navigation';
+	import { t } from '../translations/i18n';
 
 	let post = {
 		title: '',
@@ -21,24 +22,24 @@
 	const savePost = async () => {
 
 		if(!checkTitle(post.title)){
-			showToast('Save Post',"Enter title shorter than 256 char")
+			showToast('Save Post',$t('Enter title shorter than 256 char'), 'warning')
 			return
 		}
 		
 		if (!checkExist(post.title) || !checkExist(post.description) || !checkExist(post.postContent)) {
-			showToast('Save Post', 'Enter all required fields', 'warning');
+			showToast('Save Post', $t('Enter all required fields'), 'warning');
 		} else {
 			pageStatus.set('load');
 			try {
 				post.lastUpdate = new Date().toISOString();
 				if ($currentUser?.Role.includes('Admin')) {
 					const response = await createAdminPost(post);
-					showToast('Save Post', 'create post success', 'success');
+					showToast('Save Post', $t('create post success'), 'success');
 					console.log(response);
 				} else if ($currentUser?.Role.includes('Student')) {
 					const response = await createPost(post);
 					console.log(response);
-					showToast('Save Post', 'create post success, wait for admin approve ', 'info');
+					showToast('Save Post', $t('create post success, wait for admin approve '), 'info');
 				}
 				console.log(JSON.stringify(post));
 			} catch (error) {

@@ -51,6 +51,7 @@
 
 	const examclick = (l: any, index: number, lindex: number) => {
 		goto(`/manager/moderationcourses/detail/exam/${courseId}/${lindex}`);
+		
 	};
 </script>
 
