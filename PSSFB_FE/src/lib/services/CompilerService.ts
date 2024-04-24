@@ -94,36 +94,11 @@ export const CForm = (codeForm: string, testCase: string) => {
 	#define TYPE_STRING 4
 	#define TYPE_BOOL 5
 	
-	#define GET_TYPE(var) _Generic((var), \
-		int: TYPE_INT, \
-		float: TYPE_FLOAT, \
-		double: TYPE_DOUBLE, \
-		char*: TYPE_STRING, \
-		bool: TYPE_BOOL \
-	)
+	#define GET_TYPE(var) _Generic((var),   int: TYPE_INT,  float: TYPE_FLOAT, double: TYPE_DOUBLE, char*: TYPE_STRING, bool: TYPE_BOOL )
 	
-	#define PRINT_VALUE(var, type) \
-		switch(type) { \
-			case TYPE_INT: printf("%d", var); break; \
-			case TYPE_FLOAT: printf("%0.2f", (double)var); break; \
-			case TYPE_DOUBLE: printf("%0.2lf", var); break; \
-			case TYPE_STRING: printf("%s", var); break; \
-			 case TYPE_BOOL: printf("%d", var); break; \
-		}
+	#define PRINT_VALUE(var, type) switch(type) { case TYPE_INT: printf("%d", var); break;  case TYPE_FLOAT: printf("%0.2f", (double)var); break; case TYPE_DOUBLE: printf("%0.2lf", var); break; case TYPE_STRING: printf("%s", var); break; case TYPE_BOOL: printf("%d", var); break; }
 	
-	#define assertEqual(expected, actual, message) \
-		do { \
-			int type = GET_TYPE(expected); \
-			if (expected == actual) { \
-			} else { \
-				printf("Test Failed At Input: %s; Expected: ", message); \
-				PRINT_VALUE(expected, type); \
-				printf(", Actual: "); \
-				PRINT_VALUE(actual, GET_TYPE(actual)); \
-				printf("\n"); \
-				exit(0); \
-			} \
-		} while (0) \n ${codeForm} \n ${testCase} \n 
+	#define assertEqual(expected, actual, message) do { int type = GET_TYPE(expected); if (expected == actual) { } else {  printf("Test Failed At Input: %s; Expected: ", message);  PRINT_VALUE(expected, type); printf(", Actual: "); PRINT_VALUE(actual, GET_TYPE(actual));  exit(0); } } while (0) \n ${codeForm} \n ${testCase} \n 
 		int main() {
 			TestCase();
 			return 0;
