@@ -123,7 +123,21 @@ export const translations: any = {
     "Enter title shorter than 256 char":"Title ngắn hơn 256 kí tự",
     'Enter all required fields':'Điền tất cả các trường trống',
     'create post success':'Tạo post thành công',
-    'create post success, wait for admin approve ':'Tạo post thành công, đang chờ duyệt'
+    'create post success, wait for admin approve ':'Tạo post thành công, đang chờ duyệt',
+    'Add practice Question Success':'Thêm bài thực hành thành công',
+    'Something went wrong':'Lỗi hệ thống',
+    'Tutorial how to create a pratice lession':'Hưỡng dẫn tạo một bài thực hành',
+    'Exam name must shorter than 256 characters':'Tên Exam phải ngắn hơn 256 kí tự',
+    'Exam duration muse be greater or equal one minute':'Thời gian của bài exam ít nhất là mọt phút',
+    'Exam Percentage Completed muse be greater or equal 1%':'Phần trăm hoàn thành của exam ít nhất là 1%',
+    'Add Exam success':'Đăng exam thành công',
+    'Invalid duration':"Duration không hợp lêk",
+    'Please upload video':'Hãy đăng video',
+    'Invalid pop-up seconds':'Giây pop up của question không hợp lệ',
+    'Add lesson success':'Thêm bài học thành công',
+    'There are no course avaiable':'Không có khóa học nào hiện tại',
+    'There is no course':'Không có khóa học',
+    'Edit practice Question Success':'Edit bài thực hành thành công'
   },
   en: {
 

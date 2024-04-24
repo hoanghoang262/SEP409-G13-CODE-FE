@@ -6,6 +6,7 @@
 	import { showToast } from '../helpers/helpers';
 	import AdminCourseSb from '../components/AdminCourseSB.svelte';
 	import { afterUpdate } from 'svelte';
+	import { t } from '../translations/i18n';
 
 	export let form: any;
 	export let data: any;
@@ -22,7 +23,7 @@
 	const onsubmit = (event: any) => {
 		const part: any = document.getElementById('partinput');
 		if (part.value < 1) {
-			showToast('Part input', 'Part must be greater than or equal 1', 'warning');
+			showToast('Part input', $t('Part must be greater than or equal 1'), 'warning');
 			event.preventDefault();
 		}
 	};

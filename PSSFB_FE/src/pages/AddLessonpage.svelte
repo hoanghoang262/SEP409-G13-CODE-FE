@@ -13,6 +13,7 @@
 	import { getURL, getVideoURL, uploadVid } from '../firebase';
 	import { pageStatus } from '../stores/store';
 	import Icon from '@iconify/svelte';
+	import { t } from '../translations/i18n';
 
 	export let course: any;
 	let lesson: lesson = initlessons();
@@ -41,23 +42,23 @@
 
 	const Addlesson = async () => {
 		if (!checkTitle(lesson.title)) {
-			showToast('Add lesson', 'Enter title shorter than 256 char', "warning");
+			showToast('Add lesson', $t('Enter title shorter than 256 char'), "warning");
 			return;
 		}
 
 		if(lesson.duration < 1){
-			showToast('Add lesson', 'Duration không hợp lệ','warning');
+			showToast('Add lesson', $t('Invalid duration'),'warning');
 			return;
 		}
 
 		if (!checkExist(video)) {
-			showToast('Add lesson', 'Please upload video', 'warning');
+			showToast('Add lesson', $t('Please upload video'), 'warning');
 			return;
 		}
 
 		const isNegatve = questions.filter((q:any) => q.time < 0)
 		if (isNegatve.length>0) {
-			showToast('Add lesson', 'Giây pop up của question không hợp lệ', 'warning');
+			showToast('Add lesson', $t('Invalid pop-up seconds'), 'warning');
 			return;
 		}
 
@@ -70,12 +71,12 @@
 				pageStatus.set('done');
 				return
 			}
-			showToast('Add lesson', 'Add lesson success', 'success');
+			showToast('Add lesson', $t('Add lesson success'), 'success');
 			console.log(JSON.stringify({ chapterId, lesson }));
 			goto(`/manager/coursesmanager/addcourse/addcodelesson/${courseId}/${chapterId}`);
 		} catch (e) {
 			console.error(e);
-			showToast('Add lesson', 'Something went wrong', 'error');
+			showToast('Add lesson', $t('Something went wrong'), 'error');
 		}
 		pageStatus.set('done');
 	};
@@ -106,7 +107,7 @@
 		await uploadVid(video);
 		const url: any = await getVideoURL(video?.path);
 		if (!checkExist(url)) {
-			showToast('Add lesson', 'something went wrong', 'error');
+			showToast('Add lesson', $t('Something went wrong'), 'error');
 		} else {
 			lesson.videoUrl = url;
 		}

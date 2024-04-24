@@ -10,6 +10,7 @@
 	import { checkTitle, handlePosetiveInput, showToast } from '../helpers/helpers';
 	import { page } from '$app/stores';
 	import Icon from '@iconify/svelte';
+	import { t } from '../translations/i18n';
 
 	export let data;
 	let course = data.course;
@@ -39,17 +40,17 @@
 
 	const AddExam = async () => {
 		if(!checkTitle(Exam.name)){
-			showToast('Add Exam', 'Exam name must shorter than 256 characters', 'warning');
+			showToast('Add Exam', $t('Exam name must shorter than 256 characters'), 'warning');
 			return;
 		}
 		
 		if (Exam.time < 60) {
-			showToast('Save Exam', 'Exam duration muse be greater or equal one minute','warning');
+			showToast('Save Exam', $t('Exam duration muse be greater or equal one minute'),'warning');
 			return;
 		}
 
 		if (Exam.percentageCompleted < 1) {
-			showToast('Save Exam', 'Exam Percentage Completed muse be greater or equal 1%','warning');
+			showToast('Save Exam', $t('Exam Percentage Completed muse be greater or equal 1%'),'warning');
 			return;
 		}
 
@@ -63,10 +64,10 @@
 				return
 			}
 			course = await getModCourseById(course.id);
-			showToast('Add Exam', 'Add Exam success', 'success');
+			showToast('Add Exam', $t('Add Exam success'), 'success');
 		} catch (e) {
 			console.log(e);
-			showToast('Add Exam', 'something went wrong', 'error');
+			showToast('Add Exam', $t('something went wrong'), 'error');
 		}
 		pageStatus.set('done');
 		goto(`/manager/coursesmanager/addcourse/addchapter/${course.id}`);

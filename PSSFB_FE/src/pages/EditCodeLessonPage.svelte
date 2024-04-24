@@ -13,6 +13,7 @@
 		JavaComplieCodeToCheck
 	} from '$lib/services/CompilerService';
 	import CodeEditor4 from '../components/CodeEditor4.svelte';
+	import { t } from '../translations/i18n';
 
 	export let data;
 	let result = '';
@@ -21,7 +22,7 @@
 
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice Lession', 'Enter title shorter than 256 char', "warning");
+			showToast('Save Pratice Lession', $t('Enter title shorter than 256 char'), "warning");
 			return;
 		}
 
@@ -34,11 +35,11 @@
 				practiceQuestionId: codeQuestion.id,
 				practiceQuestion: codeQuestion
 			});
-			showToast('Edit Practice Question', 'Edit practice Question Success', 'success');
+			showToast('Edit Practice Question', $t('Edit practice Question Success'), 'success');
 			course = await getModCourseById(course.id);
 		} catch (e) {
 			console.log(e);
-			showToast('Edit Practice Question', 'Something went wrong', 'error');
+			showToast('Edit Practice Question', $t('Something went wrong'), 'error');
 		}
 		pageStatus.set('done');
 	};
@@ -66,7 +67,7 @@
 		<div>
 			<Label defaultClass="text-xl mb-3 block">Edit Pratice Question</Label>
 			<a class="text-blue-500 text-sm hover:underline" href="/manager/tutorial/createCodeLession"
-				>Tutorial how to create a pratice lession</a
+				>{$t('Tutorial how to create a pratice lession')}</a
 			>
 			<hr class="my-5" />
 			<Label>Title</Label>

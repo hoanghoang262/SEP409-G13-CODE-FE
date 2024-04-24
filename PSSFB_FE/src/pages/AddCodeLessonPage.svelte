@@ -17,6 +17,7 @@
 		JavaComplieCodeToCheck
 	} from '$lib/services/CompilerService';
 	import CodeEditor4 from '../components/CodeEditor4.svelte';
+	import { t } from '../translations/i18n';
 
 	export let course: any;
 	export let result = '';
@@ -26,7 +27,7 @@
 	const chapterId = ids[1];
 	const courseId: any = ids[0];
 
-	$: {
+	onMount(() => {
 		switch (course?.tag) {
 			case 'Java':
 				codeQuestion.testCaseJava = 'public void TestCase() {\n}';
@@ -38,11 +39,11 @@
 				codeQuestion.testCaseCplus = 'void TestCase() {\n}';
 				break;
 		}
-	}
+	})
 
 	const saveCQ = async () => {
 		if (!checkTitle(codeQuestion.title)) {
-			showToast('Save Pratice Lession', 'Enter title shorter than 256 char', 'warning');
+			showToast('Save Pratice Lession', $t('Enter title shorter than 256 char'), 'warning');
 			return;
 		}
 
@@ -51,11 +52,11 @@
 		try {
 			const response = await addCodeQuestion({ chapterId, practiceQuestion: codeQuestion });
 			console.log(response);
-			showToast('Add Practice Question', 'Add practice Question Success', 'success');
+			showToast('Add Practice Question', $t('Add practice Question Success'), 'success');
 			goto(`/manager/coursesmanager/addcourse/addexam/${courseId}/${chapterId}`);
 		} catch (e) {
 			console.log(e);
-			showToast('Add Practice Question', 'Something went wrong', 'error');
+			showToast('Add Practice Question', $t('Something went wrong'), 'error');
 		}
 		pageStatus.set('done');
 	};
@@ -82,7 +83,7 @@
 	<div class="w-4/5">
 		<div>
 			<Label defaultClass="text-xl mb-3 block">Add Pratice Question</Label>
-			<a href="/manager/tutorial/createCodeLession">Tutorial how to create a pratice lession</a>
+			<a href="/manager/tutorial/createCodeLession">{$t('Tutorial how to create a pratice lession')}</a>
 			<hr class="my-5" />
 			<Label>Title</Label>
 			<Textarea bind:value={codeQuestion.title} />

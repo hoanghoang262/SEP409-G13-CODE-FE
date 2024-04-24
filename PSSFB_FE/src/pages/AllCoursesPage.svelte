@@ -7,6 +7,7 @@
 	import { getAllCourses } from '$lib/services/CourseServices';
 	import { pageStatus } from '../stores/store';
 	import { tags } from '../data/data';
+	import { t } from '../translations/i18n';
 
 	export let result: any;
 	$: courses = result.items;
@@ -45,7 +46,7 @@
 
 <div>
 	<div class="bg-blue-950 text-white px-20 pb-10 pt-20 font-medium">
-		<div class="text-3xl mb-10">Learning code online. Let's start with your first course!</div>
+		<div class="text-3xl mb-10">{$t("Learning code online. Let's start with your first course!")}</div>
 		<Input onKeyDown={searchFunc} bind:value={searchStr} classes="w-1/4 mr-3" placehoder="search" />
 		<div class="w-2/12 inline-block">
 			<Select on:change={tagChange} items={tags} bind:value={tag} />
@@ -59,7 +60,7 @@
 				</div>
 			{/each}
 		{:else}
-			<div class="p-5">There are no course avaiable</div>
+			<div class="p-5">{$t('There are no course avaiable')}</div>
 		{/if}
 	</div>
 	<Pagination pagi={result} {pagiClick} />

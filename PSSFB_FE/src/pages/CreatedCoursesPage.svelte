@@ -6,6 +6,7 @@
 	import { deleteModCourse, getCreatingCourseByUser } from '$lib/services/ModerationServices';
 	import { showToast } from '../helpers/helpers';
 	import { getAllCourses } from '$lib/services/CourseServices';
+	import { t } from '../translations/i18n';
 
 	export let courses: any = [];
 	const DeleteCourse = async (id: number) => {
@@ -33,6 +34,6 @@
 			</div>
 		{/each}
 	{:else}
-		<div>There is no course</div>
+		<div>{$t('There is no course')}</div>
 	{/if}
 </div>
