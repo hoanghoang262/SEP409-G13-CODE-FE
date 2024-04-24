@@ -160,7 +160,7 @@
 				<h3 class="font-medium truncate text-xl mb-2">{course.courseName}</h3>
 
 				<p class="text-sm text-neutral-500 mb-3">{$t('Create By')}: {course.userName}</p>
-				<p class="truncate text-sm max-h-20">{@html course.courseDescription}</p>
+				<p class="truncate text-sm h-10">{@html course.courseDescription}</p>
 				<p>
 					{#if course?.status}
 						<Status status={course?.status} />

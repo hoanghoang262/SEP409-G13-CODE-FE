@@ -109,7 +109,7 @@
 							</div>
 						{/each}
 
-						<hr class="my-5" />
+						
 
 						{#each s?.codeQuestions ?? [] as l}
 							<div
@@ -126,7 +126,7 @@
 							</div>
 						{/each}
 
-						<hr class="my-5" />
+						
 
 						{#each s?.lastExam ?? [] as l}
 							<div
@@ -143,7 +143,6 @@
 							</div>
 						{/each}
 
-						<hr class="my-5" />
 					</div>
 				</div>
 			{/each}

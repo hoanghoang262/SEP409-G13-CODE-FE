@@ -77,7 +77,7 @@
 				<a
 					href="/lesson/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class="px-10 py-2 flex items-center border-b {l?.isCompleted
+					class="px-10 py-2 flex items-center {l?.isCompleted
 						? 'justify-between'
 						: ''} {$page.url.pathname.includes('lesson') && ids[2] == l.id ? 'bg-blue-100' : ''}"
 				>
@@ -103,7 +103,7 @@
 				<a
 					href="/codelesson/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class="px-10 py-2 flex items-center flex-wrap border-b {l?.isCompleted
+					class="px-10 py-2 flex items-center flex-wrap {l?.isCompleted
 						? 'justify-between'
 						: ''} {$page.url.pathname.includes('codelesson') && ids[2] == l.id
 						? 'bg-blue-100'
@@ -129,7 +129,7 @@
 				<a
 					href="/exam/{courseId}/{s.id}/{l.id}"
 					target="_blank"
-					class="px-10 py-2 flex items-center border-b {l?.isCompleted
+					class="px-10 py-2 flex items-center {l?.isCompleted
 						? 'justify-between'
 						: ''} {$page.url.pathname.includes('exam') && ids[2] == l.id ? 'bg-blue-100' : ''}"
 				>
@@ -153,5 +153,6 @@
 				</a>
 			{/each}
 		</div>
+		<hr class="my-5" />
 	{/each}
 </div>

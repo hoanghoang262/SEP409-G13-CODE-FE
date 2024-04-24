@@ -250,7 +250,7 @@
 		<div class="my-20">
 			{#if section == 'Introduction'}
 				<div>
-					{course.description}
+					{@html course.description}
 				</div>
 			{:else if section == 'Sysllabus'}
 				<div class="bg-neutral-100 border px-40 pb-20">

@@ -43,7 +43,7 @@ export const translations: any = {
     "There are 65,273 already enrolled": "Đang có 65,273 người tham gia",
     "Introduction": "Giới thiệu",
     "Sysllabus": "Giáo trình",
-    "Schedule": "Lịch trình",
+    "Schedule": "Học liệu",
     "code(s)": "bài code",
     "quiz(s)": "bài học",
     "exam(s)": "bài kiểm tra",
