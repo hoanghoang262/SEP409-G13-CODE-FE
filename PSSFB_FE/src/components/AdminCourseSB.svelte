@@ -102,18 +102,18 @@
 					break;
 			}
 			course = await getModCourseById(course.id);
-			goto(`/manager/coursesmanager/editcourse/${course.id}`)
+			goto(`/manager/coursesmanager/editcourse/${course.id}`);
 			pageStatus.set('done');
 		}
 	};
 </script>
 
-<main class="fixed top-16 md:top-24 right-0 ">
+<main class="fixed top-16 md:top-24 right-0">
 	<div>
 		{#if showStatus}
 			<div class="">
 				<div
-					class="w-72 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] shadow-xl border bg-white pr-3 overflow-auto" 
+					class="w-72 h-[calc(100vh-64px)] lg:h-[calc(100vh-96px)] shadow-xl border bg-white pr-3 overflow-auto"
 				>
 					<div
 						class="text-xl font-medium pt-4 px-4 mb-3 flex justify-between items-center truncate"
