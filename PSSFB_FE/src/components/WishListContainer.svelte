@@ -63,8 +63,8 @@
 						{/if}
 					{/if}
 				</p>
-				<p class="text-sm line-clamp-1 group-hover:line-clamp-3">
-					<span class="font-semibold">{$t('Description')}</span>: {course.description}
+				<p class="text-sm line-clamp-1 group-hover:line-clamp-3 max-h-10 truncate">
+					<span class="font-semibold">{$t('Description')}</span>: {@html course.description}
 				</p>
 			</div>
 			<hr />
