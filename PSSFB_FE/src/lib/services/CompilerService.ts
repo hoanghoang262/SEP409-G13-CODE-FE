@@ -83,16 +83,47 @@ export const JavaEditor = async (data: any) => {
 };
 
 export const CForm = (codeForm: string, testCase: string) => {
-	const CForm = `#include <stdio.h>
-	#include <stdlib.h>
+	const CForm = `#include <stdio.h>  
+	#include <stdlib.h>  
+	#include <stdbool.h> 
+	#include <string.h> 
 	
-	#define assertEqual(expected, actual, message)  \
-		if ((expected) == (actual)) {               \
-					  \
-		} else {                                    \
-			printf("Test Failed At Input: %s. Expected: %d, Actual: %d", message, expected, actual); \
-			exit(0);                                \
-		} \n ${codeForm} \n ${testCase} \n 
+	#define TYPE_INT 1
+	#define TYPE_FLOAT 2
+	#define TYPE_DOUBLE 3
+	#define TYPE_STRING 4
+	#define TYPE_BOOL 5
+	
+	#define GET_TYPE(var) _Generic((var), \
+		int: TYPE_INT, \
+		float: TYPE_FLOAT, \
+		double: TYPE_DOUBLE, \
+		char*: TYPE_STRING, \
+		bool: TYPE_BOOL \
+	)
+	
+	#define PRINT_VALUE(var, type) \
+		switch(type) { \
+			case TYPE_INT: printf("%d", var); break; \
+			case TYPE_FLOAT: printf("%0.2f", (double)var); break; \
+			case TYPE_DOUBLE: printf("%0.2lf", var); break; \
+			case TYPE_STRING: printf("%s", var); break; \
+			 case TYPE_BOOL: printf("%d", var); break; \
+		}
+	
+	#define assertEqual(expected, actual, message) \
+		do { \
+			int type = GET_TYPE(expected); \
+			if (expected == actual) { \
+			} else { \
+				printf("Test Failed At Input: %s; Expected: ", message); \
+				PRINT_VALUE(expected, type); \
+				printf(", Actual: "); \
+				PRINT_VALUE(actual, GET_TYPE(actual)); \
+				printf("\n"); \
+				exit(0); \
+			} \
+		} while (0) \n ${codeForm} \n ${testCase} \n 
 		int main() {
 			TestCase();
 			return 0;
